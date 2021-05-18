@@ -8,7 +8,7 @@ export default [
     children: [
       {
         path: 'city-evolution',
-        name: '城市变迁',
+        name: '历史变迁',
         component: () => import('@/Apps/Overview/CityEvolution'),
       },
       {
@@ -23,17 +23,17 @@ export default [
       },
       {
         path: 'education',
-        name: '教育一张图',
+        name: '民生教育',
         component: () => import('@/Apps/Overview/CityEvolution'),
       },
       {
         path: 'medical',
-        name: '医疗一张图',
+        name: '民生医疗',
         component: () => import('@/Apps/Overview/CityEvolution'),
       },
       {
         path: 'traffic',
-        name: '交通一张图',
+        name: '交通畅行',
         component: () => import('@/Apps/Overview/CityEvolution'),
       },
       {
@@ -63,5 +63,17 @@ export default [
   {
     path: '/production',
     name: '安全生产',
+  },
+  {
+    path: '/vitality',
+    name: '活力六横',
+  },
+  {
+    path: '/strength',
+    name: '实力六横',
+  },
+  {
+    path: '/charm',
+    name: '魅力六横',
   },
 ];

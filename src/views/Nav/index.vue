@@ -1,8 +1,13 @@
 <template>
   <div class="nav">
     <div class="left-secondary-nav secondary-nav">
-      <div class="nav-item" v-for="item in leftSecondaryNav" :key="item.name">
-        <router-link :to="{ name: item.name }">{{ item.name }}</router-link>
+      <router-link
+        class="nav-item"
+        v-for="item in leftSecondaryNav"
+        :key="item.name"
+        :to="{ name: item.name }"
+      >
+        <span class="nav-name">{{ item.name }}</span>
         <div class="indicators">
           <div v-for="i in 3" :key="i" class="item">
             <span class="name">核心指标</span>
@@ -12,11 +17,16 @@
             </span>
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
     <div class="right-secondary-nav secondary-nav">
-      <div class="nav-item" v-for="item in rightSecondaryNav" :key="item.name">
-        <router-link :to="{ name: item.name }">{{ item.name }}</router-link>
+      <router-link
+        class="nav-item"
+        :to="{ name: item.name }"
+        v-for="item in rightSecondaryNav"
+        :key="item.name"
+      >
+        <span class="nav-name">{{ item.name }}</span>
         <div class="indicators">
           <div v-for="i in 3" :key="i" class="item">
             <span class="name">核心指标</span>
@@ -26,7 +36,7 @@
             </span>
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
     <div class="primal-nav">
       <router-link
@@ -149,7 +159,9 @@ export default {
     height: 42.1rem;
     background-size: 100% 100%;
     margin-right: -8rem;
-    a {
+    text-decoration: none;
+    display: block;
+    .nav-name {
       display: block;
       text-decoration: none;
       background-image: linear-gradient(160deg,#fff 0%, #26c4bf 100%);
@@ -200,13 +212,16 @@ export default {
   left: 5rem;
   .nav-item {
     background-image: url('./secondary-left-normal.png');
+    &.router-link-active {
+      background-image: url('./secondary-left-active.png');
+    }
     &:nth-child(1) {
       transform: translateY(2rem);
     }
     &:nth-child(2) {
       transform: translateY(1rem);
     }
-    a {
+    .nav-name {
       transform: skew(0deg, -4deg);
       text-align: left;
     }
@@ -222,13 +237,16 @@ export default {
   right: 11rem;
   .nav-item {
     background-image: url('./secondary-right-normal.png');
+    &.router-link-active {
+      background-image: url('./secondary-right-active.png');
+    }
     &:nth-child(3) {
       transform: translateY(2rem);
     }
     &:nth-child(2) {
       transform: translateY(1rem);
     }
-    a {
+    .nav-name {
       transform: skew(0deg, 4deg);
       text-align: right;
     }
