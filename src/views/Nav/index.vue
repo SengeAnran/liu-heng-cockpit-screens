@@ -1,17 +1,5 @@
 <template>
   <div class="nav">
-    <div class="primal-nav">
-      <router-link
-        v-for="item in routes"
-        :key="item.name" class="nav-item"
-        :to="item.path"
-      >
-        {{ item.name }}
-      </router-link>
-      <div class="primal-nav-active-name">
-        <span>{{ primalNavActiveName }}</span>
-      </div>
-    </div>
     <div class="left-secondary-nav secondary-nav">
       <div class="nav-item" v-for="item in leftSecondaryNav" :key="item.name">
         <router-link :to="{ name: item.name }">{{ item.name }}</router-link>
@@ -27,7 +15,7 @@
       </div>
     </div>
     <div class="right-secondary-nav secondary-nav">
-      <div class="nav-item" v-for="item in leftSecondaryNav" :key="item.name">
+      <div class="nav-item" v-for="item in rightSecondaryNav" :key="item.name">
         <router-link :to="{ name: item.name }">{{ item.name }}</router-link>
         <div class="indicators">
           <div v-for="i in 3" :key="i" class="item">
@@ -40,6 +28,30 @@
         </div>
       </div>
     </div>
+    <div class="primal-nav">
+      <router-link
+        v-for="item in routes"
+        :key="item.name" class="nav-item"
+        :to="item.path"
+      >
+        {{ item.name }}
+      </router-link>
+      <div class="primal-nav-active-name">
+        <span>{{ primalNavActiveName }}</span>
+      </div>
+    </div>
+    <div class="move-nav" v-if="secondaryNav.length > 6">
+      <div
+        class="to-left"
+        v-if="secondNavStart > 0"
+        @click="toLeft"
+      />
+      <div
+        class="to-right"
+        v-if="secondNavStart < secondaryNav.length - 6"
+        @click="toRight"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -49,6 +61,7 @@ export default {
   data() {
     return {
       routes: [...routes],
+      secondNavStart: 0,
     };
   },
   computed: {
@@ -61,9 +74,27 @@ export default {
     },
     leftSecondaryNav() {
       const len = Math.min(this.secondaryNav.length / 2, 3);
-      const start = 0;
-      // console.log(len);
+      const start = this.secondNavStart;
       return this.secondaryNav.slice(start, start + len);
+    },
+    rightSecondaryNav() {
+      const len = Math.min(this.secondaryNav.length / 2, 3);
+      const start = this.secondNavStart + len;
+      return this.secondaryNav.slice(start, start + len);
+    },
+  },
+  watch: {
+    secondaryNav() {
+      this.secondNavStart = 0;
+    },
+  },
+  methods: {
+    toLeft() {
+      this.secondNavStart = Math.max(0, this.secondNavStart - 1);
+    },
+    toRight() {
+      const max = Math.max(this.secondaryNav.length - 6, 0);
+      this.secondNavStart = Math.min(max, this.secondNavStart + 1);
     },
   },
 };
@@ -76,11 +107,42 @@ export default {
   background-size: 576rem 73rem;
   background-position: 0 0;
 }
+.move-nav {
+  .to-left {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 5rem;
+    height: 52.5rem;
+    background-image: url('./to-left.png');
+    background-size: 100% 100%;
+    cursor: pointer;
+    transition: width 0.3s;
+    &:hover {
+      width: 36.7rem;
+    }
+  }
+  .to-right {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 5rem;
+    height: 52.5rem;
+    background-image: url('./to-right.png');
+    background-size: 100% 100%;
+    cursor: pointer;
+    transition: width 0.3s;
+    &:hover {
+      width: 36.7rem;
+    }
+  }
+}
 .secondary-nav {
   position: absolute;
   top: 22rem;
   width: 200rem;
   display: flex;
+  justify-content: center;
   .nav-item {
     flex: none;
     width: 72.2rem;
@@ -135,7 +197,7 @@ export default {
   }
 }
 .left-secondary-nav {
-  left: 7rem;
+  left: 5rem;
   .nav-item {
     background-image: url('./secondary-left-normal.png');
     &:nth-child(1) {
@@ -157,7 +219,7 @@ export default {
   }
 }
 .right-secondary-nav {
-  right: 7rem;
+  right: 11rem;
   .nav-item {
     background-image: url('./secondary-right-normal.png');
     &:nth-child(3) {
@@ -195,7 +257,7 @@ export default {
   }
 }
 .primal-nav {
-  outline: 1px solid red;
+  // outline: 1px solid red;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -225,6 +287,7 @@ export default {
     font-family: "Source Han Sans CN";
     color: rgba(178, 250, 255, 0.6);
     text-decoration: none;
+    z-index: 10;
     &.router-link-active {
       background-image: url('./primal-active.png');
       color: rgb(178, 250, 255);
