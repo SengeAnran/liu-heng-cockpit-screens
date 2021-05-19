@@ -186,8 +186,8 @@ export default [
         },
         meta: {
           indicator: [
-            { name: 'GDP总量', value: 4320, unit: '万' },
-            { name: '全镇企业工业总数', value: 429, unit: '家' },
+            { name: 'GDP总量    ', value: 4320, unit: '万' },
+            { name: '企业工业数  ', value: 429, unit: '家' },
             { name: '劳动力资源数', value: 41586, unit: '人' },
           ],
         },
@@ -201,9 +201,9 @@ export default [
         },
         meta: {
           indicator: [
-            { name: '年港口货物吞吐量', value: 8112, unit: '万吨' },
-            { name: '年外贸进出口总额', value: 13.3, unit: '亿美元' },
-            { name: '年实际到位市外资金', value: 12.26, unit: '亿元' },
+            { name: '港口货物吞吐量', value: 8112, unit: '万吨' },
+            { name: '外贸进出口额', value: 13.3, unit: '亿美元' },
+            { name: '到位市外资金', value: 12.26, unit: '亿元' },
           ],
         },
       },
