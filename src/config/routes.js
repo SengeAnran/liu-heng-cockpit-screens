@@ -213,7 +213,7 @@ export default [
     path: '/strength',
     name: '实力六横',
     component: Container,
-    // redirect: 'strength/party-construction',
+    redirect: 'strength/govern-serve',
     children: [
       {
         path: 'govern-serve',
@@ -280,6 +280,7 @@ export default [
   {
     path: '/charm',
     name: '魅力六横',
+    component: Container,
     redirect: 'charm/party-construction',
     children: [
       {
