@@ -97,11 +97,11 @@ export default {
       return this.secondaryNav.slice(start, start + len);
     },
     activePrimalIndex() {
-      return this.routes.findIndex((d) => d.name === this.$route.name);
+      return this.routes.findIndex((d) => d.name === this.primalNavActiveName);
     },
   },
   watch: {
-    secondaryNav() {
+    primalNavActiveName() {
       this.secondNavStart = 0;
     },
   },
@@ -195,7 +195,7 @@ export default {
     .nav-name {
       display: block;
       text-decoration: none;
-      background-image: linear-gradient(160deg,#fff 10%, #26c4bf 100%);
+      background-image: linear-gradient(160deg,#fff 0%, #26c4bf 100%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
       font-size: 4.5rem;
@@ -378,7 +378,7 @@ export default {
     cursor: pointer;
   }
   span {
-    background-image: linear-gradient(160deg,#c5f8ff 10%, #26c4bf 100%);
+    background-image: linear-gradient(160deg,#fff 0%, #26c4bf 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: bold;

@@ -28,9 +28,6 @@ export default {
       };
     },
   },
-  mounted() {
-    console.log(this.url);
-  },
 };
 </script>
 <style lang="scss" scoped>

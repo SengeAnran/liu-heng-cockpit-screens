@@ -1,51 +1,77 @@
 import Container from '@/components/Container';
 import ThirdPage from '@/components/ThirdPage';
+import BgImg from '@/components/BgImg';
 
 export default [
   {
     path: '/overview',
     name: '六横总览',
     component: Container,
+    redirect: 'overview/city-evolution',
     children: [
       {
         path: 'city-evolution',
         name: '历史变迁',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-city-evolution.jpg',
+        },
       },
       {
         path: 'population',
         name: '人口一张图',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-population.jpg',
+        },
       },
       {
         path: 'construction',
         name: '平安建设',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-construction.jpg',
+        },
       },
       {
         path: 'education',
         name: '民生教育',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-education.jpg',
+        },
       },
       {
         path: 'medical',
         name: '民生医疗',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-medical.jpg',
+        },
       },
       {
         path: 'traffic',
         name: '交通畅行',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-traffic.jpg',
+        },
       },
       {
         path: 'innovation',
         name: '创新转型',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-innovation.jpg',
+        },
       },
       {
         path: 'data-analysis',
         name: '数据分析',
-        component: () => import('@/Apps/Overview/CityEvolution'),
+        component: BgImg,
+        props: {
+          name: 'overview-data-analysis.jpg',
+        },
       },
     ],
   },
