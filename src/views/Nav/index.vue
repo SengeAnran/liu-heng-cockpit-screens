@@ -9,11 +9,11 @@
       >
         <span class="nav-name">{{ item.name }}</span>
         <div class="indicators">
-          <div v-for="i in 3" :key="i" class="item">
-            <span class="name">核心指标</span>
+          <div v-for="item in (item.meta && item.meta.indicator || [])" :key="item.name" class="item">
+            <span class="name">{{ item.name }}</span>
             <span class="value">
-              0000.00
-              <span class="unit">单位</span>
+              {{ item.value }}
+              <span class="unit">{{ item.unit }}</span>
             </span>
           </div>
         </div>
@@ -28,11 +28,11 @@
       >
         <span class="nav-name">{{ item.name }}</span>
         <div class="indicators">
-          <div v-for="i in 3" :key="i" class="item">
-            <span class="name">核心指标</span>
+          <div v-for="item in (item.meta && item.meta.indicator || [])" :key="item.name" class="item">
+            <span class="name">{{ item.name }}</span>
             <span class="value">
-              0000.00
-              <span class="unit">单位</span>
+              {{ item.value }}
+              <span class="unit">{{ item.unit }}</span>
             </span>
           </div>
         </div>
@@ -209,6 +209,13 @@ export default {
           font-size: 3.4rem;
           color: rgb(130, 226, 228);
           position: relative;
+          max-width: 25rem;
+          // white-space: break-spaces;
+          white-space: break-spaces;
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          // white-space: nowrap;
           &::before {
             position: absolute;
             content: ' ';
@@ -284,8 +291,8 @@ export default {
     .indicators {
       transform: skew(0deg, 4deg);
       .item {
-        padding: 0rem 12rem 2rem;
-        text-align: right;
+        padding: 0rem 5rem 2rem 22rem;
+        // text-align: right;
         .name {
           font-size: 17px;
           color: rgb(130, 226, 228);
