@@ -40,26 +40,30 @@
     </div>
     <div class="primal-nav">
       <router-link
-        v-for="item in routes"
-        :key="item.name" class="nav-item"
+        v-for="(item, i) in routes"
+        :key="item.name"
+        class="nav-item"
         :to="item.path"
+        :style="posStyle(i)"
       >
         {{ item.name }}
       </router-link>
       <div class="primal-nav-active-name">
+        <div class="to-left" @click="toPrimalLeft" />
         <span>{{ primalNavActiveName }}</span>
+        <div class="to-right" @click="toPrimalRight" />
       </div>
     </div>
     <div class="move-nav" v-if="secondaryNav.length > 6">
       <div
         class="to-left"
         v-if="secondNavStart > 0"
-        @click="toLeft"
+        @click="toSecondaryLeft"
       />
       <div
         class="to-right"
         v-if="secondNavStart < secondaryNav.length - 6"
-        @click="toRight"
+        @click="toSecondaryRight"
       />
     </div>
   </div>
@@ -92,6 +96,9 @@ export default {
       const start = this.secondNavStart + len;
       return this.secondaryNav.slice(start, start + len);
     },
+    activePrimalIndex() {
+      return this.routes.findIndex((d) => d.name === this.$route.name);
+    },
   },
   watch: {
     secondaryNav() {
@@ -99,12 +106,34 @@ export default {
     },
   },
   methods: {
-    toLeft() {
+    toPrimalLeft() {
+      const nextIndex = (this.routes.length + this.activePrimalIndex - 1) % this.routes.length;
+      this.$router.push(this.routes[nextIndex].path);
+    },
+    toPrimalRight() {
+      const nextIndex = (this.activePrimalIndex + 1) % this.routes.length;
+      this.$router.push(this.routes[nextIndex].path);
+    },
+    toSecondaryLeft() {
       this.secondNavStart = Math.max(0, this.secondNavStart - 1);
     },
-    toRight() {
+    toSecondaryRight() {
       const max = Math.max(this.secondaryNav.length - 6, 0);
       this.secondNavStart = Math.min(max, this.secondNavStart + 1);
+    },
+    posStyle(i) {
+      const pos = [
+        { top: '8rem', left: '75rem' },
+        { top: '12rem', left: '111rem' },
+        { top: '16rem', left: '146rem' },
+        { top: '20rem', left: '181rem', opacity: 0 },
+        { top: '16rem', left: '75rem', opacity: 0 },
+        { top: '20rem', left: '-30rem', opacity: 0 },
+        { top: '16rem', left: '5rem' },
+        { top: '12rem', left: '40rem' },
+      ];
+      const len = pos.length;
+      return pos[(len + i - this.activePrimalIndex) % len];
     },
   },
 };
@@ -164,7 +193,7 @@ export default {
     .nav-name {
       display: block;
       text-decoration: none;
-      background-image: linear-gradient(160deg,#fff 0%, #26c4bf 100%);
+      background-image: linear-gradient(160deg,#fff 10%, #26c4bf 100%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
       font-size: 4.5rem;
@@ -282,6 +311,8 @@ export default {
   width: 180rem;
   height: 100%;
   transform: translate(-50%, -50%);
+  overflow: hidden;
+  user-select:none;
   &::after {
     position: absolute;
     content: ' ';
@@ -306,30 +337,11 @@ export default {
     color: rgba(178, 250, 255, 0.6);
     text-decoration: none;
     z-index: 10;
+    transition: all 300ms;
     &.router-link-active {
       background-image: url('./primal-active.png');
       color: rgb(178, 250, 255);
       text-shadow: 0 0 2px;
-    }
-    &:nth-child(1) {
-      top: 8rem;
-      left: 75rem;
-    }
-    &:nth-child(2) {
-      top: 12rem;
-      left: 40rem;
-    }
-    &:nth-child(3) {
-      top: 16rem;
-      left: 5rem;
-    }
-    &:nth-child(4) {
-      top: 12rem;
-      left: 111rem;
-    }
-    &:nth-child(5) {
-      top: 16rem;
-      left: 146rem;
     }
   }
 }
@@ -346,8 +358,25 @@ export default {
   background-size: 100% 100%;
   background-position: center center;
   font-size: 5.6rem;
+  // outline: 1px solid red;
+  .to-left {
+    position: absolute;
+    width: 12rem;
+    height: 13rem;
+    bottom: 2rem;
+    left: 13rem;
+    cursor: pointer;
+  }
+  .to-right {
+    position: absolute;
+    width: 12rem;
+    height: 13rem;
+    bottom: 2rem;
+    right: 13rem;
+    cursor: pointer;
+  }
   span {
-    background-image: linear-gradient(160deg,#c5f8ff 0%, #26c4bf 100%);
+    background-image: linear-gradient(160deg,#c5f8ff 10%, #26c4bf 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: bold;
