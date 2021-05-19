@@ -141,7 +141,9 @@ export default {
 <style lang="scss" scoped>
 .nav {
   position: relative;
-  height: 144rem;
+  // height: 144rem;
+  height: 72rem;
+  flex: none;
   background: url('./nav-bg.png') no-repeat;
   background-size: 576rem 73rem;
   background-position: 0 0;

@@ -34,14 +34,13 @@ html, body {
 }
 #app {
   height: 100%;
-  background-image: url('./bg.jpg');
+  // background-image: url('./bg.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
 }
 .content {
-  height: 1350px;
-  // background: red;
+  height: 135rem;
 }
 </style>

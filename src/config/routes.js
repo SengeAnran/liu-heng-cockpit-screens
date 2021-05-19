@@ -1,4 +1,5 @@
 import Container from '@/components/Container';
+import ThirdPage from '@/components/ThirdPage';
 
 export default [
   {
@@ -51,18 +52,42 @@ export default [
   {
     path: '/emergency',
     name: '三防应急',
+    component: ThirdPage,
+    props: {
+      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/sanfang.html',
+      width: 5760,
+      height: 1620,
+    },
   },
   {
     path: '/city-manage',
     name: '城市管理',
+    component: ThirdPage,
+    props: {
+      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/cityManage.html',
+      width: 5760,
+      height: 1620,
+    },
   },
   {
     path: '/safety',
     name: '平安六横',
+    component: ThirdPage,
+    props: {
+      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/safeLiuheng.html',
+      width: 5760,
+      height: 1620,
+    },
   },
   {
     path: '/production',
     name: '安全生产',
+    component: ThirdPage,
+    props: {
+      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/safeProduction.html',
+      width: 5760,
+      height: 1620,
+    },
   },
   {
     path: '/vitality',
