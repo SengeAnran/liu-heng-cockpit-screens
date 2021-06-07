@@ -12,10 +12,7 @@ export default [
       {
         path: 'city-evolution',
         name: '历史变迁',
-        component: BgImg,
-        props: {
-          name: 'overview-city-evolution.jpg',
-        },
+        component: () => import('@/Apps/Overview/CityEvolution'),
         meta: {
           indicator: [
             { name: '全镇面积', value: 654, unit: '平方公里' },

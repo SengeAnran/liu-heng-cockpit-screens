@@ -24,7 +24,7 @@ export default {
       return {
         width: `${this.width}px`,
         height: `${this.height}px`,
-        transform: 'scale(0.5, 0.417)',
+        transform: 'scale(1, 0.833)',
       };
     },
   },
@@ -32,6 +32,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .third-page {
+  position: relative;
   transform-origin: top left;
   iframe {
     width: 100%;

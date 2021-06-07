@@ -39,8 +39,9 @@ export default {
 };
 </script>
 <style lang="scss">
-html, body {
-  overflow: hidden;
+html,
+body {
+  // overflow: hidden;
 }
 body {
   transform-origin: top left;

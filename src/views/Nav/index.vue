@@ -1,15 +1,10 @@
 <template>
   <div class="nav">
     <div class="left-secondary-nav secondary-nav">
-      <router-link
-        class="nav-item"
-        v-for="item in leftSecondaryNav"
-        :key="item.name"
-        :to="{ name: item.name }"
-      >
+      <router-link class="nav-item" v-for="item in leftSecondaryNav" :key="item.name" :to="{ name: item.name }">
         <span class="nav-name">{{ item.name }}</span>
         <div class="indicators">
-          <div v-for="item in (item.meta && item.meta.indicator || [])" :key="item.name" class="item">
+          <div v-for="item in (item.meta && item.meta.indicator) || []" :key="item.name" class="item">
             <span class="name">{{ item.name }}</span>
             <span class="value">
               {{ item.value }}
@@ -20,15 +15,10 @@
       </router-link>
     </div>
     <div class="right-secondary-nav secondary-nav">
-      <router-link
-        class="nav-item"
-        :to="{ name: item.name }"
-        v-for="item in rightSecondaryNav"
-        :key="item.name"
-      >
+      <router-link class="nav-item" :to="{ name: item.name }" v-for="item in rightSecondaryNav" :key="item.name">
         <span class="nav-name">{{ item.name }}</span>
         <div class="indicators">
-          <div v-for="item in (item.meta && item.meta.indicator || [])" :key="item.name" class="item">
+          <div v-for="item in (item.meta && item.meta.indicator) || []" :key="item.name" class="item">
             <span class="name">{{ item.name }}</span>
             <span class="value">
               {{ item.value }}
@@ -39,13 +29,7 @@
       </router-link>
     </div>
     <div class="primal-nav">
-      <router-link
-        v-for="(item, i) in routes"
-        :key="item.name"
-        class="nav-item"
-        :to="item.path"
-        :style="posStyle(i)"
-      >
+      <router-link v-for="(item, i) in routes" :key="item.name" class="nav-item" :to="item.path" :style="posStyle(i)">
         {{ item.name }}
       </router-link>
       <div class="primal-nav-active-name">
@@ -55,16 +39,8 @@
       </div>
     </div>
     <div class="move-nav" v-if="secondaryNav.length > 6">
-      <div
-        class="to-left"
-        v-if="secondNavStart > 0"
-        @click="toSecondaryLeft"
-      />
-      <div
-        class="to-right"
-        v-if="secondNavStart < secondaryNav.length - 6"
-        @click="toSecondaryRight"
-      />
+      <div class="to-left" v-if="secondNavStart > 0" @click="toSecondaryLeft" />
+      <div class="to-right" v-if="secondNavStart < secondaryNav.length - 6" @click="toSecondaryRight" />
     </div>
   </div>
 </template>
@@ -195,7 +171,7 @@ export default {
     .nav-name {
       display: block;
       text-decoration: none;
-      background-image: linear-gradient(160deg,#fff 0%, #26c4bf 100%);
+      background-image: linear-gradient(160deg, #fff 0%, #26c4bf 100%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
       font-size: 4.5rem;
@@ -233,7 +209,7 @@ export default {
         }
         .value {
           font-size: 3.4rem;
-          font-family: "Oswald";
+          font-family: 'Oswald';
           color: rgb(255, 255, 255);
           padding-left: 4rem;
         }
@@ -294,19 +270,19 @@ export default {
         padding: 0rem 5rem 2rem 22rem;
         // text-align: right;
         .name {
-          font-size: 17px;
+          font-size: 3.4rem;
           color: rgb(130, 226, 228);
         }
         .value {
-          font-size: 17px;
-          font-family: "Oswald";
+          font-size: 3.4rem;
+          font-family: 'Oswald';
           color: rgb(255, 255, 255);
-          font-weight: bold;
           padding-left: 4rem;
         }
         .unit {
-          font-size: 11.254px;
+          font-size: 2.3rem;
           color: rgb(232, 233, 233);
+          font-weight: bold;
         }
       }
     }
@@ -321,7 +297,7 @@ export default {
   height: 100%;
   transform: translate(-50%, -50%);
   overflow: hidden;
-  user-select:none;
+  user-select: none;
   &::after {
     position: absolute;
     content: ' ';
@@ -342,7 +318,7 @@ export default {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     font-size: 4rem;
-    font-family: "Source Han Sans CN";
+    font-family: 'Source Han Sans CN';
     color: rgba(178, 250, 255, 0.6);
     text-decoration: none;
     z-index: 10;
@@ -385,7 +361,7 @@ export default {
     cursor: pointer;
   }
   span {
-    background-image: linear-gradient(160deg,#fff 0%, #26c4bf 100%);
+    background-image: linear-gradient(160deg, #fff 0%, #26c4bf 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: bold;

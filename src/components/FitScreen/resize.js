@@ -28,7 +28,7 @@ export function equalRatioFull({ width: pageWidth, height: pageHeight }) {
   document.body.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
 }
 
-export function none() {
-  // document.body.style.width = `${pageWidth}px`;
-  // document.body.style.height = `${pageHeight}px`;
+export function none({ width: pageWidth, height: pageHeight }) {
+  document.body.style.width = `${pageWidth}px`;
+  document.body.style.height = `${pageHeight}px`;
 }
