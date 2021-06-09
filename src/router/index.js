@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home';
+import routeConfig from '@/config/routes';
 
 Vue.use(VueRouter);
 
 const routes = [
+  ...routeConfig,
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    redirect: '/overview',
   },
 ];
 
