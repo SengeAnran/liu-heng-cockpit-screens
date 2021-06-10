@@ -22,8 +22,10 @@ export default {
   padding: 0 2rem;
   .title-arrow{
     display: inline-block;
-    width: 4rem;
+    width: 3.2rem;
+    margin-right: 2rem;
     img{
+      transform: translateY(.2rem);
       width: 100%;
     }
   }
