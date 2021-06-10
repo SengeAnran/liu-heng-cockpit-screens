@@ -22,18 +22,25 @@
             </div>
           </div>
         </div>
-        <div class="sub-title " style="padding:20px 0">医务人员数量分布</div>
+        <div class="sub-title "
+             style="padding:20px 0">医务人员数量分布</div>
         <div class="chart">1</div>
         <div class="chart">2</div>
       </div>
       <div class="left-right">
         <div class="sub-title">医师数量分析</div>
-        <div class="flex desc">
-          <div class="flex" v-for="(item,i) in docList" :key="`doc-type-${i}`">
-            <div class="label">{{item.type}}医师</div>
+        <div class="flex desc-doc">
+          <div class="flex"
+               v-for="(item,i) in docList"
+               :key="`doc-type-${i}`">
+            <div class="label">{{item.type}}<br />医师</div>
             <div class="count">{{item.count}}</div>
           </div>
         </div>
+        <div class="sub-title "
+             style="padding:20px 0">截至2020年，医务人数增加230人</div>
+        <div class="chart"><LineChart :line-data="lineData"/></div>
+        <div class="chart">2</div>
       </div>
     </div>
   </div>
@@ -41,9 +48,10 @@
 
 <script>
 import BaseTitle from './components/BaseTitle';
+import LineChart from './components/LineChart';
 export default {
   name: 'MedicalLeft',
-  components: { BaseTitle },
+  components: { BaseTitle, LineChart },
   data() {
     return {
       descList: [
@@ -58,19 +66,33 @@ export default {
           count2: 1,
         },
       ],
-      docList: [{
-        type: '初级',
-        count: 89,
-      }, {
-        type: '主治',
-        count: 89,
-      }, {
-        type: '副主任',
-        count: 89,
-      }, {
-        type: '主任',
-        count: 89,
-      }],
+      docList: [
+        {
+          type: '初级',
+          count: 89,
+        },
+        {
+          type: '主治',
+          count: 89,
+        },
+        {
+          type: '副主任',
+          count: 89,
+        },
+        {
+          type: '主任',
+          count: 89,
+        },
+      ],
+      lineData: {
+        title: '',
+        name1: '医务人员数量分布',
+        lineColor11: 'rgba(89, 219, 230, 1)',
+        areaColor11: 'rgba(89, 219, 230, 1)',
+        areaColor12: 'rgba(89, 219, 230, .3)',
+        xData: ['1.20', '1.21', '1.22', '1.23', '1.24', '1.25', '1.26', '1.27', '1.28', '1.29'],
+        data1: [1, 3, 5, 6, 8, 9, 12, 33, 12, 55],
+      },
     };
   },
   computed: {},
@@ -92,11 +114,21 @@ export default {
   .left-right {
     width: 50%;
     margin-top: 63px;
+    margin-right: 22px;
+    .chart{
+      width: 100%;
+      height: 332px;
+    }
   }
   .sub-title {
     padding: 26px 0;
     font-size: 24px;
     font-family: Source Han Sans CN;
+    font-weight: 500;
+  }
+  .count {
+    font-size: 48px;
+    font-family: DIN;
     font-weight: 500;
   }
   .left-left {
@@ -125,15 +157,36 @@ export default {
         background: url('./images/hos-bg.png') no-repeat 100% 100%;
         > div {
           width: 50%;
-          .count {
-            font-size: 48px;
-            font-family: DIN;
-            font-weight: 500;
-          }
         }
         span {
           font-size: 22px;
           color: rgba(225, 255, 255, 0.5);
+        }
+      }
+    }
+  }
+  .left-right {
+    .desc-doc {
+      text-align: center;
+      > div {
+        height: 123px;
+        width: 202px;
+        background: url('./images/doc-bg.png') no-repeat 100% 100%;
+        .label {
+          width: 98px;
+          font-size: 24px;
+          font-family: Source Han Sans CN;
+          font-weight: 500;
+          color: #ffffff;
+          background: -webkit-linear-gradient(bottom, rgba(92, 207, 207, 1), rgba(225, 255, 255, 1));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          vertical-align: middle;
+          transform: translateY(30px);
+        }
+        .count {
+          width: 104px;
+          line-height: 123px;
         }
       }
     }
