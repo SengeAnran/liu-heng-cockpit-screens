@@ -69,7 +69,8 @@ export default [
       {
         path: 'medical',
         name: '民生医疗',
-        component: BgImg,
+        // component: BgImg,
+        component: () => import('@/Apps/Overview/Medical'),
         props: {
           name: 'overview-medical.jpg',
         },
