@@ -22,14 +22,41 @@
         </div>
 
         <div class="bottom-chart">
-          <div ref="lineChart" ></div>
+          <div ref="lineChart" style="width: 100%;height: 26rem;"></div>
         </div>
+      </div>
+
+      <div class="right-area">
+        <ul class="tab-bar">
+          <li>性别年龄结构</li>
+          <li>学历结构</li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Title from './components/Title';
+import * as echarts from 'echarts/core';
+import {
+  LineChart,
+} from 'echarts/charts';
+// 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+} from 'echarts/components';
+// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
+import {
+  CanvasRenderer,
+} from 'echarts/renderers';
+
+// 注册必须的组件
+echarts.use(
+  [TitleComponent, LegendComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer],
+);
 export default {
   components: {
     Title,
@@ -53,7 +80,95 @@ export default {
           unit: '人',
         },
       ],
+      chart: null,
+      chartOpt: {
+        tooltip: {},
+        color: ['#87E086', '#B07EF7', '#6B8CE6'],
+        grid: {
+          left: '9%',
+          right: '4%',
+        },
+        legend: {
+          icon: 'rect',
+          itemWidth: 18,
+          itemHeight: 18,
+          right: 0,
+          top: 10,
+          textStyle: {
+            fontSize: 24,
+          },
+          data: [{
+            name: '发展党员',
+            textStyle: {
+              color: '#87E086',
+            },
+          }, {
+            name: '预备党员',
+            textStyle: {
+              color: '#B07EF7',
+            },
+          }, {
+            name: '正式党员',
+            textStyle: {
+              color: '#6B8CE6',
+            },
+          }],
+        },
+        xAxis: {
+          data: ['2015', '2016', '2017', '2018', '2019', '2020'],
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(151, 151, 151, .7)',
+            },
+          },
+          axisLabel: {
+            fontSize: 22,
+            color: 'rgba(255, 255, 255, .7)',
+          },
+          axisTick: {
+            alignWithLabel: true,
+            color: 'rgba(255, 255, 255, .7)',
+          },
+        },
+        yAxis: {
+          name: '人数趋势(人)',
+          nameGap: 22,
+          nameTextStyle: {
+            fontSize: 24,
+            color: 'rgba(255, 255, 255, 0.7)',
+          },
+          axisLabel: {
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: 22,
+          },
+          splitLine: {
+            lineStyle: {
+              color: 'rgba(151, 151, 151, .24)',
+            },
+          },
+        },
+        series: [{
+          name: '发展党员',
+          type: 'line',
+          data: [5, 20, 36, 10, 10, 20],
+        }, {
+          name: '预备党员',
+          type: 'line',
+          data: [20, 36, 10, 10, 20, 5],
+        }, {
+          name: '正式党员',
+          type: 'line',
+          data: [10, 10, 20, 5, 20, 36],
+        }],
+      },
     };
+  },
+  mounted() {
+    this.chart = echarts.init(this.$refs.lineChart);
+    this.chart.setOption(this.chartOpt);
+  },
+  beforeDestroy() {
+    this.chart && this.chart.dispose();
   },
 };
 </script>
@@ -115,6 +230,9 @@ export default {
           }
 
         }
+      }
+      .bottom-chart{
+        margin-top: 1.6rem;
       }
     }
     .right-area{
