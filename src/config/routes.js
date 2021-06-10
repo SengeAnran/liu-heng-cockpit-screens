@@ -284,10 +284,7 @@ export default [
       {
         path: 'party-construction',
         name: '党群建设',
-        component: BgImg,
-        props: {
-          name: 'overview-city-evolution.jpg',
-        },
+        component: () => import(/* webpackChunkName: "charm" */ '@/views/Charm/PartyConstruction'),
         meta: {
           indicator: [
             { name: '正式党员数量', value: 100, unit: '人' },
