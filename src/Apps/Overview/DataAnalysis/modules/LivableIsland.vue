@@ -1,45 +1,59 @@
 <template>
-  <div class="IndustryIsland">
-    <secondary-title name="产业之岛" />
+  <div class="LivableIsland">
+    <secondary-title name="宜居之岛" />
     <div class="container">
       <div>
         <div>
           <div class="name">
-            <p>主要农作物面积</p>
+            <p>人口</p>
           </div>
           <div class="content">
-            <p>经济作物播种面积 <span>16499亩</span></p>
-            <p>油料播种面积 <span>3853亩</span></p>
+            <p>2019年底六横户籍人口 <span>62824人</span></p>
+            <p>人口密度 <span>449人/平安公里</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>主要农作物产量</p>
+            <p>地理位置</p>
           </div>
           <div class="content">
-            <p>油料产量 <span>583.4吨</span>，棉花产量 <span>0.1吨</span></p>
-            <p>蔬菜产量 <span>7086吨</span>，水果产量 <span>11947.7吨</span></p>
-            <p>果用瓜产量 <span>3161.3吨</span>，茶叶产量 <span>2.6吨</span></p>
+            <p>地理位置 <span>北纬29。33'~29。48'，东经121。59'~122。36'。</span></p>
+          </div>
+        </div>
+        <div>
+          <div class="name">
+            <p>区域总面积</p>
+          </div>
+          <div class="content">
+            <p>全镇总面积约 <span>654平方公里</span>，其中陆地面积 <span>140 平方公里</span>，东西长约 <span>65公里</span>，南北宽约 <span>17公里</span>。</p>
           </div>
         </div>
       </div>
       <div>
         <div>
           <div class="name">
-            <p>农牧业生产情况</p>
+            <p>行政区域</p>
           </div>
           <div class="content">
-            <p>猪年末存栏 <span>10734头</span>，牛年末存栏 <span>1头</span></p>
-            <p>羊年末存栏 <span>715只</span>，家禽年末存栏 <span>27975只</span></p>
+            <p><span>35个</span> 村（社区）</p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>主要农作物产量</p>
+            <p>气候</p>
           </div>
           <div class="content">
-            <p>猪肉产量 <span>1839吨</span>，禽肉产量 <span>28.5吨</span></p>
-            <p>羊肉产量 <span>18.4吨</span>，禽蛋产量 <span>478.3吨</span></p>
+            <p>全年降雨量 <span>1741.8毫米，</span></p>
+            <p>年平均气温 <span>17.4 ℃。</span></p>
+          </div>
+        </div>
+        <div>
+          <div class="name">
+            <p>岛屿情况</p>
+          </div>
+          <div class="content">
+            <p>大小岛屿 <span>115个</span>,有人居住岛屿 <span>5个</span></p>
+            <p>海岸线长约 <span>85公里</span></p>
           </div>
         </div>
       </div>
@@ -48,7 +62,7 @@
 </template>
 
 <script>
-import SecondaryTitle from './components/SecondaryTitle';
+import SecondaryTitle from '../components/SecondaryTitle';
 export default {
   components: {
     SecondaryTitle,
@@ -75,23 +89,23 @@ export default {
       margin-right: 48px;
     }
     & > div {
-      height: 190px;
+      height: 120px;
       background: rgba(23, 41, 69, 0.25);
       border: 1px solid rgba(168, 243, 246, 0.1);
       display: flex;
       align-items: center;
       padding: 0 20px;
-      &:nth-child(-n + 1) {
-        margin-bottom: 30px;
+      &:nth-child(-n + 2) {
+        margin-bottom: 25px;
       }
     }
     .name {
       width: 361px;
       min-width: 361px;
-      height: 150px;
+      height: 80px;
       text-align: center;
       margin-right: 38px;
-      background: url(./images/card_bg_1.png) no-repeat center / cover;
+      background: url(../images/card_bg_0.png) no-repeat center / cover;
       display: flex;
       flex-direction: column;
       justify-content: center;

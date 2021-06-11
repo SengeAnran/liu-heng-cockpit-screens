@@ -1,55 +1,45 @@
 <template>
-  <div class="HubIsland">
-    <secondary-title name="中枢之岛" />
+  <div class="IndustryIsland">
+    <secondary-title name="产业之岛" />
     <div class="container">
       <div>
         <div>
           <div class="name">
-            <p>港口货物吞吐量 <span>8112.7万吨</span></p>
+            <p>主要农作物面积</p>
           </div>
           <div class="content">
-            <p>出口货运量 <span>3520.5万吨</span></p>
-            <p>进口货运量 <span>4592.2万吨</span></p>
+            <p>经济作物播种面积 <span>16499亩</span></p>
+            <p>油料播种面积 <span>3853亩</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>外贸进出口额 <span>132916万元</span></p>
+            <p>主要农作物产量</p>
           </div>
           <div class="content">
-            <p>进口总额 <span>46862万元</span></p>
-            <p>出口总额 <span>86055万元</span></p>
-          </div>
-        </div>
-        <div>
-          <div class="name">
-            <p>财政总收入 <span>129293万元</span></p>
-          </div>
-          <div class="content">
-            <p>其中公共财政收入 <span>95711万元</span></p>
+            <p>油料产量 <span>583.4吨</span>，棉花产量 <span>0.1吨</span></p>
+            <p>蔬菜产量 <span>7086吨</span>，水果产量 <span>11947.7吨</span></p>
+            <p>果用瓜产量 <span>3161.3吨</span>，茶叶产量 <span>2.6吨</span></p>
           </div>
         </div>
       </div>
       <div>
         <div>
           <div class="name">
-            <p>公共财政预算支出</p>
-            <p><span>57940万元</span></p>
+            <p>农牧业生产情况</p>
           </div>
           <div class="content">
-            <p>教育事业 <span>9440万元</span></p>
-            <p>社会保障和就业 <span>2106万元</span></p>
-            <p>城乡社区服务 <span>20421万元</span></p>
-            <p>农林水事务 <span>2251万元</span></p>
+            <p>猪年末存栏 <span>10734头</span>，牛年末存栏 <span>1头</span></p>
+            <p>羊年末存栏 <span>715只</span>，家禽年末存栏 <span>27975只</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>游客接待人数</p>
-            <p><span>300.4万人</span></p>
+            <p>主要农作物产量</p>
           </div>
           <div class="content">
-            <p>旅游收入 <span>17.4亿元</span></p>
+            <p>猪肉产量 <span>1839吨</span>，禽肉产量 <span>28.5吨</span></p>
+            <p>羊肉产量 <span>18.4吨</span>，禽蛋产量 <span>478.3吨</span></p>
           </div>
         </div>
       </div>
@@ -58,7 +48,7 @@
 </template>
 
 <script>
-import SecondaryTitle from './components/SecondaryTitle';
+import SecondaryTitle from '../components/SecondaryTitle';
 export default {
   components: {
     SecondaryTitle,
@@ -84,47 +74,31 @@ export default {
     &:nth-child(2n + 1) {
       margin-right: 48px;
     }
-    &:nth-child(2n){
-      & > div{
-        height: 190px;
-        margin-bottom: 30px;
-        &:last-child{
-          margin-bottom: 0;
-        }
-      }
-      .name{
-        height: 150px;
-        background-image: url(./images/card_bg_1.png);
-        p{
-          font-size: 30px;
-        }
-      }
-    }
     & > div {
-      height: 120px;
+      height: 190px;
       background: rgba(23, 41, 69, 0.25);
       border: 1px solid rgba(168, 243, 246, 0.1);
       display: flex;
       align-items: center;
       padding: 0 20px;
-      &:nth-child(-n + 2) {
-        margin-bottom: 25px;
+      &:nth-child(-n + 1) {
+        margin-bottom: 30px;
       }
     }
     .name {
       width: 361px;
       min-width: 361px;
-      height: 80px;
+      height: 150px;
       text-align: center;
       margin-right: 38px;
-      background: url(./images/card_bg_0.png) no-repeat center / cover;
+      background: url(../images/card_bg_1.png) no-repeat center / cover;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       p{
         margin: 0;
-        font-size: 24px;
+        font-size: 30px;
         line-height: 40px;
         font-weight: bold;
         color: #fff;

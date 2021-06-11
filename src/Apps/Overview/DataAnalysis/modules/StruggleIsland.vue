@@ -1,53 +1,52 @@
 <template>
-  <div class="CreateIsland">
-    <secondary-title name="制造之岛" />
+  <div class="StruggleIsland">
+    <secondary-title name="奋斗之岛" />
     <div class="container">
       <div>
         <div>
           <div class="name">
-            <p>工业企业数量 <span>429个</span></p>
+            <p>户籍人数 <span>62824人</span></p>
           </div>
           <div class="content">
-            <p>集体 <span>2个</span></p>
-            <p>有限责任公司 <span>47个</span></p>
-            <p>私营企业 <span>303个</span></p>
-            <p>个人独资企业 <span>77个</span></p>
+            <p>男性人数 <span>30991个</span></p>
+            <p>女性人数 <span>31833个</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>工业产值 <span>952100万元</span></p>
+            <p>劳动力资源数 <span>41586人</span></p>
           </div>
           <div class="content">
-            <p>装备制造业 <span>505899万元</span></p>
-            <p>高新技术产业 <span>284746万元</span></p>
-            <p>船舶工业 <span>493234万元</span></p>
-            <p>重工业 <span>928644万元</span></p>
-            <p>轻工业 <span>23456万元</span></p>
+            <p>男性人数 <span>22057个</span></p>
+            <p>女性人数 <span>19529个</span></p>
+          </div>
+        </div>
+        <div>
+          <div class="name">
+            <p>财政供给人员 <span>274人</span></p>
+          </div>
+          <div class="content">
+            <p>公务员 <span>93个</span>，事业编制 <span>81个</span></p>
+            <p>其他人员 <span>100个</span></p>
           </div>
         </div>
       </div>
       <div>
         <div>
           <div class="name">
-            <p>规上工业企业数量 <span>19个</span></p>
+            <p>规模工业企业水</p>
+            <p>及能源消耗情况</p>
           </div>
           <div class="content">
-            <p>有限责任公司 <span>4个</span></p>
-            <p>私营企业 <span>15个</span></p>
-          </div>
-        </div>
-        <div>
-          <div class="name">
-            <p>工业企业从业人员数</p>
-            <p><span>11752人</span></p>
-          </div>
-          <div class="content">
-            <p>集体 <span>102人</span></p>
-            <p>有限责任公司 <span>3015人</span></p>
-            <p>私营企业 <span>7820人</span></p>
-            <p>个人独资企业 <span>817人</span></p>
-            <p>其他 <span>0人</span></p>
+           <p>水 <span>1120万吨</span></p>
+           <p>原煤 <span>3829530吨</span></p>
+           <p>焦炭 <span>0吨</span></p>
+           <p>汽油 <span>323吨</span></p>
+           <p>煤油 <span>0吨</span></p>
+           <p>柴油 <span>8098吨</span></p>
+           <p>液化石油气 <span>4.7吨</span></p>
+           <p>天然气 <span>39立方米</span></p>
+           <p>电 <span>62747万度</span></p>
           </div>
         </div>
       </div>
@@ -56,7 +55,7 @@
 </template>
 
 <script>
-import SecondaryTitle from './components/SecondaryTitle';
+import SecondaryTitle from '../components/SecondaryTitle';
 export default {
   components: {
     SecondaryTitle,
@@ -82,24 +81,34 @@ export default {
     &:nth-child(2n + 1) {
       margin-right: 48px;
     }
+    &:nth-child(2n){
+      & > div{
+        height: 406px;
+        margin-bottom: 0;
+      }
+      .name{
+        height: 366px;
+        background-image: url(../images/card_bg_2.png);
+      }
+    }
     & > div {
-      height: 190px;
+      height: 120px;
       background: rgba(23, 41, 69, 0.25);
       border: 1px solid rgba(168, 243, 246, 0.1);
       display: flex;
       align-items: center;
       padding: 0 20px;
-      &:nth-child(-n + 1) {
-        margin-bottom: 30px;
+      &:nth-child(-n + 2) {
+        margin-bottom: 25px;
       }
     }
     .name {
       width: 361px;
       min-width: 361px;
-      height: 150px;
+      height: 80px;
       text-align: center;
       margin-right: 38px;
-      background: url(./images/card_bg_1.png) no-repeat center / cover;
+      background: url(../images/card_bg_0.png) no-repeat center / cover;
       display: flex;
       flex-direction: column;
       justify-content: center;

@@ -1,59 +1,59 @@
 <template>
-  <div class="LivableIsland">
-    <secondary-title name="宜居之岛" />
+  <div class="SafeIsland">
+    <secondary-title name="平安之岛" />
     <div class="container">
       <div>
         <div>
           <div class="name">
-            <p>人口</p>
+            <p>卫生机构 <span>33个</span></p>
           </div>
           <div class="content">
-            <p>2019年底六横户籍人口 <span>62824人</span></p>
-            <p>人口密度 <span>449人/平安公里</span></p>
+            <p>医院 <span>2个</span></p>
+            <p>其他 <span>31个</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>地理位置</p>
+            <p>卫生技术人员 <span>257人</span></p>
           </div>
           <div class="content">
-            <p>地理位置 <span>北纬29。33'~29。48'，东经121。59'~122。36'。</span></p>
+            <p>医生 <span>174人</span></p>
+            <p>其他 <span>83人</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>区域总面积</p>
+            <p>p社会福利院数 <span>2个</span></p>
           </div>
           <div class="content">
-            <p>全镇总面积约 <span>654平方公里</span>，其中陆地面积 <span>140 平方公里</span>，东西长约 <span>65公里</span>，南北宽约 <span>17公里</span>。</p>
+            <p>敬老院 福利院床位数 <span>224张</span></p>
+            <p>敬老院 福利院收养人数 <span>66人</span></p>
           </div>
         </div>
       </div>
       <div>
         <div>
-          <div class="name">
-            <p>行政区域</p>
-          </div>
+        <div class="name">
+          <p>互联网宽带用户</p>
+        </div>
           <div class="content">
-            <p><span>35个</span> 村（社区）</p>
+            <p><span>22750户</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>气候</p>
+            <p>网络电视用户</p>
           </div>
           <div class="content">
-            <p>全年降雨量 <span>1741.8毫米，</span></p>
-            <p>年平均气温 <span>17.4 ℃。</span></p>
+            <p><span>22750户</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>岛屿情况</p>
+            <p>数字电视用户</p>
           </div>
           <div class="content">
-            <p>大小岛屿 <span>115个</span>,有人居住岛屿 <span>5个</span></p>
-            <p>海岸线长约 <span>85公里</span></p>
+            <p><span>22750户</span></p>
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import SecondaryTitle from './components/SecondaryTitle';
+import SecondaryTitle from '../components/SecondaryTitle';
 export default {
   components: {
     SecondaryTitle,
@@ -105,7 +105,7 @@ export default {
       height: 80px;
       text-align: center;
       margin-right: 38px;
-      background: url(./images/card_bg_0.png) no-repeat center / cover;
+      background: url(../images/card_bg_0.png) no-repeat center / cover;
       display: flex;
       flex-direction: column;
       justify-content: center;
