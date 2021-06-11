@@ -225,7 +225,7 @@ export default [
       {
         path: 'project-manage',
         name: '项目管理',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/ProjectManage'),
         props: {
           name: 'overview-population.jpg',
         },
