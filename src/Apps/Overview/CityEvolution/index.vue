@@ -22,6 +22,6 @@ export default {
   width: 100%;
   height: 2070px;
   background-size: 100% 100%;
-  background-image: url('./images/bg.png');
+  // background-image: url('./images/bg.png');
 }
 </style>

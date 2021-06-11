@@ -94,6 +94,7 @@ export default {
         color: #66CCFF;
         text-align: center;
         padding-left: 5px;
+        font-family: DIN;
         .unit {
           font-size: 30px;
           color: #59DBE6;
