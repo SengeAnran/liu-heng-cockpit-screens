@@ -1,51 +1,35 @@
 <template>
-  <div class="Line-Chart" ref="lineChart"></div>
+  <div class="Bar-Chart" ref="barChart"></div>
 </template>
 
 <script>
 import * as echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/grid';
 import 'echarts/lib/component/title';
 
 export default {
-  name: 'LineChart',
+  name: 'BarChart',
   components: {},
   props: {
-    lineData: {
+    barData: {
       type: Object,
       default: () => {
-        return {
-          title: '医务人员数量分布',
-          name1: '累计死亡',
-          showArea: true,
-          lineColor11: '#f8218b',
-          lineColor12: '#ffc12c',
-          areaColor11: 'rgba(251, 47, 47, 0.3)',
-          areaColor12: 'rgba(251, 47, 47, 0)',
-          name2: '累计治愈',
-          lineColor21: '#3efb2a',
-          lineColor22: '#bdffc0',
-          areaColor21: 'rgba(110, 238, 89, 0.3)',
-          areaColor22: 'rgba(110, 238, 89, 0)',
-          xData: ['1.20', '1.21', '1.22', '1.23', '1.24', '1.25', '1.26', '1.27', '1.28', '1.29'],
-          data1: [1, 3, 5, 6, 8, 9, 12, 33, 12, 55],
-          data2: [5, 6, 7, 4, 3, 21, 2, 3, 4, 5],
-        };
+        return {};
       },
     },
   },
   data() {
     return {
-      lineChart: null,
+      barChart: null,
     };
   },
   computed: {},
   watch: {
-    lineData() {
-      this.lineChart.setOption(this.option());
+    barData() {
+      this.barChart.setOption(this.option());
     },
     deep: true,
   },
@@ -54,13 +38,12 @@ export default {
   },
   methods: {
     initChart() {
-      this.lineChart = echarts.init(this.$refs.lineChart);
-      this.lineChart.setOption(this.option());
+      this.barChart = echarts.init(this.$refs.barChart);
+      this.barChart.setOption(this.option());
     },
     option() {
-      const { title, xData, showArea, name1, name2, lineColor11, areaColor11, areaColor12, lineColor21, areaColor21, areaColor22, data1, data2 } = this.lineData;
+      const { title, xData, name1, name2, areaColor11, areaColor12, areaColor21, areaColor22, data1, data2 } = this.barData;
       const option = {
-        colors: [lineColor11, lineColor21],
         title: {
           text: title || '',
           textStyle: {
@@ -75,16 +58,12 @@ export default {
         legend: {
           top: 22,
           right: 40,
-          orient: 'vertical',
           itemWidth: 20,
           itemHeight: 20,
-          icon: 'rect',
+          orient: 'vertical',
           textStyle: {
             color: '#fff',
             fontSize: 20,
-          },
-          itemStyle: {
-            color: 'inherit',
           },
           data: [],
         },
@@ -148,44 +127,36 @@ export default {
             fontSize: 21,
             fontFamily: 'DINPro',
           },
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
         },
         series: [
           {
             name: name1,
-            type: 'line',
-            symbol: 'emptyCircle',
-            symbolSize: 2,
-            itemStyle: {
-              color: '#fff',
-            },
-            // 线条渐变
-            lineStyle: {
-              width: 3,
-              color: lineColor11,
-            },
+            type: 'bar',
             data: data1,
             label: {
               show: true,
-              position: 'top',
-              formatter: '{c}',
+              position: 'outside',
+              color: '#fff',
               fontSize: 20,
               fontFamily: 'DINPro',
-              color: '#fff',
             },
-            emphasis: {
-              label: {
-                show: true,
-                position: 'top',
-                formatter: '{c}',
-                fontSize: 20,
-                fontFamily: 'DINPro',
-                color: '#fff',
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: areaColor11,
+                  },
+                  {
+                    offset: 1,
+                    color: areaColor12,
+                  },
+                ],
               },
             },
           },
@@ -195,41 +166,16 @@ export default {
         option.legend.data = [name1, name2];
         option.series.push({
           name: name2,
-          type: 'line',
-          symbol: 'emptyCircle',
-          symbolSize: 2,
-          itemStyle: {
-            color: '#fff',
-          },
-          lineStyle: {
-            width: 3,
-            color: lineColor21,
-          },
+          type: 'bar',
+          data: data2,
           label: {
             show: true,
-            position: 'top',
-            formatter: '{c}',
+            position: 'outside',
+            color: '#fff',
             fontSize: 20,
             fontFamily: 'DINPro',
-            color: '#fff',
           },
-          data: data2,
-          emphasis: {
-            label: {
-              show: false,
-              position: 'top',
-              formatter: '{c}',
-              fontSize: 16,
-              fontFamily: 'DINPro',
-              color: '#fff',
-            },
-          },
-        });
-      }
-      if (showArea) {
-        // 阴影渐变
-        option.series.map((item, i) => {
-          item.areaStyle = {
+          itemStyle: {
             color: {
               type: 'linear',
               x: 0,
@@ -239,15 +185,15 @@ export default {
               colorStops: [
                 {
                   offset: 0,
-                  color: i === 0 ? areaColor11 : areaColor21,
+                  color: areaColor21,
                 },
                 {
                   offset: 1,
-                  color: i === 0 ? areaColor12 : areaColor22,
+                  color: areaColor22,
                 },
               ],
             },
-          };
+          },
         });
       }
       return option;
@@ -256,7 +202,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.Line-Chart{
+.Bar-Chart{
   width: 100%;
   height: 100%;
 }

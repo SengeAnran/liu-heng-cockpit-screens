@@ -22,9 +22,11 @@
             </div>
           </div>
         </div>
-        <div class="sub-title "
-             style="padding:20px 0">医务人员数量分布</div>
-        <div class="chart">1</div>
+        <!-- <div class="sub-title "
+             style="padding:20px 0">医务人员数量分布</div> -->
+        <div class="chart">
+          <BarChart :bar-data="barData"/>
+        </div>
         <div class="chart">2</div>
       </div>
       <div class="left-right">
@@ -37,8 +39,8 @@
             <div class="count">{{item.count}}</div>
           </div>
         </div>
-        <div class="sub-title "
-             style="padding:20px 0">截至2020年，医务人数增加230人</div>
+        <!-- <div class="sub-title "
+             style="padding:20px 0">截至2020年，医务人数增加230人</div> -->
         <div class="chart"><LineChart :line-data="lineData"/></div>
         <div class="chart">2</div>
       </div>
@@ -49,9 +51,10 @@
 <script>
 import BaseTitle from './components/BaseTitle';
 import LineChart from './components/LineChart';
+import BarChart from './components/BarChart';
 export default {
   name: 'MedicalLeft',
-  components: { BaseTitle, LineChart },
+  components: { BaseTitle, LineChart, BarChart },
   data() {
     return {
       descList: [
@@ -85,13 +88,26 @@ export default {
         },
       ],
       lineData: {
-        title: '',
+        title: '截至2020年，医务人数增加230人',
         name1: '医务人员数量分布',
-        lineColor11: 'rgba(89, 219, 230, 1)',
-        areaColor11: 'rgba(89, 219, 230, 1)',
-        areaColor12: 'rgba(89, 219, 230, .3)',
-        xData: ['1.20', '1.21', '1.22', '1.23', '1.24', '1.25', '1.26', '1.27', '1.28', '1.29'],
-        data1: [1, 3, 5, 6, 8, 9, 12, 33, 12, 55],
+        lineColor11: 'rgba(123, 162, 252, 1)',
+        areaColor11: 'rgba(123, 162, 252, .6)',
+        areaColor12: 'rgba(123, 162, 252, .1)',
+        showArea: true,
+        xData: [2015, 2016, 2017, 2018, 2019, 2020, 2021],
+        data1: [1, 3, 5, 6, 8, 9, 12],
+      },
+      barData: {
+        title: '医务人员数量分布',
+        name1: '医生数量',
+        name2: '护士数量',
+        areaColor11: 'rgba(133, 234, 255, 1)',
+        areaColor12: 'rgba(133, 234, 255, .3)',
+        xData: ['内科', '外科', '妇科', '儿科', '检验科', '急诊', '口腔科'],
+        data1: [1, 3, 5, 6, 8, 9, 12],
+        data2: [1, 13, 5, 16, 8, 29, 12],
+        areaColor21: 'rgba(255, 198, 151, 1)',
+        areaColor22: 'rgba(255, 198, 151, .3)',
       },
     };
   },
@@ -117,7 +133,7 @@ export default {
     margin-right: 22px;
     .chart{
       width: 100%;
-      height: 332px;
+      height: 350px;
     }
   }
   .sub-title {

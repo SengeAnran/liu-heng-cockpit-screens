@@ -1,5 +1,5 @@
 <template>
-  <div class="BaseTitle" :style="{width:width+'px'}">
+  <div class="BaseTitle" :style="{width:width+'px',top:top+'px'}">
     {{title}}</div>
 </template>
 
@@ -14,6 +14,10 @@ export default {
     width: {
       type: Number,
       default: () => 1650,
+    },
+    top: {
+      type: Number,
+      default: () => 0,
     },
   },
   components: {},
