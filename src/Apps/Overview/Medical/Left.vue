@@ -25,9 +25,11 @@
         <!-- <div class="sub-title "
              style="padding:20px 0">医务人员数量分布</div> -->
         <div class="chart">
-          <BarChart :bar-data="barData"/>
+          <BarChart :bar-data="barData" />
         </div>
-        <div class="chart">2</div>
+        <div class="chart">
+          <PieChart :data="pieAgeData" legendType="pec" title="医务人员工龄结构" />
+        </div>
       </div>
       <div class="left-right">
         <div class="sub-title">医师数量分析</div>
@@ -42,7 +44,9 @@
         <!-- <div class="sub-title "
              style="padding:20px 0">截至2020年，医务人数增加230人</div> -->
         <div class="chart"><LineChart :line-data="lineData"/></div>
-        <div class="chart">2</div>
+        <div class="chart">
+          <PieChart :data="pieEducateData" legendType="pec" title="医务人员学历结构" />
+        </div>
       </div>
     </div>
   </div>
@@ -52,9 +56,10 @@
 import BaseTitle from './components/BaseTitle';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
+import PieChart from './components/PieChart';
 export default {
   name: 'MedicalLeft',
-  components: { BaseTitle, LineChart, BarChart },
+  components: { BaseTitle, LineChart, BarChart, PieChart },
   data() {
     return {
       descList: [
@@ -109,6 +114,16 @@ export default {
         areaColor21: 'rgba(255, 198, 151, 1)',
         areaColor22: 'rgba(255, 198, 151, .3)',
       },
+      pieAgeData: [{ name: '3年以下', value: 10 },
+        { name: '3-5年', value: 20 },
+        { name: '5-10年', value: 30 },
+        { name: '10年以上', value: 40 },
+      ],
+      pieEducateData: [
+        { name: '大专', value: 10 },
+        { name: '本科', value: 20 },
+        { name: '研究生', value: 30 },
+      ],
     };
   },
   computed: {},
@@ -133,7 +148,7 @@ export default {
     margin-right: 22px;
     .chart{
       width: 100%;
-      height: 350px;
+      height: 360px;
     }
   }
   .sub-title {

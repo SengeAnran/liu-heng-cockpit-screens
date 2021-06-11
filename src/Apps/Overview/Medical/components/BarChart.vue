@@ -140,6 +140,7 @@ export default {
               fontSize: 20,
               fontFamily: 'DINPro',
             },
+            barWidth: 16,
             itemStyle: {
               color: {
                 type: 'linear',
@@ -175,6 +176,7 @@ export default {
             fontSize: 20,
             fontFamily: 'DINPro',
           },
+          barWidth: 16,
           itemStyle: {
             color: {
               type: 'linear',
