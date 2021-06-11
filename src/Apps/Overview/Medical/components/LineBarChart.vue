@@ -143,7 +143,6 @@ export default {
             fontSize: 21,
             fontFamily: 'DINPro',
             formatter: function (value, index) {
-              console.log(value, index);
               return value + (index !== 0 ? '% /' : '');
             },
           },
@@ -177,10 +176,6 @@ export default {
             color: 'rgba(225,225,225,.7)',
             fontSize: 21,
             fontFamily: 'DINPro',
-            // formatter: function (value, index) {
-            //   console.log(value, index);
-            //   return value + (index !== 0 ? '/' : '');
-            // },
           },
           axisLine: {
             show: false,

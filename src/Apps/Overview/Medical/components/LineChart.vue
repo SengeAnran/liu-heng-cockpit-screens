@@ -95,11 +95,12 @@ export default {
           containLabel: true,
         },
         tooltip: {
+          show: true,
           trigger: 'axis',
-          axisPointer: {
-            lineStyle: {
-            },
-          },
+          // axisPointer: {
+          //   lineStyle: {
+          //   },
+          // },
         },
         xAxis: {
           type: 'category',
