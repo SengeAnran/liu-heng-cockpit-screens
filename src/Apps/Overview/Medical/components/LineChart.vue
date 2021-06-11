@@ -95,11 +95,12 @@ export default {
           containLabel: true,
         },
         tooltip: {
+          show: true,
           trigger: 'axis',
-          axisPointer: {
-            lineStyle: {
-            },
-          },
+          // axisPointer: {
+          //   lineStyle: {
+          //   },
+          // },
         },
         xAxis: {
           type: 'category',
@@ -162,7 +163,7 @@ export default {
             symbol: 'emptyCircle',
             symbolSize: 2,
             itemStyle: {
-              color: '#fff',
+              color: lineColor11,
             },
             // 线条渐变
             lineStyle: {
@@ -199,11 +200,10 @@ export default {
           symbol: 'emptyCircle',
           symbolSize: 2,
           itemStyle: {
-            color: '#fff',
+            color: lineColor21,
           },
           lineStyle: {
             width: 3,
-            color: lineColor21,
           },
           label: {
             show: true,

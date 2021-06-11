@@ -115,10 +115,7 @@ export default [
       {
         path: 'data-analysis',
         name: '数据分析',
-        component: BgImg,
-        props: {
-          name: 'overview-data-analysis.jpg',
-        },
+        component: () => import('@/Apps/Overview/DataAnalysis'),
         meta: {
           indicator: [
             { name: '三产结构比例', value: '7.4:56.8:35.8', unit: '' },
@@ -231,7 +228,7 @@ export default [
       {
         path: 'project-manage',
         name: '项目管理',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/ProjectManage'),
         props: {
           name: 'overview-population.jpg',
         },
