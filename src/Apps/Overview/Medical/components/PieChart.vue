@@ -83,8 +83,7 @@ export default {
               a: {
                 fontSize: 29,
                 fontFamily: 'Source Han Sans SC',
-                // padding: [0, 36, 0, 14],
-                width: 120,
+                width: 180,
               },
               b: {
                 fontSize: 29,

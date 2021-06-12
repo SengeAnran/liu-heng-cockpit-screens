@@ -1,6 +1,8 @@
 <template>
   <div class="BaseTitle" :style="{width:width+'px',top:top+'px'}">
-    {{title}}</div>
+    {{title}}
+    <slot/>
+    </div>
 </template>
 
 <script>

@@ -45,7 +45,7 @@
              style="padding:20px 0">截至2020年，医务人数增加230人</div> -->
         <div class="chart"><LineChart :line-data="lineData"/></div>
         <div class="chart">
-          <PieChart :data="pieEducateData" legendType="pec" title="医务人员学历结构" />
+          <PieChart :data="pieEducateData" legendType="pec" title="医务人员学历结构" :chartStyle="{scale:[2.3,2.2],position:['5.6%','5.98%']}"/>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@ export default {
         areaColor12: 'rgba(123, 162, 252, .1)',
         showArea: true,
         xData: [2015, 2016, 2017, 2018, 2019, 2020, 2021],
-        data1: [1, 3, 5, 6, 8, 9, 12],
+        data1: [1, 3, 5, -6, 8, 9, 12],
       },
       barData: {
         title: '医务人员数量分布',
