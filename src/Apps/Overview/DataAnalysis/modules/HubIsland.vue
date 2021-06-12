@@ -1,59 +1,55 @@
 <template>
-  <div class="SafeIsland">
-    <secondary-title name="平安之岛" />
+  <div class="HubIsland">
+    <secondary-title name="中枢之岛" />
     <div class="container">
       <div>
         <div>
           <div class="name">
-            <p>卫生机构 <span>33个</span></p>
+            <p>港口货物吞吐量 <span>8112.7万吨</span></p>
           </div>
           <div class="content">
-            <p>医院 <span>2个</span></p>
-            <p>其他 <span>31个</span></p>
+            <p>出口货运量 <span>3520.5万吨</span></p>
+            <p>进口货运量 <span>4592.2万吨</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>卫生技术人员 <span>257人</span></p>
+            <p>外贸进出口额 <span>132916万元</span></p>
           </div>
           <div class="content">
-            <p>医生 <span>174人</span></p>
-            <p>其他 <span>83人</span></p>
+            <p>进口总额 <span>46862万元</span></p>
+            <p>出口总额 <span>86055万元</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>p社会福利院数 <span>2个</span></p>
+            <p>财政总收入 <span>129293万元</span></p>
           </div>
           <div class="content">
-            <p>敬老院 福利院床位数 <span>224张</span></p>
-            <p>敬老院 福利院收养人数 <span>66人</span></p>
+            <p>其中公共财政收入 <span>95711万元</span></p>
           </div>
         </div>
       </div>
       <div>
         <div>
-        <div class="name">
-          <p>互联网宽带用户</p>
-        </div>
+          <div class="name">
+            <p>公共财政预算支出</p>
+            <p><span>57940万元</span></p>
+          </div>
           <div class="content">
-            <p><span>22750户</span></p>
+            <p>教育事业 <span>9440万元</span></p>
+            <p>社会保障和就业 <span>2106万元</span></p>
+            <p>城乡社区服务 <span>20421万元</span></p>
+            <p>农林水事务 <span>2251万元</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>网络电视用户</p>
+            <p>游客接待人数</p>
+            <p><span>300.4万人</span></p>
           </div>
           <div class="content">
-            <p><span>22750户</span></p>
-          </div>
-        </div>
-        <div>
-          <div class="name">
-            <p>数字电视用户</p>
-          </div>
-          <div class="content">
-            <p><span>22750户</span></p>
+            <p>旅游收入 <span>17.4亿元</span></p>
           </div>
         </div>
       </div>
@@ -62,7 +58,7 @@
 </template>
 
 <script>
-import SecondaryTitle from './components/SecondaryTitle';
+import SecondaryTitle from '../components/SecondaryTitle';
 export default {
   components: {
     SecondaryTitle,
@@ -88,6 +84,22 @@ export default {
     &:nth-child(2n + 1) {
       margin-right: 48px;
     }
+    &:nth-child(2n){
+      & > div{
+        height: 190px;
+        margin-bottom: 30px;
+        &:last-child{
+          margin-bottom: 0;
+        }
+      }
+      .name{
+        height: 150px;
+        background-image: url(../images/card_bg_1.png);
+        p{
+          font-size: 30px;
+        }
+      }
+    }
     & > div {
       height: 120px;
       background: rgba(23, 41, 69, 0.25);
@@ -105,14 +117,14 @@ export default {
       height: 80px;
       text-align: center;
       margin-right: 38px;
-      background: url(./images/card_bg_0.png) no-repeat center / cover;
+      background: url(../images/card_bg_0.png) no-repeat center / cover;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       p{
         margin: 0;
-        font-size: 30px;
+        font-size: 24px;
         line-height: 40px;
         font-weight: bold;
         color: #fff;

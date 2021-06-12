@@ -1,15 +1,24 @@
 <template>
   <div class="right_component">
     <AreaLocation />
+    <CommunityArea />
+    <AverageValue />
+    <CycleCharts />
   </div>
 </template>
 
 <script>
 import AreaLocation from './component/AreaLocation';
+import CommunityArea from './component/CommunityArea';
+import AverageValue from './component/AverageValue';
+import CycleCharts from './component/CycleCharts';
 export default {
   name: 'RightComponents',
   components: {
     AreaLocation,
+    CommunityArea,
+    AverageValue,
+    CycleCharts,
   },
 };
 </script>

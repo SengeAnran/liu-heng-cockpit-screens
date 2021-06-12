@@ -1,15 +1,24 @@
 <template>
   <div class="left_componemt">
-    <PeopleCompose />
+    <PeopleComposeIndex />
+    <CommunityAddress />
+    <PeopleComposeCharts />
+    <PeopleAgeSex />
   </div>
 </template>
 
 <script>
-import PeopleCompose from './component/PeopleCompose';
+import PeopleComposeIndex from './component/PeopleComposeIndex';
+import PeopleComposeCharts from './component/PeopleComposeCharts';
+import CommunityAddress from './component/CommunityAddress';
+import PeopleAgeSex from './component/PeopleAgeSex';
 export default {
   name: 'LeftComponents',
   components: {
-    PeopleCompose,
+    PeopleComposeIndex,
+    PeopleComposeCharts,
+    CommunityAddress,
+    PeopleAgeSex,
   },
 };
 </script>

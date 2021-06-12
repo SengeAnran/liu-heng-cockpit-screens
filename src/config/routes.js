@@ -100,10 +100,7 @@ export default [
       {
         path: 'innovation',
         name: '创新转型',
-        component: BgImg,
-        props: {
-          name: 'overview-innovation.jpg',
-        },
+        component: () => import('@/Apps/Overview/Innovation'),
         meta: {
           indicator: [
             { name: '发明专利数量', value: 28, unit: '项' },

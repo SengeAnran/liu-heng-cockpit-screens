@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import LivableIsland from './LivableIsland';
-import IndustryIsland from './IndustryIsland';
-import StruggleIsland from './StruggleIsland';
-import SafeIsland from './SafeIsland';
-import HubIsland from './HubIsland';
-import CreateIsland from './CreateIsland';
+import LivableIsland from './modules/LivableIsland';
+import IndustryIsland from './modules/IndustryIsland';
+import StruggleIsland from './modules/StruggleIsland';
+import SafeIsland from './modules/SafeIsland';
+import HubIsland from './modules/HubIsland';
+import CreateIsland from './modules/CreateIsland';
 
 export default {
   name: 'DataAnalysis',
