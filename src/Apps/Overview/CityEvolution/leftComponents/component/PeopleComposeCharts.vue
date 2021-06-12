@@ -39,7 +39,7 @@ export default {
         xAxisData.push(temp);
       }
       // 全区增幅
-      const data1 = [114, 13, 24, 9.78, 180, 40, 51, 3.15, 45, 78, 66, 44];
+      const data1 = [114, 13, 24, 9.78, 450, 40, 51, 3.15, 45, 78, 66, 44];
       // 全市增幅
       const data2 = [10, 40, 51, 3.15, 114, 13, 24, 114, 13, 24, 22, 56];
       const option = {
@@ -122,7 +122,7 @@ export default {
           },
         },
         legend: {
-          data: ['全区增幅', '全市增幅'],
+          data: ['出生人数', '死亡人数'],
           right: 30,
           textStyle: {
             color: '#FFFFFF',
