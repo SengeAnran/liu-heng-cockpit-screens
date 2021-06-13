@@ -227,7 +227,7 @@ export default [
         name: '项目管理',
         component: () => import('@/Apps/Strength/ProjectManage'),
         props: {
-          name: 'overview-population.jpg',
+          // name: 'overview-population.jpg',
         },
         meta: {
           indicator: [

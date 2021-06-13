@@ -33,19 +33,26 @@
       <BaseTitle title="项目列表"
                  :width="750" />
 
-      <div class="lunbo" @mouseenter="mouseEnter" @mouseleave="mouseleave">
+      <div class="lunbo"
+           @mouseenter="mouseEnter"
+           @mouseleave="mouseleave">
+        <div class="titles">
+          <div>
+            <span v-for="item in swiperTitle"
+                  :key="item">{{item}}</span>
+          </div>
+        </div>
         <swiper ref="mySwiper"
                 :options="swiperOption">
           <swiper-slider v-for="(item, index) in list"
                          :key="`item-${index}`">
-            <!-- <img :src="item.image" alt="" /> -->
             <div>
-              <div>
-                <span>{{ item.type }}</span>
-                <span>{{ item.time }}</span>
-              </div>
-              <div>
-                <div :class="['detail', `detail-${index+1}`]">{{ item.detail }}</div>
+              <div class="inner-div">
+                <span>{{ item.name }}</span>
+                <span>{{ item.dept }}</span>
+                <span>{{ item.startTimt }}</span>
+                <span>{{ item.endTime }}</span>
+                <span>{{ item.money }}</span>
               </div>
             </div>
           </swiper-slider>
@@ -66,51 +73,111 @@ export default {
   components: { BaseTitle, MyCountUp, YYLineBarChart, swiper, SwiperSlider },
   data() {
     return {
+      swiperTitle: ['项目名称', '牵头单位', '拟开工时间', '拟结束时间', '投资额'],
       list: [
         {
-          type: '萧山区邵钧时被诈骗案',
-          time: '2020.09.25',
-          // image: img2,
-          detail:
-            '2020年9月25日，萧山',
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
         }, {
-          type: '萧山区邵钧时被诈骗案',
-          time: '2020.09.25',
-          // image: img2,
-          detail:
-            '2020年9月25日，萧山',
-        }, {
-          type: '萧山区邵钧时被诈骗案',
-          time: '2020.09.25',
-          // image: img2,
-          detail:
-            '2020年9月25日，萧山',
-        }, {
-          type: '萧山区邵钧时被诈骗案',
-          time: '2020.09.25',
-          // image: img2,
-          detail:
-            '2020年9月25日，萧山',
-        }, {
-          type: '萧山区邵钧时被诈骗案',
-          time: '2020.09.25',
-          // image: img2,
-          detail:
-            '2020年9月25日，萧山',
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
+        },
+        {
+          name: '六横人民广场',
+          dept: '六横镇政府',
+          startTimt: '2020-05-10',
+          endTime: '2025-05-10',
+          money: '450万',
         },
       ],
       swiperOption: {
         direction: 'vertical',
-        speed: 3000,
+        speed: 1000,
+        slidesPerView: 9,
+        spaceBetween: 20,
         loop: true,
-        grabCursor: true, // 鼠标hover 变成手掌效果
+        grabCursor: true,
         autoplay: {
-          delay: 1000,
+          delay: 1500,
           disableOnInteraction: false,
         },
         // autoplay: true,
-        slidesPerView: 3,
-        spaceBetween: 15,
       },
       lineBarDataBussiness: {
         title: '项目行业分布',
@@ -144,25 +211,28 @@ export default {
   },
   computed: {
     swiper() {
-      console.log(this.$refs.mySwiper);
       return this.$refs.mySwiper.swiper;
     },
   },
   mounted() {
-    if (this.list.length < 4) {
+    if (this.list.length < 10) {
       this.swiper.autoplay = false;
     }
     this.$refs.mySwiper.options.autoplay = true;
   },
   methods: {
     mouseEnter() {
-      if (this.list.length < 4) { return; }
-      console.log(this.$refs.mySwiper);
+      if (this.list.length < 10) {
+        return;
+      }
+      // console.log(this.$refs.mySwiper);
       // this.swiper.autoplay.stop();
       this.$refs.mySwiper.options.autoplay = false;
     },
     mouseleave() {
-      if (this.list.length < 4) { return; }
+      if (this.list.length < 10) {
+        return;
+      }
       // this.swiper.autoplay.start();
       this.$refs.mySwiper.options.autoplay = true;
     },
@@ -186,6 +256,9 @@ export default {
   z-index: 999;
   > div {
     width: 50%;
+    &:nth-child(2) {
+      margin-left: 40px;
+    }
     .desc {
       margin-top: 63px;
       p {
@@ -243,98 +316,97 @@ export default {
     .lunbo {
       position: absolute;
       top: 83px;
+      width: 50%;
+      height: calc(100% - 83px);
+
+      .titles {
+        width: 793px;
+        height: 75px;
+        background: url('./images/list-bg.png') no-repeat 100% 100%;
+        > div {
+          height: 75px;
+          line-height: 75px;
+          font-size: 29px;
+          font-family: Source Han Sans SC;
+          font-weight: 500;
+          color: #ffffff;
+          padding: 0 32px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          span {
+            &:nth-child(1) {
+              width: 24%;
+            }
+            &:nth-child(2) {
+              width: 20%;
+            }
+            &:nth-child(3) {
+              width: 22%;
+            }
+            &:nth-child(4) {
+              width: 22%;
+            }
+            &:nth-child(5) {
+              width: 12%;
+            }
+          }
+        }
+      }
     }
   }
 }
 .swiper-container {
-    width: 594px;
-    height: 717px;
-    position: absolute;
-    // border: 1px solid red;
-    top: 135px;
-    left: 35px;
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  .swiper-slide {
+    width: 793px;
+    height: 75px !important;
+    background: url('./images/list-bg.png') no-repeat 100% 100%;
+    display: flex;
+    align-items: center;
+    font-size: 26px;
     box-sizing: border-box;
-
-    .swiper-slide {
+    .inner-div {
       width: 100%;
-      height: 229px;
-      background: url("./images/list-bg.png") no-repeat;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: Source Han Sans SC;
+      font-weight: 500;
+      color: #78d2ff;
+      padding: 0 32px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      box-sizing: border-box;
-      padding: 10px;
-
-      img {
-        width: 250px;
-        height: 200px;
-      }
-
-      > div {
-        width: 340px;
-        height: 229px;
-        font-size: 18px;
-        padding: 10px;
-        box-sizing: border-box;
-
-        > div:first-child {
-          width: 100%;
-          height: 45px;
-          position: relative;
-          left: -10px;
-          &::before {
-            content: "";
-            width: 33px;
-            height: 45px;
-            background: url("./images/list-bg.png");
-            position: absolute;
-            // left: 0;
-            // top: 0;
-          }
-          >span{
-            line-height: 45px;
-            position: absolute;
-          }
-          >span:first-child{
-            left: 30px;
-          }
-          >span:last-child{
-            color: #faec75;
-            font-style: italic;
-            right: -15px;
-          }
+      align-items: center;
+      span {
+        &:nth-child(1) {
+          width: 24%;
         }
-        > div:last-child {
-          width: 100%;
-          height: 160px;
-          overflow: hidden;
-          .detail {
-            padding-left: 5px;
-            font-size: 15.5px;
-            text-indent: 2em;
-          }
-          .detail-1 {
-            /*animation: detailRoll 12s 3s linear infinite;*/
-          }
-          .detail-2 {
-            animation: detailRoll 8s 3s linear infinite;
-          }
-          // overflow-y: auto;
-          // ::-webkit-scrollbar {
-          //   width: 6px;
-          //   height: 6px;
-          //   background-color: red;
-          // }
+        &:nth-child(2) {
+          width: 20%;
+        }
+        &:nth-child(3) {
+          width: 22%;
+        }
+        &:nth-child(4) {
+          width: 22%;
+        }
+        &:nth-child(5) {
+          width: 12%;
         }
       }
     }
   }
+}
 @keyframes detailRoll {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-20%);
-    }
+  0% {
+    transform: translateY(0);
   }
+  100% {
+    transform: translateY(-20%);
+  }
+}
 </style>

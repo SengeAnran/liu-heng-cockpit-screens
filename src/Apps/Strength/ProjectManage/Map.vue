@@ -12,7 +12,7 @@ export default {
 .ProjectManageMap{
   width: 100%;
   height: 100%;
-  background: url('./images/pm-map-bg.png') no-repeat 100% 100%;
+  // background: url('./images/pm-map-bg.png') no-repeat 100% 100%;
   background-position: center;
   position: absolute;
   top: 0;
