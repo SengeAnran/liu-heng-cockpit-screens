@@ -108,7 +108,7 @@ export default {
           delay: 1000,
           disableOnInteraction: false,
         },
-        // autoplay: false,
+        // autoplay: true,
         slidesPerView: 3,
         spaceBetween: 15,
       },
@@ -144,6 +144,7 @@ export default {
   },
   computed: {
     swiper() {
+      console.log(this.$refs.mySwiper);
       return this.$refs.mySwiper.swiper;
     },
   },
@@ -151,15 +152,19 @@ export default {
     if (this.list.length < 4) {
       this.swiper.autoplay = false;
     }
+    this.$refs.mySwiper.options.autoplay = true;
   },
   methods: {
     mouseEnter() {
       if (this.list.length < 4) { return; }
-      this.swiper.autoplay.stop();
+      console.log(this.$refs.mySwiper);
+      // this.swiper.autoplay.stop();
+      this.$refs.mySwiper.options.autoplay = false;
     },
     mouseleave() {
       if (this.list.length < 4) { return; }
-      this.swiper.autoplay.start();
+      // this.swiper.autoplay.start();
+      this.$refs.mySwiper.options.autoplay = true;
     },
   },
 };
