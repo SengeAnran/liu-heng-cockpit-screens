@@ -24,10 +24,7 @@ export default [
       {
         path: 'population',
         name: '人口一张图',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Overview/PopulationMap'),
         meta: {
           indicator: [
             { name: '户籍人口', value: 62824, unit: '人' },
