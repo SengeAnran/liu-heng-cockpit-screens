@@ -207,7 +207,7 @@ export default [
       {
         path: 'govern-serve',
         name: '政务服务',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/GovernServe'),
         props: {
           name: 'overview-city-evolution.jpg',
         },
