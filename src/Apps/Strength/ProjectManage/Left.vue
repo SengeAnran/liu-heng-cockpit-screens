@@ -170,7 +170,7 @@ export default {
         direction: 'vertical',
         speed: 1000,
         slidesPerView: 9,
-        spaceBetween: 20,
+        spaceBetween: 0,
         loop: true,
         grabCursor: true,
         autoplay: {
@@ -218,23 +218,19 @@ export default {
     if (this.list.length < 10) {
       this.swiper.autoplay = false;
     }
-    this.$refs.mySwiper.options.autoplay = true;
   },
   methods: {
     mouseEnter() {
       if (this.list.length < 10) {
         return;
       }
-      // console.log(this.$refs.mySwiper);
-      // this.swiper.autoplay.stop();
-      this.$refs.mySwiper.options.autoplay = false;
+      this.swiper.autoplay.stop();
     },
     mouseleave() {
       if (this.list.length < 10) {
         return;
       }
-      // this.swiper.autoplay.start();
-      this.$refs.mySwiper.options.autoplay = true;
+      this.swiper.autoplay.start();
     },
   },
 };
@@ -359,10 +355,8 @@ export default {
 .swiper-container {
   width: 100%;
   height: 100%;
-  margin-top: 10px;
   .swiper-slide {
-    width: 793px;
-    height: 75px !important;
+    width: 795px;
     background: url('./images/list-bg.png') no-repeat 100% 100%;
     display: flex;
     align-items: center;
@@ -382,6 +376,8 @@ export default {
       justify-content: space-between;
       align-items: center;
       span {
+        height: 75px;
+          line-height: 100px;
         &:nth-child(1) {
           width: 24%;
         }
