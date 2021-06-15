@@ -36,10 +36,7 @@ export default [
       {
         path: 'construction',
         name: '平安建设',
-        component: BgImg,
-        props: {
-          name: 'overview-construction.jpg',
-        },
+        component: () => import('@/Apps/Overview/PeaceSecurity'),
         meta: {
           indicator: [
             { name: '执法次数', value: 1000, unit: '次' },
