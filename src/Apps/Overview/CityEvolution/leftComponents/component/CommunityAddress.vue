@@ -177,8 +177,6 @@ export default {
   left: 0;
   padding-top: 20px;
   padding-left: 20px;
-  // opacity: 0.9;
-  // background: #ED7F64;
   box-sizing: border-box;
   .item_wrapper {
     margin-top: 65px;
@@ -191,7 +189,6 @@ export default {
       height: 460px;
       width: 100%;
       box-sizing: border-box;
-      // background: red;
     }
   }
 }

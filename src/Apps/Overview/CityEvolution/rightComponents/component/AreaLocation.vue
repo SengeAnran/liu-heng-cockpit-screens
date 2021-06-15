@@ -7,7 +7,7 @@
           全镇面积
         </div>
         <div class="count">
-          118.8
+          654
         </div>
         <div class="unit">
           平方千米
@@ -18,7 +18,7 @@
           行政辖区面积
         </div>
         <div class="count administration_title">
-          118.8
+          140
         </div>
         <div class="unit administration_unit">
           平方千米
@@ -29,7 +29,7 @@
           海域面积
         </div>
         <div class="count seal_title">
-          118.8
+          514
         </div>
         <div class="unit seal_unit">
           平方千米
