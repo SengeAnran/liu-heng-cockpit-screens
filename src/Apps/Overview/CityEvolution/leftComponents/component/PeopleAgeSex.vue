@@ -212,7 +212,7 @@ export default {
             },
           },
           axisLabel: {
-            color: '#FFFFFF',
+            color: 'rgba(0, 0, 0, 0)',
             margin: 10,
             textStyle: {
               fontSize: 22,
@@ -311,7 +311,7 @@ export default {
         left: 0;
         width: 55%;
         display: inline-block;
-        background: black;
+        // background: black;
         z-index: 9999;
         .left_charts {
           display: inline-block;

@@ -48,7 +48,7 @@ export default [
       {
         path: 'education',
         name: '民生教育',
-        component: BgImg,
+        component: () => import('@/Apps/Overview/Education'),
         props: {
           name: 'overview-education.jpg',
         },
