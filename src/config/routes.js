@@ -24,10 +24,7 @@ export default [
       {
         path: 'population',
         name: '人口一张图',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Overview/PopulationMap'),
         meta: {
           indicator: [
             { name: '户籍人口', value: 62824, unit: '人' },
@@ -39,10 +36,7 @@ export default [
       {
         path: 'construction',
         name: '平安建设',
-        component: BgImg,
-        props: {
-          name: 'overview-construction.jpg',
-        },
+        component: () => import('@/Apps/Overview/PeaceSecurity'),
         meta: {
           indicator: [
             { name: '执法次数', value: 1000, unit: '次' },
@@ -54,7 +48,7 @@ export default [
       {
         path: 'education',
         name: '民生教育',
-        component: BgImg,
+        component: () => import('@/Apps/Overview/Education'),
         props: {
           name: 'overview-education.jpg',
         },
@@ -69,7 +63,8 @@ export default [
       {
         path: 'medical',
         name: '民生医疗',
-        component: BgImg,
+        // component: BgImg,
+        component: () => import('@/Apps/Overview/Medical'),
         props: {
           name: 'overview-medical.jpg',
         },
@@ -99,10 +94,7 @@ export default [
       {
         path: 'innovation',
         name: '创新转型',
-        component: BgImg,
-        props: {
-          name: 'overview-innovation.jpg',
-        },
+        component: () => import('@/Apps/Overview/Innovation'),
         meta: {
           indicator: [
             { name: '发明专利数量', value: 28, unit: '项' },
@@ -114,10 +106,7 @@ export default [
       {
         path: 'data-analysis',
         name: '数据分析',
-        component: BgImg,
-        props: {
-          name: 'overview-data-analysis.jpg',
-        },
+        component: () => import('@/Apps/Overview/DataAnalysis'),
         meta: {
           indicator: [
             { name: '三产结构比例', value: '7.4:56.8:35.8', unit: '' },
@@ -215,7 +204,7 @@ export default [
       {
         path: 'govern-serve',
         name: '政务服务',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/GovernServe'),
         props: {
           name: 'overview-city-evolution.jpg',
         },
@@ -230,9 +219,9 @@ export default [
       {
         path: 'project-manage',
         name: '项目管理',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/ProjectManage'),
         props: {
-          name: 'overview-population.jpg',
+          // name: 'overview-population.jpg',
         },
         meta: {
           indicator: [

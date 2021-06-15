@@ -18,3 +18,39 @@
   font-weight: bold;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'SourceHanSansSC';
+  src: url("./fonts/SourceHanSansCN-Regular.eot") format('embedded-opentype'),
+  url("./fonts/SourceHanSansCN-Regular.svg") format('svg'),
+  url("./fonts/SourceHanSansCN-Regular.ttf") format('truetype'),
+  url("./fonts/SourceHanSansCN-Regular.woff") format('woff');
+}
+
+@font-face {
+  font-family: 'SourceHanSansSC Bold';
+  src: url('./fonts/SourceHanSansCN-Bold.otf');
+}
+
+@font-face {
+  font-family: 'SourceHanSansSC Medium';
+  src: url('./fonts/SourceHanSansCN-Medium.otf');
+}
+
+@font-face {
+  font-family: 'SourceHanSansSC Light';
+  src: url('./fonts/SourceHanSansCN-Light.otf');
+}
+
+@font-face {
+  font-family: 'DIN Alternate';
+  src: url('./fonts/DIN Alternate Bold.ttf') format('truetype'),
+  url("./fonts/DIN Alternate Bold.woff") format('woff'),
+  url('./fonts/DIN Alternate Bold.otf');
+}
+
+@font-face {
+  font-family: 'DIN Condensed';
+  src: url('./fonts/DIN Condensed Bold.ttf');
+}
+
