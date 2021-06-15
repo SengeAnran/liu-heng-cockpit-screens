@@ -58,7 +58,7 @@ export default {
       this.lineChart.setOption(this.option());
     },
     option() {
-      const { title, xData, showArea, name1, name2, lineColor11, areaColor11, areaColor12, lineColor21, areaColor21, areaColor22, data1, data2 } = this.lineData;
+      const { title, xData, showArea, name1, name2, yname1, lineColor11, areaColor11, areaColor12, lineColor21, areaColor21, areaColor22, data1, data2 } = this.lineData;
       const option = {
         colors: [lineColor11, lineColor21],
         title: {
@@ -128,7 +128,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: '人数',
+          name: yname1 || '人数',
           nameTextStyle: {
             color: 'rgba(225,225,225,.7)',
             fontSize: 21,
@@ -144,7 +144,7 @@ export default {
           minInterval: 1,
           axisLabel: {
             show: true,
-            margin: 8,
+            margin: 18,
             color: 'rgba(225,225,225,.7)',
             fontSize: 21,
             fontFamily: 'DINPro',

@@ -1,11 +1,19 @@
 <template>
-  <div class="ProjectManage">ProjectManage</div>
+  <div class="ProjectManage">
+    <ProjectManageLeft/>
+    <ProjectManageMap/>
+    <ProjectManageRight/>
+  </div>
 </template>
 
 <script>
+import ProjectManageLeft from './Left';
+import ProjectManageMap from './Map';
+import ProjectManageRight from './Right';
+
 export default {
   name: 'ProjectManage',
-  components: {},
+  components: { ProjectManageLeft, ProjectManageMap, ProjectManageRight },
   data() {
     return {};
   },
@@ -20,7 +28,8 @@ export default {
   width: 100%;
   height: 2070px;
   background-position: center;
-  background: url('./images/project-manage-bg.png') no-repeat 100% 100%;
+  // background: url('./images/bg.png') no-repeat 100% 100%;
+  // background: url('./images/pm-map-bg.png') no-repeat 100% 100%;
   position: absolute;
   top: 0;
   left: 0;

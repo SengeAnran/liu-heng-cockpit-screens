@@ -24,10 +24,7 @@ export default [
       {
         path: 'population',
         name: '人口一张图',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Overview/PopulationMap'),
         meta: {
           indicator: [
             { name: '户籍人口', value: 62824, unit: '人' },
@@ -210,7 +207,7 @@ export default [
       {
         path: 'govern-serve',
         name: '政务服务',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/GovernServe'),
         props: {
           name: 'overview-city-evolution.jpg',
         },
@@ -227,7 +224,7 @@ export default [
         name: '项目管理',
         component: () => import('@/Apps/Strength/ProjectManage'),
         props: {
-          name: 'overview-population.jpg',
+          // name: 'overview-population.jpg',
         },
         meta: {
           indicator: [

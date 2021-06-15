@@ -4,7 +4,7 @@
       <PieChart :data="buildingAreaData" legendType="pec" :color="colors" title="建成区分布情况" />
     </div>
     <div class="area_location">
-      <PieChart :data="areaAddressData" legendType="pec" :color="colors" title="建成区分布情况" />
+      <PieChart :data="areaAddressData" legendType="pec" :color="colors" title="面积分布情况" />
     </div>
     <div class="area_location">
       <PieChart :data="oceanAddressData" legendType="pec" :color="colors" title="海域分布情况" />

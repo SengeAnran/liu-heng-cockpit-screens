@@ -12,11 +12,11 @@
             <div class="label">{{item.label||'全区'}}</div>
             <div class="desc-count flex">
               <div>
-                <div class="count">{{item.count1}}</div>
+                <div class="count"><MyCountUp :endVal="item.count1"/></div>
                 <span>公办</span>
               </div>
               <div>
-                <div class="count">{{item.count2}}</div>
+                <div class="count"><MyCountUp :endVal="item.count2"/></div>
                 <span>民办</span>
               </div>
             </div>
@@ -38,14 +38,14 @@
                v-for="(item,i) in docList"
                :key="`doc-type-${i}`">
             <div class="label">{{item.type}}<br />医师</div>
-            <div class="count">{{item.count}}</div>
+            <div class="count"><MyCountUp :endVal="item.count"/></div>
           </div>
         </div>
         <!-- <div class="sub-title "
              style="padding:20px 0">截至2020年，医务人数增加230人</div> -->
         <div class="chart"><LineChart :line-data="lineData"/></div>
         <div class="chart">
-          <PieChart :data="pieEducateData" legendType="pec" title="医务人员学历结构" />
+          <PieChart :data="pieEducateData" legendType="pec" title="医务人员学历结构" :chartStyle="{scale:[2.3,2.2],position:['5.6%','5.98%']}"/>
         </div>
       </div>
     </div>
@@ -57,9 +57,11 @@ import BaseTitle from './components/BaseTitle';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
+import MyCountUp from './components/ICountUp';
+
 export default {
   name: 'MedicalLeft',
-  components: { BaseTitle, LineChart, BarChart, PieChart },
+  components: { BaseTitle, LineChart, BarChart, PieChart, MyCountUp },
   data() {
     return {
       descList: [
@@ -100,7 +102,7 @@ export default {
         areaColor12: 'rgba(123, 162, 252, .1)',
         showArea: true,
         xData: [2015, 2016, 2017, 2018, 2019, 2020, 2021],
-        data1: [1, 3, 5, 6, 8, 9, 12],
+        data1: [1, 3, 5, -6, 8, 9, 12],
       },
       barData: {
         title: '医务人员数量分布',
