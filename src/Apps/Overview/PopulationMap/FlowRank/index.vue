@@ -144,7 +144,7 @@ export default {
                 width: 0,
                 height: 24,
                 align: 'left',
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                backgroundColor: '#ff6ed',
               },
             },
           },
