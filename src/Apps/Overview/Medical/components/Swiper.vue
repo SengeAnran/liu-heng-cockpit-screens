@@ -7,7 +7,7 @@
 </template>
 <script>
 import Swiper from 'swiper';
-import 'swiper/css/swiper.css';
+import 'swiper/swiper.scss';
 export default {
   name: 'Swiper',
   props: {
