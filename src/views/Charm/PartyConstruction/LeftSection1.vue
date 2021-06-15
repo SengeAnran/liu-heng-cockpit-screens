@@ -28,15 +28,20 @@
 
       <div class="right-area">
         <ul class="tab-bar">
-          <li>性别年龄结构</li>
-          <li>学历结构</li>
+          <li :class="{'active': currentTab === 'sexAge'}" @click="selectTab('sexAge')">性别年龄结构</li>
+          <li :class="{'active': currentTab === 'education'}" @click="selectTab('education')">学历结构</li>
         </ul>
+
+        <div class="pie-chart-wrap">
+          <PieChart :type="currentTab" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Title from './components/Title';
+import PieChart from './components/PieChart';
 import * as echarts from 'echarts/core';
 import {
   LineChart,
@@ -60,6 +65,7 @@ echarts.use(
 export default {
   components: {
     Title,
+    PieChart,
   },
   data() {
     return {
@@ -80,7 +86,8 @@ export default {
           unit: '人',
         },
       ],
-      chart: null,
+      currentTab: 'sexAge',
+      lineChart: null,
       chartOpt: {
         tooltip: {},
         color: ['#87E086', '#B07EF7', '#6B8CE6'],
@@ -164,11 +171,16 @@ export default {
     };
   },
   mounted() {
-    this.chart = echarts.init(this.$refs.lineChart);
-    this.chart.setOption(this.chartOpt);
+    this.lineChart = echarts.init(this.$refs.lineChart);
+    this.lineChart.setOption(this.chartOpt);
   },
   beforeDestroy() {
-    this.chart && this.chart.dispose();
+    this.lineChart && this.lineChart.dispose();
+  },
+  methods: {
+    selectTab(val) {
+      this.currentTab = val;
+    },
   },
 };
 </script>
@@ -237,6 +249,25 @@ export default {
     }
     .right-area{
       width: 49%;
+      .tab-bar{
+        margin-top: 2rem;
+        height: 6rem;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        li{
+          height: 6rem;
+          cursor: pointer;
+          font-size: 3.4rem;
+          padding: 0 3rem;
+          color: #fff;
+          margin-right: 2rem;
+          &.active{
+            background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
+            background-size: 130% 100%;
+          }
+        }
+      }
     }
   }
 }

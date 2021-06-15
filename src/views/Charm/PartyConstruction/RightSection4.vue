@@ -2,7 +2,7 @@
   <div class="left-section2">
     <Title title="党员缴纳情况" />
     <div class="section-content">
-      <div ref="lineChart" style="height: 32rem; width: 100%"></div>
+      <div ref="lineChart" style="height: 30rem; width: 100%"></div>
     </div>
   </div>
 </template>
