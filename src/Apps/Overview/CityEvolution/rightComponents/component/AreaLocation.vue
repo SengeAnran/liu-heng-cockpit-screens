@@ -7,7 +7,7 @@
           全镇面积
         </div>
         <div class="count">
-          654
+          <CountUp  :num="place.allArea" />
         </div>
         <div class="unit">
           平方千米
@@ -18,7 +18,7 @@
           行政辖区面积
         </div>
         <div class="count administration_title">
-          140
+          <CountUp  :num="place.mangeArea" />
         </div>
         <div class="unit administration_unit">
           平方千米
@@ -29,7 +29,7 @@
           海域面积
         </div>
         <div class="count seal_title">
-          514
+          <CountUp  :num="place.oceanArea" />
         </div>
         <div class="unit seal_unit">
           平方千米
@@ -45,6 +45,15 @@ export default {
   name: 'CityEvolution',
   components: {
     BaseTitle,
+  },
+  data() {
+    return {
+      place: {
+        allArea: 654,
+        mangeArea: 140,
+        oceanArea: 514,
+      },
+    };
   },
 };
 </script>
