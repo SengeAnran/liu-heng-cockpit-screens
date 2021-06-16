@@ -1,15 +1,18 @@
 <template>
   <div class="Education">
     <LeftComponents />
+    <RightComponents />
   </div>
 </template>
 
 <script>
 import LeftComponents from './leftComponents/index';
+import RightComponents from './rightComponents/index';
 export default {
   name: 'Education',
   components: {
     LeftComponents,
+    RightComponents,
   },
 };
 </script>
