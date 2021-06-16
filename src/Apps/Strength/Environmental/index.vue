@@ -1,21 +1,27 @@
 <template>
   <div class="environmental">
+    <AirQuality />
     <Pollution />
     <DangerWaste />
     <Punishment />
+    <WaterQuality />
   </div>
 </template>
 
 <script>
+import AirQuality from './AirQuality';
 import Pollution from './Pollution';
 import DangerWaste from './DangerWaste';
 import Punishment from './Punishment';
+import WaterQuality from './WaterQuality';
 export default {
   name: 'Environmental',
   components: {
+    AirQuality,
     Pollution,
     DangerWaste,
     Punishment,
+    WaterQuality,
   },
 };
 </script>
