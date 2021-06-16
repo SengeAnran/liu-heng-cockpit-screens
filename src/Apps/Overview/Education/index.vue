@@ -18,7 +18,7 @@ export default {
   height: 2070px;
   background-size: 100% 100%;
   // background-image: url('./images/bg.png');
-  // background: url('./images/bg.jpg') no-repeat;
+  background: url('./images/bg.jpg') no-repeat;
   // background-size: 100% 100%;
   // background-image: url('./images/show-bg.png');
 }

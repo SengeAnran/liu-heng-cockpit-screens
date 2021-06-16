@@ -1,8 +1,7 @@
 <template>
   <div class="ProjectManage-left flex">
     <div>
-      <BaseTitle title="项目投资信息"
-                 :width="750" />
+      <BaseTitle title="项目投资信息" :width="750" />
       <div class="desc">
         <p>实时情况</p>
         <div class="flex desc-item">
@@ -30,22 +29,15 @@
       </div>
     </div>
     <div>
-      <BaseTitle title="项目列表"
-                 :width="750" />
-
-      <div class="lunbo"
-           @mouseenter="mouseEnter"
-           @mouseleave="mouseleave">
+      <BaseTitle title="项目列表" :width="750" />
+      <div class="lunbo" @mouseenter="mouseEnter" @mouseleave="mouseleave">
         <div class="titles">
           <div>
-            <span v-for="item in swiperTitle"
-                  :key="item">{{item}}</span>
+            <span v-for="item in swiperTitle" :key="item">{{item}}</span>
           </div>
         </div>
-        <swiper ref="mySwiper"
-                :options="swiperOption">
-          <swiper-slider v-for="(item, index) in list"
-                         :key="`item-${index}`">
+        <swiper ref="mySwiper" :options="swiperOption">
+          <swiper-slider v-for="(item, index) in list" :key="`item-${index}`">
             <div>
               <div class="inner-div">
                 <span>{{ item.name }}</span>

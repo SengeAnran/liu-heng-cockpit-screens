@@ -135,22 +135,6 @@ export default {
               fontSize: 22,
               fontFamily: 'DIN Alternate',
             },
-            // formatter: (params) => {
-            //   const { data, dataIndex } = params;
-            //   const eachD = ['起', '条', '个', '人'];
-            //   return `{a|${data}}{b|${eachD[dataIndex]}}`;
-            // },
-            // rich: {
-            //   a: {
-            //     color: 'rgba(24, 227, 255, 1)',
-            //     fontSize: 22,
-            //     fontFamily: 'DIN Alternate',
-            //   },
-            //   b: {
-            //     color: 'rgba(24, 227, 255, 1)',
-            //     fontSize: 22,
-            //   },
-            // },
           },
           data: data,
         }],
