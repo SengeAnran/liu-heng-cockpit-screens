@@ -36,10 +36,7 @@ export default [
       {
         path: 'construction',
         name: '平安建设',
-        component: BgImg,
-        props: {
-          name: 'overview-construction.jpg',
-        },
+        component: () => import('@/Apps/Overview/PeaceSecurity'),
         meta: {
           indicator: [
             { name: '执法次数', value: 1000, unit: '次' },
@@ -51,7 +48,7 @@ export default [
       {
         path: 'education',
         name: '民生教育',
-        component: BgImg,
+        component: () => import('@/Apps/Overview/Education'),
         props: {
           name: 'overview-education.jpg',
         },
@@ -207,7 +204,7 @@ export default [
       {
         path: 'govern-serve',
         name: '政务服务',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/GovernServe'),
         props: {
           name: 'overview-city-evolution.jpg',
         },

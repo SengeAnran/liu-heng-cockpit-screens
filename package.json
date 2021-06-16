@@ -14,7 +14,7 @@
     "d3": "^7.0.0",
     "echarts": "^5.1.2",
     "lodash": "^4.17.21",
-    "swiper": "^5.2.1",
+    "swiper": "^6.7.0",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
     "vue-countup-v2": "^4.0.0",

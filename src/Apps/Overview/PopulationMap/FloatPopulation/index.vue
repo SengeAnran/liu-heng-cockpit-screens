@@ -36,15 +36,6 @@ export default {
       }
       const data1 = [24, 33, 24, 9.78, 70, 40, 51, 15, 45, 78, 56, 44];
       const option = {
-        // title: {
-        //   text: '指数',
-        //   textStyle: {
-        //     align: 'center',
-        //     color: '#fff',
-        //   },
-        //   top: '0%',
-        //   left: '3%',
-        // },
         grid: {
           top: '18%',
           left: '6%',

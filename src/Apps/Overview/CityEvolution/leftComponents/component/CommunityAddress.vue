@@ -52,6 +52,18 @@ export default {
           right: '3%',
           bottom: '10%',
         },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+          },
+          textStyle: {
+            color: '#fff',
+            fontSize: 22,
+          },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        },
         xAxis: {
           data: xData,
           type: 'category',
@@ -80,12 +92,6 @@ export default {
             show: false,
           },
           boundaryGap: true,
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow',
-          },
         },
         yAxis: {
           type: 'value',
@@ -177,8 +183,6 @@ export default {
   left: 0;
   padding-top: 20px;
   padding-left: 20px;
-  // opacity: 0.9;
-  // background: #ED7F64;
   box-sizing: border-box;
   .item_wrapper {
     margin-top: 65px;
@@ -191,7 +195,6 @@ export default {
       height: 460px;
       width: 100%;
       box-sizing: border-box;
-      // background: red;
     }
   }
 }
