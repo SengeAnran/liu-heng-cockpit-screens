@@ -234,10 +234,7 @@ export default [
       {
         path: 'environment',
         name: '环保专题',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Strength/Environmental'),
         meta: {
           indicator: [
             { name: 'AQI      ', value: 20, unit: '' },
