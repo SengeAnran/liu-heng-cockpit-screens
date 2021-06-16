@@ -27,6 +27,7 @@ export default {
           areaColor12: 'rgba(251, 47, 47, 0)',
           name2: '累计治愈',
           lineColor21: '#3efb2a',
+          legendOrient: '',
           lineColor22: '#bdffc0',
           areaColor21: 'rgba(110, 238, 89, 0.3)',
           areaColor22: 'rgba(110, 238, 89, 0)',
@@ -58,7 +59,7 @@ export default {
       this.lineChart.setOption(this.option());
     },
     option() {
-      const { title, xData, showArea, name1, name2, yname1, lineColor11, areaColor11, areaColor12, lineColor21, areaColor21, areaColor22, data1, data2 } = this.lineData;
+      const { title, xData, showArea, name1, name2, yname1, lineColor11, areaColor11, areaColor12, lineColor21, legendOrient, areaColor21, areaColor22, data1, data2 } = this.lineData;
       const option = {
         colors: [lineColor11, lineColor21],
         title: {
@@ -75,7 +76,7 @@ export default {
         legend: {
           top: 22,
           right: 40,
-          orient: 'vertical',
+          orient: legendOrient || 'vertical',
           itemWidth: 20,
           itemHeight: 20,
           icon: 'rect',
