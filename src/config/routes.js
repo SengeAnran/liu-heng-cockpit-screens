@@ -24,10 +24,7 @@ export default [
       {
         path: 'population',
         name: '人口一张图',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Overview/PopulationMap'),
         meta: {
           indicator: [
             { name: '户籍人口', value: 62824, unit: '人' },
@@ -39,10 +36,7 @@ export default [
       {
         path: 'construction',
         name: '平安建设',
-        component: BgImg,
-        props: {
-          name: 'overview-construction.jpg',
-        },
+        component: () => import('@/Apps/Overview/PeaceSecurity'),
         meta: {
           indicator: [
             { name: '执法次数', value: 1000, unit: '次' },
@@ -54,7 +48,7 @@ export default [
       {
         path: 'education',
         name: '民生教育',
-        component: BgImg,
+        component: () => import('@/Apps/Overview/Education'),
         props: {
           name: 'overview-education.jpg',
         },
@@ -207,7 +201,7 @@ export default [
       {
         path: 'govern-serve',
         name: '政务服务',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/GovernServe'),
         props: {
           name: 'overview-city-evolution.jpg',
         },
@@ -237,10 +231,7 @@ export default [
       {
         path: 'environment',
         name: '环保专题',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Strength/Environmental'),
         meta: {
           indicator: [
             { name: 'AQI      ', value: 20, unit: '' },

@@ -8,7 +8,7 @@
           户籍人口数量
         </div>
         <div class="count_wrapper">
-          23456
+          <CountUp  :num="item.people" />
           <span class="unit">人</span>
         </div>
       </div>
@@ -18,7 +18,7 @@
           新生儿出生数量
         </div>
         <div class="count_wrapper children">
-          23
+          <CountUp  :num="item.children" />
           <span class="unit">人</span>
         </div>
       </div>
@@ -28,7 +28,7 @@
           人口死亡数量
         </div>
         <div class="count_wrapper dead">
-          23
+          <CountUp  :num="item.dead" />
           <span class="unit">人</span>
         </div>
       </div>
@@ -42,6 +42,15 @@ export default {
   name: 'CityEvolution',
   components: {
     BaseTitle,
+  },
+  data() {
+    return {
+      item: {
+        people: 10345,
+        children: 34,
+        dead: 12,
+      },
+    };
   },
 };
 </script>
@@ -99,7 +108,7 @@ export default {
           font-size: 30px;
           color: #59DBE6;
           position: relative;
-          right: 15px;
+          right: 0px;
           top: -2px;
         }
       }

@@ -52,6 +52,18 @@ export default {
           right: '3%',
           bottom: '23%',
         },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow',
+          },
+          textStyle: {
+            color: '#fff',
+            fontSize: 22,
+          },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        },
         xAxis: {
           data: xData,
           type: 'category',
@@ -80,12 +92,6 @@ export default {
             show: false,
           },
           boundaryGap: true,
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow',
-          },
         },
         yAxis: {
           type: 'value',

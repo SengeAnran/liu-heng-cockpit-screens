@@ -1,8 +1,7 @@
 <template>
   <div class="ProjectManage-left flex">
     <div>
-      <BaseTitle title="项目投资信息"
-                 :width="750" />
+      <BaseTitle title="项目投资信息" :width="750" />
       <div class="desc">
         <p>实时情况</p>
         <div class="flex desc-item">
@@ -30,22 +29,15 @@
       </div>
     </div>
     <div>
-      <BaseTitle title="项目列表"
-                 :width="750" />
-
-      <div class="lunbo"
-           @mouseenter="mouseEnter"
-           @mouseleave="mouseleave">
+      <BaseTitle title="项目列表" :width="750" />
+      <div class="lunbo" @mouseenter="mouseEnter" @mouseleave="mouseleave">
         <div class="titles">
           <div>
-            <span v-for="item in swiperTitle"
-                  :key="item">{{item}}</span>
+            <span v-for="item in swiperTitle" :key="item">{{item}}</span>
           </div>
         </div>
-        <swiper ref="mySwiper"
-                :options="swiperOption">
-          <swiper-slider v-for="(item, index) in list"
-                         :key="`item-${index}`">
+        <swiper ref="mySwiper" :options="swiperOption">
+          <swiper-slider v-for="(item, index) in list" :key="`item-${index}`">
             <div>
               <div class="inner-div">
                 <span>{{ item.name }}</span>
@@ -170,7 +162,7 @@ export default {
         direction: 'vertical',
         speed: 1000,
         slidesPerView: 9,
-        spaceBetween: 20,
+        spaceBetween: 0,
         loop: true,
         grabCursor: true,
         autoplay: {
@@ -218,23 +210,19 @@ export default {
     if (this.list.length < 10) {
       this.swiper.autoplay = false;
     }
-    this.$refs.mySwiper.options.autoplay = true;
   },
   methods: {
     mouseEnter() {
       if (this.list.length < 10) {
         return;
       }
-      // console.log(this.$refs.mySwiper);
-      // this.swiper.autoplay.stop();
-      this.$refs.mySwiper.options.autoplay = false;
+      this.swiper.autoplay.stop();
     },
     mouseleave() {
       if (this.list.length < 10) {
         return;
       }
-      // this.swiper.autoplay.start();
-      this.$refs.mySwiper.options.autoplay = true;
+      this.swiper.autoplay.start();
     },
   },
 };
@@ -359,10 +347,8 @@ export default {
 .swiper-container {
   width: 100%;
   height: 100%;
-  margin-top: 10px;
   .swiper-slide {
-    width: 793px;
-    height: 75px !important;
+    width: 795px;
     background: url('./images/list-bg.png') no-repeat 100% 100%;
     display: flex;
     align-items: center;
@@ -382,6 +368,8 @@ export default {
       justify-content: space-between;
       align-items: center;
       span {
+        height: 75px;
+          line-height: 100px;
         &:nth-child(1) {
           width: 24%;
         }

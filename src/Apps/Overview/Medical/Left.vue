@@ -1,14 +1,11 @@
 <template>
   <div class="Medical-Left">
-    <BaseTitle title="医疗资源情况"
-               :width="1650" />
+    <BaseTitle title="医疗资源情况" :width="1650" />
     <div class="flex">
       <div class="left-left">
         <div class="sub-title">医院数量</div>
         <div class="flex desc">
-          <div class="flex"
-               v-for="item in descList"
-               :key="item.label">
+          <div class="flex" v-for="item in descList" :key="item.label">
             <div class="label">{{item.label||'全区'}}</div>
             <div class="desc-count flex">
               <div>
@@ -34,9 +31,7 @@
       <div class="left-right">
         <div class="sub-title">医师数量分析</div>
         <div class="flex desc-doc">
-          <div class="flex"
-               v-for="(item,i) in docList"
-               :key="`doc-type-${i}`">
+          <div class="flex" v-for="(item,i) in docList" :key="`doc-type-${i}`">
             <div class="label">{{item.type}}<br />医师</div>
             <div class="count"><MyCountUp :endVal="item.count"/></div>
           </div>

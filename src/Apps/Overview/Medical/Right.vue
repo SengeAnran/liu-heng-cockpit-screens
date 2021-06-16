@@ -1,27 +1,21 @@
 <template>
   <div class="Medical-Right">
     <div>
-      <BaseTitle title="医务业务量"
-                 :width="780" />
+      <BaseTitle title="医务业务量" :width="780" />
       <div class="chart-box">
         <LineChart :line-data="lineData" />
       </div>
-      <BaseTitle title="居民基本医疗保险增长趋势"
-                 :width="780"
-                 :top="530" />
+      <BaseTitle title="居民基本医疗保险增长趋势" :width="780" :top="530" />
       <div class="chart-box box1">
         <LineBarChart :data="lineBarData" />
       </div>
     </div>
     <div class="right-right">
-      <BaseTitle title="患者挂号科室占比"
-                 :width="780" />
+      <BaseTitle title="患者挂号科室占比" :width="780" />
       <div class="chart-box">
         <PieChart :data="pieTypeData" legendType="pec" title="患者挂号科室占比" />
       </div>
-      <BaseTitle title="患者年龄占比"
-                 :width="780"
-                 :top="530" />
+      <BaseTitle title="患者年龄占比" :width="780" :top="530" />
       <div class="chart-box box1">
         <PieChart :data="pieAgeData" legendType="pec" title="患者年龄占比" />
       </div>

@@ -33,11 +33,7 @@ export default {
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const xAxisData = [];
-      for (let i = 1; i <= 12; i++) {
-        const temp = i + '月';
-        xAxisData.push(temp);
-      }
+      const xAxisData = ['A社区', 'B社区', 'C社区', 'D社区', 'E社区', 'F社区', 'G社区', 'H社区'];
       // 全区增幅
       const data1 = [114, 13, 24, 9.78, 450, 40, 51, 3.15, 45, 78, 66, 44];
       // 全市增幅
@@ -55,7 +51,7 @@ export default {
         grid: {
           top: '10%',
           left: '8%',
-          right: '0%',
+          right: '5%',
           bottom: '13%',
         },
         tooltip: {
@@ -66,7 +62,22 @@ export default {
               type: 'dashed',
             },
           },
+          textStyle: {
+            color: '#fff',
+            fontSize: 22,
+          },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
+        // tooltip: {
+        //   trigger: 'axis',
+        //   axisPointer: {
+        //     type: 'line',
+        //     lineStyle: {
+        //       type: 'dashed',
+        //     },
+        //   },
+        // },
         xAxis: {
           type: 'category',
           axisLine: {
@@ -93,7 +104,7 @@ export default {
           splitLine: {
             show: false,
           },
-          boundaryGap: true,
+          boundaryGap: false,
           data: xAxisData,
         },
         yAxis: {
@@ -146,12 +157,13 @@ export default {
               shadowOffsetX: 10,
             },
             label: {
-              show: false,
+              show: true,
               position: 'top',
               distance: 10,
               color: '#FFFFFF',
               textStyle: {
                 fontSize: 22,
+                fontFamily: 'DIN Alternate',
               },
             },
             tooltip: {
@@ -183,12 +195,13 @@ export default {
               shadowOffsetX: 10,
             },
             label: {
-              show: false,
+              show: true,
               position: 'top',
               distance: 10,
               color: '#FFFFFF',
               textStyle: {
                 fontSize: 22,
+                fontFamily: 'DIN Alternate',
               },
             },
             tooltip: {

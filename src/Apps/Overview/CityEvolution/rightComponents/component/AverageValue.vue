@@ -34,28 +34,14 @@ export default {
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const xAxisData = [];
-      for (let i = 1; i <= 12; i++) {
-        const temp = i + '月';
-        xAxisData.push(temp);
-      }
-      // 全市增幅
-      const data2 = [10, 40, 51, 3.15, 114, 13, 24, 114, 13, 24, 22, 56];
+      const xAxisData = ['A社区', 'B社区', 'C社区', 'D社区', 'E社区', 'F社区', 'G社区', 'H社区'];
+      const data1 = [24, 33, 24, 9.78, 70, 40, 51, 15, 45, 78, 56, 44];
       const option = {
-        title: {
-          text: '平方米',
-          textStyle: {
-            align: 'center',
-            color: '#fff',
-          },
-          top: '5%',
-          left: '3%',
-        },
         grid: {
           top: '18%',
-          left: '10%',
-          right: '3%',
-          bottom: '23%',
+          left: '6%',
+          right: '5%',
+          bottom: '16%',
         },
         tooltip: {
           trigger: 'axis',
@@ -65,6 +51,12 @@ export default {
               type: 'dashed',
             },
           },
+          textStyle: {
+            color: '#fff',
+            fontSize: 22,
+          },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
           type: 'category',
@@ -92,11 +84,17 @@ export default {
           splitLine: {
             show: false,
           },
-          boundaryGap: true,
+          boundaryGap: false,
           data: xAxisData,
         },
         yAxis: {
+          name: '指数',
           type: 'value',
+          nameTextStyle: {
+            align: 'center',
+            color: '#fff',
+            fontSize: 20,
+          },
           splitLine: {
             show: true,
             lineStyle: {
@@ -120,18 +118,8 @@ export default {
             show: false,
           },
         },
-        legend: {
-          data: ['全区增幅', '全市增幅'],
-          right: 30,
-          textStyle: {
-            color: '#FFFFFF',
-            fontSize: 20,
-          },
-          icon: 'rect',
-        },
         series: [
           {
-            name: '全市增幅',
             type: 'line',
             showAllSymbol: true,
             symbolSize: 6,
@@ -149,23 +137,32 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: 'rgba(89, 219, 230, 1)' },
                   { offset: 1, color: 'rgba(89, 219, 230, 0.1)' },
-
                 ]),
               },
             },
             label: {
-              show: false,
+              show: true,
               position: 'top',
               distance: 10,
               color: '#FFFFFF',
               textStyle: {
                 fontSize: 22,
+                fontFamily: 'DIN Alternate',
               },
             },
             tooltip: {
               show: true,
             },
-            data: data2,
+            markPoint: {
+              label: {
+                normal: {
+                  textStyle: {
+                    color: '#fff',
+                  },
+                },
+              },
+            },
+            data: data1,
           },
         ],
       };
