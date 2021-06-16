@@ -1,13 +1,15 @@
 <template>
   <div class="Education">
-    Education
+    <LeftComponents />
   </div>
 </template>
 
 <script>
+import LeftComponents from './leftComponents/index';
 export default {
   name: 'Education',
   components: {
+    LeftComponents,
   },
 };
 </script>
@@ -17,9 +19,6 @@ export default {
   width: 100%;
   height: 2070px;
   background-size: 100% 100%;
-  // background-image: url('./images/bg.png');
-  // background: url('./images/bg.jpg') no-repeat;
-  // background-size: 100% 100%;
-  // background-image: url('./images/show-bg.png');
+  // background-image: url('./images/education.jpg');
 }
 </style>
