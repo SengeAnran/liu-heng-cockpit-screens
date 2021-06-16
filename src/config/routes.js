@@ -1,6 +1,5 @@
 import Container from '@/components/Container';
 import ThirdPage from '@/components/ThirdPage';
-import Charm from '@/components/Charm/index';
 import BgImg from '@/components/BgImg';
 
 export default [
@@ -261,7 +260,7 @@ export default [
   {
     path: '/charm',
     name: '魅力六横',
-    component: Charm,
+    component: Container,
     redirect: 'charm/party-construction',
     children: [
       {
@@ -279,7 +278,8 @@ export default [
       {
         path: 'digit-county',
         name: '数字乡社',
-        component: BgImg,
+        component: () => import('@/views/Charm/DigitCounty'),
+        // component: BgImg,
         props: {
           name: 'overview-population.jpg',
         },
