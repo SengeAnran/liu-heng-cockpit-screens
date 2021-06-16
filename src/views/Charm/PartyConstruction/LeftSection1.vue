@@ -5,7 +5,7 @@
       <div class="left-area">
         <div class="top-indi">
           <div class="party-icon">
-            <img src="@/assets/images/Charm/party-icon.png">
+            <img src="@/assets/images/charm/party-icon.png">
             <p>基本情况</p>
           </div>
           <div class="indi-wrapper">
