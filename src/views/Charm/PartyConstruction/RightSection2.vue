@@ -46,8 +46,8 @@
 <script>
 import Title from './components/Title';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/swiper.scss';
-import { Swiper as SwiperClass, Pagination, Autoplay } from 'swiper/core';
+import 'swiper/css/swiper.css';
+import { Swiper as SwiperClass, Pagination, Autoplay } from 'swiper/js/swiper.esm';
 // Swiper modules
 SwiperClass.use([Pagination, Autoplay]);
 
@@ -73,7 +73,7 @@ export default {
   mounted() {
   },
   methods: {
-    onSlideChange(item) {
+    onSlideChange() {
     },
   },
 };
@@ -121,6 +121,8 @@ export default {
         display: flex;
         justify-content: space-around;
         align-items: center;
+        position: relative;
+        bottom: initial;
         ::v-deep .swiper-pagination-bullet{
           display: inline-block;
           width: 1rem;
