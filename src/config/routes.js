@@ -185,12 +185,9 @@ export default [
         },
       },
       {
-        path: 'port-economy;',
+        path: 'port-economy',
         name: '港口经济',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Vitality/PortEconomy'),
         meta: {
           indicator: [
             { name: '港口货物吞吐量', value: 8112, unit: '万吨' },
