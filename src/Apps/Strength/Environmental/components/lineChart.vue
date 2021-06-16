@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     getStyle() {
-      return (unit) => {
+      return (unit = '') => {
         return {
           type: 'value',
           axisLabel: {
@@ -122,7 +122,7 @@ export default {
             ...item,
           };
         })
-        : this.getYStyle();
+        : this.getStyle();
       const options = {
         grid: {
           left: 50,

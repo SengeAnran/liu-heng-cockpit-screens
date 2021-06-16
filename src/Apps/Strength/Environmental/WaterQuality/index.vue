@@ -145,7 +145,7 @@ $font-family: ' Source Han Sans CN';
       -webkit-text-fill-color: transparent;
     }
     .nav-box {
-      width: 800px;
+      // width: 800px;
       margin-top: 10px;
       @extend .flex;
       .item {
