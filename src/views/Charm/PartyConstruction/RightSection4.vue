@@ -1,158 +1,91 @@
 <template>
-  <div class="left-section2">
-    <Title title="党员缴纳情况" />
+  <div class="right-section4">
+    <Title title="党建文件" />
     <div class="section-content">
-      <div ref="lineChart" style="height: 30rem; width: 100%"></div>
+      <swiper
+        ref="mySwiper"
+        :options="swiperOptions"
+        class="main-swiper"
+      >
+        <swiper-slide class="swiper-slide" v-for="(item, index) in dataList" :key="index">
+          <div class="row">
+            <div class="file-label">{{item.label}}</div>
+            <div class="file-time">{{item.time}}</div>
+          </div>
+        </swiper-slide>
+      </swiper>
     </div>
   </div>
 </template>
 <script>
 import Title from './components/Title';
-import * as echarts from 'echarts/core';
-import {
-  BarChart,
-} from 'echarts/charts';
-// 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  GridComponent,
-} from 'echarts/components';
-// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import {
-  CanvasRenderer,
-} from 'echarts/renderers';
-
-// 注册必须的组件
-echarts.use(
-  [TitleComponent, LegendComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer],
-);
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+import 'swiper/css/swiper.css';
 export default {
   components: {
     Title,
+    Swiper,
+    SwiperSlide,
   },
   data() {
     return {
-      chart: null,
-      chartOpt: {
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            crossStyle: {
-              color: '#999',
-            },
-          },
+      swiperOptions: {
+        direction: 'vertical',
+        slidesPerView: 4,
+        spaceBetween: 15,
+        autoplay: {
+          delay: 3000,
         },
-        grid: {
-          left: '1%',
-          right: '2%',
-          top: '18%',
-          bottom: 0,
-          containLabel: true,
-        },
-        legend: {
-          itemWidth: 18,
-          itemHeight: 18,
-          itemGap: 20,
-          textStyle: {
-            fontSize: 24,
-          },
-          data: [
-            { name: '党费缴纳', itemStyle: { color: '#6FEFB1' }, textStyle: { color: '#6FEFB1' } },
-            { name: '党费支出', itemStyle: { color: '#6EBCF7' }, textStyle: { color: '#6EBCF7' } },
-          ],
-          right: 0,
-        },
-        xAxis: [
-          {
-            type: 'category',
-            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-            axisPointer: {
-              type: 'shadow',
-            },
-            axisLine: {
-              lineStyle: {
-                color: 'rgba(151, 151, 151, .7)',
-              },
-            },
-            axisLabel: {
-              fontSize: 22,
-              color: 'rgba(255, 255, 255, .7)',
-            },
-          },
-        ],
-        yAxis: [
-          {
-            type: 'value',
-            name: '金额(元)',
-            nameGap: 20,
-            nameTextStyle: {
-              fontSize: 26,
-              color: 'rgba(255, 255, 255, 0.5)',
-            },
-            axisLabel: {
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: 22,
-            },
-            splitLine: {
-              lineStyle: {
-                color: 'rgba(151, 151, 151, .24)',
-              },
-            },
-          },
-        ],
-        series: [
-          {
-            name: '党费缴纳',
-            type: 'bar',
-            barWidth: 21,
-            itemStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: 'rgba(111, 239, 177, 1)', // 0% 处的颜色
-                }, {
-                  offset: 1, color: 'rgba(111, 239, 177, .1)', // 100% 处的颜色
-                }],
-                global: false, // 缺省为 false
-              },
-            },
-            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-          },
-          {
-            name: '党费支出',
-            type: 'bar',
-            barWidth: 21,
-            itemStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: 'rgba(110, 188, 247, 1)', // 0% 处的颜色
-                }, {
-                  offset: 1, color: 'rgba(110, 188, 247, .1)', // 100% 处的颜色
-                }],
-                global: false, // 缺省为 false
-              },
-            },
-            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-          },
-        ],
       },
+      dataList: [
+        {
+          label: '中共中央印发《中国共产党中央委员会工作条例》',
+          time: '2021-05-23',
+        },
+        {
+          label: '中共中央印发《中国共产党中央委员会工作条例》',
+          time: '2021-05-23',
+        },
+        {
+          label: '中共中央印发《中国共产党中央委员会工作条例》',
+          time: '2021-05-23',
+        },
+        {
+          label: '中共中央印发《中国共产党中央委员会工作条例》',
+          time: '2021-05-23',
+        },
+        {
+          label: '中共中央印发《中国共产党中央委员会工作条例》',
+          time: '2021-05-23',
+        },
+      ],
     };
   },
   mounted() {
-    this.lineChart = echarts.init(this.$refs.lineChart);
-    this.lineChart.setOption(this.chartOpt);
   },
 };
 </script>
+<style lang="scss" scoped>
+.right-section4{
+  .section-content{
+    padding-top: 2rem;
+    .main-swiper{
+      ::v-deep .swiper-wrapper{
+        height: 30.1rem;
+        .swiper-slide{
+          height: 6.4rem;
+          background: url('~@/assets/images/Charm/swiper-row-bg.png') no-repeat 0 0;
+          .row{
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            line-height: 6.4rem;
+            color: rgba(139, 173, 211, 1);
+            font-size: 2.4rem;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
