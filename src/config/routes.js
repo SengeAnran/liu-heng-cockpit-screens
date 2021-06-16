@@ -1,5 +1,6 @@
 import Container from '@/components/Container';
 import ThirdPage from '@/components/ThirdPage';
+import Charm from '@/components/Charm/index';
 import BgImg from '@/components/BgImg';
 
 export default [
@@ -277,7 +278,7 @@ export default [
   {
     path: '/charm',
     name: '魅力六横',
-    component: Container,
+    component: Charm,
     redirect: 'charm/party-construction',
     children: [
       {
