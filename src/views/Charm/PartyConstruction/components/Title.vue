@@ -1,7 +1,7 @@
 <template>
   <div class="section-title">
     <span class="title-arrow">
-      <img src="@/assets/images/Charm/title-icon.png">
+      <img src="@/assets/images/charm/title-icon.png">
     </span>
     <span class="title-content">{{title}}</span>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="title-wrapper">
-    <img src="@/assets/images/charm/icon-title.png" alt=""> {{name}}
+    <img src="@/assets/images/charm/title-icon.png" alt=""> {{name}}
   </div>
 </template>
 <script>

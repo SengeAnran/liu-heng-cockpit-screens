@@ -22,6 +22,7 @@
       <div class="third-wrapper">
         <div class="third-wrapper-base">
           <SamllTitle :name="ageName" />
+          <BarCharts style="height:30rem;width: 100%" :xAxisData="ageData.xData" :yAxisData="ageData.yData" />
         </div>
         <div class="third-wrapper-base">
           <SamllTitle :name="educationName" />
@@ -30,7 +31,15 @@
     </div>
     <div class="center-wrapper"></div>
     <div class="right-wrapper">
-      <SamllTitle :name="CommunityOverview" />
+      <div>
+        <SamllTitle name="居民情况" />
+        <SamllTitle name="五类老人" />
+        <SamllTitle name="村民信息" />
+      </div>
+      <div>
+        <SamllTitle name="乡村规划" />
+        <SamllTitle name="村民用水用电趋势" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,11 +50,13 @@
 import SamllTitle from './Comps/SamllTitle';
 import Proportion from './Comps/Proportion';
 import showList from './Comps/ShowList';
+import BarCharts from './Comps/BarCharts';
 export default {
   components: {
     SamllTitle,
     Proportion,
     showList,
+    BarCharts,
   },
   data() {
     return {
@@ -103,7 +114,13 @@ export default {
         },
       ],
       ageName: '年龄分布',
+      ageData: {
+        xData: [8, 13, 27, 15, 3, 8],
+        yData: ['0～16岁', '17～25岁', '26～40岁', '27～65岁', '65岁以上'],
+        bgColor: '',
+      },
       educationName: '学历分布',
+
     };
   },
 };
@@ -180,6 +197,11 @@ export default {
     width: 165.2rem;
     right: 25rem;
     top: 13rem;
+    display: flex;
+    justify-content: space-between;
+    &>div {
+      width: 79.97rem;
+    }
   }
 }
 </style>
