@@ -1,12 +1,21 @@
 <template>
   <div class="environmental">
+    <Pollution />
+    <DangerWaste />
+    <Punishment />
   </div>
 </template>
 
 <script>
+import Pollution from './Pollution';
+import DangerWaste from './DangerWaste';
+import Punishment from './Punishment';
 export default {
   name: 'Environmental',
   components: {
+    Pollution,
+    DangerWaste,
+    Punishment,
   },
 };
 </script>
