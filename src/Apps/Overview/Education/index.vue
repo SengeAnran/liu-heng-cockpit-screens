@@ -1,13 +1,18 @@
 <template>
   <div class="Education">
-    Education
+    <LeftComponents />
+    <RightComponents />
   </div>
 </template>
 
 <script>
+import LeftComponents from './leftComponents/index';
+import RightComponents from './rightComponents/index';
 export default {
   name: 'Education',
   components: {
+    LeftComponents,
+    RightComponents,
   },
 };
 </script>
@@ -21,5 +26,6 @@ export default {
   background: url('./images/bg.jpg') no-repeat;
   // background-size: 100% 100%;
   // background-image: url('./images/show-bg.png');
+  // background-image: url('./images/education.jpg');
 }
 </style>
