@@ -110,6 +110,8 @@ $font-family: ' Source Han Sans CN';
       background: url(../img/bg-item.png);
       width: 391px;
       height: 191px;
+      padding: 10px;
+      box-sizing: border-box;
       > .name {
         width: 168px;
         text-align: center;

@@ -30,6 +30,7 @@ export default {
         yAxisData: [
           { min: 0, max: 100, splitNumber: 5, interval: 25, unit: '%' },
           {
+            min: 0,
             max: 50,
             splitNumber: 6,
             interval: 10,
@@ -94,6 +95,8 @@ $font-family: ' Source Han Sans CN';
       background: url(../img/bg-item.png);
       width: 391px;
       height: 191px;
+      padding: 10px;
+      box-sizing: border-box;
       > .name {
         width: 168px;
         text-align: center;
@@ -120,12 +123,13 @@ $font-family: ' Source Han Sans CN';
       }
     }
     .nav-item:nth-child(2) {
-      > div:nth-child(2) {
+      .value,
+      .unit {
         color: #ffe566;
       }
     }
     .nav-item:nth-child(3) {
-      > div:nth-child(2) {
+      > .value {
         color: #66ccff;
       }
     }
