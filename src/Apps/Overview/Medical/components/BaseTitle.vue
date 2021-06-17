@@ -1,6 +1,8 @@
 <template>
-  <div class="BaseTitle" :style="{width:width+'px'}">
-    {{title}}</div>
+  <div class="BaseTitle" :style="{width:width+'px',top:top+'px'}">
+    {{title}}
+    <slot/>
+    </div>
 </template>
 
 <script>
@@ -14,6 +16,10 @@ export default {
     width: {
       type: Number,
       default: () => 1650,
+    },
+    top: {
+      type: Number,
+      default: () => 0,
     },
   },
   components: {},

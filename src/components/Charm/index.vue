@@ -87,13 +87,13 @@ export default {
       contain2: [
         // 社区概述-社区人口+镇宅住区+小区数量+住宅单元数
         {
-          img: require('@/assets/images/charm/镇宅住区.png'),
+          img: require('@/assets/images/Charm/icon-charm-1.png'),
           count: 348,
           name: '镇宅住区',
           unit: '幢',
         },
         {
-          img: require('@/assets/images/charm/住宅单元数.png'),
+          img: require('@/assets/images/Charm/icon-charm-2.png'),
           count: 543,
           name: '住宅单元数',
           unit: '个',
@@ -101,13 +101,13 @@ export default {
       ],
       contain3: [
         {
-          img: require('@/assets/images/charm/人脉.png'),
+          img: require('@/assets/images/Charm/icon-charm-3.png'),
           count: 1749,
           name: '社区人口',
           unit: '人',
         },
         {
-          img: require('@/assets/images/charm/小区数量.png'),
+          img: require('@/assets/images/Charm/icon-charm-4.png'),
           count: 54,
           name: '小区数量',
           unit: '个',

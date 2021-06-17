@@ -1,6 +1,5 @@
 import Container from '@/components/Container';
 import ThirdPage from '@/components/ThirdPage';
-import Charm from '@/components/Charm/index';
 import BgImg from '@/components/BgImg';
 
 export default [
@@ -25,10 +24,7 @@ export default [
       {
         path: 'population',
         name: '人口一张图',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Overview/PopulationMap'),
         meta: {
           indicator: [
             { name: '户籍人口', value: 62824, unit: '人' },
@@ -40,10 +36,7 @@ export default [
       {
         path: 'construction',
         name: '平安建设',
-        component: BgImg,
-        props: {
-          name: 'overview-construction.jpg',
-        },
+        component: () => import('@/Apps/Overview/PeaceSecurity'),
         meta: {
           indicator: [
             { name: '执法次数', value: 1000, unit: '次' },
@@ -55,7 +48,7 @@ export default [
       {
         path: 'education',
         name: '民生教育',
-        component: BgImg,
+        component: () => import('@/Apps/Overview/Education'),
         props: {
           name: 'overview-education.jpg',
         },
@@ -101,10 +94,7 @@ export default [
       {
         path: 'innovation',
         name: '创新转型',
-        component: BgImg,
-        props: {
-          name: 'overview-innovation.jpg',
-        },
+        component: () => import('@/Apps/Overview/Innovation'),
         meta: {
           indicator: [
             { name: '发明专利数量', value: 28, unit: '项' },
@@ -116,10 +106,7 @@ export default [
       {
         path: 'data-analysis',
         name: '数据分析',
-        component: BgImg,
-        props: {
-          name: 'overview-data-analysis.jpg',
-        },
+        component: () => import('@/Apps/Overview/DataAnalysis'),
         meta: {
           indicator: [
             { name: '三产结构比例', value: '7.4:56.8:35.8', unit: '' },
@@ -192,12 +179,9 @@ export default [
         },
       },
       {
-        path: 'port-economy;',
+        path: 'port-economy',
         name: '港口经济',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Vitality/PortEconomy'),
         meta: {
           indicator: [
             { name: '港口货物吞吐量', value: 8112, unit: '万吨' },
@@ -217,7 +201,7 @@ export default [
       {
         path: 'govern-serve',
         name: '政务服务',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/GovernServe'),
         props: {
           name: 'overview-city-evolution.jpg',
         },
@@ -232,9 +216,9 @@ export default [
       {
         path: 'project-manage',
         name: '项目管理',
-        component: BgImg,
+        component: () => import('@/Apps/Strength/ProjectManage'),
         props: {
-          name: 'overview-population.jpg',
+          // name: 'overview-population.jpg',
         },
         meta: {
           indicator: [
@@ -247,10 +231,7 @@ export default [
       {
         path: 'environment',
         name: '环保专题',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Strength/Environmental'),
         meta: {
           indicator: [
             { name: 'AQI      ', value: 20, unit: '' },
@@ -279,7 +260,7 @@ export default [
   {
     path: '/charm',
     name: '魅力六横',
-    component: Charm,
+    component: Container,
     redirect: 'charm/party-construction',
     children: [
       {
@@ -297,7 +278,8 @@ export default [
       {
         path: 'digit-county',
         name: '数字乡社',
-        component: BgImg,
+        component: () => import('@/views/Charm/DigitCounty'),
+        // component: BgImg,
         props: {
           name: 'overview-population.jpg',
         },
