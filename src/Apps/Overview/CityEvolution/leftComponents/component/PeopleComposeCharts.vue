@@ -143,7 +143,7 @@ export default {
         },
         series: [
           {
-            name: '全区增幅',
+            name: '出生人数',
             type: 'line',
             showAllSymbol: true,
             symbolSize: 6,
@@ -181,7 +181,7 @@ export default {
             data: data1,
           },
           {
-            name: '全市增幅',
+            name: '死亡人数',
             type: 'line',
             showAllSymbol: true,
             symbolSize: 6,

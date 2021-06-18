@@ -189,7 +189,6 @@ export default {
   },
   computed: {
     manageSwiper() {
-      console.log(this.$refs.manageSwiper, '');
       return this.$refs.manageSwiper.swiper;
     },
     swiper() {
@@ -202,7 +201,6 @@ export default {
     }
     this.$nextTick(() => {
       if (this.list.length < 4) {
-        console.log(this.manageSwiper, '=====');
         this.manageSwiper.autoplay = false;
       }
     });

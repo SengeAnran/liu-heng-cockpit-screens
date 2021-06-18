@@ -24,7 +24,7 @@ module.exports = {
     indent: ['error', 2, {
       SwitchCase: 1,
     }],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'comma-dangle': ['error', 'always-multiline'],
     'prefer-const': ['error', {

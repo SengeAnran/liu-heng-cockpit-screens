@@ -13,7 +13,10 @@
           <industry-field />
         </div>
         <div>
-
+          <!-- 专利权重分析 -->
+          <patent-weight />
+          <!-- 人才类型分布 -->
+          <talent-type />
         </div>
       </div>
     </div>
@@ -32,6 +35,8 @@ import SecondaryTitle from './components/SecondaryTitle';
 import PatentNumber from './modules/PatentNumber';
 import ChangesTrends from './modules/ChangesTrends';
 import IndustryField from './modules/IndustryField';
+import PatentWeight from './modules/PatentWeight';
+import TalentType from './modules/TalentType';
 import PatentList from './modules/PatentList';
 import PatentCertificate from './modules/PatentCertificate';
 export default {
@@ -41,6 +46,8 @@ export default {
     PatentNumber,
     ChangesTrends,
     IndustryField,
+    PatentWeight,
+    TalentType,
     PatentList,
     PatentCertificate,
   },
@@ -51,7 +58,6 @@ export default {
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 2070px;
   display: flex;
   justify-content: space-between;
   padding: 263px 160px 0;
@@ -73,6 +79,17 @@ export default {
       width: 800px;
       display: flex;
       flex-direction: column;
+      &:nth-child(2){
+        &>div{
+          &:nth-child(1){
+            flex: 1;
+          }
+          &:nth-child(2){
+            height: 446px;
+            min-height: 446px;
+          }
+        }
+      }
     }
   }
   .right-webview {

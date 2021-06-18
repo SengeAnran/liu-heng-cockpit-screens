@@ -147,7 +147,6 @@ export default {
   },
   watch: {
     type: function (val, oldVal) {
-      console.log('watch val:', val);
       if (val === 'sexAge') {
         this.chartOpt.series[0].data[0].name = '性别年龄结构';
       } else {
