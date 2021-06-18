@@ -21,12 +21,8 @@ export default {
     this.mapDom = this.$refs.map;
     this.map = new AMap.Map(this.mapDom, {
       resizeEnable: true,
-      zoom: 13,
+      zoom: 13.4,
       center: [122.200254, 29.717613],
-      style: {
-        borderWidth: 1,
-        borderColor: 'red',
-      },
     });
   },
 };
