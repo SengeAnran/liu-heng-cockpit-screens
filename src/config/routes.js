@@ -79,10 +79,7 @@ export default [
       {
         path: 'traffic',
         name: '交通畅行',
-        component: BgImg,
-        props: {
-          name: 'overview-traffic.jpg',
-        },
+        component: () => import('@/Apps/Overview/Traffic'),
         meta: {
           indicator: [
             { name: '全年码头客运量', value: 100, unit: '万人' },
