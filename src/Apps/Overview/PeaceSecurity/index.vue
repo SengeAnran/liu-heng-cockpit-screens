@@ -4,6 +4,7 @@
     <EventRank />
     <Department />
     <Complaint />
+    <Map />
     <Satisfaction />
     <Keywords />
   </div>
@@ -14,6 +15,7 @@ import Supervision from './Supervision';
 import EventRank from './EventRank';
 import Department from './Department';
 import Complaint from './Complaint';
+import Map from './Map';
 import Satisfaction from './Satisfaction';
 import Keywords from './Keywords';
 export default {
@@ -23,6 +25,7 @@ export default {
     EventRank,
     Department,
     Complaint,
+    Map,
     Satisfaction,
     Keywords,
   },
@@ -35,5 +38,8 @@ export default {
   height: 2070px;
   background-size: 100% 100%;
   // background-image: url('./img/bg.jpg');
+  >div:not(.map-container) {
+    z-index: 999;
+  }
 }
 </style>

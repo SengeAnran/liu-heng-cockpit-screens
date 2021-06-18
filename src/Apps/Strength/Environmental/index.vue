@@ -2,6 +2,7 @@
   <div class="environmental">
     <AirQuality />
     <Pollution />
+    <Map />
     <DangerWaste />
     <Punishment />
     <WaterQuality />
@@ -11,6 +12,7 @@
 <script>
 import AirQuality from './AirQuality';
 import Pollution from './Pollution';
+import Map from './Map';
 import DangerWaste from './DangerWaste';
 import Punishment from './Punishment';
 import WaterQuality from './WaterQuality';
@@ -19,6 +21,7 @@ export default {
   components: {
     AirQuality,
     Pollution,
+    Map,
     DangerWaste,
     Punishment,
     WaterQuality,
@@ -32,5 +35,8 @@ export default {
   height: 2070px;
   background-size: 100% 100%;
   // background-image: url('./img/bg.png');
+  >div:not(.map-container) {
+    z-index: 999;
+  }
 }
 </style>
