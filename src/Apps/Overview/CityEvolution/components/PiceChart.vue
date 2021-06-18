@@ -281,7 +281,6 @@ export default {
         return that.legendSwitch(checkData, name);
       };
       this.chart.clear();
-      console.log(this.option, 'this.option');
       this.chart.setOption(this.option);
     },
     legendSwitch(checkData, name) {

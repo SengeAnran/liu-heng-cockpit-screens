@@ -136,7 +136,7 @@ export default {
   }
   .percent {
     width: 120px;
-    height: 26;
+    height: 26px;
     min-width: 120px;
     background-color: transparent;
     color: rgba(255, 255, 255, 0.8);

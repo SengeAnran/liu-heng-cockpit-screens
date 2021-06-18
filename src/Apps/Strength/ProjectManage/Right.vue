@@ -1,28 +1,20 @@
 <template>
   <div class="ProjectManage-right">
     <div>
-      <BaseTitle title="投资增速分析"
-                 :width="780" />
+      <BaseTitle title="投资增速分析" :width="780" />
       <div class="chart-box">
         <LineChart :line-data="lineData" />
       </div>
-      <BaseTitle title="项目许可情况"
-                 :width="780"
-                 :top="550" />
+      <BaseTitle  title="项目许可情况" :width="780" :top="550" />
       <div class="chart-box box1">
-        <div class="box-left"
-             @mouseenter="mouseEnter"
-             @mouseleave="mouseleave">
+        <div class="box-left" @mouseenter="mouseEnter" @mouseleave="mouseleave">
           <div class="titles">
             <div>
-              <span v-for="item in swiperTitle"
-                    :key="item">{{item}}</span>
+              <span v-for="item in swiperTitle" :key="item">{{item}}</span>
             </div>
           </div>
-          <swiper ref="manageSwiper"
-                  :options="swiperOption">
-            <swiper-slider v-for="(item, index) in list"
-                           :key="`item-${index}`">
+          <swiper ref="manageSwiper" :options="swiperOption">
+            <swiper-slider v-for="(item, index) in list" :key="`item-${index}`">
               <div>
                 <div class="inner-div">
                   <span>{{ item.name }}</span>
@@ -38,16 +30,11 @@
       </div>
     </div>
     <div class="right-right">
-      <BaseTitle title="资金占比分析"
-                 :width="780" />
+      <BaseTitle title="资金占比分析" :width="780" />
       <div class="chart-box">
-        <PieChart :data="pieTypeData"
-                  legendType="pec"
-                  title="资金占比分析" />
+        <PieChart :data="pieTypeData" legendType="pec" title="资金占比分析" />
       </div>
-      <BaseTitle title="重大项目"
-                 :width="780"
-                 :top="550" />
+      <BaseTitle title="重大项目" :width="780" :top="550" />
       <div class="chart-box box1">
         <div class="flex">
           <div>
@@ -58,19 +45,14 @@
               <MyCountUp :endVal="22333" />
             </div>
           </div>
-          <div class="lunbo-list"
-               @mouseenter="mouseEnterMain"
-               @mouseleave="mouseleaveMain">
+          <div class="lunbo-list" @mouseenter="mouseEnterMain" @mouseleave="mouseleaveMain">
             <div class="title-list">
               <div>
-                <span v-for="item in swiperTitle1"
-                      :key="item">{{item}}</span>
+                <span v-for="item in swiperTitle1" :key="item">{{item}}</span>
               </div>
             </div>
-            <swiper ref="manageMainSwiper"
-                    :options="swiperOption">
-              <swiper-slider v-for="(item, index) in list1"
-                             :key="`item-${index}`">
+            <swiper ref="manageMainSwiper" :options="swiperOption">
+              <swiper-slider v-for="(item, index) in list1" :key="`item-${index}`">
                 <div>
                   <div class="inner-div-main">
                     <span>{{ item.plan }}</span>
@@ -207,7 +189,6 @@ export default {
   },
   computed: {
     manageSwiper() {
-      console.log(this.$refs.manageSwiper, '');
       return this.$refs.manageSwiper.swiper;
     },
     swiper() {
@@ -220,7 +201,6 @@ export default {
     }
     this.$nextTick(() => {
       if (this.list.length < 4) {
-        console.log(this.manageSwiper, '=====');
         this.manageSwiper.autoplay = false;
       }
     });
