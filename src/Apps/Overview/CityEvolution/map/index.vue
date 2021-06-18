@@ -22,8 +22,16 @@ export default {
     this.map = new AMap.Map(this.mapDom, {
       resizeEnable: true,
       zoom: 13.4,
+      zooms: [3, 16],
       center: [122.200254, 29.717613],
+      mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
     });
+    const marker = new AMap.Marker({
+      position: [122.200254, 29.767613],
+      content: "<div style='display: inline-block; width: 20px; height: 20px; background: red;'>13444</div>",
+    });
+    console.log(marker);
+    marker.setMap(this.map);
   },
 };
 </script>
