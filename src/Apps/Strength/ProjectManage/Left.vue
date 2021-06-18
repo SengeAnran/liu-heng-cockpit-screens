@@ -383,7 +383,7 @@ export default {
           width: 22%;
         }
         &:nth-child(5) {
-          width: 12%;
+          width: 10%;
         }
       }
     }
