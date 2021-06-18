@@ -187,7 +187,6 @@ export default {
   .item_wrapper {
     margin-top: 65px;
     height: 460px;
-    background: black;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
