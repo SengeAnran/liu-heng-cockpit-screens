@@ -63,7 +63,6 @@ export default {
   left: 0;
   padding-top: 20px;
   padding-left: 20px;
-  // opacity: 0.6;
   box-sizing: border-box;
   .item_wrapper {
     margin-top: 90px;
