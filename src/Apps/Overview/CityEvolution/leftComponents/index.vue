@@ -31,5 +31,6 @@ export default {
   left: 140px;
   // background: red;
   // opacity: 0.6;
+  z-index: 100;
 }
 </style>

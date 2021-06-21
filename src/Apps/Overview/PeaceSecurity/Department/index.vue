@@ -53,7 +53,7 @@ export default {
           itemWidth: 20,
           itemHeight: 20,
           orient: 'vertical',
-          top: '35%',
+          top: '25%',
           right: '5%',
           formatter: function (name) {
             const cur = data.find((item) => item.name === name);

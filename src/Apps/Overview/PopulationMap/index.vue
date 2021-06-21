@@ -3,6 +3,7 @@
     <Register />
     <FloatPopulation />
     <FlowRank />
+    <Map />
     <AgeDistribution />
     <Degree />
     <Single />
@@ -14,6 +15,7 @@
 import Register from './Register';
 import FloatPopulation from './FloatPopulation';
 import FlowRank from './FlowRank';
+import Map from './Map';
 import AgeDistribution from './AgeDistribution';
 import Degree from './Degree';
 import Single from './Single';
@@ -24,6 +26,7 @@ export default {
     Register,
     FloatPopulation,
     FlowRank,
+    Map,
     AgeDistribution,
     Degree,
     Single,
@@ -38,5 +41,8 @@ export default {
   height: 2070px;
   background-size: 100% 100%;
   background-image: url('./img/show-bg.png');
+  >div:not(.map-container) {
+    z-index: 999;
+  }
 }
 </style>

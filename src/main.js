@@ -5,7 +5,6 @@ import store from './store';
 import BaseTitle from '@/components/BaseTitle';
 import CountUp from '@/components/CountUp';
 import * as echarts from 'echarts';
-import '@/assets/font.scss';
 
 Vue.component('CountUp', CountUp);
 Vue.component('BaseTitle', BaseTitle);

@@ -136,6 +136,18 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
+          axisPointer: {
+            type: 'line',
+            lineStyle: {
+              type: 'dashed',
+            },
+          },
+          textStyle: {
+            color: '#fff',
+            fontSize: 22,
+          },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         color: this.colors,
         legend: {

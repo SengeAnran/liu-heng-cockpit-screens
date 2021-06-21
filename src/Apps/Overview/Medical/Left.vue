@@ -138,6 +138,7 @@ export default {
   position: absolute;
   top: 263px;
   left: 160px;
+  z-index:1000;
   .left-left,
   .left-right {
     width: 50%;
