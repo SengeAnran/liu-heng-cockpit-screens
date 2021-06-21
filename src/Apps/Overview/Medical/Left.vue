@@ -49,7 +49,7 @@ import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import MyCountUp from './components/ICountUp';
-import { getHospitalAndDoctorInfo, getStaffNum, getCompetentTrend } from '@/api/Medical/api';
+import { getHospitalAndDoctorInfo, getStaffNum, getCompetentTrend, getOutpatientService, getEducationTrend } from '@/api/Medical/api';
 export default {
   name: 'MedicalLeft',
   components: { BaseTitle, LineChart, BarChart, PieChart, MyCountUp },
@@ -133,6 +133,8 @@ export default {
       this.getHospitalAndDoctorInfo();
       this.getStaffNum();
       this.getCompetentTrend();
+      this.getOutpatientService();
+      this.getEducationTrend();
     },
     getHospitalAndDoctorInfo() {
       getHospitalAndDoctorInfo().request().then((res) => {
@@ -149,11 +151,11 @@ export default {
         const xData = [];
         const data1 = [];
         const data2 = [];
-        res.ywryfb_female.map((item) => {
+        res.ywryfb_female && res.ywryfb_female.map((item) => {
           xData.push(item.ywfg);
           data2.push(item.rs);
         });
-        res.ywryfb_male.map((item) => {
+        res.ywryfb_male && res.ywryfb_male.map((item) => {
           data1.push(item.rs);
         });
         this.barData.data1 = data1;
@@ -163,11 +165,32 @@ export default {
     },
     getCompetentTrend() {
       getCompetentTrend().request().then((res) => {
-        res.map((item) => {
+        res && res.map((item) => {
           item.name = item.zc;
           item.value = item.rs;
         });
         this.pieAgeData = res;
+      });
+    },
+    getOutpatientService() {
+      getOutpatientService().request().then((res) => {
+        const xData = [];
+        const yData = [];
+        res && res.map((item) => {
+          xData.push(item.nf);
+          yData.push(item.mzrs);
+        });
+        this.lineData.xData = xData;
+        this.lineData.data1 = yData;
+      });
+    },
+    getEducationTrend() {
+      getEducationTrend().request().then((res) => {
+        res && res.map((item) => {
+          item.name = item.xl;
+          item.value = item.rs;
+        });
+        this.pieEducateData = res;
       });
     },
   },

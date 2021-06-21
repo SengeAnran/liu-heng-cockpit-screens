@@ -1,99 +1,99 @@
 import MetroApi from '@/utils/http';
 
 // 医院数量/医师数量分析
-export const getHospitalAndDoctorInfo = (params) => {
+export const getHospitalAndDoctorInfo = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getHospitalAndDoctorInfo',
     method: 'get',
-    params,
+    data,
   });
 };
 
 // 医务人员数量分布
-export const getStaffNum = (params) => {
+export const getStaffNum = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getStaffNum',
     method: 'get',
-    params,
+    data,
   });
 };
 
 // 人员职称结构
-export const getCompetentTrend = (params) => {
+export const getCompetentTrend = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getCompetentTrend',
     method: 'get',
-    params,
+    data,
   });
 };
 
 // 人员学历结构
-export const getEducationTrend = (params) => {
+export const getEducationTrend = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getEducationTrend',
     method: 'get',
-    params,
+    data,
   });
 };
 
 // 医疗机构列表信息
-export const getHospitalListByCategory = (params) => {
+export const getHospitalListByCategory = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getHospitalListByCategory',
     method: 'get',
-    params,
+    data,
   });
 };
 
 // 疫苗接种趋势
-export const getVaccinateTrend = (params) => {
+export const getVaccinateTrend = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getVaccinateTrend',
     method: 'get',
-    params,
+    data,
   });
 };
 
 // 疫苗接种点信息
-export const getPlaceInfo = (params) => {
+export const getPlaceInfo = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getPlaceInfo',
     method: 'get',
-    params,
+    data,
   });
 };
 // 门诊趋势
-export const getOutpatientService = (params) => {
+export const getOutpatientService = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getOutpatientService',
     method: 'get',
-    params,
+    data,
   });
 };
 // 隔离点信息
-export const getIsolationPlaceInfo = (params) => {
+export const getIsolationPlaceInfo = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getIsolationPlaceInfo',
     method: 'get',
-    params,
+    data,
   });
 };
 
 // 隔离点人数趋势图
-export const getIsolatedPointNum = (params) => {
+export const getIsolatedPointNum = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/medical/getIsolatedPointNum',
     method: 'get',
-    params,
+    data,
   });
 };
