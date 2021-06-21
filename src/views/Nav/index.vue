@@ -59,6 +59,8 @@ export default {
       return this.$route.matched?.[0]?.name || '';
     },
     secondaryNav() {
+      console.log(this.routes);
+      console.log(this.primalNavActiveName);
       const matched = this.routes.find((d) => d.name === this.primalNavActiveName);
       return matched?.children || [];
     },
@@ -123,6 +125,7 @@ export default {
   background: url('./nav-bg.png') no-repeat;
   background-size: 576rem 73rem;
   background-position: 0 0;
+  z-index: 100000;
 }
 .move-nav {
   .to-left {

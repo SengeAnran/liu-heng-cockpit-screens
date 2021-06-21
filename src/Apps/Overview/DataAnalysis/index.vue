@@ -46,7 +46,6 @@ export default {
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 2070px;
   display: flex;
   justify-content: space-between;
   padding: 244px 160px 0;

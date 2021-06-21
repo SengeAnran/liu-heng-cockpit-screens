@@ -26,8 +26,9 @@ export default {
 .right_component {
   position: absolute;
   width: 1700px;
-  height: 100%;
+  height: 1100px;
   top: 240px;
   right: 140px;
+  z-index: 100;
 }
 </style>
