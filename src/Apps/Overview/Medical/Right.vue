@@ -86,6 +86,8 @@ export default {
   top: 263px;
   right: 159px;
   display: flex;
+  z-index:1000;
+
   >div{
     height: 100%;
     width: 50%;
