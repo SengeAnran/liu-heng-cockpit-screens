@@ -7,25 +7,33 @@
 
 <script>
 import PieChart from '../components/PieChart';
+import { getWrok } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Work',
   data() {
     return {
-      personData: [
-        { value: 1048, name: '农业' },
-        { value: 735, name: '技术' },
-        { value: 580, name: '服务业' },
-        { value: 484, name: '工业' },
-        { value: 300, name: '其他' },
-      ],
+      personData: [],
     };
   },
   components: {
     PieChart,
   },
   mounted() {
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getWrok().request().then((json) => {
+        this.personData = this.resolveData(json);
+      });
+    },
+    resolveData(data) {
+      return data.map((item) => {
+        item.name = item.dsman;
+        item.value = +item.rs;
+        return item;
+      });
+    },
   },
 };
 </script>

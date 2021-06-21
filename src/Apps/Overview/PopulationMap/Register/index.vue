@@ -7,6 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getResidenceTrend } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Register',
   data() {
@@ -22,19 +23,17 @@ export default {
   },
   methods: {
     loadData() {
-      this.setData();
+      getResidenceTrend().request().then((json) => {
+        // console.log(json, '户籍信息');
+        this.chart.setOption(this.getOptions(json));
+      });
     },
-    setData() {
-      this.chart.clear();
-      this.chart.setOption(this.getOptions());
-    },
-    getOptions() {
-      const xAxisData = [];
-      for (let i = 1; i <= 12; i++) {
-        const temp = i + '月';
-        xAxisData.push(temp);
-      }
-      const data1 = [64, 33, 24, 9.78, 45, 40, 51, 31.5, 45, 78, 66, 44];
+    getOptions(data) {
+      // const xAxisData = [];
+      // for (let i = 1; i <= 12; i++) {
+      //   const temp = i + '月';
+      //   xAxisData.push(temp);
+      // }
       const option = {
         grid: {
           top: '18%',
@@ -83,8 +82,8 @@ export default {
           splitLine: {
             show: false,
           },
-          boundaryGap: false,
-          data: xAxisData,
+          boundaryGap: true,
+          data: data.map((item) => item.hjyf),
         },
         yAxis: {
           name: '指数',
@@ -162,7 +161,7 @@ export default {
                 },
               },
             },
-            data: data1,
+            data: data.map((item) => item.hjrs),
           },
         ],
       };
