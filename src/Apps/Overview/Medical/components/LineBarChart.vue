@@ -39,10 +39,15 @@ export default {
   },
   computed: {},
   watch: {
-    data() {
-      this.lineBarChart.setOption(this.option());
+    data: {
+      handler() {
+        this.$nextTick(() => {
+          this.lineBarChart.setOption(this.option());
+        });
+      },
+      immediate: true,
+      deep: true,
     },
-    deep: true,
   },
   mounted() {
     this.initChart();
