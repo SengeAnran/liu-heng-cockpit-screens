@@ -45,6 +45,18 @@ export default {
     margin-top: 3rem;
     display: flex;
     align-items: center;
+    &:nth-child(1) {
+      .name {
+        background: url('./icon/traffic.png') no-repeat;
+        background-position: center center;
+      }
+    }
+    &:nth-child(2) {
+      .name {
+        background: url('./icon/crowd.png') no-repeat;
+        background-position: center center;
+      }
+    }
     .name {
       width: 31rem;
       height: 12.5rem;
