@@ -2,7 +2,7 @@
   <div class="CityEvolution">
     <LeftComponent />
     <RightComponent />
-    <!-- <Map /> -->
+    <Map />
     <!-- <div class="marker_wrapper">
       <img src="./images/mark_left.png" alt="">
       <div class="address">
@@ -21,13 +21,13 @@
 <script>
 import LeftComponent from './leftComponents/index';
 import RightComponent from './rightComponents';
-// import Map from './map/index';
+import Map from './map/index';
 export default {
   name: 'CityEvolution',
   components: {
     LeftComponent,
     RightComponent,
-    // Map,
+    Map,
   },
 };
 </script>
