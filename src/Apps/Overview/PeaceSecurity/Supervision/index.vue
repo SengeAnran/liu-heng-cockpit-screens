@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { getLawOper } from '@/api/Overview/PeaceSecurity/api';
 export default {
   name: 'Supervision',
   data() {
@@ -26,23 +27,23 @@ export default {
       list: [
         {
           name: '执法次数',
-          year: 194,
-          month: 13,
+          year: 0,
+          month: 0,
         },
         {
           name: '出动人次',
-          year: 345,
-          month: 47,
+          year: 0,
+          month: 0,
         },
         {
-          name: '检查企业',
-          year: 169,
-          month: 19,
+          name: '建成企业',
+          year: 0,
+          month: 0,
         },
         {
           name: '完成笔录',
-          year: 244,
-          month: 41,
+          year: 0,
+          month: 0,
         },
       ],
     };
@@ -50,8 +51,21 @@ export default {
   components: {
   },
   mounted() {
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getLawOper().request().then((json) => {
+        this.list.forEach((item) => {
+          json.forEach((item1) => {
+            if (item.name === item1.zflx) {
+              item.year = item1.qncs || 0;
+              item.month = item1.bycs || 0;
+            }
+          });
+        });
+      });
+    },
   },
 };
 </script>
