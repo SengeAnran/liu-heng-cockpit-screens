@@ -16,6 +16,7 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getInOut } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'FlowRank',
   data() {
@@ -67,8 +68,14 @@ export default {
   mounted() {
     this.chart = echarts.init(this.$refs.barChart);
     this.chart.setOption(this.optionData(this.barData));
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getInOut().request().then((json) => {
+        console.log(json, '人口迁入迁出排行榜');
+      });
+    },
     handleClick(index) {
       this.activeIndex = index;
     },

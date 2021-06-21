@@ -10,7 +10,7 @@
             <div class="desc-count">
               <!-- <div> -->
                 <div class="count"><MyCountUp :endVal="item.count1"/></div>
-                <span>公办</span>
+                <!-- <span>公办</span> -->
               <!-- </div> -->
               <!-- <div>
                 <div class="count"><MyCountUp :endVal="item.count2"/></div>
@@ -19,8 +19,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="sub-title "
-             style="padding:20px 0">医务人员数量分布</div> -->
         <div class="chart">
           <BarChart :bar-data="barData" />
         </div>
@@ -36,8 +34,6 @@
             <div class="count"><MyCountUp :endVal="item.count"/></div>
           </div>
         </div>
-        <!-- <div class="sub-title "
-             style="padding:20px 0">截至2020年，医务人数增加230人</div> -->
         <div class="chart"><LineChart :line-data="lineData"/></div>
         <div class="chart">
           <PieChart :data="pieEducateData" legendType="pec" title="医务人员学历结构" :chartStyle="{scale:[2.3,2.2],position:['5.6%','5.98%']}"/>
@@ -53,7 +49,7 @@ import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import MyCountUp from './components/ICountUp';
-import { getHospitalAndDoctorInfo } from '@/api/medical';
+import { getHospitalAndDoctorInfo, getStaffNum, getCompetentTrend } from '@/api/Medical/api';
 export default {
   name: 'MedicalLeft',
   components: { BaseTitle, LineChart, BarChart, PieChart, MyCountUp },
@@ -63,29 +59,33 @@ export default {
         {
           label: '镇医院',
           count1: 2,
-          // count2: 1,
+          key: 'zyy',
         },
         {
           label: '卫生室',
           count1: 31,
-          // count2: 1,
+          key: 'wss',
         },
       ],
       docList: [
         {
           type: '医生总数',
+          key: 'yszs',
           count: 89,
         },
         {
           type: '年门诊数',
+          key: 'mzzs',
           count: 89,
         },
         {
           type: '病床总数',
+          key: 'bczs',
           count: 89,
         },
         {
           type: '救护车数',
+          key: 'jhcs',
           count: 89,
         },
       ],
@@ -105,7 +105,8 @@ export default {
         name2: '女',
         areaColor11: 'rgba(133, 234, 255, 1)',
         areaColor12: 'rgba(133, 234, 255, .3)',
-        xData: ['内科', '外科', '妇科', '儿科', '检验科', '急诊', '口腔科'],
+        // xData: ['内科', '外科', '妇科', '儿科', '检验科', '急诊', '口腔科'],
+        xData: [],
         data1: [1, 3, 5, 6, 8, 9, 12],
         data2: [1, 13, 5, 16, 8, 29, 12],
         areaColor21: 'rgba(255, 198, 151, 1)',
@@ -129,9 +130,44 @@ export default {
   },
   methods: {
     getData() {
-      getHospitalAndDoctorInfo().then((res) => {
-        if (res.code !== '200') { return; };
-        console.log(res.data.ysslfx);
+      this.getHospitalAndDoctorInfo();
+      this.getStaffNum();
+      this.getCompetentTrend();
+    },
+    getHospitalAndDoctorInfo() {
+      getHospitalAndDoctorInfo().request().then((res) => {
+        this.docList.map((item) => {
+          item.count = res.ysslfx[item.key];
+        });
+        this.descList.map((item) => {
+          item.count = res.yysl[item.key];
+        });
+      });
+    },
+    getStaffNum() {
+      getStaffNum().request().then((res) => {
+        const xData = [];
+        const data1 = [];
+        const data2 = [];
+        res.ywryfb_female.map((item) => {
+          xData.push(item.ywfg);
+          data2.push(item.rs);
+        });
+        res.ywryfb_male.map((item) => {
+          data1.push(item.rs);
+        });
+        this.barData.data1 = data1;
+        this.barData.data2 = data2;
+        this.barData.xData = xData;
+      });
+    },
+    getCompetentTrend() {
+      getCompetentTrend().request().then((res) => {
+        res.map((item) => {
+          item.name = item.zc;
+          item.value = item.rs;
+        });
+        this.pieAgeData = res;
       });
     },
   },
@@ -192,6 +228,8 @@ export default {
       }
       .desc-count {
         width: 223px;
+        height: 100px;
+        line-height: 100px;
         background: url('./images/hos-bg.png') no-repeat 100% 100%;
         padding-top: 12px;
         span {
@@ -224,6 +262,10 @@ export default {
         .count {
           width: 104px;
           line-height: 123px;
+          font-size: 24px;
+          .iCountUp{
+          font-size: 30px;
+          }
         }
       }
     }

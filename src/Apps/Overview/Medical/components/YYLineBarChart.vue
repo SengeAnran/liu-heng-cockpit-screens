@@ -41,10 +41,15 @@ export default {
   },
   computed: {},
   watch: {
-    data() {
-      this.yylineBarChart.setOption(this.option());
+    data: {
+      handler() {
+        this.$nextTick(() => {
+          this.yylineBarChart.setOption(this.option());
+        });
+      },
+      immediate: true,
+      deep: true,
     },
-    deep: true,
   },
   mounted() {
     this.initChart();
