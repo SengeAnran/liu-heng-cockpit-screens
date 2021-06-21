@@ -1,5 +1,5 @@
 <template>
-  <div class="flow-rank">
+  <view-template class="flow-rank">
     <BaseTitle title="户籍人口流动排名" />
     <div class="btn-list">
       <div
@@ -11,12 +11,12 @@
       </div>
     </div>
     <div class="bar-chart" ref="barChart"></div>
-  </div>
+  </view-template>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import { getInOut } from '@/api/Overview/PopulationMap/api';
+import { getPopIn } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'FlowRank',
   data() {
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     loadData() {
-      getInOut().request().then((json) => {
+      getPopIn().request().then((json) => {
         console.log(json, '人口迁入迁出排行榜');
       });
     },

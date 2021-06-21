@@ -28,6 +28,14 @@ export default {
     Nav,
     AppTitle,
   },
+  mounted() {
+    this.interval();
+  },
+  methods: {
+    interval() {
+      this.$store.commit('setIntervalId', true);
+    },
+  },
 };
 </script>
 <style lang="scss">
