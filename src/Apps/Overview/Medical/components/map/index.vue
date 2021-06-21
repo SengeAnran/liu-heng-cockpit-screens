@@ -46,6 +46,8 @@ export default {
         [122.143261, 30.105335], // 干览镇卫生院
       ],
       markerList: [],
+      markers: [],
+      infoWindow: {},
     };
   },
   mounted() {
@@ -56,12 +58,12 @@ export default {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
-        zoom: 16,
+        zoom: 13,
         zooms: [3, 16],
         center: [122.128762, 29.751102],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
-      this.addMarker();
+      // this.addMarker();
       this.addInfoWindow();
     },
     addInfoWindow() {
@@ -74,27 +76,34 @@ export default {
         content: html, // 传入 dom 对象，或者 html 字符串
         offset: new AMap.Pixel(2600, 0),
       });
-      this.map.on('click', (e) => {
-        console.log(e.lnglat, '地图点击事案件');
-        const { lng, lat } = e.lnglat;
-        infoWindow.open(this.map, [lng, lat]);
-      });
+      this.infoWindow = infoWindow;
+      // this.map.on('click', (e) => {
+      //   console.log(e.lnglat, '地图点击事案件');
+      //   const { lng, lat } = e.lnglat;
+      //   infoWindow.open(this.map, [lng, lat]);
+      // });
     },
-    addMarker() {
+    addMarker(markerList) {
       const markers = [];
-      for (let i = 0; i < this.markerList.length; i++) {
-        const element = this.markerList[i];
+      for (let i = 0; i < markerList.length; i++) {
+        const element = markerList[i];
         const marker = new AMap.Marker({
           position: element,
           content: "<div class='custom-marker'></div>",
           icon: hosIcon,
         });
-        // debugger;
-        marker.on('click', () => {
-          console.log('打点测试');
+        marker.on('click', (e) => {
+          console.log(e.lnglat, '地图点击事案件');
+          const { lng, lat } = e.lnglat;
+          this.infoWindow.open(this.map, [lng, lat]);
+        });
+        AMap.event.addListener(marker, 'click', function () {
+          // infoWindow.open(map, marker.getPosition());
+          console.log('dsdfsdf');
         });
         markers.push(marker);
       }
+      this.markers = markers;
       this.map.add(markers);
     },
     toggle(i) {
@@ -104,12 +113,13 @@ export default {
         this.markerList = this.markerLan;
       } else if (i === 1) {
         // 医院
-        this.markerList = this.markerLan.splice(0, 2);
+        this.markerList = this.markerLan.slice(0, 2);
       } else if (i === 2) {
         // 卫生院
-        this.markerList = this.markerLan.splice(2);
+        this.markerList = this.markerLan.slice(2);
       }
-      this.addMarker();
+      this.map.remove(this.markers);
+      this.addMarker(this.markerList);
     },
   },
 };
@@ -144,8 +154,8 @@ export default {
     width: 100%;
     height: 2070px;
     ::v-deep .custom-marker {
-      width: 45px;
-      height: 45px;
+      width: 90px;
+      height: 90px;
       background: url('../../images/hospital-icon.png') no-repeat center center;
       background-size: 98% 98%;
       border-radius: 50%;
