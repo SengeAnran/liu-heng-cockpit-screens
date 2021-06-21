@@ -23,12 +23,17 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getAgeAndSexyTrend } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'PeopleAgeSex',
   data() {
     return {
       leftCharts: null,
       rightCharts: null,
+      male: [],
+      maleYAxis: [],
+      female: [],
+      femaleYAxis: [],
     };
   },
   components: {
@@ -42,7 +47,17 @@ export default {
     this.loadData();
   },
   methods: {
-    loadData() {
+    async loadData() {
+      const res = await getAgeAndSexyTrend().request();
+      const { female, male } = res;
+      female.forEach((item) => {
+        this.femaleYAxis.push(item.nld);
+        this.female.push(item.rksl);
+      });
+      male.forEach((item) => {
+        this.maleYAxis.push(item.nld);
+        this.male.push(item.rksl);
+      });
       this.setData();
     },
     setData() {
@@ -119,7 +134,7 @@ export default {
           axisTick: {
             show: false,
           },
-          data: ['15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59'],
+          data: this.maleYAxis,
         },
         series: [
           {
@@ -147,7 +162,7 @@ export default {
                 global: false,
               },
             },
-            data: [444, 666, 777, 888, 888, 999, 100, 400, 800],
+            data: this.male,
           },
         ],
       };
@@ -221,7 +236,7 @@ export default {
           axisTick: {
             show: false,
           },
-          data: ['15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59'],
+          data: this.femaleYAxis,
         },
         series: [
           {
@@ -249,7 +264,7 @@ export default {
                 global: false,
               },
             },
-            data: [444, 666, 777, 888, 888, 999, 100, 400, 800],
+            data: this.female,
           },
         ],
       };

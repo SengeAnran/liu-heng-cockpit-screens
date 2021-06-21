@@ -38,7 +38,7 @@ export default {
           });
         }
       },
-      immediate: true,
+      immediate: false,
       deep: true,
     },
   },
@@ -76,7 +76,7 @@ export default {
           itemWidth: 20,
           itemHeight: 20,
           orient: 'vertical',
-          top: '18%',
+          top: '22%',
           right: '20%',
           formatter: function (name) {
             const cur = data.pieData.find((item) => item.name === name);

@@ -7,7 +7,7 @@
           全镇面积
         </div>
         <div class="count">
-          <CountUp  :num="place.allArea" />
+          <CountUp  :num="sqmj.qzmj" />
         </div>
         <div class="unit">
           平方千米
@@ -18,7 +18,7 @@
           行政辖区面积
         </div>
         <div class="count administration_title">
-          <CountUp  :num="place.mangeArea" />
+          <CountUp  :num="sqmj.xqmj" />
         </div>
         <div class="unit administration_unit">
           平方千米
@@ -29,7 +29,7 @@
           海域面积
         </div>
         <div class="count seal_title">
-          <CountUp  :num="place.oceanArea" />
+          <CountUp  :num="sqmj.hymj" />
         </div>
         <div class="unit seal_unit">
           平方千米
@@ -46,14 +46,13 @@ export default {
   components: {
     BaseTitle,
   },
-  data() {
-    return {
-      place: {
-        allArea: 654,
-        mangeArea: 140,
-        oceanArea: 514,
+  props: {
+    sqmj: {
+      type: Object,
+      default: () => {
+        return {};
       },
-    };
+    },
   },
 };
 </script>

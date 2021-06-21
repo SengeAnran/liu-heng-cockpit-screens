@@ -7,6 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getAgeDistribution } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'AgeDistribution',
   data() {
@@ -22,15 +23,13 @@ export default {
   },
   methods: {
     loadData() {
-      this.setData();
+      getAgeDistribution().request().then((json) => {
+        this.chart.setOption(this.getOptions(json));
+      });
     },
-    setData() {
-      this.chart.clear();
-      this.chart.setOption(this.getOptions());
-    },
-    getOptions() {
-      const data = [99, 75, 43, 52, 122, 38];
-      const xData = ['18岁以下', '18～25岁', '26～40岁', '41～60岁', '60岁以上'];
+    getOptions(data) {
+      // const data = [99, 75, 43, 52, 122, 38];
+      // const xData = ['18岁以下', '18～25岁', '26～40岁', '41～60岁', '60岁以上'];
       const option = {
         grid: {
           top: '10%',
@@ -39,7 +38,7 @@ export default {
           bottom: '16%',
         },
         xAxis: {
-          data: xData,
+          data: data.map((item) => item.nld),
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -136,7 +135,7 @@ export default {
               fontFamily: 'DIN Alternate',
             },
           },
-          data: data,
+          data: data.map((item) => item.rs),
         }],
       };
       return option;

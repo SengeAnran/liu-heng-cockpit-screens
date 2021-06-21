@@ -38,6 +38,7 @@
 <script>
 import './mark.scss';
 import AMap from 'AMap';
+import { getMapData } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   components: {
@@ -94,11 +95,34 @@ export default {
   },
   mounted() {
     this.marskLine = this.$refs.line;
-    this.autoClick();
     this.initMap();
-    this.markerList();
+    this.autoClick();
+    this.getData();
   },
   methods: {
+    getData() {
+      const year = (this.activeIndex * 5 + 2000) + '';
+      getMapData().request({ year: year }).then((res) => {
+        if (res.length) {
+          this.leftMarkMessage[0].count = res[0].czrk;
+          this.leftMarkMessage[1].count = res[0].ldrk;
+          this.leftMarkMessage[2].count = res[0].hjrk;
+          // 陆地面积
+          this.rightMarkMessage[0].count = res[0].ldmj;
+          this.rightMarkMessage[1].count = res[0].gdp;
+          this.rightMarkMessage[2].count = res[0].qysl;
+        } else {
+          this.leftMarkMessage[0].count = '暂无数据';
+          this.leftMarkMessage[1].count = '暂无数据';
+          this.leftMarkMessage[2].count = '暂无数据';
+          // 陆地面积
+          this.rightMarkMessage[0].count = '暂无数据';
+          this.rightMarkMessage[1].count = '暂无数据';
+          this.rightMarkMessage[2].count = '暂无数据';
+        }
+        this.markerDownList();
+      });
+    },
     initMap() {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
@@ -109,7 +133,11 @@ export default {
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
     },
-    markerList() {
+    markerDownList() {
+      this.markList.forEach((item) => {
+        this.map.remove(item);
+      });
+      this.markList = [];
       this.leftMarkMessage.forEach((item) => {
         this.makeLeftMarker(item);
       });
@@ -134,8 +162,8 @@ export default {
         return;
       }
       this.activeIndex += 1;
+      this.getData();
       this.lineTask(this.activeIndex); // 进度条
-      // 打点
     },
     makeLeftMarker(message) {
       const content = `
@@ -159,25 +187,21 @@ export default {
       this.markList.push(marker);
     },
     makeRightMarker(message) {
-      const name = message.name;
-      const count = message.count;
-      const unit = message.unit;
-      const position = message.position;
       const content = `
         <div class='mark_wrapper_right'>
           <img class='mark_img_bg' src="${require('./img/mark_right.png')}" style=''></img>
           <div class='mark_address'>六横</div>
-          <div class='mark_title'>${name}</div>
+          <div class='mark_title'>${message.name}</div>
           <div class='mark_count'>
-            <span>${count}</span>
+            <span>${message.count}</span>
             <span class='unit'>
-              ${unit}
+              ${message.unit}
             </span>
           </div>
         </div>`
       ;
       const marker = new AMap.Marker({
-        position: position,
+        position: message.position,
         content: content,
       });
       marker.setMap(this.map);
@@ -196,6 +220,7 @@ export default {
         this.activeIndex += 1;
         this.lineTask(this.activeIndex); // 进度条
       }
+      this.getData();
     },
   },
 };

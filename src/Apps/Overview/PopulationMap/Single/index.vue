@@ -10,6 +10,7 @@
   </div>
 </template>
 <script>
+import { getMarriedSingle } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Single',
   data() {
@@ -17,11 +18,11 @@ export default {
       list: [
         {
           name: '单身男性',
-          value: 3.09,
+          value: 0,
         },
         {
           name: '单身女性',
-          value: 3.29,
+          value: 0,
         },
       ],
     };
@@ -29,6 +30,15 @@ export default {
   components: {
   },
   mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getMarriedSingle().request().then((json) => {
+        this.list[0].value = json.dsman || 0;
+        this.list[1].value = json.dsfemale || 0;
+      });
+    },
   },
 };
 </script>

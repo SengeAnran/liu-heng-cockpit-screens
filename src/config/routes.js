@@ -163,10 +163,7 @@ export default [
       {
         path: 'economic-dev',
         name: '经济发展',
-        component: BgImg,
-        props: {
-          name: 'overview-city-evolution.jpg',
-        },
+        component: () => import('@/Apps/Vitality/EconomicDev'),
         meta: {
           indicator: [
             { name: 'GDP总量    ', value: 4320, unit: '万' },

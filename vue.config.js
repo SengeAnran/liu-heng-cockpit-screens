@@ -1,5 +1,6 @@
 module.exports = {
   configureWebpack: {
+    devtool: 'eval-source-map',
     externals: {
       AMap: 'window.AMap',
     },
