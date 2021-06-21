@@ -7,7 +7,9 @@
       </div>
       <div class="item item-right">
         <div>
-          <span>{{ item.count }}</span>
+          <span>
+            <CountUp  :num="item.count" />
+          </span>
           <span>{{ item.unit }}</span>
         </div>
       </div>
