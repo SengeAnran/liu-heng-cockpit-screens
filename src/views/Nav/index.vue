@@ -125,6 +125,7 @@ export default {
   background: url('./nav-bg.png') no-repeat;
   background-size: 576rem 73rem;
   background-position: 0 0;
+  z-index: 100000;
 }
 .move-nav {
   .to-left {
