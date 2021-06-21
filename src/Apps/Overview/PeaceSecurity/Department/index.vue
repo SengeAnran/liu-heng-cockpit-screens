@@ -7,6 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getDeptType } from '@/api/Overview/PeaceSecurity/api';
 export default {
   name: 'Degree',
   data() {
@@ -23,9 +24,19 @@ export default {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
-    this.chart.setOption(this.optionData(this.list));
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getDeptType().request().then((json) => {
+        this.list = json.map((item) => {
+          item.name = item.bmbl;
+          item.value = item.blcs || 0;
+          return item;
+        });
+        this.chart.setOption(this.optionData(this.list));
+      });
+    },
     optionData(data) {
       const total = data.reduce((prev, next) => prev + next.value, 0);
       data = data.map((item) => {
