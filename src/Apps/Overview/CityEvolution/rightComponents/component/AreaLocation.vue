@@ -49,7 +49,9 @@ export default {
   props: {
     sqmj: {
       type: Object,
-      default: {},
+      default: () => {
+        return {};
+      },
     },
   },
 };
