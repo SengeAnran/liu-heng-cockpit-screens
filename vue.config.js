@@ -7,11 +7,11 @@ module.exports = {
   devServer: {
     open: true,
     proxy: {
-      '/app': {
+      '/api': {
         // target: 'http://47.110.254.132:8005/',
-        target: 'http://192.168.124.46',
+        target: 'http://192.168.124.46:8100/',
         changeOrange: true,
-        pathRewrite: { '^/app': '' },
+        pathRewrite: { '^/api': '' },
       },
     },
   },

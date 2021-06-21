@@ -53,7 +53,7 @@ import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import MyCountUp from './components/ICountUp';
-
+import { getHospitalAndDoctorInfo } from '@/api/medical';
 export default {
   name: 'MedicalLeft',
   components: { BaseTitle, LineChart, BarChart, PieChart, MyCountUp },
@@ -124,8 +124,17 @@ export default {
     };
   },
   computed: {},
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      getHospitalAndDoctorInfo().then((res) => {
+        if (res.code !== '200') { return; };
+        console.log(res.data.ysslfx);
+      });
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
