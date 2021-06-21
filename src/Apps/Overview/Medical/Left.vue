@@ -1,5 +1,5 @@
 <template>
-  <div class="Medical-Left">
+  <view-template class="Medical-Left"  :interval="30" @interval="getData">
     <BaseTitle title="医疗资源情况" :width="1650" />
     <div class="flex">
       <div class="left-left">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </view-template>
 </template>
 
 <script>
@@ -49,7 +49,7 @@ import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
 import MyCountUp from './components/ICountUp';
-import { getHospitalAndDoctorInfo, getStaffNum, getCompetentTrend, getOutpatientService, getEducationTrend } from '@/api/Medical/api';
+import { getHospitalAndDoctorInfo, getStaffNum, getCompetentTrend, getOutpatientService, getEducationTrend } from '@/api/Overview/Medical/api';
 export default {
   name: 'MedicalLeft',
   components: { BaseTitle, LineChart, BarChart, PieChart, MyCountUp },
@@ -148,24 +148,26 @@ export default {
     },
     getStaffNum() {
       getStaffNum().request().then((res) => {
-        const xData = [];
-        const data1 = [];
-        const data2 = [];
-        res.ywryfb_female && res.ywryfb_female.map((item) => {
-          xData.push(item.ywfg);
-          data2.push(item.rs);
-        });
-        res.ywryfb_male && res.ywryfb_male.map((item) => {
-          data1.push(item.rs);
-        });
-        this.barData.data1 = data1;
-        this.barData.data2 = data2;
-        this.barData.xData = xData;
+        if (res.ywryfb_female && res.ywryfb_female.length) {
+          const xData = [];
+          const data1 = [];
+          const data2 = [];
+          res.ywryfb_female.map((item) => {
+            xData.push(item.ywfg);
+            data2.push(item.rs);
+          });
+          res.ywryfb_male.map((item) => {
+            data1.push(item.rs);
+          });
+          this.barData.data1 = data1;
+          this.barData.data2 = data2;
+          this.barData.xData = xData;
+        }
       });
     },
     getCompetentTrend() {
       getCompetentTrend().request().then((res) => {
-        res && res.map((item) => {
+        res && res.length && res.map((item) => {
           item.name = item.zc;
           item.value = item.rs;
         });
@@ -176,7 +178,7 @@ export default {
       getOutpatientService().request().then((res) => {
         const xData = [];
         const yData = [];
-        res && res.map((item) => {
+        res && res.length && res.map((item) => {
           xData.push(item.nf);
           yData.push(item.mzrs);
         });
@@ -186,7 +188,7 @@ export default {
     },
     getEducationTrend() {
       getEducationTrend().request().then((res) => {
-        res && res.map((item) => {
+        res && res.length && res.map((item) => {
           item.name = item.xl;
           item.value = item.rs;
         });

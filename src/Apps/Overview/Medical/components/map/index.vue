@@ -28,7 +28,7 @@ export default {
       map: null,
       mapDom: null,
       currentIndex: '',
-      list: ['全选', '医院', '卫生院'],
+      list: ['全选', '医院', '卫生院', '疫苗接种点', '隔离点'],
       isPop: false,
       markerMsg: {
         name: '六横镇医院',
@@ -93,7 +93,7 @@ export default {
           icon: hosIcon,
         });
         marker.on('click', (e) => {
-          console.log(e.lnglat, '地图点击事案件');
+          console.log(e.lnglat, '地图点击事件=========================');
           const { lng, lat } = e.lnglat;
           this.infoWindow.open(this.map, [lng, lat]);
         });
@@ -163,10 +163,10 @@ export default {
   }
   .toggle-layer {
     width: 274px;
-    height: 281px;
+    height: 360px;
     position: absolute;
     left: 3326px;
-    top: 963px;
+    top: 943px;
     background: url('../../images/toggle-bg.png') no-repeat;
     background-size: 100% 100%;
     z-index: 1000;

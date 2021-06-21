@@ -9,7 +9,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://47.110.254.132:8005/',
-        target: 'http://192.168.124.46:8100',
+        target: 'http://47.99.56.5:8100',
         changeOrange: true,
         pathRewrite: { '^/api': '' },
       },

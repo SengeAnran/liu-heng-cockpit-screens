@@ -1,5 +1,5 @@
 <template>
-  <div class="Medical-Right">
+  <view-template class="Medical-Right" :interval="30" @interval="getData">
     <div>
       <BaseTitle title="隔离点人数趋势图"
                  :width="780" />
@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </view-template>
 </template>
 
 <script>
@@ -58,7 +58,7 @@ import BaseTitle from './components/BaseTitle';
 import LineChart from './components/LineChart';
 // import PieChart from './components/PieChart';
 import LineBarChart from './components/LineBarChart';
-import { getIsolatedPointNum, getIsolationPlaceInfo, getPlaceInfo, getVaccinateTrend } from '@/api/Medical/api';
+import { getIsolatedPointNum, getIsolationPlaceInfo, getPlaceInfo, getVaccinateTrend } from '@/api/Overview/Medical/api';
 
 export default {
   name: 'MedicalRight',
@@ -116,6 +116,7 @@ export default {
     getData() {
       this.getIsolationPlaceInfo();
       this.getPlaceInfo();
+      this.getVaccinateTrend();
     },
     // 隔离点信息
     async getIsolationPlaceInfo() {
@@ -123,7 +124,7 @@ export default {
         .request()
         .then((res) => {
           this.isoList = res;
-          res && res.map((item) => {
+          res && res.length && res.map((item) => {
             this.isoNames.push(item.gldmx);
           });
           return this.isoNames;
@@ -137,7 +138,7 @@ export default {
             const xData = [];
             const yData = [];
             if (i === 0) {
-              res && res.map((item) => {
+              res && res.length && res.map((item) => {
                 this.lineData.name1 = item.gld;
                 xData.push(item.yf);
                 yData.push(item.glrs);
@@ -146,7 +147,7 @@ export default {
               this.lineData.data1 = yData;
             } else {
               const data2 = [];
-              res && res.map((item) => {
+              res && res.length && res.map((item) => {
                 this.lineData.name2 = item.gld;
                 data2.push(item.glrs);
               });
@@ -166,6 +167,17 @@ export default {
       getVaccinateTrend()
         .request()
         .then((res) => {
+          const xData = [];
+          const data1 = [];
+          const data2 = [];
+          res && res.length && res.map((item) => {
+            xData.push(item.yf);
+            data1.push(item.zzl * 100);
+            data2.push(item.jzrs);
+          });
+          this.lineBarData.xData = xData;
+          this.lineBarData.data1 = data1;
+          this.lineBarData.data2 = data2;
         });
     },
   },

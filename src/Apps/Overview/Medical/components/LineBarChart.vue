@@ -142,10 +142,10 @@ export default {
               opacity: 0.5,
             },
           },
-          minInterval: 1,
+          minInterval: 3,
           axisLabel: {
             show: true,
-            margin: 45,
+            margin: 65,
             color: 'rgba(225,225,225,.7)',
             fontSize: 21,
             fontFamily: 'DINPro',
