@@ -17,6 +17,8 @@ export default {
     RightComponent,
     Map,
   },
+  mounted() {
+  },
 };
 </script>
 <style lang="scss" scoped>
