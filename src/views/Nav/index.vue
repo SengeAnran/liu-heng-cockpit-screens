@@ -59,8 +59,8 @@ export default {
       return this.$route.matched?.[0]?.name || '';
     },
     secondaryNav() {
-      console.log(this.routes);
-      console.log(this.primalNavActiveName);
+      // console.log(this.routes);
+      // console.log(this.primalNavActiveName);
       const matched = this.routes.find((d) => d.name === this.primalNavActiveName);
       return matched?.children || [];
     },
