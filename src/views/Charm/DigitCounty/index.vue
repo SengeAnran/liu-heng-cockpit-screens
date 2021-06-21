@@ -17,15 +17,33 @@
           <showList :dataList="contain2 && contain2.length > 0 ? contain2 : []" />
         </div>
       </div>
-      <Proportion :name="manAwomenName" :dataList="manAwomenList" :barStyle="manAwomenStyle" />
+      <div class="proportion-wrapper">
+        <div>
+          <Proportion name="男女性别比" :dataList="manAwomenList" :barStyle="manAwomenStyle" />
+        </div>
+        <div>
+          <Proportion name="民族比例" :dataList="manAwomenList" :barStyle="manAwomenStyle" />
+        </div>
+      </div>
       <!-- 年龄分布 + 学历分布 -->
       <div class="third-wrapper">
         <div class="third-wrapper-base">
           <SamllTitle :name="ageName" />
-          <BarCharts style="height:30rem;width: 100%" :xAxisData="ageData.xData" :yAxisData="ageData.yData" />
+          <BarCharts
+            style="height: 38rem; width: 100%"
+            :xAxisData="ageData.xData"
+            :yAxisData="ageData.yData"
+            :bgColor="ageData.bgColor"
+          />
         </div>
         <div class="third-wrapper-base">
           <SamllTitle :name="educationName" />
+          <BarCharts
+            style="height: 38rem; width: 100%"
+            :xAxisData="educationData.xData"
+            :yAxisData="educationData.yData"
+            :bgColor="educationData.bgColor"
+          />
         </div>
       </div>
     </div>
@@ -33,12 +51,17 @@
     <div class="right-wrapper">
       <div>
         <SamllTitle name="居民情况" />
+        <pie-charts style="height: 35rem; width: 100%" />
         <SamllTitle name="五类老人" />
+        <TableList style="width: 100%; height: 19.7rem" :datalist="oldManInfo" />
         <SamllTitle name="村民信息" />
+        <TableList style="width: 100%; height: 19.7rem" :datalist="villagerInfo" fontColor="rgba(219, 248, 119, 1)" />
       </div>
       <div>
         <SamllTitle name="乡村规划" />
+        <RadarCharts style="height: 45rem; width: 100%" />
         <SamllTitle name="村民用水用电趋势" />
+        <LineCharts style="height: 52rem; width: 100%" />
       </div>
     </div>
   </div>
@@ -51,12 +74,21 @@ import SamllTitle from './Comps/SamllTitle';
 import Proportion from './Comps/Proportion';
 import showList from './Comps/ShowList';
 import BarCharts from './Comps/BarCharts';
+import PieCharts from './Comps/PieCharts';
+import TableList from './Comps/TableList';
+import RadarCharts from './Comps/RadarCharts';
+import LineCharts from './Comps/LineCharts';
+
 export default {
   components: {
     SamllTitle,
     Proportion,
     showList,
     BarCharts,
+    PieCharts,
+    TableList,
+    RadarCharts,
+    LineCharts,
   },
   data() {
     return {
@@ -75,7 +107,7 @@ export default {
         {
           name: '女性人口',
           unit: '人',
-          num: 33,
+          num: 1324,
         },
       ],
       contain1: {
@@ -117,10 +149,38 @@ export default {
       ageData: {
         xData: [8, 13, 27, 15, 3, 8],
         yData: ['0～16岁', '17～25岁', '26～40岁', '27～65岁', '65岁以上'],
-        bgColor: '',
+        bgColor: [
+          { offset: 0, color: 'rgba(117, 248, 195, 1)' },
+          { offset: 0.98, color: 'rgba(185, 251, 224, 1)' },
+          { offset: 0.98, color: '#fff' },
+          { offset: 1, color: '#fff' },
+        ],
       },
       educationName: '学历分布',
-
+      educationData: {
+        xData: [1, 4, 27, 15, 3, 8],
+        yData: ['研究生学历', '本科学历', '专科学历', '高中文化', '其他'],
+        bgColor: [
+          { offset: 0, color: 'rgba(248, 243, 117, 1)' },
+          { offset: 0.98, color: 'rgba(255, 164, 64, 1)' },
+          { offset: 0.99, color: '#fff' },
+          { offset: 1, color: '#fff' },
+        ],
+      },
+      oldManInfo: [
+        { name: '高龄老人', value: '44', unit: '人' },
+        { name: '残疾老人', value: '43', unit: '人' },
+        { name: '困难老人', value: '44', unit: '人' },
+        { name: '空巢老人', value: '35', unit: '人' },
+        { name: '孤寡老人', value: '123', unit: '人' },
+      ], // 五类老人
+      villagerInfo: [
+        { name: '低保人员', value: '253', unit: '人' },
+        { name: '残障人员', value: '43', unit: '人' },
+        { name: '退伍军人', value: '44', unit: '人' },
+        { name: '留守儿童', value: '35', unit: '人' },
+        { name: '烈士子女', value: '123', unit: '人' },
+      ], // 村民信息
     };
   },
 };
@@ -184,6 +244,11 @@ export default {
         margin-left: 4.2rem;
       }
     }
+    .proportion-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .third-wrapper {
       display: flex;
       justify-content: space-between;
@@ -199,7 +264,7 @@ export default {
     top: 13rem;
     display: flex;
     justify-content: space-between;
-    &>div {
+    & > div {
       width: 79.97rem;
     }
   }
