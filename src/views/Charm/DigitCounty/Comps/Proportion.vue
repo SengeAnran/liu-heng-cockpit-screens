@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" :style="'width:'+ width + 'rem'">
     <div class="name-style">
       {{name}}
     </div>
@@ -7,25 +7,23 @@
       <div v-for="(item, index) in dataList"
       class="flex-item"
       :key="index">
-        <div class="num-style">
+        <div class="num-style" :class="'font' + index">
           {{item.num}}
+          <!-- <CountUp :num="item.num" /> -->
         </div>
-        <!-- <div class="zhu" :style="'width:' + (item.num/sum * 100) + '%;'+'background:' + colorList[index].bgColor"></div>
-        <div class="name-style" :style="'color: ' + colorList[index].fontColor">
-          {{item.name}}
-        </div> -->
       </div>
     </div>
 
-    <div class="contain-box2" :style="'width:' + barStyle.width + '%;height:' + barStyle.height">
+    <div class="contain-box2" :style="'width: 100%' + '%;height:' + barStyle.height">
       <div v-for="(item, index) in dataList"
       class="flex-item"
-      :style="'width:' + (item.num/sum * 100) + '%; background:' + colorList[index].bgColor"
+      :style="'width:' + (item.num/sum * (width - 2)) + 'rem;'+ colorList[index].radius + ';background:' + colorList[index].shaow"
       :key="index">
-        <div class="zhu" ></div>
+        <div class="zhu"
+        :style="'width:' + (item.num/sum * (width - 3)) + 'rem;' + colorList[index].radius + ';background:' + colorList[index].bgColor"
+         ></div>
       </div>
     </div>
-
     <div class="contain-box">
       <div v-for="(item, index) in dataList"
       class="flex-item"
@@ -52,16 +50,20 @@ export default {
       default: function () {
         return {
           width: '80rem',
-          height: '3.17rem',
+          height: '3rem',
         };
       },
+    },
+    width: {
+      type: Number,
+      default: () => 80,
     },
   },
   data() {
     return {
       colorList: [
-        { fontColor: 'rgba(174, 250, 254, 1)', bgColor: 'linear-gradient(-90deg, rgba(180, 250, 254, 0.02) 0%, rgba(180, 250, 254, 1), 100%)' },
-        { fontColor: 'rgba(255,  167, 162, 1)', bgColor: 'linear-gradient(90deg, rgba(255, 167, 162, 1) 0%, rgba(255, 167, 162, .02) 100%);' },
+        { fontColor: 'rgba(174, 250, 254, 1)', bgColor: 'linear-gradient(90deg, rgba(180, 250, 254, 0.02) 0%, rgba(180, 250, 254, 1) 100%)', radius: 'border-radius: 0 2rem 2rem 0;', shaow: 'linear-gradient(90deg, rgba(180, 250, 254, 0.02) 0%, rgba(180, 250, 254, .2) 100%)' },
+        { fontColor: 'rgba(255, 167, 162, 1)', bgColor: 'linear-gradient(90deg, rgba(255, 167, 162, 1) 0%, rgba(255, 167, 162, .02) 100%);', radius: 'border-radius: 2rem 0 0 2rem ;', shaow: 'linear-gradient(90deg, rgba(255, 167, 162, .2) 0%, rgba(255, 167, 162, .02) 100%)' },
       ],
     };
   },
@@ -76,6 +78,8 @@ export default {
 .wrapper {
   width: 100%;
   padding: 3.4rem 0;
+  margin: 3.8rem 0;
+  background: linear-gradient(90deg, rgba(17, 36, 37, 0) 0%, rgba(17, 36, 37, .5) 50%, rgba(17, 36, 37, 0) 100%,);
   .name-style {
     color: rgba(255, 255, 255, .8);
     font-size: 3.52rem;
@@ -89,6 +93,17 @@ export default {
       width: auto;
       .name-style {
         font-size: 2.4rem;
+        font-weight: 600;
+      }
+      .font0 {
+        background-image: -webkit-linear-gradient(bottom, #4ECDD8, white);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+      }
+      .font1 {
+        background-image: -webkit-linear-gradient(bottom, rgba(255, 167, 162, 1), white);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
       }
       .num-style {
         font-size: 3.2rem;
@@ -102,9 +117,13 @@ export default {
   .contain-box2 {
     display: flex;
     justify-content: space-between;
+    // border: 1px solid red;
     .flex-item {
       width: auto;
+      display: flex;
+      align-items: center;
     }
+
     .zhu {
       height: 1.18rem;
       width: auto;

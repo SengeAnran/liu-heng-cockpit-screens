@@ -28,10 +28,15 @@ export default {
   },
   computed: {},
   watch: {
-    barData() {
-      this.barChart.setOption(this.option());
+    barData: {
+      handler() {
+        this.$nextTick(() => {
+          this.barChart.setOption(this.option());
+        });
+      },
+      immediate: true,
+      deep: true,
     },
-    deep: true,
   },
   mounted() {
     this.initChart();
