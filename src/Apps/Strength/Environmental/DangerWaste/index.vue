@@ -7,15 +7,16 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getWasteControl } from '@/api/Strength/Environmental/api';
 export default {
   name: 'DangerWaste',
   data() {
     return {
       list: [
-        { value: 1048, name: '产废量' },
-        { value: 735, name: '转移量' },
-        { value: 580, name: '贮存量' },
-        { value: 480, name: '实际接受量' },
+        { value: 0, name: '产废量' },
+        { value: 0, name: '转移量' },
+        { value: 0, name: '贮存量' },
+        { value: 0, name: '实际接受量' },
       ],
       title: '危险废物监管',
     };
@@ -24,9 +25,18 @@ export default {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
-    this.chart.setOption(this.optionData(this.list));
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getWasteControl().request().then((json) => {
+        this.list[0].value = json[0].cfl || 0;
+        this.list[1].value = json[0].zyl || 0;
+        this.list[2].value = json[0].ccl || 0;
+        this.list[3].value = json[0].sjssl || 0;
+        this.chart.setOption(this.optionData(this.list));
+      });
+    },
     optionData(data) {
       const total = data.reduce((prev, next) => prev + next.value, 0);
       data = data.map((item) => {
