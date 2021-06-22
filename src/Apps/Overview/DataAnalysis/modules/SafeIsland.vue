@@ -1,6 +1,6 @@
 <template>
   <div class="SafeIsland">
-    <secondary-title name="平安之岛" />
+    <secondary-title name="平安之岛" isLarge/>
     <div class="container">
       <div>
         <div>

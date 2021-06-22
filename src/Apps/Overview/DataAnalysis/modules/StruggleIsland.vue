@@ -1,6 +1,6 @@
 <template>
   <div class="StruggleIsland">
-    <secondary-title name="奋斗之岛" />
+    <secondary-title name="奋斗之岛" isLarge/>
     <div class="container">
       <div>
         <div>
