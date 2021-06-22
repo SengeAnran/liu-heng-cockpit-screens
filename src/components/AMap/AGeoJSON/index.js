@@ -1,4 +1,5 @@
-// import Vue from 'vue';
+import Vue from 'vue';
+import { getPopupPostion } from '../utils';
 
 export default {
   inject: ['mapPromise'],
@@ -43,34 +44,35 @@ export default {
       layer.setMap(map);
       this.layer = layer;
       this.managePopup();
+      this.$once('hook:beforeDestroy', () => {
+        layer.setMap(null);
+      });
     },
     async managePopup() {
       if (!this.$scopedSlots.popup) {
         return;
       }
-      // const map = await this.mapPromise;
-
-      // const popup = new Vue({
-      //   render: () => this.$scopedSlots.popup(),
-      // }).$mount(document.createElement('div'));
-      // const infoWindow = new AMap.InfoWindow({
-      //   // isCustom: true,
-      //   content: popup.$el,
-      //   // closeWhenClickMap: true,
-      // });
-      // infoWindow.open(map, [122.10479736328125, 29.754541914052]);
-      // setTimeout(() => {
-      //   popup.$destroy();
-      //   setTimeout(() => {
-      //     console.log(popup, popup.$el);
-      //   }, 100);
-      // }, 1000);
-      // if (!this.$slots.popup) {
+      const map = await this.mapPromise;
       this.layer.on('click', async (ev) => {
-        console.log('hello world');
+        const feature = ev.target.getExtData();
+        const popup = new Vue({
+          render: () => this.$scopedSlots.popup(feature),
+        }).$mount(document.createElement('div'));
+        const infoWindow = new AMap.InfoWindow({
+          content: popup.$el,
+          isCustom: true,
+          closeWhenClickMap: true,
+        });
+        const position = getPopupPostion(feature);
+        infoWindow.on('close', () => {
+          popup.$destroy();
+        });
+        infoWindow.open(map, position);
+        this.infoWindow = infoWindow;
       });
-      //   return;
-      // }
+      this.$once('hook:beforeDestroy', () => {
+        this.infoWindow && this.infoWindow.close();
+      });
     },
   },
   render() {
@@ -78,6 +80,5 @@ export default {
   },
   beforeDestroy() {
     this.destroyFlag = true;
-    this.geoJSON.setMap(null);
   },
 };
