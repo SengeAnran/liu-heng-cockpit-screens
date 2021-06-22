@@ -5,39 +5,68 @@
       <div>
         <div>
           <div class="name">
-            <p>卫生机构 <span>33个</span></p>
+            <p>
+              卫生机构
+              <span>{{ylxx.wsjgs}}个</span>
+            </p>
           </div>
           <div class="content">
-            <p>医院 <span>2个</span></p>
-            <p>其他 <span>31个</span></p>
+            <p>
+              医院
+              <span>{{ylxx.yys}}个</span>
+            </p>
+            <p>
+              其他
+              <span>{{ylxx.wsjgs - ylxx.yys}}个</span>
+            </p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>卫生技术人员 <span>257人</span></p>
+            <p>
+              卫生技术人员
+              <span>{{ylxx.wsjsry}}人</span>
+            </p>
           </div>
           <div class="content">
-            <p>医生 <span>174人</span></p>
-            <p>其他 <span>83人</span></p>
+            <p>
+              医生
+              <span>{{ylxx.ys}}人</span>
+            </p>
+            <p>
+              其他
+              <span>{{ylxx.wsjsry - ylxx.ys}}人</span>
+            </p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>p社会福利院数 <span>2个</span></p>
+            <p>
+              社会福利院数
+              <span>{{shflyxx.shflys}}个</span>
+            </p>
           </div>
           <div class="content">
-            <p>敬老院 福利院床位数 <span>224张</span></p>
-            <p>敬老院 福利院收养人数 <span>66人</span></p>
+            <p>
+              敬老院 福利院床位数
+              <span>{{shflyxx.cws}}张</span>
+            </p>
+            <p>
+              敬老院 福利院收养人数
+              <span>{{shflyxx.syrs}}人</span>
+            </p>
           </div>
         </div>
       </div>
       <div>
         <div>
-        <div class="name">
-          <p>互联网宽带用户</p>
-        </div>
+          <div class="name">
+            <p>互联网宽带用户</p>
+          </div>
           <div class="content">
-            <p><span>22750户</span></p>
+            <p>
+              <span>{{wlyhxx.hlwkdyhs}}户</span>
+            </p>
           </div>
         </div>
         <div>
@@ -45,7 +74,9 @@
             <p>网络电视用户</p>
           </div>
           <div class="content">
-            <p><span>22750户</span></p>
+            <p>
+              <span>{{wlyhxx.wldsyhs}}户</span>
+            </p>
           </div>
         </div>
         <div>
@@ -53,7 +84,9 @@
             <p>数字电视用户</p>
           </div>
           <div class="content">
-            <p><span>22750户</span></p>
+            <p>
+              <span>{{wlyhxx.szdsyhs}}户</span>
+            </p>
           </div>
         </div>
       </div>
@@ -63,14 +96,46 @@
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
+import { getSafety } from '@/api/Overview/DataAnalysis/api';
 export default {
   components: {
     SecondaryTitle,
   },
   data() {
-    return {};
+    return {
+      ylxx: {
+        wsjgs: 0,
+        wsjsry: 0,
+        ys: 0,
+        yys: 0,
+      },
+      shflyxx: {
+        cws: 0,
+        shflys: 0,
+        syrs: 0,
+      },
+      wlyhxx: {
+        hlwkdyhs: 0,
+        wldsyhs: 0,
+        szdsyhs: 0,
+      },
+    };
   },
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getSafety()
+        .request()
+        .then((json) => {
+          const { ylxx, shflyxx, wlyhxx } = json;
+          this.ylxx = ylxx;
+          this.shflyxx = shflyxx;
+          this.wlyhxx = wlyhxx;
+        });
+    },
+  },
 };
 </script>
 
@@ -87,6 +152,13 @@ export default {
     flex: 1;
     &:nth-child(2n + 1) {
       margin-right: 48px;
+    }
+    &:nth-child(2){
+      .content{
+        p{
+          font-size: 24px;
+        }
+      }
     }
     & > div {
       height: 120px;
@@ -110,7 +182,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      p{
+      p {
         margin: 0;
         font-size: 30px;
         line-height: 40px;
