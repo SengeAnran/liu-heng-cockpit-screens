@@ -27,6 +27,6 @@ export default {
   top: 0;
   width: 100%;
   height: 135rem;
-  background: url('/imgs/overview-traffic.jpg');
+  // background: url('/imgs/overview-traffic.jpg');
 }
 </style>

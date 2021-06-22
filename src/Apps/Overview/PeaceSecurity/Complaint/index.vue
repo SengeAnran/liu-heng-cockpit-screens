@@ -17,6 +17,7 @@
 <script>
 import BarItem from './barItem';
 import * as echarts from 'echarts';
+import { getComplainTrend } from '@/api/Overview/PeaceSecurity/api';
 export default {
   name: 'Complaint',
   data() {
@@ -33,7 +34,7 @@ export default {
   components: { BarItem },
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
-    this.chart.setOption(this.optionData(this.list));
+    this.loadData();
   },
   computed: {
     getTotal() {
@@ -43,6 +44,16 @@ export default {
     },
   },
   methods: {
+    loadData() {
+      getComplainTrend().request().then((json) => {
+        this.list = json.map((item) => {
+          item.name = item.xfts;
+          item.value = item.cs || 0;
+          return item;
+        });
+        this.chart.setOption(this.optionData(this.list));
+      });
+    },
     optionData(data) {
       return {
         title: {

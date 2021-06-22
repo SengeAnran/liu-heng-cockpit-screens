@@ -19,6 +19,7 @@
 
 <script>
 import LineChart from '../components/lineChart';
+import { getCountyAirQualityStatus, getAirQualityTrends } from '@/api/Strength/Environmental/api';
 export default {
   name: 'AirQuality',
   components: {
@@ -52,24 +53,41 @@ export default {
       list: [
         {
           name: '空气质量',
-          value: '优',
+          value: '',
         },
         {
           name: 'AQI',
-          value: 100,
+          value: 0,
           unit: '%',
         },
         {
           name: 'PM2.5',
-          value: 23,
+          value: 0,
           unit: 'ug/m3',
         },
         {
           name: '空气等级',
-          value: 'II 清新',
+          value: '',
         },
       ],
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getCountyAirQualityStatus().request().then((json) => {
+        this.list[0].value = json[0].kqzl || '';
+        this.list[1].value = json[0].aqi || '';
+        this.list[2].value = json[0].pm25 || '';
+        this.list[3].value = json[0].kqdj || '';
+        // console.log(json);
+      });
+      getAirQualityTrends().request().then((json) => {
+        console.log(json);
+      });
+    },
   },
 };
 </script>

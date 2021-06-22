@@ -45,10 +45,15 @@ export default {
   },
   computed: {},
   watch: {
-    lineData() {
-      this.lineChart.setOption(this.option());
+    lineData: {
+      handler() {
+        this.$nextTick(() => {
+          this.lineChart.setOption(this.option());
+        });
+      },
+      immediate: true,
+      deep: true,
     },
-    deep: true,
   },
   mounted() {
     this.initChart();

@@ -1,5 +1,5 @@
 <template>
-  <div class="flow-rank">
+  <view-template class="flow-rank">
     <BaseTitle title="户籍人口流动排名" />
     <div class="btn-list">
       <div
@@ -11,73 +11,51 @@
       </div>
     </div>
     <div class="bar-chart" ref="barChart"></div>
-  </div>
+  </view-template>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import { getInOut } from '@/api/Overview/PopulationMap/api';
+import { getPopIn, getPopOut } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'FlowRank',
   data() {
     return {
       activeIndex: 0,
       btnList: ['迁入', '迁出'],
-      barData: [
-        {
-          label: '黑龙江',
-          value: 1.2,
-        },
-        {
-          label: '山西',
-          value: 0.9,
-        },
-        {
-          label: '武汉',
-          value: 0.8,
-        },
-        {
-          label: '银川',
-          value: 0.7,
-        },
-        {
-          label: '西宁',
-          value: 0.6,
-        },
-        {
-          label: '拉萨',
-          value: 0.5,
-        },
-        {
-          label: '昆明',
-          value: 0.4,
-        },
-        {
-          label: '长沙',
-          value: 0.3,
-        },
-        {
-          label: '福建',
-          value: 0.2,
-        },
-      ],
+      barData: [],
     };
   },
   components: {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.barChart);
-    this.chart.setOption(this.optionData(this.barData));
     this.loadData();
   },
   methods: {
     loadData() {
-      getInOut().request().then((json) => {
-        console.log(json, '人口迁入迁出排行榜');
-      });
+      if (this.activeIndex === 0) {
+        getPopIn().request().then((json) => {
+          this.barData = this.resolveData(json);
+          this.chart.setOption(this.optionData(this.barData));
+        });
+      } else {
+        getPopOut().request().then((json) => {
+          this.barData = this.resolveData(json);
+          this.chart.setOption(this.optionData(this.barData));
+        });
+      }
     },
     handleClick(index) {
       this.activeIndex = index;
+      this.loadData();
+    },
+    resolveData(data) {
+      return data.map((item) => {
+        item.label = item.sf;
+        item.value = +item.rs;
+        return item;
+      });
     },
     optionData(data) {
       const colors = [['#f8f375', '#ffa340'], ['#75f8c3', '#befbe3']];

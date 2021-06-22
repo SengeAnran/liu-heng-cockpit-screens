@@ -7,25 +7,33 @@
 
 <script>
 import PieChart from '../components/PieChart';
+import { getEducation } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Degree',
   data() {
     return {
-      personData: [
-        { value: 1048, name: '大专' },
-        { value: 735, name: '本科' },
-        { value: 580, name: '研究生' },
-        { value: 484, name: '高中' },
-        { value: 300, name: '其他' },
-      ],
+      personData: [],
     };
   },
   components: {
     PieChart,
   },
   mounted() {
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getEducation().request().then((json) => {
+        this.personData = this.resolveData(json);
+      });
+    },
+    resolveData(data) {
+      return data.map((item) => {
+        item.name = item.xl;
+        item.value = +item.rs;
+        return item;
+      });
+    },
   },
 };
 </script>

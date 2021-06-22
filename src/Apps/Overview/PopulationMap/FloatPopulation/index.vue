@@ -7,6 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getFlowTrend } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Register',
   data() {
@@ -22,19 +23,16 @@ export default {
   },
   methods: {
     loadData() {
-      this.setData();
+      getFlowTrend().request().then((json) => {
+        this.chart.setOption(this.getOptions(json));
+      });
     },
-    setData() {
-      this.chart.clear();
-      this.chart.setOption(this.getOptions());
-    },
-    getOptions() {
-      const xAxisData = [];
-      for (let i = 1; i <= 12; i++) {
-        const temp = i + '月';
-        xAxisData.push(temp);
-      }
-      const data1 = [24, 33, 24, 9.78, 70, 40, 51, 15, 45, 78, 56, 44];
+    getOptions(data) {
+      // const xAxisData = [];
+      // for (let i = 1; i <= 12; i++) {
+      //   const temp = i + '月';
+      //   xAxisData.push(temp);
+      // }
       const option = {
         grid: {
           top: '18%',
@@ -83,8 +81,8 @@ export default {
           splitLine: {
             show: false,
           },
-          boundaryGap: false,
-          data: xAxisData,
+          boundaryGap: true,
+          data: data.map((item) => item.ldyf),
         },
         yAxis: {
           name: '指数',
@@ -123,7 +121,7 @@ export default {
             showAllSymbol: true,
             symbolSize: 6,
             itemStyle: {
-              color: '#e1f875',
+              color: '#75f8c3',
               borderColor: '#fff',
               borderWidth: 3,
               shadowColor: 'rgba(0, 0, 0, .3)',
@@ -134,8 +132,9 @@ export default {
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: 'rgba(225, 248, 117, 1)' },
-                  { offset: 1, color: 'rgba(225, 248, 117, 0.1)' },
+                  { offset: 0, color: 'rgba(117, 248, 195, 1)' },
+                  { offset: 1, color: 'rgba(117, 248, 195, 0.1)' },
+
                 ]),
               },
             },
@@ -161,7 +160,7 @@ export default {
                 },
               },
             },
-            data: data1,
+            data: data.map((item) => item.ldrs),
           },
         ],
       };
