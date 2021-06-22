@@ -8,6 +8,7 @@ export function centerFull({ width: pageWidth, height: pageHeight }) {
   const ratioY = screenHeight / pageHeight;
 
   document.body.style.transform = `scale(${ratioX}, ${ratioY})`;
+  window.globalScale && window.globalScale.setScale(ratioX, ratioY);
 }
 
 export function equalRatioFull({ width: pageWidth, height: pageHeight }) {
@@ -26,6 +27,7 @@ export function equalRatioFull({ width: pageWidth, height: pageHeight }) {
     offsetX = (screenWidth / ratioY - pageWidth) / 2;
   }
   document.body.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
+  window.globalScale && window.globalScale.setScale(scale, scale);
 }
 
 export function none({ width: pageWidth, height: pageHeight }) {
