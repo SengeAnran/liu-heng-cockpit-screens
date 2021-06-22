@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <FitScreen displayType="none" :pageSize="pageSize" />
+    <FitScreen displayType="equalRatioFull" :pageSize="pageSize" />
     <AppTitle />
     <div class="content">
       <router-view />
