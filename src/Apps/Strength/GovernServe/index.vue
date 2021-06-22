@@ -1,5 +1,5 @@
 <template>
-  <div class="GovernServe">
+  <div class="govern-serve">
     <Left/>
     <Map/>
     <Right/>
@@ -24,11 +24,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.GovernServe{
+.govern-serve{
   width: 100%;
   height: 2070px;
   background-position: center;
-  background: url('./img/bg.png') no-repeat 100% 100%;
+  // background: url('./img/bg.png') no-repeat 100% 100%;
   position: absolute;
   top: 0;
   left: 0;
