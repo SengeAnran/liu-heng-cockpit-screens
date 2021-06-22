@@ -10,6 +10,7 @@
 <script>
 import BaseTitle from '../../components/BaseTitle';
 import * as echarts from 'echarts';
+import { getPopulationTrend } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   components: {
@@ -18,6 +19,9 @@ export default {
   data() {
     return {
       charts: null,
+      xAxisData: [],
+      bornData: [],
+      deathData: [],
     };
   },
   mounted() {
@@ -25,19 +29,25 @@ export default {
     this.loadData();
   },
   methods: {
-    loadData() {
-      this.setData();
+    loadData() { // 社区信息
+      getPopulationTrend().request().then((res) => {
+        console.log(res);
+        res.born.reverse().forEach((item) => {
+          this.xAxisData.push(item.chyf);
+          this.bornData.push(item.chks);
+        });
+        res.death.reverse().forEach((item) => {
+          this.deathData.push(item.swks);
+        });
+        console.log(this.bornData, this.deathData);
+        this.setData();
+      });
     },
     setData() {
       this.charts.clear();
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const xAxisData = ['A社区', 'B社区', 'C社区', 'D社区', 'E社区', 'F社区', 'G社区', 'H社区'];
-      // 全区增幅
-      const data1 = [114, 13, 24, 9.78, 450, 40, 51, 3.15, 45, 78, 66, 44];
-      // 全市增幅
-      const data2 = [10, 40, 51, 3.15, 114, 13, 24, 114, 13, 24, 22, 56];
       const option = {
         title: {
           text: '单位（人）',
@@ -105,7 +115,7 @@ export default {
             show: false,
           },
           boundaryGap: false,
-          data: xAxisData,
+          data: this.xAxisData,
         },
         yAxis: {
           type: 'value',
@@ -178,7 +188,7 @@ export default {
                 },
               },
             },
-            data: data1,
+            data: this.bornData,
           },
           {
             name: '死亡人数',
@@ -207,7 +217,7 @@ export default {
             tooltip: {
               show: true,
             },
-            data: data2,
+            data: this.deathData,
           },
         ],
       };

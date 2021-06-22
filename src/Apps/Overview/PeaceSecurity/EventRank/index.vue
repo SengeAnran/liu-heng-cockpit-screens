@@ -6,6 +6,7 @@
 </template>
 <script>
 import * as echarts from 'echarts';
+import { getIndustryRank } from '@/api/Overview/PeaceSecurity/api';
 export default {
   name: 'Complaint',
   data() {
@@ -38,15 +39,26 @@ export default {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.barChart);
-    this.chart.setOption(this.optionData(this.barData));
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getIndustryRank().request().then((json) => {
+        this.barData = json.map((item) => {
+          item.label = item.hymc;
+          item.value = item.je;
+          return item;
+        });
+        this.chart.setOption(this.optionData(this.barData));
+        // console.log(json, '排名');
+      });
+    },
     optionData(data) {
       return {
         grid: {
           top: 15,
           left: 10,
-          right: 160,
+          right: 210,
           bottom: 60,
           containLabel: true,
         },

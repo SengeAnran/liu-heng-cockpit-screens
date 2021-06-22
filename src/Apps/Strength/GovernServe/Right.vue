@@ -6,8 +6,8 @@
       <div class="top-box flex">
         <div class="item flex" v-for="(item, index) in list" :key="index">
           <div class="name">
-            <div>预约今日</div>
-            <div class="sub-title">数量</div>
+            <div>{{item.name}}</div>
+            <div class="sub-title">办理量</div>
           </div>
           <div>
             <CountUp :num="item.number" />
@@ -33,7 +33,7 @@
             <div class="sub-title">{{ item.subTitle }}</div>
           </div>
           <div>
-            <div class="number"><span class="sign" v-show="item.hasSign">+</span><CountUp :num="item.number" /></div>
+            <div class="number"><span class="sign" v-show="item.hasSign"><span v-if="item.number>0">+</span><span v-else>-</span></span><CountUp :num="item.number" /></div>
             <div class="unit">件</div>
           </div>
         </div>
@@ -44,7 +44,7 @@
       <div class="bar-box">
         <div class="name">本月事项满意度排行Top5</div>
         <Bar
-          v-for="(item, index) in barList"
+          v-for="(item, index) in barList1"
           :color="'221, 114, 227'"
           :key="index"
           :barData="{ ...item, index: index + 1 }"
@@ -55,20 +55,16 @@
 </template>
 
 <script>
-import BaseTitle from '../../Overview/Medical/components/BaseTitle';
+import { getRealtimeHandling, getEvaluationSituation, getTrendOfHandlingVolume, getEvaluationPercent, geTopFiveHotIssues, getTopFiveSatisfactionRank } from '@/api/Strength/GovernServe/api';
 import LineChart from '../../Overview/Medical/components/LineChart';
 import PieChart from '../../Overview/Medical/components/PieChart';
 import Bar from './component/Bar';
 export default {
   name: 'Right',
-  components: { BaseTitle, LineChart, PieChart, Bar },
+  components: { LineChart, PieChart, Bar },
   data() {
     return {
-      pieTypeData: [
-        { name: '非常满意', value: 10 },
-        { name: '满意', value: 20 },
-        { name: '不满意', value: 30 },
-      ],
+      pieTypeData: [],
       lineData: {
         title: '办理量趋势',
         yname1: '件',
@@ -77,28 +73,28 @@ export default {
         lineColor11: 'rgba(89, 219, 230, 1)',
         lineColor12: 'rgba(153, 170, 255, 1)',
         showArea: false,
-        xData: [2015, 2016, 2017, 2018, 2019, 2020, 2021],
-        data1: [1, 3, 5, 6, 8, 9, 12],
-        data2: [13, 33, 53, 6, 38, 9, 12],
+        xData: [],
+        data1: [],
+        data2: [],
       },
       pieColor: ['#6182AE', ' #E772DD', '#01A1F5'],
       list: [
         {
           name: '今日',
-          number: 102,
+          number: 0,
         },
         {
           name: '本周',
-          number: 102,
+          number: 0,
         },
         {
           name: '月度',
-          number: 102,
+          number: 0,
         },
       ],
       list1: [
-        { name: '评价总数', number: 234324 },
-        { name: '评价总数', subTitle: '较昨日', hasSign: true, number: 88 },
+        { name: '评价总数', number: 0 },
+        { name: '评价总数', subTitle: '较昨日', hasSign: true, number: 0 },
       ],
       barList: [
         { name: '不动产登记', percent: 90 },
@@ -116,9 +112,49 @@ export default {
       ],
     };
   },
-  computed: {},
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getRealtimeHandling()
+        .request()
+        .then((json) => {
+          if (!json) { return; }
+          this.list[0].number = json[0].jrbll || 0;
+          this.list[1].number = json[0].bzbll || 0;
+          this.list[2].number = json[0].ydbll || 0;
+        });
+      getEvaluationSituation().request()
+        .then((json) => {
+          if (!json) { return; }
+          this.list1[0].number = json[0].pjzs || 0;
+          this.list1[1].number = json[0].jzrpjzs || 0;
+        });
+      getTrendOfHandlingVolume().request()
+        .then((json) => {
+          if (!json) { return; }
+          this.lineData.xData = json.today.map((item) => item.sj);
+          this.lineData.data1 = json.today.map((item) => item.blajs);
+          this.lineData.data2 = json.last.map((item) => item.blajs);
+        });
+      getEvaluationPercent().request()
+        .then((json) => {
+          if (!json) { return; }
+          this.pieTypeData = json.map((item) => { return { name: item.pjzt, value: item.pjzs }; });
+        });
+      geTopFiveHotIssues().request()
+        .then((json) => {
+          if (!json) { return; }
+          this.barList = json.map((item) => { return { name: item.sj, percent: item.blajs }; });
+        });
+      getTopFiveSatisfactionRank().request()
+        .then((json) => {
+          if (!json) { return; }
+          this.barList1 = json.map((item) => { return { name: item.sxfl, percent: item.pjzs }; });
+        });
+    },
+  },
 };
 </script>
 

@@ -10,11 +10,13 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getCommunityInfo } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   data() {
     return {
       charts: null,
+      data: [],
     };
   },
   components: {
@@ -26,16 +28,11 @@ export default {
     this.loadData();
   },
   methods: {
-    loadData() {
-      this.setData();
-    },
     setData() {
       this.charts.clear();
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const data = [990, 175, 43, 532, 222, 898];
-      const xData = ['A社区', 'B社区', 'C社区', 'D社区', 'E社区', 'F社区'];
       const option = {
         title: {
           text: '（人）',
@@ -65,7 +62,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: xData,
+          data: this.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -149,27 +146,24 @@ export default {
             textStyle: {
               fontSize: 22,
             },
-            // formatter: (params) => {
-            //   const { data, dataIndex } = params;
-            //   const eachD = ['起', '条', '个', '人'];
-            //   return `{a|${data}}{b|${eachD[dataIndex]}}`;
-            // },
-            // rich: {
-            //   a: {
-            //     color: 'rgba(24, 227, 255, 1)',
-            //     fontSize: 22,
-            //     fontFamily: 'DIN Alternate',
-            //   },
-            //   b: {
-            //     color: 'rgba(24, 227, 255, 1)',
-            //     fontSize: 22,
-            //   },
-            // },
           },
-          data: data,
+          data: this.data,
         }],
       };
       return option;
+    },
+    loadData() { // 社区信息
+      getCommunityInfo().request().then((res) => {
+        const arr = [];
+        const xAxisData = [];
+        res.forEach((item) => {
+          arr.push(item.cqks);
+          xAxisData.push(item.sqmc);
+        });
+        this.xAxisData = xAxisData;
+        this.data = arr;
+        this.setData();
+      });
     },
   },
 };
