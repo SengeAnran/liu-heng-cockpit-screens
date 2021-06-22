@@ -40,11 +40,11 @@ export const getEducationTrend = (data) => {
   });
 };
 
-// 医疗机构列表信息
+// 医院信息
 export const getHospitalListByCategory = (data) => {
   return new MetroApi({
     myType: 0,
-    url: '/medical/getHospitalListByCategory',
+    url: '/medical/getHospitalInfo',
     method: 'get',
     data,
   });

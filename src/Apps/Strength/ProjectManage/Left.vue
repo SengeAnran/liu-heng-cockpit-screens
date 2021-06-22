@@ -1,14 +1,15 @@
 <template>
   <div class="ProjectManage-left flex">
     <div>
-      <BaseTitle title="项目投资信息" :width="750" />
+      <BaseTitle title="项目投资信息"
+                 :width="750" />
       <div class="desc">
         <p>实时情况</p>
         <div class="flex desc-item">
           <div class="flex">
             <div class="label">已实现 <br />融资项目</div>
             <div class="count">
-              <MyCountUp :endVal="233" /><span class="unit">个</span>
+              <MyCountUp :endVal="onTimeData.ysxrzxms" /><span class="unit">个</span>
             </div>
           </div>
           <div class="flex">
@@ -16,7 +17,7 @@
               已实现<br />融资总量
             </div>
             <div class="count">
-              <MyCountUp :endVal="233" /><span class="unit">万</span>
+              <MyCountUp :endVal="onTimeData.yssrzzl" /><span class="unit">万</span>
             </div>
           </div>
         </div>
@@ -29,26 +30,44 @@
       </div>
     </div>
     <div>
-      <BaseTitle title="项目列表" :width="750" />
-      <div class="lunbo" @mouseenter="mouseEnter" @mouseleave="mouseleave">
+      <BaseTitle title="项目列表"
+                 :width="750" />
+      <div class="lunbo"
+           @mouseenter="mouseEnter"
+           @mouseleave="mouseleave">
         <div class="titles">
           <div>
-            <span v-for="item in swiperTitle" :key="item">{{item}}</span>
+            <span v-for="item in swiperTitle"
+                  :key="item">{{item}}</span>
           </div>
         </div>
-        <swiper ref="mySwiper" :options="swiperOption">
-          <swiper-slider v-for="(item, index) in list" :key="`item-${index}`">
+        <swiper ref="mySwiper"
+                :options="swiperOption"
+                v-if="list.length>9">
+          <swiper-slider v-for="(item, index) in list"
+                         :key="`lunbo-item-${index}`">
             <div>
               <div class="inner-div">
-                <span>{{ item.name }}</span>
-                <span>{{ item.dept }}</span>
-                <span>{{ item.startTimt }}</span>
-                <span>{{ item.endTime }}</span>
-                <span>{{ item.money }}</span>
+                <span>{{ item.qymc }}</span>
+                <span>{{ item.qtdw }}</span>
+                <span>{{ item.nkgsj }}</span>
+                <span>{{ item.nkgjssj }}</span>
+                <span>{{ item.tze }}</span>
               </div>
             </div>
           </swiper-slider>
         </swiper>
+        <div v-else class="outer-div">
+          <div class="inner-div"
+               v-for="(item, index) in list"
+               :key="`item-${index}`">
+            <span>{{ item.qymc }}</span>
+            <span>{{ item.qtdw }}</span>
+            <span>{{ item.nkgsj }}</span>
+            <span>{{ item.nkgjssj }}</span>
+            <span>{{ item.tze }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -60,104 +79,23 @@ import MyCountUp from '../../Overview/Medical/components/ICountUp';
 import YYLineBarChart from '../../Overview/Medical/components/YYLineBarChart';
 import swiper from '../../Overview/Medical/components/Swiper';
 import SwiperSlider from '../../Overview/Medical/components/SwiperSlider';
+import {
+  realtimeInvestment,
+  projectIndustryDistribution,
+  projectCommencement,
+  itemsList,
+} from '@/api/Strength/ProjectManage/api';
 export default {
   name: 'ProjectManageLeft',
   components: { BaseTitle, MyCountUp, YYLineBarChart, swiper, SwiperSlider },
   data() {
     return {
       swiperTitle: ['项目名称', '牵头单位', '拟开工时间', '拟结束时间', '投资额'],
-      list: [
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        }, {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-        {
-          name: '六横人民广场',
-          dept: '六横镇政府',
-          startTimt: '2020-05-10',
-          endTime: '2025-05-10',
-          money: '450万',
-        },
-      ],
+      list: [],
+      onTimeData: {
+        ysxrzxms: 203,
+        yssrzzl: 5420,
+      },
       swiperOption: {
         direction: 'vertical',
         speed: 1000,
@@ -203,15 +141,20 @@ export default {
   },
   computed: {
     swiper() {
+      console.log(this.$refs.mySwiper.swiper);
       return this.$refs.mySwiper.swiper;
     },
   },
   mounted() {
-    if (this.list.length < 10) {
-      this.swiper.autoplay = false;
-    }
+    this.getData();
   },
   methods: {
+    getData() {
+      this.realtimeInvestment();
+      this.projectIndustryDistribution();
+      this.projectCommencement();
+      this.itemsList();
+    },
     mouseEnter() {
       if (this.list.length < 10) {
         return;
@@ -223,6 +166,73 @@ export default {
         return;
       }
       this.swiper.autoplay.start();
+    },
+    // 实时
+    realtimeInvestment() {
+      realtimeInvestment()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            this.onTimeData = res[0];
+          }
+        });
+    },
+    // 项目行业分布
+    projectIndustryDistribution() {
+      projectIndustryDistribution()
+        .request()
+        .then((res) => {
+          if (res.tze && res.tze.length) {
+            const xData = [];
+            const data2 = [];
+            res.tze.map((item) => {
+              xData.push(item.value);
+              data2.push(+item.label);
+            });
+            this.lineBarDataBussiness.xData = xData;
+            this.lineBarDataBussiness.data2 = data2;
+          }
+          if (res.xms && res.xms.length) {
+            const data1 = [];
+            res.xms.map((item) => {
+              data1.push(+item.label);
+            });
+            this.lineBarDataBussiness.data1 = data1;
+          }
+        });
+    },
+    // 项目开工情况
+    projectCommencement() {
+      projectCommencement()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            const xData = [];
+            const data1 = [];
+            const data2 = [];
+            const data3 = [];
+            res.map((item) => {
+              xData.push(item.qymc);
+              data1.push(item.percent.slice(0, -1));
+              data2.push(item.xmzs);
+              data3.push(item.kgzs);
+            });
+            this.lineBarData.xData = xData;
+            this.lineBarData.data1 = data1;
+            this.lineBarData.data2 = data2;
+            this.lineBarData.data3 = data3;
+          }
+        });
+    },
+    // 轮播列表
+    itemsList() {
+      itemsList()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            this.list = res;
+          }
+        });
     },
   },
 };
@@ -354,38 +364,50 @@ export default {
     align-items: center;
     font-size: 26px;
     box-sizing: border-box;
-    .inner-div {
-      width: 100%;
-      text-align: left;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-family: Source Han Sans SC;
-      font-weight: 500;
-      color: #78d2ff;
-      padding: 0 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      span {
-        height: 75px;
-          line-height: 100px;
-        &:nth-child(1) {
-          width: 24%;
-        }
-        &:nth-child(2) {
-          width: 20%;
-        }
-        &:nth-child(3) {
-          width: 22%;
-        }
-        &:nth-child(4) {
-          width: 22%;
-        }
-        &:nth-child(5) {
-          width: 10%;
-        }
-      }
+  }
+}
+.outer-div {
+  width: 795px;
+  margin-top: 34px;
+  background: url('./images/list-bg.png') no-repeat 100% 100%;
+  display: flex;
+  align-items: center;
+  font-size: 26px;
+  span {
+    line-height: 75px!important;
+  }
+}
+.inner-div {
+  width: 100%;
+  height: 75px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Source Han Sans SC;
+  font-weight: 500;
+  color: #78d2ff;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    height: 75px;
+    line-height: 100px;
+    &:nth-child(1) {
+      width: 24%;
+    }
+    &:nth-child(2) {
+      width: 20%;
+    }
+    &:nth-child(3) {
+      width: 22%;
+    }
+    &:nth-child(4) {
+      width: 22%;
+    }
+    &:nth-child(5) {
+      width: 10%;
     }
   }
 }
