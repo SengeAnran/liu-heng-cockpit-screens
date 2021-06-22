@@ -204,7 +204,6 @@ export default {
     right: 0;
     margin-left: 12px;
     .tables {
-      overflow-y: scroll;
       font-size: 28px;
       text-align: center;
       > div {
