@@ -1,6 +1,5 @@
 <template>
   <div class="map_wrapper">
-    <div class="mask"></div>
     <div class="main-map"
          ref="map"></div>
     <div class="toggle-layer">
@@ -32,7 +31,6 @@ export default {
       list: [
         { type: '全选', key: 'all' },
         { type: '医院', key: 'getHospitalListByCategory' },
-        // { type: '卫生院', key: '' },
         { type: '疫苗接种点', key: 'getPlaceInfo' },
         { type: '隔离点', key: 'getIsolationPlaceInfo' },
       ],
@@ -60,26 +58,26 @@ export default {
   },
   mounted() {
     this.initMap();
+    this.getData('all');
   },
   methods: {
     getData(category) {
       this.markerMsgList = [];
       const apis = { getHospitalListByCategory, getPlaceInfo, getIsolationPlaceInfo };
+      const apisArr = [
+        getHospitalListByCategory().request(),
+        getPlaceInfo().request(),
+        getIsolationPlaceInfo().request(),
+      ];
       if (category === 'all') {
-        for (const key in apis) {
-          if (Object.hasOwnProperty.call(apis, key)) {
-            const api = apis[key];
-            api()
-              .request()
-              .then((res) => {
-                res.map((item) => {
-                  item.position = [item.lng, item.lat];
-                });
-                this.markerMsgList.push(...res);
-              });
-          }
-        }
-        this.addMarkerOneByOne();
+        Promise.all(apisArr).then((res) => {
+          const data = [...res[0], ...res[1], ...res[2]];
+          data.map((item) => {
+            item.position = [item.lng, item.lat];
+          });
+          this.markerMsgList = data;
+          this.addMarkerOneByOne();
+        });
       } else {
         apis[category]()
           .request()
@@ -95,7 +93,6 @@ export default {
             }
           });
       }
-      console.log(this.markerMsgList, 'this.markerMsgList');
     },
     initMap() {
       this.mapDom = this.$refs.map;
@@ -110,10 +107,10 @@ export default {
     addInfoWindow(markerMsg, lnglat) {
       const { lng, lat } = lnglat;
       const html = `<div class='pop-up-box'>
-          <h3>${markerMsg.yljg || markerMsg.gldmx || markerMsg.yymc}</h3>
+          <h3>${markerMsg.jzdmc || markerMsg.gldmx || markerMsg.yymc}</h3>
           <div>
             <label>联系电话：</label><br>
-            <span>${markerMsg.dh}<span>
+            <span>${markerMsg.dh || '暂无'}<span>
           </div>
           <div class='flex'>
             <div><label>医生人数：</label><br><span>${markerMsg.ysrs || 0}人</span></div>
@@ -135,13 +132,11 @@ export default {
         this.map.remove(item);
       });
       this.markers = [];
-      this.markerMsgList.map((item) => {
-        console.log(item, 'item');
+      this.markerMsgList.forEach((item) => {
         this.addMarker(item);
       });
     },
     addMarker(item) {
-      console.log(item, item.position);
       const marker = new AMap.Marker({
         position: item.position,
         content: "<div class='custom-marker'></div>",
@@ -169,20 +164,8 @@ export default {
   width: 100%;
   height: 2070px;
   background-size: 100% 100%;
-  // transform: scale(1.49);
   .flex {
     display: flex;
-  }
-  .mask {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 2070px;
-    z-index: 6;
-    pointer-events: none;
-    background-size: 100% 100%;
-    background: url('./img/mask.png') no-repeat;
   }
   .main-map {
     position: absolute;
