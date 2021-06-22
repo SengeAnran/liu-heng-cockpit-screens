@@ -2,14 +2,14 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
-import '@/assets/font.scss';
 import BaseTitle from '@/components/BaseTitle';
 import CountUp from '@/components/CountUp';
+import ViewTemplate from '@/components/ViewTemplate';
 import * as echarts from 'echarts';
 
 Vue.component('CountUp', CountUp);
 Vue.component('BaseTitle', BaseTitle);
-// import echarts from 'echarts';
+Vue.component('view-template', ViewTemplate);
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
 

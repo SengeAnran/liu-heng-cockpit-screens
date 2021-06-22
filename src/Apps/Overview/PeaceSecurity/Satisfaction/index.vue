@@ -7,6 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getSatisfactionTrend } from '@/api/Overview/PeaceSecurity/api';
 export default {
   name: 'Satisfaction',
   data() {
@@ -60,9 +61,20 @@ export default {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.barChart);
-    this.chart.setOption(this.optionData(this.list));
+    // this.chart.setOption(this.optionData(this.list));
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getSatisfactionTrend().request().then((json) => {
+        this.list = json.map((item) => {
+          item.name = item.sqmc;
+          item.value = item.mydzs * 100 || 0;
+          return item;
+        });
+        this.chart.setOption(this.optionData(this.list));
+      });
+    },
     optionData(data) {
       return {
         grid: {

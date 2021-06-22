@@ -19,6 +19,20 @@ export default {
   components: {
     PieChart,
   },
+  props: {
+    buildingAreaData: {
+      type: Array,
+      default: () => [],
+    },
+    areaAddressData: {
+      type: Array,
+      default: () => [],
+    },
+    oceanAddressData: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       colors: [
@@ -74,23 +88,6 @@ export default {
           }],
           global: false, // 缺省为 false
         },
-      ],
-      buildingAreaData: [
-        { name: '蛟头', value: 10 },
-        { name: '台门', value: 20 },
-        { name: '龙山', value: 30 },
-      ],
-      areaAddressData: [
-        { name: '住宅面积', value: 10 },
-        { name: '工业面积', value: 20 },
-        { name: '商业面积', value: 30 },
-        { name: '农业面积', value: 30 },
-      ],
-      oceanAddressData: [
-        { name: '海域代码01', value: 10 },
-        { name: '海域代码02', value: 20 },
-        { name: '海域代码03', value: 30 },
-        { name: '海域代码04', value: 30 },
       ],
     };
   },

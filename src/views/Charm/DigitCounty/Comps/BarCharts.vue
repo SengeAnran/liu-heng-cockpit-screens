@@ -19,7 +19,6 @@ const defaultOptions = {
       show: false,
     },
   },
-
 };
 export default {
   props: {
@@ -34,6 +33,19 @@ export default {
     yAxisData: {
       type: Array,
       default: () => ['0～16岁', '17～25岁', '26～40岁', '27～65岁', '65岁以上'],
+    },
+    bgColor: {
+      type: Array,
+      default: () => [
+        { offset: 0, color: 'rgba(117, 248, 195, 1)' },
+        { offset: 0.98, color: 'rgba(185, 251, 224, 1)' },
+        { offset: 0.98, color: '#fff' },
+        { offset: 1, color: '#fff' },
+      ],
+    },
+    unit: {
+      type: String,
+      default: () => '万人',
     },
   },
   data() {
@@ -62,11 +74,10 @@ export default {
   methods: {
     updateOptions() {
       const mergedOptions = deepMerge({}, defaultOptions, this.options);
-      console.log('xAxisData', this.xAxisData);
-      const options = this.getOptions(mergedOptions, this.xAxisData, this.yAxisData);
+      const options = this.getOptions(mergedOptions, this.xAxisData, this.yAxisData, this.bgColor);
       this.chart.setOption(options);
     },
-    getOptions(opts = {}, xData = [], yData = []) {
+    getOptions(opts = {}, xData = [], yData = [], bgColor = []) {
       const seriesData = [];
       const _this = this;
       xData.map((item) => {
@@ -82,25 +93,28 @@ export default {
           axisTick: {
             show: false,
           },
+          axisLabel: {
+            fontSize: 20,
+            color: '#fff',
+          },
           data: yData,
         },
         series: [
           {
             data: xData,
             type: 'bar',
+            barWidth: 20,
             label: {
               show: true,
               position: 'right',
+              fontSize: 20,
+              color: '#fff',
               formatter: function (params) {
-                return params.value + '万人';
+                return params.value + _this.unit;
               },
             },
             itemStyle: {
-              color: _this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                { offset: 0, color: 'rgba(117, 248, 195, 1)' },
-                { offset: 0.98, color: 'rgba(185, 251, 224, 1)' },
-                { offset: 1, color: '#fff' },
-              ]),
+              color: _this.$echarts.graphic.LinearGradient(0, 0, 1, 0, bgColor),
             },
           },
         ],

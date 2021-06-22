@@ -39,10 +39,15 @@ export default {
   },
   computed: {},
   watch: {
-    data() {
-      this.lineBarChart.setOption(this.option());
+    data: {
+      handler() {
+        this.$nextTick(() => {
+          this.lineBarChart.setOption(this.option());
+        });
+      },
+      immediate: true,
+      deep: true,
     },
-    deep: true,
   },
   mounted() {
     this.initChart();
@@ -137,10 +142,10 @@ export default {
               opacity: 0.5,
             },
           },
-          minInterval: 1,
+          minInterval: 3,
           axisLabel: {
             show: true,
-            margin: 45,
+            margin: 65,
             color: 'rgba(225,225,225,.7)',
             fontSize: 21,
             fontFamily: 'DINPro',
