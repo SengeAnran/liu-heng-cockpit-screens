@@ -33,7 +33,7 @@
         </ul>
 
         <div class="pie-chart-wrap">
-          <PieChart :type="currentTab" />
+          <PieChart :type="currentTab" :sexAgeData="sexAgeData" :educationData="educationData" />
         </div>
       </div>
     </div>
@@ -43,6 +43,7 @@
 import Title from './components/Title';
 import PieChart from './components/PieChart';
 import * as echarts from 'echarts/core';
+import { peopleBasicInfo } from '@/api/Charm/PartyConstruction';
 import {
   LineChart,
 } from 'echarts/charts';
@@ -76,20 +77,24 @@ export default {
           unit: '人',
         },
         {
-          label: '正式党员',
+          label: '预备党员',
           value: 275,
           unit: '人',
         },
         {
-          label: '正式党员',
+          label: '发展党员',
           value: 275,
           unit: '人',
         },
       ],
+      sexAgeData: null,
+      educationData: null,
       currentTab: 'sexAge',
       lineChart: null,
       chartOpt: {
-        tooltip: {},
+        tooltip: {
+          trigger: 'axis',
+        },
         color: ['#87E086', '#B07EF7', '#6B8CE6'],
         grid: {
           left: '9%',
@@ -173,6 +178,7 @@ export default {
   mounted() {
     this.lineChart = echarts.init(this.$refs.lineChart);
     this.lineChart.setOption(this.chartOpt);
+    this.getData();
   },
   beforeDestroy() {
     this.lineChart && this.lineChart.dispose();
@@ -180,6 +186,29 @@ export default {
   methods: {
     selectTab(val) {
       this.currentTab = val;
+    },
+    async getData() {
+      const result = await peopleBasicInfo().request();
+      if (result) {
+        const { basicCnt, cntTrend, education, sexAndAge } = result;
+        this.indiData[0].value = basicCnt.zsdyrs;
+        this.indiData[1].value = basicCnt.ybdyrs;
+        this.indiData[2].value = basicCnt.fzdyrs;
+
+        this.renderChartData(cntTrend);
+        this.sexAgeData = sexAndAge;
+        this.educationData = education;
+      }
+    },
+    renderChartData(data) {
+      this.chartOpt.xAxis.data = data.map((i) => i.nf);
+      const fzdyByYear = data.map((i) => i.fzdyrs);
+      const ybdyByYear = data.map((i) => i.ybdyrs);
+      const zsdyByYear = data.map((i) => i.zsdyrs);
+      this.chartOpt.series[0].data = fzdyByYear;
+      this.chartOpt.series[1].data = ybdyByYear;
+      this.chartOpt.series[2].data = zsdyByYear;
+      this.lineChart.setOption(this.chartOpt);
     },
   },
 };

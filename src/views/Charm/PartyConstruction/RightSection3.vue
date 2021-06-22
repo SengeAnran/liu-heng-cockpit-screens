@@ -3,7 +3,7 @@
     <Title title="工会维权统计" />
     <div class="section-content">
       <div class="total-legend">
-        维权总数 <span class="value">586</span> 件
+        维权总数 <span class="value">{{totalNum}}</span> 件
       </div>
       <div ref="lineChart" style="height: 30rem; width: 100%"></div>
     </div>
@@ -11,6 +11,8 @@
 </template>
 <script>
 import Title from './components/Title';
+import { protectRights } from '@/api/Charm/PartyConstruction';
+import { sumBy } from 'lodash';
 import * as echarts from 'echarts/core';
 import {
   BarChart,
@@ -131,11 +133,22 @@ export default {
           },
         ],
       },
+      totalNum: 0,
     };
   },
   mounted() {
     this.lineChart = echarts.init(this.$refs.lineChart);
-    this.lineChart.setOption(this.chartOpt);
+    // this.lineChart.setOption(this.chartOpt);
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      const result = await protectRights().request();
+      this.totalNum = sumBy(result, 'wqsl');
+      this.chartOpt.xAxis[0].data = result.map((i) => i.jgmc);
+      this.chartOpt.series[0].data = result.map((i) => i.wqsl);
+      this.lineChart.setOption(this.chartOpt);
+    },
   },
 };
 </script>
