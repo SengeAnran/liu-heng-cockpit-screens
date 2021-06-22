@@ -2,7 +2,7 @@
   <div class="left-2">
     <Title>全镇交通情况</Title>
     <Indicator />
-    <Title>出租车营运分析</Title>
+    <Title>全镇交通分析</Title>
     <LineChart />
   </div>
 </template>
