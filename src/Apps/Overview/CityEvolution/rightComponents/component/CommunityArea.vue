@@ -19,26 +19,25 @@ export default {
     };
   },
   props: {
-    xAxisData: {
-      type: Array,
+    communityAreaData: {
+      type: Object,
       default: () => {
-        return [];
+        return {};
       },
     },
-    areaAddress: {
-      type: Array,
-      default: () => {
-        return [];
-      },
+  },
+  watch: {
+    communityAreaData(newValue, oldValue) {
+      this.loadData();
     },
   },
   components: {},
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
-    setTimeout(() => {
-      this.loadData();
-    }, 500);
+    // setTimeout(() => {
+    //   this.loadData();
+    // }, 500);
   },
   methods: {
     loadData() {
@@ -78,7 +77,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: this.xAxisData,
+          data: this.communityAreaData.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -179,7 +178,7 @@ export default {
             //   },
             // },
           },
-          data: this.areaAddress,
+          data: this.communityAreaData.areaAddress,
         }],
       };
       return option;

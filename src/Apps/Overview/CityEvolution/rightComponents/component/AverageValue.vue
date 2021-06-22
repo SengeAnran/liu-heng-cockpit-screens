@@ -14,17 +14,16 @@ import * as echarts from 'echarts';
 export default {
   name: 'CommunityArea',
   props: {
-    xAxisData: {
-      type: Array,
+    averageValueData: {
+      type: Object,
       default: () => {
-        return [];
+        return {};
       },
     },
-    lineData: {
-      type: Array,
-      default: () => {
-        return [];
-      },
+  },
+  watch: {
+    averageValueData(newValue, oldValue) {
+      this.loadData();
     },
   },
   data() {
@@ -37,9 +36,6 @@ export default {
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
-    setTimeout(() => {
-      this.loadData();
-    }, 500);
   },
   methods: {
     loadData() {
@@ -99,7 +95,7 @@ export default {
             show: false,
           },
           boundaryGap: false,
-          data: this.xAxisData,
+          data: this.averageValueData.xAxisData,
         },
         yAxis: {
           name: '指数',
@@ -176,7 +172,7 @@ export default {
                 },
               },
             },
-            data: this.lineData,
+            data: this.averageValueData.lineData,
           },
         ],
       };
