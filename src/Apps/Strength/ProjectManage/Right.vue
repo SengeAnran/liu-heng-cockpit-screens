@@ -1,5 +1,7 @@
 <template>
-  <div class="ProjectManage-right">
+  <view-template class="ProjectManage-right flex"
+                 :interval="300"
+                 @interval="getData">
     <div>
       <BaseTitle title="投资增速分析"
                  :width="780" />
@@ -108,7 +110,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </view-template>
 </template>
 
 <script>
