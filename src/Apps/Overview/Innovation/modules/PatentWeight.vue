@@ -4,7 +4,7 @@
     <div class="chart-wrap">
       <div class="chart" ref="radarChart"></div>
       <div class="index-wrap">
-        <div :key="index" v-for="(item,index) in listData">
+        <div :key="index" v-for="(item,index) in chartData">
           <span>{{item.name}}</span>
           <span>{{item.num}}</span>
         </div>
@@ -15,37 +15,46 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getPatentAnalysisTrend } from '@/api/Overview/Innovation/api';
 export default {
   data() {
     return {
       chart: null,
-      listData: [
+      chartData: [
         {
           name: '创造性',
-          num: 4,
+          num: 0,
         },
         {
           name: '成果性',
-          num: 3,
+          num: 0,
         },
         {
           name: '推广性',
-          num: 1,
+          num: 0,
         },
         {
           name: '实用性',
-          num: 3,
+          num: 0,
         },
         {
           name: '价值性',
-          num: 2,
+          num: 0,
         },
       ],
+      indicator: [
+        { name: '创造性', max: 5 },
+        { name: '价值性', max: 5 },
+        { name: '实用性', max: 5 },
+        { name: '推广性', max: 5 },
+        { name: '成果性', max: 5 },
+      ],
+      chartNumList: [],
     };
   },
   mounted() {
     this.chart = echarts.init(this.$refs.radarChart);
-    this.initEcharts();
+    this.loadData();
   },
   beforeDestroy() {
     if (this.chart) {
@@ -54,16 +63,31 @@ export default {
     }
   },
   methods: {
+    loadData() {
+      getPatentAnalysisTrend()
+        .request()
+        .then((json) => {
+          this.chartData.map((item) => {
+            item.num = json.filter((obj) => obj.qzmc === item.name)[0].qzsz;
+          });
+          this.chartNumList = [];
+          const chartNum = [];
+          this.indicator.forEach((obj) => {
+            this.chartData.forEach((item) => {
+              if (obj.name === item.name) {
+                chartNum.push(item.num);
+              }
+            });
+          });
+          this.chartNumList.push(chartNum);
+          this.initEcharts();
+        });
+    },
     initEcharts() {
       const option = {
         radar: {
-          indicator: [
-            { name: '创造性', max: 5 },
-            { name: '价值性', max: 5 },
-            { name: '实用性', max: 5 },
-            { name: '推广性', max: 5 },
-            { name: '成果性', max: 5 },
-          ],
+          startAngle: 60,
+          indicator: this.indicator,
           name: {
             textStyle: {
               color: '#fff',
@@ -96,9 +120,8 @@ export default {
         },
         series: [
           {
-            name: '预算 vs 开销（Budget vs spending）',
             type: 'radar',
-            data: [[4, 2, 3, 1, 3]],
+            data: this.chartNumList,
             itemStyle: {
               borderWidth: 2,
               color: '#11FFFC',
@@ -156,11 +179,11 @@ export default {
           height: 60px;
           background: url(../images/shadow_bg.png) no-repeat center bottom / 270px 69px;
           text-align: center;
-          span{
+          span {
             font-size: 29px;
             line-height: 80px;
-            color: rgba(255,255,255,.9);
-            &:first-child{
+            color: rgba(255, 255, 255, 0.9);
+            &:first-child {
               margin-right: 40px;
             }
           }

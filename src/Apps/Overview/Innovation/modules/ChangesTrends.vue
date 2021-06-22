@@ -7,15 +7,36 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getPatentNumTrend } from '@/api/Overview/Innovation/api';
 export default {
   data() {
-    return {};
+    return {
+      year: [],
+      fmzlsl: [],
+      wgsjzlsl: [],
+      syxxzlsl: [],
+    };
   },
   mounted() {
     this.chart = echarts.init(this.$refs.lineChart);
-    this.initEcharts();
+    this.loadData();
   },
   methods: {
+    loadData() {
+      getPatentNumTrend()
+        .request()
+        .then((json) => {
+          const data = json.sort(this.sortYear);
+          this.year = data.map((item) => item.nf);
+          this.fmzlsl = data.map((item) => item.fmzlsl);
+          this.wgsjzlsl = data.map((item) => item.wgsjzlsl);
+          this.syxxzlsl = data.map((item) => item.syxxzlsl);
+          this.initEcharts();
+        });
+    },
+    sortYear(a, b) {
+      return a.nf - b.nf;
+    },
     initEcharts() {
       const option = {
         tooltip: {
@@ -44,7 +65,7 @@ export default {
         },
         xAxis: {
           type: 'category',
-          boundaryGap: false,
+          // boundaryGap: false,
           axisTick: {
             show: false,
           },
@@ -61,7 +82,7 @@ export default {
               color: 'rgba(255, 255, 255, .7)',
             },
           },
-          data: ['2015', '2016', '2017', '2018', '2019', '2020', '2021'],
+          data: this.year,
         },
         yAxis: {
           type: 'value',
@@ -98,17 +119,17 @@ export default {
           {
             name: '发明专利',
             type: 'line',
-            data: [220, 182, 191, 234, 290, 330, 310],
+            data: this.fmzlsl,
           },
           {
             name: '外观设计专利',
             type: 'line',
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: this.wgsjzlsl,
           },
           {
             name: '实用新型',
             type: 'line',
-            data: [60, 66, 50, 67, 45, 115, 105],
+            data: this.syxxzlsl,
           },
         ],
       };
@@ -132,7 +153,7 @@ export default {
   color: #fff;
   margin-bottom: 20px;
 }
-.chart{
+.chart {
   flex: 1;
 }
 </style>

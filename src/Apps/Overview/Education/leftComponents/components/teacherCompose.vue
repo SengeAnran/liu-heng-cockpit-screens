@@ -7,6 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getTeacherTrend } from '@/api/Overview/Education/api';
 export default {
   name: 'LeftComponents',
   components: {
@@ -14,6 +15,9 @@ export default {
   data() {
     return {
       charts: null,
+      notOrganization: [],
+      organization: [],
+      xData: [],
     };
   },
   mounted() {
@@ -23,16 +27,25 @@ export default {
   },
   methods: {
     loadData() {
-      this.setData();
+      getTeacherTrend().request().then((res) => {
+        const { fb, zb } = res;
+        fb.forEach((itemFb) => {
+          zb.forEach((itemZb) => {
+            if (itemFb.xj === itemZb.xj) {
+              this.xData.push(itemZb.xj);
+              this.notOrganization.push(itemFb.sl);
+              this.organization.push(itemZb.sl);
+            };
+          });
+        });
+        this.setData();
+      });
     },
     setData() {
       this.charts.clear();
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const data = [990, 175, 43, 532, 222, 22];
-      const data1 = [456, 456, 445, 33, 345, 33];
-      const xData = ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'];
       const option = {
         title: {
           text: '人数',
@@ -50,7 +63,7 @@ export default {
           bottom: '15%',
         },
         legend: {
-          data: ['高级教师', '初级教师'],
+          data: ['在编教师', '非在编教师'],
           right: 10,
           top: 7,
           orient: 'vertical',
@@ -74,7 +87,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: xData,
+          data: this.xData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -129,7 +142,7 @@ export default {
           },
         },
         series: [{
-          name: '高级教师',
+          name: '在编教师',
           type: 'bar',
           barWidth: 20,
           itemStyle: {
@@ -163,10 +176,10 @@ export default {
             },
           },
           barGap: '40%',
-          data: data,
+          data: this.organization,
         },
         {
-          name: '初级教师',
+          name: '非在编教师',
           type: 'bar',
           barWidth: 20,
           itemStyle: {
@@ -200,7 +213,7 @@ export default {
             },
           },
           barGap: '40%',
-          data: data1,
+          data: this.notOrganization,
         }],
       };
       return option;

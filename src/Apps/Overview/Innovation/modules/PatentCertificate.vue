@@ -2,8 +2,8 @@
   <div class="CreateIsland">
     <secondary-title name="六横镇人才专利发明证书" />
     <div class="container">
-      <div class="item" :key="index" v-for="(item,index) in 12">
-        <img src="../images/temp.png" />
+      <div class="item" :key="index" v-for="(item,index) in imageList">
+        <img :src="item" />
       </div>
     </div>
   </div>
@@ -11,14 +11,40 @@
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
+import { getPatentPicList } from '@/api/Overview/Innovation/api';
 export default {
   components: {
     SecondaryTitle,
   },
   data() {
-    return {};
+    return {
+      imageList: [
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+        require('../images/temp.png'),
+      ],
+    };
   },
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getPatentPicList().request().then((json) => {
+        console.log('六横镇人才专利发明证书', json);
+        // this.imageList = json;
+      });
+    },
+  },
 };
 </script>
 

@@ -1,17 +1,19 @@
 <template>
   <div class="IndustryField">
-    <div class="sub-title">申报产业领域 Top5</div>
+    <div class="sub-title">申报产业领域 Top{{ chartList.length }}</div>
     <div class="chart-wrap">
       <div class="bar-wrap" :key="index" v-for="(item,index) in chartList">
         <div class="bg">
-          <div class="name" :class="{opacity: item.percent > 0}">{{item.name}}</div>
+          <div class="name" :class="{opacity: item.percent > 0}">{{`Top${index+1} ${item.cylymc}`}}</div>
           <div class="num" :style="{width:`${item.percent}%`}">
             <i v-if="item.percent > 0" class="white"></i>
-            <i v-if="item.percent > 0" class="number">{{item.num}}</i>
+            <i v-if="item.percent > 0" class="number">{{item.sl}}</i>
           </div>
         </div>
         <div class="percent">
-          <span>{{item.percent}}</span>%
+          <span>
+            <ICountUp :endVal="item.percent" :options="options" />
+          </span>%
         </div>
       </div>
     </div>
@@ -19,47 +21,49 @@
 </template>
 
 <script>
+import ICountUp from '../components/ICountUp';
+import { getIndustrialField } from '@/api/Overview/Innovation/api';
 export default {
+  components: {
+    ICountUp,
+  },
   data() {
     return {
-      chartList: [
-        {
-          name: 'Top1 高端装备',
-          num: 999,
-          percent: 0,
-        },
-        {
-          name: 'Top2 新材料',
-          num: 777,
-          percent: 0,
-        },
-        {
-          name: 'Top3 数字经济',
-          num: 555,
-          percent: 0,
-        },
-        {
-          name: 'Top4 数字经济',
-          num: 333,
-          percent: 0,
-        },
-        {
-          name: 'Top5 数字经济',
-          num: 111,
-          percent: 0,
-        },
-      ],
+      chartList: [],
+      options: {
+        useEasing: true,
+        useGrouping: true,
+        duration: 1,
+        separator: '',
+        decimal: '.',
+        prefix: '',
+        suffix: '',
+        decimalPlaces: 2,
+      },
     };
   },
   mounted() {
-    setTimeout(() => {
-      const _arr = [90, 80, 70, 60, 50];
-      _arr.forEach((item, index) => {
-        this.chartList[index].percent = item;
-      });
-    }, 0);
+    this.loadData();
   },
-  methods: {},
+  methods: {
+    loadData() {
+      getIndustrialField()
+        .request()
+        .then((json) => {
+          this.chartList = json;
+          setTimeout(() => {
+            const numArr = json.map((item) => item.sl);
+            const total = numArr.reduce((prev, cur) => {
+              return prev + cur;
+            });
+            this.chartList.map((item) => {
+              item.percent = Number(((item.sl / total) * 100).toFixed(2));
+            });
+            this.$forceUpdate();
+          }, 0);
+        });
+    },
+  },
 };
 </script>
 
@@ -98,7 +102,7 @@ export default {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, rgba(35, 41, 87, 1) 30%, rgba(92, 111, 255, 1));
-    transition: all 2s ease;
+    transition: all 1s ease;
     position: relative;
     .white {
       display: block;
@@ -108,10 +112,10 @@ export default {
       right: 0;
       background: linear-gradient(90deg, rgba(92, 111, 255, 1) 10%, #fff);
     }
-    .number{
-      line-height: 28px;
+    .number {
+      line-height: 26px;
       font-style: normal;
-      color:#fff;
+      color: #fff;
       font-size: 20px;
       position: absolute;
       top: 0;
@@ -128,7 +132,7 @@ export default {
     top: 0;
     z-index: 10;
     transition: all 2s ease;
-    transition-delay: .4s;
+    transition-delay: 0.4s;
     opacity: 0;
     &.opacity {
       opacity: 1;
@@ -136,7 +140,7 @@ export default {
   }
   .percent {
     width: 120px;
-    height: 26px;
+    height: 36px;
     min-width: 120px;
     background-color: transparent;
     color: rgba(255, 255, 255, 0.8);
@@ -147,6 +151,10 @@ export default {
       line-height: 40px;
       font-size: 30px;
       margin-right: 2px;
+      & > div {
+        display: inline;
+        font-size: 32px;
+      }
     }
   }
 }

@@ -27,6 +27,10 @@ export default {
   },
   data() {
     return {
+      keyValues: {
+        pm: 'PM2.5',
+        yll: '优良率',
+      },
       lineData: {
         yAxisData: [
           { min: 0, max: 100, splitNumber: 5, interval: 25, unit: '%' },
@@ -38,15 +42,15 @@ export default {
             unit: 'ug',
           },
         ],
-        xAxisData: ['1', '1', '2', '2', '3', '3', '3'],
+        xAxisData: [],
         data: [
           {
             name: 'PM2.5',
-            data: [12, 22, 33, 55, 34, 66],
+            data: [],
           },
           {
             name: '优良率',
-            data: [12, 32, 33, 4, 9, 88],
+            data: [],
           },
         ],
       },
@@ -78,6 +82,7 @@ export default {
   methods: {
     loadData() {
       getCountyAirQualityStatus().request().then((json) => {
+        if (!json) { return; }
         this.list[0].value = json[0].kqzl || '';
         this.list[1].value = json[0].aqi || '';
         this.list[2].value = json[0].pm25 || '';
@@ -85,7 +90,13 @@ export default {
         // console.log(json);
       });
       getAirQualityTrends().request().then((json) => {
-        console.log(json);
+        if (!json) { return; }
+        const data = [];
+        this.lineData.xAxisData = json.yll.map((item) => item.value);
+        Object.keys(this.keyValues).forEach((item) => {
+          data.push({ name: this.keyValues[item], data: json[item].map((item) => item.label) });
+        });
+        this.lineData.data = data;
       });
     },
   },

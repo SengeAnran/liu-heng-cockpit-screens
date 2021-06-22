@@ -2,12 +2,10 @@
   <div class="right_component">
     <AreaLocation :sqmj='sqmj'/>
     <CommunityArea
-      :areaAddress='areaAddress'
-      :xAxisData='xAxisData'
+      :communityAreaData='communityAreaData'
     />
     <AverageValue
-      :lineData='lineData'
-      :xAxisData='xAxisData'
+      :averageValueData='averageValueData'
     />
     <CycleCharts
       :buildingAreaData='buildingAreaData'
@@ -40,11 +38,10 @@ export default {
       // 市域面积分布
       sqmj: {},
       // 亩均产值
-      lineData: [],
+      averageValueData: {},
       // 面积分布
-      areaAddress: [],
+      communityAreaData: {},
       // xAxisData
-      xAxisData: [],
     };
   },
   mounted() {
@@ -71,15 +68,29 @@ export default {
     },
     getCommunityInfo() { // 社区信息
       getCommunityInfo().request().then((res) => {
+        const lineData = [];
+        const xAxisData = [];
+        const areaAddress = [];
         res.forEach((item) => {
-          this.lineData.push(item.sqmjc);
-          this.areaAddress.push(item.sqmj);
-          this.xAxisData.push(item.sqmc);
+          // 亩均产值
+          lineData.push(item.sqmjc);
+          xAxisData.push(item.sqmc);
+          // 社区数据
+          areaAddress.push(item.sqmj);
+          // this.areaAddress.push(item.sqmj);
           this.buildingAreaData.push({
             name: item.sqmc,
             value: item.sqmj,
           });
         });
+        this.averageValueData = {
+          lineData: lineData,
+          xAxisData: xAxisData,
+        };
+        this.communityAreaData = {
+          xAxisData: xAxisData,
+          areaAddress: areaAddress,
+        };
       });
     },
   },

@@ -25,7 +25,7 @@ export const getGasPollutionSources = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/environmental/project/emissionReductionOfGasPollutionSources' });
 };
 
-// 获取污染企业(地图)
+// 涉水污染源检测
 export const getWaterPollutionSourceDetection = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/environmental/project/waterPollutionSourceDetection' });
 };
@@ -35,7 +35,7 @@ export const getDrinkingWaterSources = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/environmental/project/waterQualityOfDrinkingWaterSources' });
 };
 
-// 获取污染企业
+// 获取污染企业(地图)
 export const getPollutingEnterprises = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/environmental/project/pollutingEnterprises' });
 };

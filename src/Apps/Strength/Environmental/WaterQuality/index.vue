@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { getDrinkingWaterSources, getWaterPollutionSourceDetection, getMonthlySewage } from '@/api/Strength/Environmental/api';
 import LineChart from '../components/lineChart';
 export default {
   name: 'WaterQuality',
@@ -45,6 +46,11 @@ export default {
   },
   data() {
     return {
+      keyValues: {
+        wfpfl: '污水排放',
+        codpfl: 'COD排放',
+        adpfl: '氨氮排放',
+      },
       lineData: {
         xAxisData: ['1', '1', '2', '2', '3', '3', '3'],
         data: [
@@ -73,18 +79,51 @@ export default {
         },
         {
           name: '酸碱度',
-          value: 7.85,
+          value: 0,
         },
         {
           name: '溶解氧',
-          value: 9.66,
+          value: 0,
         },
       ],
       list1: [
-        { name: '全区涉水', subTitle: '污染源', number: 115, unit: '家' },
-        { name: '预警值', subTitle: '出现', number: 115, unit: '全年', number1: 115, unit1: '今日' },
+        { name: '全区涉水', subTitle: '污染源', number: 0, unit: '家' },
+        { name: '预警值', subTitle: '出现', number: 0, unit: '全年', number1: 0, unit1: '今日' },
       ],
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getDrinkingWaterSources()
+        .request()
+        .then((json) => {
+          if (!json) { return; }
+          this.list[0].value = json[0].szzk || '';
+          this.list[1].value = json[0].szzk || '';
+          this.list[2].value = json[0].sjd || 0;
+          this.list[3].value = json[0].rjy || 0;
+        });
+      getWaterPollutionSourceDetection()
+        .request()
+        .then((json) => {
+          if (!json) { return; }
+          this.list1[0].number = json[0].qqsswryjs || 0;
+          this.list1[1].number = json[0].qnyjzcxcs || 0;
+          this.list1[1].number1 = json[0].jryjzcxcs || 0;
+        });
+      getMonthlySewage().request().then((json) => {
+        if (!json) { return; }
+        const data = [];
+        this.lineData.xAxisData = json.map((item) => item.yf);
+        Object.keys(this.keyValues).forEach((key) => {
+          data.push({ name: this.keyValues[key], data: json.map((item) => item[key]) });
+        });
+        this.lineData.data = data;
+      });
+    },
   },
 };
 </script>
