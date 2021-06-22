@@ -1,5 +1,5 @@
 <template>
-  <view-template class="Medical-Left"  :interval="30" @interval="getData">
+  <view-template class="Medical-Left"  :interval="300" @interval="getData">
     <BaseTitle title="医疗资源情况" :width="1650" />
     <div class="flex">
       <div class="left-left">

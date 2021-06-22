@@ -1,5 +1,7 @@
 <template>
-  <div class="ProjectManage-left flex">
+  <view-template class="ProjectManage-left flex"
+                 :interval="300"
+                 @interval="getData">
     <div>
       <BaseTitle title="项目投资信息"
                  :width="750" />
@@ -57,7 +59,8 @@
             </div>
           </swiper-slider>
         </swiper>
-        <div v-else class="outer-div">
+        <div v-else
+             class="outer-div">
           <div class="inner-div"
                v-for="(item, index) in list"
                :key="`item-${index}`">
@@ -70,7 +73,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </view-template>
 </template>
 
 <script>
@@ -374,7 +377,7 @@ export default {
   align-items: center;
   font-size: 26px;
   span {
-    line-height: 75px!important;
+    line-height: 75px !important;
   }
 }
 .inner-div {
