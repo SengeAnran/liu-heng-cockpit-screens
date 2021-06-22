@@ -1,33 +1,33 @@
 <template>
   <div class="StruggleIsland">
-    <secondary-title name="奋斗之岛" />
+    <secondary-title name="奋斗之岛" isLarge/>
     <div class="container">
       <div>
         <div>
           <div class="name">
-            <p>户籍人数 <span>62824人</span></p>
+            <p>户籍人数 <span>{{rkxx.hjrs}}人</span></p>
           </div>
           <div class="content">
-            <p>男性人数 <span>30991个</span></p>
-            <p>女性人数 <span>31833个</span></p>
+            <p>男性人数 <span>{{rkxx.brs}}个</span></p>
+            <p>女性人数 <span>{{rkxx.grs}}个</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>劳动力资源数 <span>41586人</span></p>
+            <p>劳动力资源数 <span>{{ldlxx.ldlrs}}人</span></p>
           </div>
           <div class="content">
-            <p>男性人数 <span>22057个</span></p>
-            <p>女性人数 <span>19529个</span></p>
+            <p>男性人数 <span>{{ldlxx.brs}}个</span></p>
+            <p>女性人数 <span>{{ldlxx.grs}}个</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>财政供给人员 <span>274人</span></p>
+            <p>财政供给人员 <span>{{czgjxxTotal}}人</span></p>
           </div>
           <div class="content">
-            <p>公务员 <span>93个</span>，事业编制 <span>81个</span></p>
-            <p>其他人员 <span>100个</span></p>
+            <p>公务员 <span>{{czgjxx[0].rs}}个</span>，事业编制 <span>{{czgjxx[1].rs}}个</span></p>
+            <p>其他人员 <span>{{czgjxx[2].rs}}个</span></p>
           </div>
         </div>
       </div>
@@ -38,15 +38,15 @@
             <p>及能源消耗情况</p>
           </div>
           <div class="content">
-           <p>水 <span>1120万吨</span></p>
-           <p>原煤 <span>3829530吨</span></p>
-           <p>焦炭 <span>0吨</span></p>
-           <p>汽油 <span>323吨</span></p>
-           <p>煤油 <span>0吨</span></p>
-           <p>柴油 <span>8098吨</span></p>
-           <p>液化石油气 <span>4.7吨</span></p>
-           <p>天然气 <span>39立方米</span></p>
-           <p>电 <span>62747万度</span></p>
+           <p>水 <span>{{nyxhqk[0].xhl}}万吨</span></p>
+           <p>原煤 <span>{{nyxhqk[1].xhl}}吨</span></p>
+           <p>焦炭 <span>{{nyxhqk[2].xhl}}吨</span></p>
+           <p>汽油 <span>{{nyxhqk[3].xhl}}吨</span></p>
+           <p>煤油 <span>{{nyxhqk[4].xhl}}吨</span></p>
+           <p>柴油 <span>{{nyxhqk[5].xhl}}吨</span></p>
+           <p>液化石油气 <span>{{nyxhqk[6].xhl}}吨</span></p>
+           <p>天然气 <span>{{nyxhqk[7].xhl}}立方米</span></p>
+           <p>电 <span>{{nyxhqk[8].xhl}}万度</span></p>
           </div>
         </div>
       </div>
@@ -56,14 +56,68 @@
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
+import { getFight } from '@/api/Overview/DataAnalysis/api';
 export default {
   components: {
     SecondaryTitle,
   },
   data() {
-    return {};
+    return {
+      rkxx: {
+        brs: 0,
+        grs: 0,
+        hjrs: 0,
+      },
+      ldlxx: {
+        brs: 0,
+        grs: 0,
+        ldlrs: 0,
+      },
+      czgjxx: [
+        { czryfl: '公务员', rs: 0 },
+        { czryfl: '事业编制', rs: 0 },
+        { czryfl: '其他人员', rs: 0 },
+      ],
+      czgjxxTotal: 0,
+      nyxhqk: [
+        { nyfl: '水', xhl: 0 },
+        { nyfl: '原煤', xhl: 0 },
+        { nyfl: '焦煤', xhl: 0 },
+        { nyfl: '汽油', xhl: 0 },
+        { nyfl: '煤油', xhl: 0 },
+        { nyfl: '柴油', xhl: 0 },
+        { nyfl: '液化石油气', xhl: 0 },
+        { nyfl: '天然气', xhl: 0 },
+        { nyfl: '电', xhl: 0 },
+      ],
+    };
   },
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getFight()
+        .request()
+        .then((json) => {
+          const { rkxx, ldlxx, czgjxx, nyxhqk } = json;
+          this.rkxx = rkxx;
+
+          this.ldlxx = ldlxx;
+
+          this.czgjxx.map((item) => {
+            const data = czgjxx.filter((obj) => obj.czryfl === item.czryfl);
+            item.rs = data[0].rs;
+          });
+          this.czgjxxTotal = this.czgjxx.map((item) => item.rs).reduce((n, m) => n + m);
+
+          this.nyxhqk.map((item) => {
+            const data = nyxhqk.filter((obj) => obj.nyfl === item.nyfl);
+            item.xhl = data[0].xhl;
+          });
+        });
+    },
+  },
 };
 </script>
 

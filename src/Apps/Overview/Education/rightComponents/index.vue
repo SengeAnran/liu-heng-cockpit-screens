@@ -1,44 +1,79 @@
 <template>
   <div class="right_componemt">
-    <BaseTitle title="适龄儿童入学分析" :width='720' class="title" />
-    <div class="children">
-      <div class="all_area_studet">
-        <div class="num">
-          <CountUp :num="students.students" />
-        </div>
-        <div class="unit">人</div>
-      </div>
-      <div class="all_area_studet not_area_studet">
-        <div class="num">
-          <CountUp :num="students.noStudent" />
-        </div>
-        <div class="unit">人</div>
-      </div>
-    </div>
-    <TrendComponent />
-    <HistoryStudent />
-    <AdmissionsStudent />
+    <BaseTitle title="学生情况" :width='720' class="title" />
+    <JuniorSchool :dataMessage='juniorSchool' />
+    <PrimarySchool :dataMessage='primarySchool' />
+    <HeightSchool :dataMessage='heightSchool' />
+    <Kindergarten :dataMessage='kindergarten' />
   </div>
 </template>
 
 <script>
-import TrendComponent from './components/trend';
-import HistoryStudent from './components/historyStudent';
-import AdmissionsStudent from './components/admissionsStudent';
+import JuniorSchool from './components/juniorSchool';
+import PrimarySchool from './components/primarySchool';
+import HeightSchool from './components/heightSchool';
+import Kindergarten from './components/kindergarten';
+import { getStudentByCategory } from '@/api/Overview/Education/api';
 export default {
   name: 'RightComponents',
   components: {
-    TrendComponent,
-    HistoryStudent,
-    AdmissionsStudent,
+    JuniorSchool,
+    PrimarySchool,
+    HeightSchool,
+    Kindergarten,
   },
   data() {
     return {
-      students: {
-        students: 2344,
-        noStudent: 2454,
+      kindergarten: {
+        xAxis: [],
+        classNum: [],
+        allPeople: [],
+      },
+      primarySchool: {
+        xAxis: [],
+        classNum: [],
+        allPeople: [],
+      },
+      juniorSchool: {
+        xAxis: [],
+        classNum: [],
+        allPeople: [],
+      },
+      heightSchool: {
+        xAxis: [],
+        classNum: [],
+        allPeople: [],
       },
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    async loadData() {
+      const categorys = ['幼儿园', '小学', '初中', '高中'];
+      const allRequestMethods = categorys.map((item) => {
+        const params = {
+          category: item,
+        };
+        return getStudentByCategory().request(params);
+      });
+      const arr = await Promise.all(allRequestMethods);
+      const [kindergarten, primarySchool, juniorSchool, heightSchool] = arr;
+      this.kindergarten = this.resolveData(kindergarten);
+      this.primarySchool = this.resolveData(primarySchool);
+      this.juniorSchool = this.resolveData(juniorSchool);
+      this.heightSchool = this.resolveData(heightSchool);
+      console.log(this.kindergarten, this.primarySchool, this.juniorSchool, this.heightSchool);
+    },
+    resolveData(data, obj = { xAxis: [], classNum: [], allPeople: [] }) {
+      data.forEach((item) => {
+        obj.xAxis.push(item.xxmc);
+        obj.classNum.push(item.bjs);
+        obj.allPeople.push(item.xszs);
+      });
+      return obj;
+    },
   },
 };
 </script>
@@ -55,52 +90,6 @@ export default {
     position: absolute;
     left: 35px;
     top: 10px;
-  }
-  .children {
-    margin-top: 100px;
-    height: 400px;
-    width: 810px;
-    box-sizing: border-box;
-    display: flex;
-    .all_area_studet {
-      display: inline-block;
-      height: 100%;
-      width: 390px;
-      background: url('../images/alreadyStudent.png') no-repeat;
-      background-size: 100% 100%;
-      position: relative;
-      .num {
-        position: absolute;
-        bottom: 20%;
-        font-size: 60px;
-        width: 100%;
-        text-align: center;
-        color: #66CCFF;
-      }
-      .unit {
-        position: absolute;
-        bottom: 10%;
-        font-size: 30px;
-        width: 100%;
-        text-align: center;
-        color: #66CCFF;
-      }
-    }
-    // #FF9798
-    .not_area_studet {
-      display: inline-block;
-      margin-left: 30px;
-      height: 100%;
-      width: 390px;
-      background: url('../images/noStudent.png') no-repeat;
-      background-size: 100% 100%;
-      .num {
-        color: #FF9798;
-      }
-      .unit {
-        color: #FF9798;
-      }
-    }
   }
 }
 </style>

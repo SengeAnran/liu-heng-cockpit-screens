@@ -1,6 +1,6 @@
 <template>
   <div class="CreateIsland">
-    <secondary-title name="制造之岛" />
+    <secondary-title name="制造之岛" isLarge />
     <div class="container">
       <div>
         <div>

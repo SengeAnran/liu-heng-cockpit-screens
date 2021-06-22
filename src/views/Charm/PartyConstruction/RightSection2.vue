@@ -30,14 +30,13 @@
       </div>
 
       <div class="loop-content">
-        <h2 class="activity-title">五四青年节竞赛</h2>
-        <p class="activity-label">举办时间：2021-05-23</p>
-        <p class="activity-label">举办单位：六横镇团委</p>
-        <p class="activity-label">举办地址：六横镇文化礼堂</p>
+        <h2 class="activity-title">{{currentData.bt}}</h2>
+        <p class="activity-label">举办时间：{{currentData.jbsj}}</p>
+        <p class="activity-label">举办单位：{{currentData.jbdw}}</p>
+        <p class="activity-label">举办地址：{{currentData.jbdz}}</p>
 
         <div class="activity-content">
-          <p>项目总工黄志林下达了“大干100天”劳动竞赛施工计划节点目标，明确了劳动竞赛的开展时间、产值完成计划、考核办法及活动要求，并对技术质量安全作了重点讲解。
-号召全体员工充分认识当前的严峻形势，团结协作、共同奋斗。他指出：形势是严峻的，但困难是暂时的，全体参建人员要心往一处想，劲儿往...处使，齐心协力做好各项工作</p>
+          <p>{{currentData.jbnr}}</p>
         </div>
       </div>
     </div>
@@ -45,6 +44,7 @@
 </template>
 <script>
 import Title from './components/Title';
+import { workCompetition } from '@/api/Charm/PartyConstruction';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 import { Swiper as SwiperClass, Pagination, Autoplay } from 'swiper/js/swiper.esm';
@@ -68,12 +68,25 @@ export default {
           el: '.swiper-pagination',
         },
       },
+      dataList: [],
+      currentData: {},
     };
   },
   mounted() {
+    this.getData();
   },
   methods: {
     onSlideChange() {
+    },
+    async getData() {
+      const result = await workCompetition().request();
+      console.log('workCompetition', result);
+      this.dataList = result.map((i) => {
+        return {
+          ...i,
+        };
+      });
+      this.currentData = this.dataList[0];
     },
   },
 };

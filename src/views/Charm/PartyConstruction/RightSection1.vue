@@ -9,19 +9,9 @@
           @slideChange="onSlideChange"
           class="swiper-main"
         >
-          <swiper-slide>
+          <swiper-slide v-for="(item, index) in imgList" :key="index">
             <div class="img-bg">
-              <img src="@/assets/images/Charm/loopImg1.png" />
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div class="img-bg">
-              <img src="@/assets/images/Charm/loopImg1.png" />
-            </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div class="img-bg">
-              <img src="@/assets/images/Charm/loopImg1.png" />
+              <img :src="item.url" />
             </div>
           </swiper-slide>
 
@@ -35,13 +25,11 @@
             :class="{'active': currentTab === item.name}"
             v-for="(item, index) in tabList"
             :key="index"
-            @click="currentTab = item.name">{{item.name}}</li>
+            @click="selectTab(item.name, index)">{{item.name}}</li>
         </ul>
 
         <div class="content">
-          <p>党的群团工作是党治国理政的一项经常性、基础性工作，是党动员广大人民群众为完成党的中心任务而奋斗的重要法宝。
-回望中国共产党90多年砥砺奋进的光辉历程，党领导下的群团组织为实现党在各个历史时期的中心任务发挥了重要作用，作出了突出贡献。
-今天，群团组织联系的广大人民群众更是全面建成小康社会、坚持和发展中国特色社会主义的基本力量，是全面深化改革、全面依法治国、巩固党的执政地位、维护国家长治久安的基本依靠。</p>
+          <p>{{currentContent}}</p>
         </div>
       </div>
     </div>
@@ -49,6 +37,7 @@
 </template>
 <script>
 import Title from './components/Title';
+import { publicitySituation } from '@/api/Charm/PartyConstruction';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 import { Swiper as SwiperClass, Pagination, Autoplay } from 'swiper/js/swiper.esm';
@@ -73,14 +62,18 @@ export default {
         },
       },
       currentTab: '工会',
+      dataList: [],
       tabList: [
         { name: '工会' },
         { name: '妇联' },
         { name: '团委' },
       ],
+      imgList: [],
+      currentContent: '迎接建党100周年活动',
     };
   },
   mounted() {
+    this.getData();
   },
   computed: {
     mySwiper() {
@@ -90,6 +83,26 @@ export default {
   methods: {
     onSlideChange(item) {
       this.currentTab = this.tabList[this.mySwiper.activeIndex].name;
+      this.currentContent = this.dataList[this.mySwiper.activeIndex].xcnr;
+    },
+    selectTab(name, index) {
+      this.mySwiper.slideTo(index);
+    },
+    async getData() {
+      const result = await publicitySituation().request();
+      console.log('publicitySituation', result);
+      this.tabList = result.map((i) => {
+        return {
+          name: i.qtlx,
+        };
+      });
+      this.imgList = result.map((i) => {
+        return {
+          url: 'data:image/png;base64,' + i.xctp,
+        };
+      });
+      this.dataList = result;
+      this.currentContent = this.dataList[0].xcnr;
     },
   },
 };

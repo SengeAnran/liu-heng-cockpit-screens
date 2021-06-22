@@ -2,29 +2,26 @@
   <div class="left_componemt">
     <BaseTitle title="教育资源情况" :width='720' class="title" />
     <SchoolCount />
-    <TeacherCount />
     <TeacherCompose />
     <TeacherIncrease />
-    <TeacherAge />
+    <TeacherGrade />
     <TeacherEducation />
   </div>
 </template>
 
 <script>
-import TeacherCount from './components/teacherCount';
 import SchoolCount from './components/schoolCount';
 import TeacherCompose from './components/teacherCompose';
 import TeacherIncrease from './components/teacherIncrease';
-import TeacherAge from './components/teacherAge';
+import TeacherGrade from './components/teacherGrade';
 import TeacherEducation from './components/teacherEducation';
 export default {
   name: 'LeftComponents',
   components: {
     SchoolCount,
-    TeacherCount,
     TeacherCompose,
     TeacherIncrease,
-    TeacherAge,
+    TeacherGrade,
     TeacherEducation,
   },
 };

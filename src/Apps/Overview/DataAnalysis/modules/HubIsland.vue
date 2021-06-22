@@ -1,6 +1,6 @@
 <template>
   <div class="HubIsland">
-    <secondary-title name="中枢之岛" />
+    <secondary-title name="中枢之岛" isLarge />
     <div class="container">
       <div>
         <div>

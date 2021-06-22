@@ -18,6 +18,7 @@
   </div>
 </template>
 <script>
+import { partyDocument } from '@/api/Charm/PartyConstruction';
 import Title from './components/Title';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
@@ -62,6 +63,21 @@ export default {
     };
   },
   mounted() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      const result = await partyDocument().request();
+      console.log('partyDocument', result);
+      if (result) {
+        this.dataList = result.map((i) => {
+          return {
+            label: i.wjm,
+            time: i.rq,
+          };
+        });
+      }
+    },
   },
 };
 </script>
