@@ -1,5 +1,5 @@
 <template>
-  <view-template class="Medical-Right" :interval="30" @interval="getData">
+  <view-template class="Medical-Right" :interval="300" @interval="getData">
     <div>
       <BaseTitle title="隔离点人数趋势图"
                  :width="780" />
@@ -204,7 +204,6 @@ export default {
     right: 0;
     margin-left: 12px;
     .tables {
-      overflow-y: scroll;
       font-size: 28px;
       text-align: center;
       > div {

@@ -8,6 +8,7 @@
 </template>
 <script>
 import Title from './components/Title';
+import { partyFeeSituation } from '@/api/Charm/PartyConstruction';
 import * as echarts from 'echarts/core';
 import {
   BarChart,
@@ -153,6 +154,18 @@ export default {
   mounted() {
     this.lineChart = echarts.init(this.$refs.lineChart);
     this.lineChart.setOption(this.chartOpt);
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      const result = await partyFeeSituation().request();
+      this.chartOpt.xAxis.data = result.map((i) => {
+        return parseInt(i.yf.slice(-2)) + '月';
+      });
+      this.chartOpt.series[0].data = result.map((i) => i.dfjn);
+      this.chartOpt.series[1].data = result.map((i) => i.dfzc);
+      this.lineChart.setOption(this.chartOpt);
+    },
   },
 };
 </script>

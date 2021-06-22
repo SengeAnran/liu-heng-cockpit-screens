@@ -1,6 +1,5 @@
 <template>
   <div class="map_wrapper">
-    <div class="mask"></div>
     <div class="main-map"
          ref="map"></div>
     <div class="toggle-layer">
@@ -8,9 +7,9 @@
       <ul>
         <li v-for="(item,i) in list"
             :key="`toggle-${i}`">
-          <span @click="toggle(i)"
+          <span @click="toggle(item,i)"
                 :class="{'active':currentIndex===i}"></span>
-          <span>{{item}}</span>
+          <span>{{item.type}}</span>
         </li>
       </ul>
     </div>
@@ -20,6 +19,7 @@
 <script>
 import AMap from 'AMap';
 import hosIcon from '../../images/hospital-icon.png';
+import { getHospitalListByCategory, getPlaceInfo, getIsolationPlaceInfo } from '@/api/Overview/Medical/api';
 export default {
   name: 'MedicalMap',
   components: {},
@@ -28,17 +28,23 @@ export default {
       map: null,
       mapDom: null,
       currentIndex: '',
-      list: ['全选', '医院', '卫生院', '疫苗接种点', '隔离点'],
+      list: [
+        { type: '全选', key: 'all' },
+        { type: '医院', key: 'getHospitalListByCategory' },
+        { type: '疫苗接种点', key: 'getPlaceInfo' },
+        { type: '隔离点', key: 'getIsolationPlaceInfo' },
+      ],
       isPop: false,
+      markerMsgList: [],
       markerMsg: {
-        name: '六横镇医院',
-        phone: '0574-83307880',
+        yljg: '六横镇医院',
+        lxdh: '0574-83307880',
         doctor: 67,
         nurse: 112,
-        address: '浙江省舟山市普陀区六横镇XXXXXX号',
+        dz: '浙江省舟山市普陀区六横镇XXXXXX号',
       },
       markerLan: [
-        [22.125225, 29.748662], // 镇医院
+        [122.125225, 29.748662], // 镇医院
         [122.12642, 29.74875], // 普陀人民医院六横分院-门诊
         [122.20457, 29.702632], // 台门社区卫生服务站
         [122.168829, 29.685418], // 六横镇苍洞社区卫生站
@@ -52,74 +58,100 @@ export default {
   },
   mounted() {
     this.initMap();
+    this.getData('all');
   },
   methods: {
+    getData(category) {
+      this.markerMsgList = [];
+      const apis = { getHospitalListByCategory, getPlaceInfo, getIsolationPlaceInfo };
+      const apisArr = [
+        getHospitalListByCategory().request(),
+        getPlaceInfo().request(),
+        getIsolationPlaceInfo().request(),
+      ];
+      if (category === 'all') {
+        Promise.all(apisArr).then((res) => {
+          const data = [...res[0], ...res[1], ...res[2]];
+          data.map((item) => {
+            item.position = [item.lng, item.lat];
+          });
+          this.markerMsgList = data;
+          this.addMarkerOneByOne();
+        });
+      } else {
+        apis[category]()
+          .request()
+          .then((res) => {
+            if (res && res.length) {
+              res.map((item) => {
+                item.position = [item.lng, item.lat];
+              });
+              this.markerMsgList = res;
+              this.addMarkerOneByOne();
+            } else {
+              this.markerMsgList = [];
+            }
+          });
+      }
+    },
     initMap() {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
         zoom: 13,
-        zooms: [3, 16],
-        center: [122.128762, 29.751102],
+        zoomEnable: false,
+        center: [122.140462, 29.734471],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
-      // this.addMarker();
-      this.addInfoWindow();
     },
-    addInfoWindow() {
-      const markerMsg = this.markerMsg;
-      const html =
-        `<div class='pop-up-box'><h3>${markerMsg.name}</h3><div><label>联系电话：</label><br><span>${markerMsg.phone}<span></div><div class='flex'><div><label>医生人数：</label><br><span>${markerMsg.doctor}人</span></div><div><label>护士人数：</label><br><span>${markerMsg.nurse}人</span></div></div><div><label>地址：</label><br><span>${markerMsg.address}</span></div></div>`;
+    addInfoWindow(markerMsg, lnglat) {
+      const { lng, lat } = lnglat;
+      const html = `<div class='pop-up-box'>
+          <h3>${markerMsg.jzdmc || markerMsg.gldmx || markerMsg.yymc}</h3>
+          <div>
+            <label>联系电话：</label><br>
+            <span>${markerMsg.dh || '暂无'}<span>
+          </div>
+          <div class='flex'>
+            <div><label>医生人数：</label><br><span>${markerMsg.ysrs || 0}人</span></div>
+            <div><label>护士人数：</label><br><span>${markerMsg.hsrs || 0}人</span></div>
+          </div>
+          <div><label>地址：</label><br><span>${markerMsg.dz}</span></div>
+        </div>`;
 
       var infoWindow = new AMap.InfoWindow({
         isCustom: true, // 使用自定义窗体
         content: html, // 传入 dom 对象，或者 html 字符串
-        offset: new AMap.Pixel(2600, 0),
+        offset: new AMap.Pixel(760.7, -590),
       });
       this.infoWindow = infoWindow;
-      // this.map.on('click', (e) => {
-      //   console.log(e.lnglat, '地图点击事案件');
-      //   const { lng, lat } = e.lnglat;
-      //   infoWindow.open(this.map, [lng, lat]);
-      // });
+      infoWindow.open(this.map, [lng, lat]);
     },
-    addMarker(markerList) {
-      const markers = [];
-      for (let i = 0; i < markerList.length; i++) {
-        const element = markerList[i];
-        const marker = new AMap.Marker({
-          position: element,
-          content: "<div class='custom-marker'></div>",
-          icon: hosIcon,
-        });
-        marker.on('click', (e) => {
-          console.log(e.lnglat, '地图点击事件=========================');
-          const { lng, lat } = e.lnglat;
-          this.infoWindow.open(this.map, [lng, lat]);
-        });
-        AMap.event.addListener(marker, 'click', function () {
-          // infoWindow.open(map, marker.getPosition());
-          console.log('dsdfsdf');
-        });
-        markers.push(marker);
-      }
-      this.markers = markers;
-      this.map.add(markers);
+    addMarkerOneByOne() {
+      this.markers.map((item) => {
+        this.map.remove(item);
+      });
+      this.markers = [];
+      this.markerMsgList.forEach((item) => {
+        this.addMarker(item);
+      });
     },
-    toggle(i) {
+    addMarker(item) {
+      const marker = new AMap.Marker({
+        position: item.position,
+        content: "<div class='custom-marker'></div>",
+        icon: hosIcon,
+      });
+      this.map.add(marker);
+      marker.on('click', (e) => {
+        this.addInfoWindow(item, e.lnglat);
+      });
+      this.markers.push(marker);
+    },
+    toggle(item, i) {
+      this.map.remove(this.infoWindow);
       this.currentIndex = i;
-      if (i === 0) {
-        // 全选
-        this.markerList = this.markerLan;
-      } else if (i === 1) {
-        // 医院
-        this.markerList = this.markerLan.slice(0, 2);
-      } else if (i === 2) {
-        // 卫生院
-        this.markerList = this.markerLan.slice(2);
-      }
-      this.map.remove(this.markers);
-      this.addMarker(this.markerList);
+      this.getData(item.key);
     },
   },
 };
@@ -132,20 +164,8 @@ export default {
   width: 100%;
   height: 2070px;
   background-size: 100% 100%;
-  // z-index: -1;
   .flex {
     display: flex;
-  }
-  .mask {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 2070px;
-    z-index: 6;
-    pointer-events: none;
-    background-size: 100% 100%;
-    background: url('./img/mask.png') no-repeat;
   }
   .main-map {
     position: absolute;
@@ -159,6 +179,7 @@ export default {
       background: url('../../images/hospital-icon.png') no-repeat center center;
       background-size: 98% 98%;
       border-radius: 50%;
+      z-index: 111;
     }
   }
   .toggle-layer {
@@ -205,7 +226,7 @@ export default {
       }
     }
   }
- ::v-deep .pop-up-box {
+  ::v-deep .pop-up-box {
     width: 550px;
     // height: 462px;
     position: absolute;
@@ -215,6 +236,10 @@ export default {
     background-size: 100% 100%;
     padding-left: 53px;
     padding-right: 53px;
+    z-index: 10;
+    .flex {
+      display: flex;
+    }
     h3 {
       font-size: 34px;
       font-family: 'Source Han Sans SC';
@@ -225,7 +250,7 @@ export default {
       width: 100%;
       margin-bottom: 46px;
       > div {
-        width: 50%;
+        width: 45%;
       }
       label {
         font-size: 30px;

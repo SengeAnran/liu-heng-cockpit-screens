@@ -24,7 +24,6 @@
       setScale(ratioX, ratioY) {
         this.ratioX = ratioX;
         this.ratioY = ratioY;
-        console.log(ratioX, ratioY);
         if (Array.isArray(this.resizeCbs)) {
           this.resizeCbs.forEach((cb) => {
             typeof cb === 'function' && cb(ratioX, ratioY);

@@ -1,72 +1,116 @@
 <template>
-  <div class="ProjectManage-right">
+  <view-template class="ProjectManage-right flex"
+                 :interval="300"
+                 @interval="getData">
     <div>
-      <BaseTitle title="投资增速分析" :width="780" />
+      <BaseTitle title="投资增速分析"
+                 :width="780" />
       <div class="chart-box">
         <LineChart :line-data="lineData" />
       </div>
-      <BaseTitle  title="项目许可情况" :width="780" :top="550" />
+      <BaseTitle title="项目许可情况"
+                 :width="780"
+                 :top="550" />
       <div class="chart-box box1">
-        <div class="box-left" @mouseenter="mouseEnter" @mouseleave="mouseleave">
+        <div class="box-left"
+             @mouseenter="mouseEnter"
+             @mouseleave="mouseleave">
           <div class="titles">
             <div>
-              <span v-for="item in swiperTitle" :key="item">{{item}}</span>
+              <span v-for="item in swiperTitle"
+                    :key="item">{{item}}</span>
             </div>
           </div>
-          <swiper ref="manageSwiper" :options="swiperOption">
-            <swiper-slider v-for="(item, index) in list" :key="`item-${index}`">
+          <swiper ref="manageSwiper"
+                  :options="swiperOption"
+                  v-if="list1.length>4">
+            <swiper-slider v-for="(item, index) in list"
+                           :key="`xuke-lunbo-item-${index}`">
               <div>
                 <div class="inner-div">
-                  <span>{{ item.name }}</span>
-                  <span>{{ item.area }}</span>
-                  <span><i :class="['suqare',`${item.isXuke?'active':''}`]"></i></span>
-                  <span><i :class="['suqare',`${item.isPro?'active':''}`]"></i></span>
-                  <span> <i :class="['suqare',`${item.isImplent?'active':''}`]"></i></span>
+                  <span>{{ item.xmmc }}</span>
+                  <span>{{ item.dq }}</span>
+                  <span><i :class="['suqare',`${item.ydghxk?'active':''}`]"></i></span>
+                  <span><i :class="['suqare',`${item.gcghxk?'active':''}`]"></i></span>
+                  <span> <i :class="['suqare',`${item.sgxk?'active':''}`]"></i></span>
                 </div>
               </div>
             </swiper-slider>
           </swiper>
+          <div class="outter"
+               v-else>
+            <div class="inner-div"
+                 v-for="(item, index) in list"
+                 :key="`xuke-item-${index}`">
+              <span>{{ item.xmmc }}</span>
+              <span>{{ item.dq }}</span>
+              <span><i :class="['suqare',`${item.ydghxk?'active':''}`]"></i></span>
+              <span><i :class="['suqare',`${item.gcghxk?'active':''}`]"></i></span>
+              <span> <i :class="['suqare',`${item.sgxk?'active':''}`]"></i></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="right-right">
-      <BaseTitle title="资金占比分析" :width="780" />
+      <BaseTitle title="资金占比分析"
+                 :width="780" />
       <div class="chart-box">
-        <PieChart :data="pieTypeData" legendType="pec" title="资金占比分析" />
+        <PieChart :data="pieTypeData"
+                  legendType="pec"
+                  title="资金占比分析" />
       </div>
-      <BaseTitle title="重大项目" :width="780" :top="550" />
+      <BaseTitle title="重大项目"
+                 :width="780"
+                 :top="550" />
       <div class="chart-box box1">
         <div class="flex">
           <div>
             <div class="desc-item">项目总数（个）
-              <MyCountUp :endVal="2333" />
+              <MyCountUp :endVal="mainPro.xmzs" />
             </div>
             <div class="desc-item">项目总量（万元）
-              <MyCountUp :endVal="22333" />
+              <MyCountUp :endVal="mainPro.xmzl" />
             </div>
           </div>
-          <div class="lunbo-list" @mouseenter="mouseEnterMain" @mouseleave="mouseleaveMain">
+          <div class="lunbo-list"
+               @mouseenter="mouseEnterMain"
+               @mouseleave="mouseleaveMain">
             <div class="title-list">
               <div>
-                <span v-for="item in swiperTitle1" :key="item">{{item}}</span>
+                <span v-for="item in swiperTitle1"
+                      :key="item">{{item}}</span>
               </div>
             </div>
-            <swiper ref="manageMainSwiper" :options="swiperOption">
-              <swiper-slider v-for="(item, index) in list1" :key="`item-${index}`">
+            <swiper ref="manageMainSwiper"
+                    :options="swiperOption"
+                    v-if="list1.length>4">
+              <swiper-slider v-for="(item, index) in list1"
+                             :key="`lunbo-main-item-${index}`">
                 <div>
                   <div class="inner-div-main">
-                    <span>{{ item.plan }}</span>
-                    <span>{{ item.num }}</span>
-                    <span>{{ item.money }}</span>
+                    <span>{{ item.xmjhmc }}</span>
+                    <span>{{ item.xmzs }}</span>
+                    <span>{{ item.ljwctze }}</span>
                   </div>
                 </div>
               </swiper-slider>
             </swiper>
+            <div v-else
+                 class="outter-main">
+              <div class="inner-div-main"
+                   v-for="(item, index) in list1"
+                   :key="`main-item-${index}`">
+                <span>{{ item.xmjhmc }}</span>
+                <span>{{ item.xmzs }}</span>
+                <span>{{ item.ljwctze }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </view-template>
 </template>
 
 <script>
@@ -76,77 +120,22 @@ import PieChart from '../../Overview/Medical/components/PieChart';
 import MyCountUp from '../../Overview/Medical/components/ICountUp';
 import swiper from '../../Overview/Medical/components/Swiper';
 import SwiperSlider from '../../Overview/Medical/components/SwiperSlider';
+import {
+  analysisOfInvestmentGrowth,
+  projectPermission,
+  capitalRatioAnalysis,
+  majorProjects,
+  majorProjectsPlan,
+} from '@/api/Strength/ProjectManage/api';
 export default {
   name: 'ProjectManageRight',
   components: { BaseTitle, LineChart, PieChart, MyCountUp, swiper, SwiperSlider },
   data() {
     return {
       swiperTitle: ['项目名称', '地区', '用地规划许可', '工程规划许可', '施工许可'],
-      list: [
-        {
-          name: '蛟头水利工程',
-          area: '蛟头',
-          isXuke: true,
-          isPro: true,
-          isImplent: false,
-        },
-        {
-          name: '蛟头水利工程',
-          area: '蛟头',
-          isXuke: true,
-          isPro: false,
-          isImplent: false,
-        },
-        {
-          name: '蛟头水利工程',
-          area: '蛟头',
-          isXuke: false,
-          isPro: true,
-          isImplent: false,
-        },
-        {
-          name: '蛟头水利工程',
-          area: '蛟头',
-          isXuke: true,
-          isPro: true,
-          isImplent: false,
-        },
-        {
-          name: '蛟头水利工程',
-          area: '蛟头',
-          isXuke: true,
-          isPro: true,
-          isImplent: false,
-        },
-      ],
+      list: [],
       swiperTitle1: ['项目计划 ', '项目总数', '累计完成投资额'],
-      list1: [
-        {
-          plan: '六横智慧海项目',
-          num: '120',
-          money: '7000万元',
-        },
-        {
-          plan: '六横智慧海项目',
-          num: '120',
-          money: '7000万元',
-        },
-        {
-          plan: '六横智慧海项目',
-          num: '120',
-          money: '7000万元',
-        },
-        {
-          plan: '六横智慧海项目',
-          num: '120',
-          money: '7000万元',
-        },
-        {
-          plan: '六横智慧海项目',
-          num: '120',
-          money: '7000万元',
-        },
-      ],
+      list1: [],
       swiperOption: {
         direction: 'vertical',
         speed: 1000,
@@ -174,6 +163,7 @@ export default {
         xData: [2015, 2016, 2017, 2018, 2019, 2020, 2021],
         data1: [1, 3, 5, 6, 8, 9, 12],
       },
+      mainPro: {},
       lineBarData: {
         title: '图表',
         name1: '增长率',
@@ -196,16 +186,16 @@ export default {
     },
   },
   mounted() {
-    if (this.list1.length < 4) {
-      this.swiper.autoplay = false;
-    }
-    this.$nextTick(() => {
-      if (this.list.length < 4) {
-        this.manageSwiper.autoplay = false;
-      }
-    });
+    this.getData();
   },
   methods: {
+    getData() {
+      this.analysisOfInvestmentGrowth();
+      this.projectPermission();
+      this.capitalRatioAnalysis();
+      this.majorProjects();
+      this.majorProjectsPlan();
+    },
     mouseEnter() {
       if (this.list.length < 4) {
         return;
@@ -228,6 +218,72 @@ export default {
         return;
       }
       this.swiper.autoplay.start();
+    },
+    // 增速分析
+    analysisOfInvestmentGrowth() {
+      analysisOfInvestmentGrowth()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            const xData = [];
+            const data1 = [];
+            res.map((item) => {
+              xData.push(item.sj);
+              data1.push(item.zs * 100);
+            });
+            this.lineData.xData = xData;
+            this.lineData.data1 = data1;
+          }
+        });
+    },
+    // 项目许可情况 轮播
+    projectPermission() {
+      projectPermission()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            res.map((item) => {
+              item.gcghxk = item.gcghxk === '是';
+              item.sgxk = item.sgxk === '是';
+              item.ydghxk = item.ydghxk === '是';
+            });
+            this.list = res;
+          }
+        });
+    },
+    // 饼图
+    capitalRatioAnalysis() {
+      capitalRatioAnalysis()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            res.map((item) => {
+              item.name = item.zjfl;
+              item.value = item.je;
+            });
+            this.pieTypeData = res;
+          }
+        });
+    },
+    // 最右侧轮播左侧
+    majorProjects() {
+      majorProjects()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            this.mainPro = res[0];
+          }
+        });
+    },
+    // 轮播
+    majorProjectsPlan() {
+      majorProjectsPlan()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            this.list1 = res;
+          }
+        });
     },
   },
 };
@@ -323,55 +379,65 @@ export default {
             line-height: 130px;
             width: 100%;
           }
-          .inner-div {
-            width: 100%;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-family: Source Han Sans SC;
-            font-weight: 500;
-            color: rgba(120, 203, 246, 1);
-            padding: 0 32px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            span {
-              &:nth-child(1) {
-                width: 25%;
-              }
-              &:nth-child(2) {
-                width: 12%;
-              }
-              &:nth-child(3) {
-                width: 28%;
-                text-align: center;
-              }
-              &:nth-child(4) {
-                width: 28%;
-                text-align: center;
-              }
-              &:nth-child(5) {
-                width: 18%;
-                text-align: center;
-              }
-              i{
-                display: inline-block;
-              }
-            }
-            .suqare {
-              width: 20px;
-              height: 20px;
-              background: transparent;
-              border: 2px solid #78cbf6;
-              border-radius: 2px;
-            }
-            .active {
-              background: rgba(120, 203, 246, 0.8);
-            }
-          }
         }
+      }
+    }
+    .outter {
+      width: 795px;
+      background: url('./images/list-right-bg.png') no-repeat 100% 100%;
+      font-size: 24px;
+      box-sizing: border-box;
+      margin-top: 24px;
+      span {
+        line-height: 75px !important;
+      }
+    }
+    .inner-div {
+      width: 100%;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: Source Han Sans SC;
+      font-weight: 500;
+      color: rgba(120, 203, 246, 1);
+      padding: 0 32px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        &:nth-child(1) {
+          width: 25%;
+        }
+        &:nth-child(2) {
+          width: 12%;
+        }
+        &:nth-child(3) {
+          width: 28%;
+          text-align: center;
+        }
+        &:nth-child(4) {
+          width: 28%;
+          text-align: center;
+        }
+        &:nth-child(5) {
+          width: 18%;
+          text-align: center;
+        }
+        i {
+          display: inline-block;
+        }
+      }
+      .suqare {
+        width: 20px;
+        height: 20px;
+        background: transparent;
+        border: 2px solid #78cbf6;
+        border-radius: 2px;
+      }
+      .active {
+        background: rgba(120, 203, 246, 0.8);
       }
     }
     .desc-item {
@@ -442,33 +508,43 @@ export default {
           > div {
             width: 100%;
           }
-          .inner-div-main {
-            width: 100%;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-family: Source Han Sans SC;
-            font-weight: 500;
-            color: #59dbe6;
-            padding: 0 32px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            span {
-              height: 75px;
-              line-height: 100px;
-              &:nth-child(1) {
-                width: 30%;
-              }
-              &:nth-child(2) {
-                width: 20%;
-              }
-              &:nth-child(3) {
-                width: 30%;
-              }
-            }
+        }
+      }
+      .outter-main {
+        width: 585px;
+        background: url('./images/list-mainpro-bg.png') no-repeat 100% 100%;
+        font-size: 24px;
+        box-sizing: border-box;
+        margin-top: 24px;
+        span {
+          line-height: 75px !important;
+        }
+      }
+      .inner-div-main {
+        width: 100%;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-family: Source Han Sans SC;
+        font-weight: 500;
+        color: #59dbe6;
+        padding: 0 32px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span {
+          height: 75px;
+          line-height: 100px;
+          &:nth-child(1) {
+            width: 30%;
+          }
+          &:nth-child(2) {
+            width: 20%;
+          }
+          &:nth-child(3) {
+            width: 30%;
           }
         }
       }
