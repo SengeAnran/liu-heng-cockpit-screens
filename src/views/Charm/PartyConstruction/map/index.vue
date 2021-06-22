@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import './mark.scss';
+// import './mark.scss';
 import { partyConstruct } from '@/api/Charm/PartyConstruction';
 import AMap from 'AMap';
 export default {
@@ -92,7 +92,7 @@ export default {
     },
     handleMarkerClick(ev) {
       console.log(ev);
-      // this.clearLastMarkerDetail();
+      this.clearLastMarkerDetail();
       const marker = ev.target;
 
       const feature = marker.getExtData();
@@ -103,35 +103,35 @@ export default {
       this.lastDetailMarker = marker;
       this.lastDetailMarker.type = this.selected;
     },
-    // clearLastMarkerDetail() {
-    //   if (!this.lastDetailMarker) {
-    //     return;
-    //   }
-    //   const feature = this.lastDetailMarker.getExtData();
-    //   this.lastDetailMarker.setzIndex(100);
-    //   const content = this.markerTemplate(feature.properties);
-    //   this.lastDetailMarker.setContent(content);
-    //   this.lastDetailMarker = null;
-    // },
+    clearLastMarkerDetail() {
+      if (!this.lastDetailMarker) {
+        return;
+      }
+      const feature = this.lastDetailMarker.getExtData();
+      this.lastDetailMarker.setzIndex(100);
+      const content = this.markerTemplate(feature.properties);
+      this.lastDetailMarker.setContent(content);
+      this.lastDetailMarker = null;
+    },
     detailTemplate() {
       return `
-        <div class="marker-detail-content">
+        <div class="marker-detail-content2">
           <div class="detail-content">
-            <h3 class="title">{{ name }}</h3>
+            <h3 class="title">六横党支部</h3>
             <div class="people-row">
               <div class="left-part">
-                <p class="title">正式党员：</p>
+                <p class="sub-title">正式党员：</p>
                 <p class="value">102</p>
               </div>
               <div class="right-part">
-                <p class="title">正式党员：</p>
-                <p class="value">102</p>
+                <p class="sub-title">预备党员：</p>
+                <p class="value">56</p>
               </div>
             </div>
             <div class="desc-row">
-              <p class="title">支部介绍：</p>
+              <p class="sub-title">支部介绍：</p>
               <div class="desc-content">
-                支部始终注重加强自身建设，近年来通过开展党的群众路线教育实践活动、“三严三实”专题教育及“两学一做”学习教育等，支部的战斗堡垒作用及党员的先锋模范作用得到有效发挥。
+                支部始终注重加强自身建设，近年来通过开展党的群众路线教育实践活动、“三严三实”专题教育及“两学一做”学习教育等，支部的战斗堡垒左右及党员的先锋模范作用得到有效发挥
               </div>
             </div>
           </div>
@@ -142,7 +142,7 @@ export default {
       return `
         <div class="marker-content">
           <div class="catalog-content">
-            <h3 class="title">${data.name}</h3>
+            <h3 class="title">六横党支部</h3>
           </div>
         </div>
         `;
@@ -150,7 +150,11 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+@import "./mark.scss";
+</style>
 <style lang="scss" scoped>
+
 .map_wrapper {
   position: absolute;
   left: 0;
