@@ -13,6 +13,20 @@
 import * as echarts from 'echarts';
 export default {
   name: 'CommunityArea',
+  props: {
+    xAxisData: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    lineData: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       charts: null,
@@ -23,7 +37,9 @@ export default {
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
-    this.loadData();
+    setTimeout(() => {
+      this.loadData();
+    }, 500);
   },
   methods: {
     loadData() {
@@ -34,12 +50,10 @@ export default {
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const xAxisData = ['A社区', 'B社区', 'C社区', 'D社区', 'E社区', 'F社区', 'G社区', 'H社区'];
-      const data1 = [24, 33, 24, 9.78, 70, 40, 51, 15, 45, 78, 56, 44];
       const option = {
         grid: {
           top: '18%',
-          left: '6%',
+          left: '9%',
           right: '5%',
           bottom: '16%',
         },
@@ -85,7 +99,7 @@ export default {
             show: false,
           },
           boundaryGap: false,
-          data: xAxisData,
+          data: this.xAxisData,
         },
         yAxis: {
           name: '指数',
@@ -162,7 +176,7 @@ export default {
                 },
               },
             },
-            data: data1,
+            data: this.lineData,
           },
         ],
       };

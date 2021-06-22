@@ -18,12 +18,27 @@ export default {
       charts: null,
     };
   },
-  components: {
+  props: {
+    xAxisData: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    areaAddress: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
+  components: {},
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
-    this.loadData();
+    setTimeout(() => {
+      this.loadData();
+    }, 500);
   },
   methods: {
     loadData() {
@@ -34,8 +49,6 @@ export default {
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const data = [990, 175, 43, 532, 222, 898];
-      const xData = ['A社区', 'B社区', 'C社区', 'D社区', 'E社区', 'F社区'];
       const option = {
         title: {
           text: '平方米',
@@ -65,7 +78,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: xData,
+          data: this.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -166,7 +179,7 @@ export default {
             //   },
             // },
           },
-          data: data,
+          data: this.areaAddress,
         }],
       };
       return option;

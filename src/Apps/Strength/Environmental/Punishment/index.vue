@@ -9,6 +9,7 @@
 
 <script>
 import BarItem from '../components/barItem';
+import { getPenaltyForPollution } from '@/api/Strength/Environmental/api';
 export default {
   name: 'Punishment',
   components: {
@@ -16,13 +17,18 @@ export default {
   },
   data() {
     return {
-      list: [
-        { name: '下达限改', number: 50 },
-        { name: '行政处罚', number: 40 },
-        { name: '立案查处', number: 30 },
-        { name: '罚款金额', number: 20 },
-      ],
+      list: [],
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getPenaltyForPollution().request().then((json) => {
+        this.list = json || [];
+      });
+    },
   },
 };
 </script>

@@ -2,8 +2,8 @@
   <div class="bar">
     <div class="content" :style="{ width: num + '%' }">
         <div class="text">
-      <div>{{ item.name }}</div>
-      <div><CountUp :num="item.number" /></div>
+      <div>{{ item.cflx }}</div>
+      <div><CountUp :num="item.cs" /></div>
     </div>
     </div>
   </div>
@@ -30,7 +30,7 @@ export default {
     item: {
       handler(val) {
         setTimeout(() => {
-          this.num = val.number;
+          this.num = val.cs;
         }, 300);
       },
       immediate: true,

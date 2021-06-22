@@ -19,6 +19,7 @@
 
 <script>
 import LineChart from '../components/lineChart';
+import { getCountyAirQualityStatus, getAirQualityTrends } from '@/api/Strength/Environmental/api';
 export default {
   name: 'AirQuality',
   components: {
@@ -26,6 +27,10 @@ export default {
   },
   data() {
     return {
+      keyValues: {
+        pm: 'PM2.5',
+        yll: '优良率',
+      },
       lineData: {
         yAxisData: [
           { min: 0, max: 100, splitNumber: 5, interval: 25, unit: '%' },
@@ -37,39 +42,63 @@ export default {
             unit: 'ug',
           },
         ],
-        xAxisData: ['1', '1', '2', '2', '3', '3', '3'],
+        xAxisData: [],
         data: [
           {
             name: 'PM2.5',
-            data: [12, 22, 33, 55, 34, 66],
+            data: [],
           },
           {
             name: '优良率',
-            data: [12, 32, 33, 4, 9, 88],
+            data: [],
           },
         ],
       },
       list: [
         {
           name: '空气质量',
-          value: '优',
+          value: '',
         },
         {
           name: 'AQI',
-          value: 100,
+          value: 0,
           unit: '%',
         },
         {
           name: 'PM2.5',
-          value: 23,
+          value: 0,
           unit: 'ug/m3',
         },
         {
           name: '空气等级',
-          value: 'II 清新',
+          value: '',
         },
       ],
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getCountyAirQualityStatus().request().then((json) => {
+        if (!json) { return; }
+        this.list[0].value = json[0].kqzl || '';
+        this.list[1].value = json[0].aqi || '';
+        this.list[2].value = json[0].pm25 || '';
+        this.list[3].value = json[0].kqdj || '';
+        // console.log(json);
+      });
+      getAirQualityTrends().request().then((json) => {
+        if (!json) { return; }
+        const data = [];
+        this.lineData.xAxisData = json.yll.map((item) => item.value);
+        Object.keys(this.keyValues).forEach((item) => {
+          data.push({ name: this.keyValues[item], data: json[item].map((item) => item.label) });
+        });
+        this.lineData.data = data;
+      });
+    },
   },
 };
 </script>
