@@ -1,78 +1,46 @@
 <template>
-  <div class="teacher_compose">
-    <div class="name">学校教师数量分布</div>
-    <div class="bar_chart" ref="charts"></div>
+  <div class="teacher_increase">
+    <div class="name">初中</div>
+    <div class="line_chart" ref="charts"></div>
   </div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import { getTeacherTrend } from '@/api/Overview/Education/api';
 export default {
-  name: 'LeftComponents',
-  components: {
+  components: {},
+  props: {
+    dataMessage: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+  watch: {
+    dataMessage(newValue, oldValue) {
+      this.setData();
+    },
   },
   data() {
-    return {
-      charts: null,
-      notOrganization: [],
-      organization: [],
-      xData: [],
-    };
+    return {};
   },
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
-    this.loadData();
   },
   methods: {
-    loadData() {
-      getTeacherTrend().request().then((res) => {
-        const { fb, zb } = res;
-        fb.forEach((itemFb) => {
-          zb.forEach((itemZb) => {
-            if (itemFb.xj === itemZb.xj) {
-              this.xData.push(itemZb.xj);
-              this.notOrganization.push(itemFb.sl);
-              this.organization.push(itemZb.sl);
-            };
-          });
-        });
-        this.setData();
-      });
-    },
     setData() {
       this.charts.clear();
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
       const option = {
-        title: {
-          text: '人数',
-          textStyle: {
-            align: 'center',
-            color: '#fff',
-          },
-          top: '15%',
-          left: '5%',
-        },
         grid: {
-          top: '25%',
+          top: '18%',
           left: '10%',
           right: '3%',
-          bottom: '15%',
-        },
-        legend: {
-          data: ['在编教师', '非在编教师'],
-          right: 10,
-          top: 7,
-          orient: 'vertical',
-          textStyle: {
-            color: '#FFFFFF',
-            fontSize: 20,
-            fontFamily: 'DIN Alternate',
-          },
-          icon: 'rect',
+          bottom: '10%',
         },
         tooltip: {
           trigger: 'axis',
@@ -87,7 +55,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: this.xData,
+          data: this.dataMessage.xAxis,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -108,7 +76,6 @@ export default {
             color: '#FFFFFF',
             textStyle: {
               fontSize: 22,
-              fontFamily: 'DIN Alternate',
             },
           },
           splitLine: {
@@ -127,7 +94,7 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,0.4)',
+              color: '#979797',
             },
           },
           axisLabel: {
@@ -141,47 +108,23 @@ export default {
             show: false,
           },
         },
-        series: [{
-          name: '在编教师',
-          type: 'bar',
-          barWidth: 20,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: 'rgba(133, 234, 255, 1)',
-                },
-                {
-                  offset: 1,
-                  color: 'rgba(133, 234, 255, 0.3)',
-                },
-              ],
-              global: false,
-            },
-          },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
+        legend: {
+          data: ['班级数', '总人数'],
+          right: 10,
+          top: 7,
+          orient: 'vertical',
+          textStyle: {
             color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-              fontFamily: 'DIN Alternate',
-            },
+            fontSize: 20,
+            fontFamily: 'DIN Alternate',
           },
-          barGap: '40%',
-          data: this.organization,
+          icon: 'rect',
         },
-        {
-          name: '非在编教师',
+        series: [{
+          name: '班级数',
           type: 'bar',
           barWidth: 20,
+          barGap: 0.5,
           itemStyle: {
             color: {
               type: 'linear',
@@ -192,11 +135,11 @@ export default {
               colorStops: [
                 {
                   offset: 0,
-                  color: 'rgba(255, 151, 152, 1)',
+                  color: '#FFAE9A',
                 },
                 {
                   offset: 1,
-                  color: 'rgba(255, 151, 152, 0.3)',
+                  color: '#BB6D3E',
                 },
               ],
               global: false,
@@ -209,11 +152,44 @@ export default {
             color: '#FFFFFF',
             textStyle: {
               fontSize: 22,
-              fontFamily: 'DIN Alternate',
             },
           },
-          barGap: '40%',
-          data: this.notOrganization,
+          data: this.dataMessage.classNum,
+        }, {
+          name: '总人数',
+          type: 'bar',
+          barWidth: 20,
+          barGap: 0.5,
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: 'rgba(89, 219, 230, 1)',
+                },
+                {
+                  offset: 1,
+                  color: 'rgba(89, 219, 230, 0.5)',
+                },
+              ],
+              global: false,
+            },
+          },
+          label: {
+            show: true,
+            position: 'top',
+            distance: 10,
+            color: '#FFFFFF',
+            textStyle: {
+              fontSize: 22,
+            },
+          },
+          data: this.dataMessage.allPeople,
         }],
       };
       return option;
@@ -222,18 +198,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.teacher_compose {
+.teacher_increase {
   position: absolute;
   width: 855px;
-  height: 360px;
+  height: 400px;
   position: absolute;
-  top: 290px;
-  left: 0;
+  top: 530px;
+  left: 10px;
   z-index: 101010;
-  // background: blue;
-  // opacity: 0.8;
-  .bar_chart {
-    height: 360px;
+  .line_chart {
+    height: 400px;
     width: 100%;
     box-sizing: border-box;
   }

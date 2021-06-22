@@ -1,11 +1,12 @@
 <template>
   <div class="school_age">
-    <PiceChart :chartData="{ pieData: personData, title: '教师工龄结构' }" height="470" />
+    <PiceChart :chartData="{ pieData: personData, title: '教师等级结构' }" height="470" legendTop="30%" />
   </div>
 </template>
 
 <script>
 import PiceChart from '../../components/piceChart';
+import { getTeacherGradeTrend } from '@/api/Overview/Education/api';
 export default {
   name: 'LeftComponents',
   components: {
@@ -14,10 +15,7 @@ export default {
   data() {
     return {
       personData: [
-        { value: 1048, name: '三年以下' },
-        { value: 735, name: '3-5年' },
-        { value: 580, name: '5-10年' },
-        { value: 484, name: '10年以上' },
+        { value: 484, name: ' ' },
       ],
       color: [
         {
@@ -61,6 +59,20 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getTeacherGradeTrend().request().then((res) => {
+        res.forEach((item) => {
+          item.name = item.jsdj;
+          item.value = item.rs;
+        });
+        this.personData = res;
+      });
+    },
   },
 };
 </script>

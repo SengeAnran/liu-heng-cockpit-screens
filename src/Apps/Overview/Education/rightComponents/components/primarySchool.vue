@@ -1,6 +1,6 @@
 <template>
   <div class="teacher_increase">
-    <div class="name">适龄儿童历年人数</div>
+    <div class="name">小学</div>
     <div class="line_chart" ref="charts"></div>
   </div>
 </template>
@@ -9,52 +9,44 @@
 import * as echarts from 'echarts';
 export default {
   name: 'TeacherIncrease',
-  components: {
+  components: {},
+  props: {
+    dataMessage: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+  watch: {
+    dataMessage(newValue, oldValue) {
+      this.setData();
+    },
   },
   data() {
-    return {
-      charts: null,
-    };
+    return {};
   },
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
-    this.loadData();
   },
   methods: {
-    loadData() {
-      this.setData();
-    },
     setData() {
       this.charts.clear();
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const xAxisData = ['2016', '2017', '2018', '2019', '2020', '2021'];
-      const data1 = [112, 332, 224, 978, 703, 430, 531, 415, 455, 768, 566, 414];
       const option = {
         grid: {
-          top: '25%',
+          top: '18%',
           left: '10%',
-          right: '5%',
+          right: '3%',
           bottom: '10%',
-        },
-        title: {
-          text: '人数',
-          textStyle: {
-            align: 'center',
-            color: '#fff',
-          },
-          top: '15%',
-          left: '5%',
         },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            type: 'line',
-            lineStyle: {
-              type: 'dashed',
-            },
+            type: 'shadow',
           },
           textStyle: {
             color: '#fff',
@@ -64,10 +56,11 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
+          data: this.dataMessage.xAxis,
           type: 'category',
           axisLine: {
             lineStyle: {
-              color: 'rgba(255, 255, 255, 0.5)',
+              color: 'rgba(255,255,255,0.2)',
             },
           },
           axisTick: {
@@ -89,16 +82,10 @@ export default {
           splitLine: {
             show: false,
           },
-          boundaryGap: false,
-          data: xAxisData,
+          boundaryGap: true,
         },
         yAxis: {
           type: 'value',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
           splitLine: {
             show: true,
             lineStyle: {
@@ -123,7 +110,7 @@ export default {
           },
         },
         legend: {
-          data: ['小升初儿童', '入学儿童'],
+          data: ['班级数', '总人数'],
           right: 10,
           top: 7,
           orient: 'vertical',
@@ -134,54 +121,77 @@ export default {
           },
           icon: 'rect',
         },
-        series: [
-          {
-            name: '人数',
-            type: 'line',
-            showAllSymbol: true,
-            symbolSize: 6,
-            itemStyle: {
-              color: '#59DBE6',
-              borderColor: '#fff',
-              borderWidth: 3,
-              shadowColor: 'rgba(0, 0, 0, .3)',
-              shadowBlur: 10,
-              shadowOffsetY: 10,
-              shadowOffsetX: 10,
-            },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: 'rgba(89, 219, 230, 1)' },
-                  { offset: 1, color: 'rgba(89, 219, 230, 0.1)' },
-                ]),
-              },
-            },
-            label: {
-              show: true,
-              position: 'top',
-              distance: 10,
-              color: '#FFFFFF',
-              textStyle: {
-                fontSize: 22,
-                fontFamily: 'DIN Alternate',
-              },
-            },
-            tooltip: {
-              show: true,
-            },
-            markPoint: {
-              label: {
-                normal: {
-                  textStyle: {
-                    color: '#fff',
-                  },
+        series: [{
+          name: '班级数',
+          type: 'bar',
+          barWidth: 20,
+          barGap: 0.5,
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: '#FFAE9A',
                 },
-              },
+                {
+                  offset: 1,
+                  color: '#BB6D3E',
+                },
+              ],
+              global: false,
             },
-            data: data1,
           },
-        ],
+          label: {
+            show: true,
+            position: 'top',
+            distance: 10,
+            color: '#FFFFFF',
+            textStyle: {
+              fontSize: 22,
+            },
+          },
+          data: this.dataMessage.classNum,
+        }, {
+          name: '总人数',
+          type: 'bar',
+          barWidth: 20,
+          barGap: 0.5,
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: 'rgba(89, 219, 230, 1)',
+                },
+                {
+                  offset: 1,
+                  color: 'rgba(89, 219, 230, 0.5)',
+                },
+              ],
+              global: false,
+            },
+          },
+          label: {
+            show: true,
+            position: 'top',
+            distance: 10,
+            color: '#FFFFFF',
+            textStyle: {
+              fontSize: 22,
+            },
+          },
+          data: this.dataMessage.allPeople,
+        }],
       };
       return option;
     },
