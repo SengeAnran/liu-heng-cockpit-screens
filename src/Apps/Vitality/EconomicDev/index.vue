@@ -23,6 +23,6 @@ export default {
   top: 0;
   width: 100%;
   height: 135rem;
-  // background: url('./bg.webp');
+  background: url('./bg.webp');
 }
 </style>

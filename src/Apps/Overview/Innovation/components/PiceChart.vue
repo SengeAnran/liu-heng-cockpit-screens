@@ -1,55 +1,38 @@
 <template>
-  <div class="chart" ref="pieChart"></div>
+  <div class="pieChart" ref="pieChart" />
 </template>
 
 <script>
-import * as echarts from 'echarts';
+/*
+参数说明
+data: 传入数据;
+legendType: 图例展示样式 all--名称+数据+占比,value--名称+数据, pec--名称+占比, default--名称，默认为default;
+chartStyle:
+{radius: [], // 圆环大小 center: [], // 圆环位置 position: [left, top], //
+环内贴图位置 scale: [], // 环内贴图缩放比例 legendStyle: [top, right, bottom,
+left], // 图例位置 }
+*/
+import circle from '../images/circle_bg.png';
+import * as echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/pie';
+import 'echarts/lib/component/toolbox';
+import 'echarts/lib/component/legend';
+import 'echarts/lib/component/graphic';
+import 'echarts/lib/component/grid';
 export default {
-  props: {
-    chartData: {
-      type: Array,
-      default: () => [],
-    },
-    color: {
-      type: Array,
-      default: () => ['#6182AE', '#E772DD', '#01A1F5', '#90FFED', '#65C986'],
-    },
-    title: {
-      type: String,
-      default: '',
-    },
-    unit: {
-      type: String,
-      default: '%',
-    },
-  },
+  name: 'PieChart',
   data() {
     return {
       chart: null,
-    };
-  },
-  mounted() {
-    this.chart = echarts.init(this.$refs.pieChart);
-    this.initEcharts();
-  },
-  beforeDestroy() {
-    if (this.chart) {
-      this.chart.dispose();
-      this.chart = null;
-    }
-  },
-  methods: {
-    initEcharts() {
-      const option = {
-        color: this.color,
+      total: 0,
+      option: {
         title: {
-          text: this.title,
-          left: '27%',
-          top: '40%',
+          text: '医务人员工龄结构',
+          left: '25%',
+          top: '42%',
           textAlign: 'center',
           textStyle: {
             fontSize: 34,
-            lineHeight: 40,
             fontFamily: 'Source Han Sans CN',
             color: '#fff',
             width: 140,
@@ -57,72 +40,282 @@ export default {
           },
         },
         tooltip: {
-          trigger: 'item',
+          show: false,
+        },
+        grid: {
+          top: 20,
+          left: 0,
+          bottom: 20,
+          // containLabel: true,
+        },
+        graphic: {
+          elements: [
+            {
+              type: 'image',
+              z: 3,
+              style: {
+                image: circle,
+                width: 143,
+                height: 150,
+              },
+              left: '16%',
+              top: '21%',
+              scaleX: 1,
+              scaleY: 1,
+            },
+          ],
         },
         legend: {
-          icon: 'circle',
+          y: 'center',
+          right: '10%',
+          align: 'left',
           orient: 'vertical',
-          itemWidth: 24,
-          itemHeight: 24,
-          itemGap: 32,
           top: 'center',
-          left: '450',
+          icon: 'circle',
+          itemGap: 25,
+          itemWidth: 21,
+          itemHeight: 21,
+          height: '95%',
           textStyle: {
-            color: '#fff',
+            color: '#fefefe',
+            fontSize: 29,
             rich: {
-              name: {
-                align: 'left',
-                fontSize: 24,
-                width: 160,
+              a: {
+                fontSize: 29,
+                fontFamily: 'Source Han Sans SC',
+                width: 180,
               },
-              value: {
-                align: 'left',
-                fontSize: 24,
+              b: {
+                fontSize: 29,
+                color: '#fff',
+                fontFamily: 'DINPro',
               },
             },
           },
-          data: this.chartData.map((item) => item.name),
-          formatter: (name) => {
-            let value = '';
-            const sum = this.chartData.reduce((value, item) => Number(value) + Number(item.value), 0);
-            value = this.chartData.filter((item) => item.name === name)[0].value;
-            return '{name| ' + name + '}  ' + '{value|' + ((value / sum) * 100).toFixed(2) + this.unit + '}';
-          },
+          formatter: '',
+        },
+        toolbox: {
+          show: false,
         },
         series: [
           {
-            name: '访问来源',
+            name: '患者年龄占比',
             type: 'pie',
-            radius: ['60%', '80%'],
-            center: ['27%', '50%'],
-            avoidLabelOverlap: false,
+            clockwise: true,
+            radius: [],
+            center: [],
+            top: 0,
+            left: 0,
+            bottom: 20,
+            hoverAnimation: false,
+            emphasis: { scale: false },
             label: {
-              show: false,
-              position: 'center',
-            },
-            emphasis: {
               show: false,
             },
             itemStyle: {
-              normal: {
-                shadowBlur: 30,
-                shadowColor: 'rgba(44, 142, 196, 1)',
-              },
+              borderWidth: 0,
             },
-            labelLine: {
-              show: false,
-            },
-            data: this.chartData,
+            data: [],
           },
         ],
+      },
+    };
+  },
+  props: {
+    data: {
+      type: Array,
+      default: function () {
+        return [
+          { name: 'Ⅰ类', value: 0 },
+          { name: 'Ⅱ类', value: 0 },
+          { name: 'Ⅲ类', value: 0 },
+          { name: 'Ⅳ类', value: 0 },
+          { name: 'Ⅴ类', value: 0 },
+          { name: '劣Ⅴ类', value: 0 },
+        ];
+      },
+    },
+    chartStyle: {
+      type: Object,
+      default: function () {
+        return {
+          scale: [],
+        };
+      },
+    },
+    legendType: {
+      type: String,
+      default: function () {
+        return 'default';
+      },
+    },
+    title: {
+      type: String,
+      default: function () {
+        return '标题';
+      },
+    },
+    tooltip: {
+      type: Object,
+      default: function () {
+        return { show: true };
+      },
+    },
+    color: {
+      type: Array,
+      default: function () {
+        return [
+          'rgba(97, 130, 174, 1)',
+          'rgba(142, 220, 125, 1)',
+          'rgba(1, 161, 245, 1)',
+          'rgba(85, 230, 243, 1)',
+          'rgba(235, 225, 128, 1)',
+          'rgba(219, 181, 167, 1)',
+        ];
+      },
+    },
+  },
+  watch: {
+    data: {
+      handler: function (val) {
+        if (typeof val === typeof []) {
+          this.getData();
+        }
+      },
+      immediate: false,
+      deep: true,
+    },
+    legendType(val) {
+      if (typeof val === 'string') {
+        this.getData();
+      }
+    },
+    chartStyle: {
+      handler: function () {
+        this.getData();
+      },
+      immediate: false,
+      deep: true,
+    },
+    tooltip: {
+      handler: function () {
+        this.getData();
+      },
+      immediate: false,
+      deep: true,
+    },
+  },
+  mounted() {
+    this.initChart();
+    this.getData();
+  },
+  methods: {
+    initChart() {
+      if (!this.chart) {
+        this.chart = echarts.init(this.$refs.pieChart);
+        this.chart.setOption(this.option);
+      }
+    },
+    getData() {
+      this.option.series[0].data = [];
+      this.option.legend.data = [];
+      this.total = 0;
+      const seriesData = [];
+      const legendData = [];
+      this.data.forEach((item) => {
+        this.total = this.total + item.value;
+      });
+      this.data.forEach((item, i) => {
+        seriesData.push({
+          value: item.value,
+          name: item.name,
+          itemStyle: {
+            borderWidth: 0,
+          },
+          tooltip: {
+            textStyle: {
+              fontSize: 29,
+            },
+          },
+        });
+        legendData.push(item.name);
+      });
+      this.option.title.text = this.title;
+      this.option.color = this.color;
+      this.option.series[0].data = seriesData;
+      this.option.legend.data = legendData;
+      this.option.series[0].radius = this.chartStyle.radius || ['66%', '83%'];
+      this.option.series[0].center = this.chartStyle.center || ['26%', '55%'];
+      this.option.tooltip.show = this.tooltip?.show;
+      const that = this;
+      this.option.tooltip.formatter = function (params) {
+        const html =
+          "<div style='font-size: 20px'>" +
+            params.marker +
+            params.name +
+            ':  ' +
+            params.value +
+            that.tooltip?.unit || '' + '</div>';
+        return html;
       };
-      this.chart.setOption(option);
+      this.option.graphic.elements[0].left = this.chartStyle.position
+        ? this.chartStyle.position[0]
+        : '6.2%';
+      this.option.graphic.elements[0].top = this.chartStyle.position
+        ? this.chartStyle.position[1]
+        : '5.88%';
+      this.option.graphic.elements[0].scaleX = this.chartStyle.scale[0] || 2.3;
+      this.option.graphic.elements[0].scaleY = this.chartStyle.scale[1] || 2.2;
+
+      if (this.chartStyle.legendStyle && this.chartStyle.legendStyle.length) {
+        this.option.legend.top = this.chartStyle.legendStyle[0] || 0;
+        this.option.legend.right = this.chartStyle.legendStyle[1] || 0;
+        this.option.legend.bottom = this.chartStyle.legendStyle[2] || 0;
+        this.option.legend.left = this.chartStyle.legendStyle[3] || 0;
+      }
+      this.option.legend.formatter = function (name) {
+        const checkData = that.data.filter((item) => {
+          return item.name === name;
+        });
+        return that.legendSwitch(checkData, name);
+      };
+      this.chart.clear();
+      this.chart.setOption(this.option);
+    },
+    legendSwitch(checkData, name) {
+      let html = name;
+      switch (this.legendType) {
+        case 'all':
+          html = [
+            '{a|' + name + '}',
+            '{b|' + checkData[0].value + '}',
+            '{b|' +
+              Math.floor((checkData[0].value / this.total) * 10000) / 100 +
+              '%}',
+          ];
+          break;
+        case 'value':
+          html = ['{a|' + name + '}', '{b|' + checkData[0].value + '}'];
+          break;
+        case 'pec':
+          html = [
+            '{a|' + name + '}' +
+            '{b|' +
+              Math.floor((checkData[0].value / this.total) * 10000) / 100 +
+              '%}',
+          ];
+          break;
+        default:
+          break;
+      }
+      return html;
     },
   },
 };
 </script>
-<style lang="scss">
-.chart {
+<style lang="scss" scoped>
+.pieChart {
+  // width: 100%;
   height: 100%;
 }
 </style>

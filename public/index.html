@@ -14,9 +14,26 @@
     }
   </style>
 </head>
-<script src="https://webapi.amap.com/maps?v=1.4.15&key=7fbaa402922cfec0fb3a1829c4677776"></script>
 <body>
   <div id="app"></div>
+  <script>
+    window.globalScale = {
+      ratioX: 1,
+      ratioY: 1,
+      resizeCbs: [],
+      setScale(ratioX, ratioY) {
+        this.ratioX = ratioX;
+        this.ratioY = ratioY;
+        console.log(ratioX, ratioY);
+        if (Array.isArray(this.resizeCbs)) {
+          this.resizeCbs.forEach((cb) => {
+            typeof cb === 'function' && cb(ratioX, ratioY);
+          })
+        }
+      },
+    };
+  </script>
+  <script src="<%= BASE_URL %>amap/maps.js?v=1.4.15&key=7fbaa402922cfec0fb3a1829c4677776"></script>
 </body>
 
 </html>

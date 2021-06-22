@@ -31,15 +31,16 @@ export default {
   methods: {
     loadData() { // 社区信息
       getPopulationTrend().request().then((res) => {
-        console.log(res);
-        res.born.reverse().forEach((item) => {
-          this.xAxisData.push(item.chyf);
-          this.bornData.push(item.chks);
+        const { born, death } = res;
+        born.reverse().forEach((bornTtem) => {
+          death.reverse().forEach((deadthItem) => {
+            if (bornTtem.chyf === deadthItem.swyf) {
+              this.xAxisData.push(bornTtem.chyf);
+              this.bornData.push(bornTtem.chks);
+              this.deathData.push(deadthItem.swks);
+            }
+          });
         });
-        res.death.reverse().forEach((item) => {
-          this.deathData.push(item.swks);
-        });
-        console.log(this.bornData, this.deathData);
         this.setData();
       });
     },

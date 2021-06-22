@@ -1,12 +1,13 @@
 <template>
   <div class="teacher_increase">
-    <div class="name">截止2021年，教职工人数增加24人</div>
+    <div class="name">升学情况</div>
     <div class="bar_chart" ref="charts"></div>
   </div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
+import { getPromotionTrendNew } from '@/api/Overview/Education/api';
 export default {
   name: 'TeacherIncrease',
   components: {
@@ -14,6 +15,9 @@ export default {
   data() {
     return {
       charts: null,
+      highSchool: [], // 初中升高中
+      university: [], // 高中升大学
+      xData: [],
     };
   },
   mounted() {
@@ -23,21 +27,43 @@ export default {
   },
   methods: {
     loadData() {
-      this.setData();
+      getPromotionTrendNew().request().then((res) => {
+        const { csg, gksx } = res; // 初升高 高考升学
+        csg.forEach((itemC) => {
+          gksx.forEach((itemG) => {
+            if (itemC.nf === itemG.nf) {
+              this.xData.push(itemC.nf);
+              this.highSchool.push(itemC.sl);
+              this.university.push(itemG.sl);
+            };
+          });
+        });
+        this.setData();
+      });
     },
     setData() {
       this.charts.clear();
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const xAxisData = ['2016', '2017', '2018', '2019', '2020', '2021'];
-      const data1 = [112, 332, 224, 978, 703, 430, 531, 415, 455, 768, 566, 414];
       const option = {
         grid: {
           top: '25%',
           left: '10%',
           right: '3%',
           bottom: '15%',
+        },
+        legend: {
+          data: ['初升高', '高考升学'],
+          right: 10,
+          top: 7,
+          orient: 'vertical',
+          textStyle: {
+            color: '#FFFFFF',
+            fontSize: 20,
+            fontFamily: 'DIN Alternate',
+          },
+          icon: 'rect',
         },
         title: {
           text: '人数',
@@ -90,7 +116,7 @@ export default {
             show: false,
           },
           boundaryGap: false,
-          data: xAxisData,
+          data: this.xData,
         },
         yAxis: {
           type: 'value',
@@ -124,7 +150,7 @@ export default {
         },
         series: [
           {
-            name: '人数',
+            name: '初升高',
             type: 'line',
             showAllSymbol: true,
             symbolSize: 6,
@@ -167,7 +193,53 @@ export default {
                 },
               },
             },
-            data: data1,
+            data: this.highSchool,
+          },
+          {
+            name: '高考升学',
+            type: 'line',
+            showAllSymbol: true,
+            symbolSize: 6,
+            itemStyle: {
+              color: 'rgba(200, 114, 242, 1)',
+              borderColor: '#fff',
+              borderWidth: 3,
+              shadowColor: 'rgba(0, 0, 0, .3)',
+              shadowBlur: 10,
+              shadowOffsetY: 10,
+              shadowOffsetX: 10,
+            },
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: 'rgba(200, 114, 242, 1)' },
+                  { offset: 1, color: 'rgba(200, 114, 242, 0)' },
+                ]),
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 22,
+                fontFamily: 'DIN Alternate',
+              },
+            },
+            tooltip: {
+              show: true,
+            },
+            markPoint: {
+              label: {
+                normal: {
+                  textStyle: {
+                    color: '#fff',
+                  },
+                },
+              },
+            },
+            data: this.university,
           },
         ],
       };

@@ -6,6 +6,7 @@
 
 <script>
 import PiceChart from '../../components/piceChart';
+import { getTeacherEducationTrend } from '@/api/Overview/Education/api';
 export default {
   name: 'LeftComponents',
   components: {
@@ -14,9 +15,9 @@ export default {
   data() {
     return {
       personData: [
-        { value: 1048, name: '大专' },
-        { value: 735, name: '本科' },
-        { value: 580, name: '研究生' },
+        { value: 0, name: '大专' },
+        { value: 0, name: '本科' },
+        { value: 0, name: '研究生' },
       ],
       color: [
         {
@@ -60,6 +61,20 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getTeacherEducationTrend().request().then((res) => {
+        res.forEach((item) => {
+          item.name = item.jsxl;
+          item.value = item.rs;
+        });
+        this.personData = res;
+      });
+    },
   },
 };
 </script>

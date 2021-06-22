@@ -38,12 +38,21 @@ export default {
     text-align: center;
     &:nth-child(1) {
       color: #66CCFF;
+      .name {
+        background-image: url('./icons/company.png');
+      }
     }
     &:nth-child(2) {
       color: #31EABC;
+      .name {
+        background-image: url('./icons/density.png');
+      }
     }
     &:nth-child(3) {
       color: #EDC063;
+      .name {
+        background-image: url('./icons/number.png');
+      }
     }
     .name {
       height: 26.5rem;
@@ -58,6 +67,8 @@ export default {
       box-sizing: border-box;
       text-align: center;
       line-height: 32rem;
+      background-repeat: no-repeat;
+      background-position: center 40%;
     }
     .value {
       font-size: 60px;
