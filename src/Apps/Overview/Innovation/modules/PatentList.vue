@@ -10,15 +10,15 @@
         <span>所属公司</span>
       </div>
       <div class="table-content">
-         <vue-seamless-scroll :data="listData" :class-option="defaultOption" >
+        <vue-seamless-scroll :data="listData" :class-option="defaultOption">
           <div class="item" :key="index" v-for="(item,index) in listData">
-            <span>李四{{index}}</span>
-            <span>一种可变化拖鞋</span>
-            <span>2021-03-11</span>
-            <span>舟山市六横镇</span>
-            <span>六横制船厂</span>
+            <span>{{item.xm}}</span>
+            <span>{{item.zlmc}}</span>
+            <span>{{item.sj}}</span>
+            <span>{{item.ssd}}</span>
+            <span>{{item.ssgs}}</span>
           </div>
-         </vue-seamless-scroll>
+        </vue-seamless-scroll>
       </div>
     </div>
   </div>
@@ -27,6 +27,7 @@
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
 import vueSeamlessScroll from 'vue-seamless-scroll';
+import { getPatentList } from '@/api/Overview/Innovation/api';
 export default {
   components: {
     SecondaryTitle,
@@ -34,7 +35,7 @@ export default {
   },
   data() {
     return {
-      listData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      listData: [],
     };
   },
   computed: {
@@ -46,9 +47,17 @@ export default {
         openWatch: true,
       };
     },
-
   },
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getPatentList().request().then((json) => {
+        this.listData = json;
+      });
+    },
+  },
 };
 </script>
 
@@ -119,7 +128,7 @@ export default {
       }
     }
   }
-  .table-content{
+  .table-content {
     flex: 1;
     overflow: hidden;
   }

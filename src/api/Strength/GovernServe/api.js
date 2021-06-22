@@ -9,6 +9,10 @@ export const getAppointmentAnalysis = () => {
 export const getBookingTrend = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/bookingTrend' });
 };
+// 评价占比
+export const getEvaluationPercent = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/evaluationPercent' });
+};
 
 // 政务大厅信息
 export const getInfoGovernment = () => {
@@ -23,22 +27,26 @@ export const getEvaluationSituation = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/realtimeEvaluationAndAnalysisSituation' });
 };
 
-// 获取户籍人口年龄分布
-export const getAgeDistribution = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getAgeDistribution' });
+// 实时办理情况
+export const getRealtimeHandling = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/realtimeHandling' });
 };
 
-// 获取户籍人口学历占比
-export const getEducation = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getEducation' });
+// 实时预约明细
+export const getRealtimeReservationDetails = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/realtimeReservationDetails' });
 };
 
-// 获取户籍人口婚龄单身比
-export const getMarriedSingle = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getMarriedSingle' });
+// 热点事项TOP5
+export const geTopFiveHotIssues = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/topFiveHotIssues' });
 };
 
-// 获取户籍人口工作占比
-export const getWrok = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getWrok' });
+// 本月事项满意度排行TOP5
+export const getTopFiveSatisfactionRank = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/topFiveSatisfactionRank' });
+};
+// 办理量趋势
+export const getTrendOfHandlingVolume = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/trendOfHandlingVolume' });
 };

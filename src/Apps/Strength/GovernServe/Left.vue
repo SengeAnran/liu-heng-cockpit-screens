@@ -12,7 +12,7 @@
               <div class="sub-title">{{ item.subTitle }}</div>
             </div>
             <div>
-              <div class="number"><span class="sign" v-show="item.hasSign">+</span> <CountUp :num="item.number" /></div>
+              <div class="number"><span class="sign" v-show="item.hasSign"><span v-if="item.number>0">+</span><span v-else>-</span></span> <CountUp :num="item.number" /></div>
               <div class="unit">件</div>
             </div>
           </div>
@@ -48,17 +48,17 @@
             class="picker-item"
             v-for="(item, index) in dateList"
             :key="index"
-            @click="active = index"
+            @click="onClick(item,index)"
             :class="{ active: active === index }"
           >
-            {{ item }}
+            {{ item.name }}
           </div>
         </div>
         <div class="list">
-          <div class="item flex" v-for="item in 3" :key="item">
-            <div class="name"><span>姓名：</span><span>张三</span></div>
-            <div class="time"><span>预约时间：</span><span>04/12 13:00-14:00</span></div>
-            <div class="desc"><span>预约事项：</span><span>不动产登记</span></div>
+          <div class="item flex" v-for="(item,index) in tableList" :key="index">
+            <div class="name"><span>姓名：</span><span>{{item.xm}}</span></div>
+            <div class="time"><span>预约时间：</span><span>{{item.yysj}}</span></div>
+            <div class="desc"><span>预约事项：</span><span>{{item.yysx}}</span></div>
           </div>
         </div>
       </div>
@@ -67,27 +67,34 @@
 </template>
 
 <script>
-import BaseTitle from '../../Overview/Medical/components/BaseTitle';
+import moment from 'moment';
 import PieChart from '../../Overview/Medical/components/PieChart';
 import LineChart from '../../Overview/Medical/components/LineChart';
+import { getRealtimeBooking, getAppointmentAnalysis, getBookingTrend, getRealtimeReservationDetails } from '@/api/Strength/GovernServe/api';
 export default {
   name: 'ProjectManageLeft',
-  components: { BaseTitle, PieChart, LineChart },
+  components: { PieChart, LineChart },
   data() {
     return {
       list: [
-        { name: '预约总数', number: 223 },
-        { name: '预约总数', subTitle: '较上月', number: 223, hasSign: true },
+        { name: '预约总数', number: 0 },
+        { name: '预约总数', subTitle: '较上月', number: 0, hasSign: true },
       ],
       list1: [
-        { name: '预约今日', subTitle: '数量', number: 223 },
-        { name: '等待办理', subTitle: '数量', number: 223 },
+        { name: '预约今日', subTitle: '数量', number: 0 },
+        { name: '等待办理', subTitle: '数量', number: 0 },
       ],
-      dateList: ['前7日', '昨日', '今天', '明天', '后7天'],
+      tableList: [],
+      dateList: [
+        { name: '前7日', value: moment().subtract('days', 6).format('YYYY-MM-DD') },
+        { name: '昨日', value: moment().subtract('days', 1).format('YYYY-MM-DD') },
+        { name: '今天', value: moment().format('YYYY-MM-DD') },
+        { name: '明天', value: moment().add(1, 'days').format('YYYY-MM-DD') },
+        { name: '后7天', value: moment().add(7, 'days').format('YYYY-MM-DD') }],
       pieTypeData: [
-        { name: '已受理', value: 10 },
-        { name: '已取消', value: 20 },
-        { name: '未到达', value: 30 },
+        { name: '已受理', value: 0 },
+        { name: '已取消', value: 0 },
+        { name: '未到达', value: 0 },
       ],
       lineData: {
         title: '预约趋势',
@@ -101,10 +108,53 @@ export default {
       },
       colors: ['rgba(1, 94, 234, 1)', 'rgba(247, 114, 209, 1)', 'rgba(97, 130, 174, 1)'],
       active: 2,
+      time: moment().format('YYYY-MM-DD'),
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    onClick(item, index) {
+      this.active = index;
+      this.time = item.value;
+      this.fetchDetails();
+    },
+    loadData() {
+      getRealtimeBooking()
+        .request()
+        .then((json) => {
+          if (!json) { return; }
+          this.list[0].number = json[0].yyzs || 0;
+          this.list[1].number = json[0].jsyzs || 0;
+          this.list1[0].number = json[0].yyjnsl || 0;
+          this.list1[1].number = json[0].ddblsl || 0;
+        });
+      getAppointmentAnalysis()
+        .request()
+        .then((json) => {
+          if (!json) { return; }
+          this.pieTypeData = json.map((item) => { return { name: item.yyzt, value: item.yyzs }; });
+        });
+      getBookingTrend()
+        .request()
+        .then((json) => {
+          if (!json) { return; }
+          this.lineData.xData = json.map((item) => item.sj);
+          this.lineData.data1 = json.map((item) => item.yys);
+        });
+      this.fetchDetails();
+    },
+    fetchDetails() {
+      getRealtimeReservationDetails()
+        .request({ yysj: this.time })
+        .then((json) => {
+          if (!json) { return; }
+          this.tableList = json;
+        });
+    },
+  },
+
 };
 </script>
 

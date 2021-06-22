@@ -8,7 +8,9 @@
           <p>{{item.subTitle}}</p>
         </div>
         <div class="number">
-          <p>{{addZero(item.number)}}</p>
+          <p>
+            <ICountUp :endVal="item.number" />
+          </p>
         </div>
       </div>
     </div>
@@ -16,29 +18,45 @@
 </template>
 
 <script>
+import ICountUp from '../components/ICountUp';
+import { getPatentNum } from '@/api/Overview/Innovation/api';
 export default {
+  components: {
+    ICountUp,
+  },
   data() {
     return {
       listData: [
         {
           title: '发明',
           subTitle: '专利',
-          number: 6,
+          number: 0,
         },
         {
           title: '外观设计',
           subTitle: '专利',
-          number: 66,
+          number: 0,
         },
         {
           title: '实用',
           subTitle: '新型',
-          number: 66,
+          number: 0,
         },
       ],
     };
   },
+  mounted() {
+    this.loadData();
+  },
   methods: {
+    loadData() {
+      getPatentNum().request().then((json) => {
+        const { fmzlsl, wgsjzlsl, syxxzlsl } = json;
+        this.listData[0].number = fmzlsl;
+        this.listData[1].number = wgsjzlsl;
+        this.listData[2].number = syxxzlsl;
+      });
+    },
     addZero(num) {
       return num < 10 ? '0' + num : num;
     },
@@ -47,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.PatentList{
+.PatentList {
   margin-bottom: 30px;
 }
 .sub-title {
@@ -85,9 +103,9 @@ export default {
     .number {
       overflow: hidden;
       p {
+        padding-left: 6px;
         color: #fff;
-        font-size: 48px;
-        letter-spacing: 4px;
+        font-size: 40px;
       }
     }
   }
