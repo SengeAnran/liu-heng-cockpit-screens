@@ -1,6 +1,6 @@
 import Container from '@/components/Container';
 import ThirdPage from '@/components/ThirdPage';
-import BgImg from '@/components/BgImg';
+// import BgImg from '@/components/BgImg';
 
 export default [
   {
@@ -237,10 +237,7 @@ export default [
       {
         path: 'public-voice',
         name: '舆情分析',
-        component: BgImg,
-        props: {
-          name: 'overview-population.jpg',
-        },
+        component: () => import('@/Apps/Strength/PublicVoice'),
         meta: {
           indicator: [
             { name: '本月事件', value: 100, unit: '件' },

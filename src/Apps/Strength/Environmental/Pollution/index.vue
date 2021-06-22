@@ -34,6 +34,7 @@
 </template>
 <script>
 import * as echarts from 'echarts';
+import { gasPollutionSourceDetection, getGasrelatedSources, getGasPollutionSources } from '@/api/Strength/Environmental/api';
 export default {
   name: 'Pollution',
   data() {
@@ -41,29 +42,25 @@ export default {
       topList: [
         {
           name: '全区涉气污染源',
-          value: 203,
+          value: 0,
         },
         {
           name: '预警值出现',
-          year: 104,
-          today: 16,
+          year: 0,
+          today: 0,
         },
       ],
-      list: [
-        { value: 1048, name: '氮氧化物排放' },
-        { value: 735, name: '二氧化硫排放' },
-        { value: 580, name: '烟尘排放' },
-      ],
+      list: [],
       title: '排放分析',
       bottomList: [
         {
           name: '二氧化硫排放',
-          value: 79,
+          value: 0,
           status: '完成',
         },
         {
           name: '二氧化碳排放',
-          value: 63,
+          value: 0,
           status: '完成',
         },
       ],
@@ -73,9 +70,35 @@ export default {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
-    this.chart.setOption(this.optionData(this.list));
+    this.loadData();
   },
   methods: {
+    loadData() {
+      gasPollutionSourceDetection().request().then((json) => {
+        this.topList[0].value = json[0].qqsqwryjs || 0;
+        this.topList[1].year = json[0].qnyjzcxcs || 0;
+        this.topList[1].today = json[0].jryjzcxcs || 0;
+      });
+
+      getGasrelatedSources().request().then((json) => {
+        this.list = json.map((item) => {
+          item.name = item.wrwlx;
+          item.value = item.pfl || 0;
+          return item;
+        });
+        this.chart.setOption(this.optionData(this.list));
+      });
+
+      getGasPollutionSources().request().then((json) => {
+        this.bottomList.forEach((item) => {
+          json.forEach((item1) => {
+            if (item.name.includes(item1.wrwlx)) {
+              item.value = +((item1.jpwcl / item1.jpmbl) * 100).toFixed(0) || 0;
+            }
+          });
+        });
+      });
+    },
     optionData(data) {
       const total = data.reduce((prev, next) => prev + next.value, 0);
       data = data.map((item) => {
@@ -263,7 +286,7 @@ export default {
       height: 240px;
       text-align: center;
       .status {
-        font-size: 25px;
+        font-size: 32px;
         margin-top: 32px;
         font-family: 'SourceHanSansSC';
       }
