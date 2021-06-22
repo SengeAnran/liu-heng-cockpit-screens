@@ -11,6 +11,8 @@
       <RightSection3 class="section-item"/>
       <RightSection4 class="section-item"/>
     </div>
+
+    <Map />
   </div>
 </template>
 <script>
@@ -20,6 +22,7 @@ import RightSection1 from './RightSection1';
 import RightSection2 from './RightSection2';
 import RightSection3 from './RightSection3';
 import RightSection4 from './RightSection4';
+import Map from './map/index';
 export default {
   components: {
     LeftSection1,
@@ -28,6 +31,7 @@ export default {
     RightSection2,
     RightSection3,
     RightSection4,
+    Map,
   },
 };
 </script>
@@ -41,9 +45,11 @@ export default {
     width: 170rem;
     top: 26.3rem;
     left: 16rem;
+    z-index: 10;
   }
   .right-part{
     position: absolute;
+    z-index: 10;
     width: 170rem;
     right: 16rem;
     top: 26.3rem;
