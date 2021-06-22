@@ -1,7 +1,7 @@
 <template>
   <div class="popup">
     <input type="text" v-model="age">
-    hello world {{ age }}
+    hello {{ name }} {{ age }}
   </div>
 </template>
 <script>

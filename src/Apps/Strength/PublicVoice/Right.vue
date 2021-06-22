@@ -62,7 +62,8 @@ export default {
         margin: 1.6rem;
         flex: none;
         box-sizing: border-box;
-        background: linear-gradient(180deg, rgba(22, 40, 47, 0.8), rgba(16, 31, 37, 0.8));
+        background: rgba(16, 31, 37, 0.8) url('./avatar.png') no-repeat;
+        background-position: center 35%;
         border: 1px solid rgba(168, 247, 237, 0.2);
         border-radius: 10px;
         text-align: center;
