@@ -86,6 +86,7 @@ export default {
   right: 140px;
   padding:0 35px;
   box-sizing: border-box;
+  z-index: 10000;
   .title {
     position: absolute;
     left: 35px;
