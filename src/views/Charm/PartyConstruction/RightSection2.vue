@@ -9,7 +9,12 @@
           @slideChange="onSlideChange"
           class="swiper-main"
         >
-          <swiper-slide>
+          <swiper-slide v-for="(item, index) in dataList" :key="index">
+            <div class="img-bg">
+              <img :src="item.url" />
+            </div>
+          </swiper-slide>
+          <!-- <swiper-slide>
             <div class="img-bg">
               <img src="@/assets/images/Charm/loopImg1.png" />
             </div>
@@ -18,12 +23,7 @@
             <div class="img-bg">
               <img src="@/assets/images/Charm/loopImg1.png" />
             </div>
-          </swiper-slide>
-          <swiper-slide>
-            <div class="img-bg">
-              <img src="@/assets/images/Charm/loopImg1.png" />
-            </div>
-          </swiper-slide>
+          </swiper-slide> -->
 
           <div class="swiper-pagination" style="height: 3rem;text-align: center" slot="pagination"></div>
         </Swiper>
@@ -84,6 +84,7 @@ export default {
       this.dataList = result.map((i) => {
         return {
           ...i,
+          url: 'data:image/png;base64,' + i.jstp,
         };
       });
       this.currentData = this.dataList[0];
