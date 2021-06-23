@@ -1,5 +1,6 @@
 <template>
   <div class="economic-dev">
+    <Map />
     <Left />
     <Right1 />
     <Right2 />
@@ -9,8 +10,11 @@
 import Left from './Left';
 import Right1 from './Right1';
 import Right2 from './Right2';
+import Map from './Map';
+
 export default {
   components: {
+    Map,
     Left,
     Right1,
     Right2,

@@ -26,7 +26,7 @@ export default {
     },
     async fetchData() {
       const data = await economicAPI.companyRegisterCancelNum();
-      console.log(data);
+      // console.log(data);
       const list = data.map((d) => ({
         ...d,
         name: d.sj,

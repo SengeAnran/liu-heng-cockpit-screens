@@ -5,6 +5,7 @@
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
+import economicAPI from '@/api/Vitality/EconomicDev';
 
 export default {
   data() {
@@ -19,11 +20,22 @@ export default {
   },
   mounted() {
     this.initChart();
+    this.fetchData();
   },
   methods: {
     initChart() {
       this.chart = echarts.init(this.$refs.eleChart);
       this.chart.setOption(getOptions(this.list));
+    },
+    async fetchData() {
+      const data = await economicAPI.typeDistribution();
+      // console.log(data);
+      const list = data.map((d) => ({
+        ...d,
+        name: d.qylx,
+        value: d.qysl,
+      }));
+      this.chart.setOption(getOptions(list));
     },
   },
 };
