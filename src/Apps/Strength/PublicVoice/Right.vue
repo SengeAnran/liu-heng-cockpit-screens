@@ -73,7 +73,7 @@ export default {
           font-family: Source Han Sans CN;
           font-weight: 500;
           background: linear-gradient(180deg, #fff 0%, #99FFFF 100%);
-          -webkit-background-clip: text;
+          background-clip: text;
           -webkit-text-fill-color: transparent;
         }
       }
