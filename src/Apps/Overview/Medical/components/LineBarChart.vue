@@ -169,7 +169,7 @@ export default {
           },
           position: 'left',
           splitLine: {
-            show: true,
+            show: false,
             interval: '0',
             lineStyle: {
               color: 'rgba(151, 151, 151, 1)',

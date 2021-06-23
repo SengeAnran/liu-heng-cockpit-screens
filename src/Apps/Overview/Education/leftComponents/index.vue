@@ -33,6 +33,7 @@ export default {
   height: 1076px;
   top: 250px;
   left: 140px;
+  z-index: 10000;
   .title {
     position: absolute;
     left: 22px;

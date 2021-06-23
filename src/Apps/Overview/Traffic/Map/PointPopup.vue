@@ -1,6 +1,7 @@
 <template>
   <div class="popup">
-    hello world
+    <input type="text" v-model="age">
+    hello {{ name }} {{ age }}
   </div>
 </template>
 <script>
@@ -11,13 +12,16 @@ export default {
       default: () => ({}),
     },
   },
+  data() {
+    return { age: undefined };
+  },
   computed: {
     name() {
       return this.feature?.properties?.name || 'world';
     },
   },
   mounted() {
-    console.log('mounted');
+    console.log('mounted', this.feature);
   },
   beforeDestroy() {
     console.log('beforeDestroy');
@@ -26,6 +30,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .popup {
-  // color: #fff;
+  color: red;
 }
 </style>
