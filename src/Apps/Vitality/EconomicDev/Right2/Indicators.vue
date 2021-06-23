@@ -1,20 +1,61 @@
 <template>
   <div class="indicator">
-    <div class="item" v-for="item in list" :key="item.name">
-      <span class="name">{{ item.name }}</span>
+    <div class="item">
+      <span class="name">
+        常住人口<br />数量
+      </span>
       <span class="value">
-        {{ item.value }}
-        <span class="unit">{{ item.unit }}</span>
+        {{ permanentNumValue }}
+        <span class="unit">{{ permanentNumUnit }}人</span>
+      </span>
+    </div>
+    <div class="item">
+      <span class="name">劳动力<br />人口数量</span>
+      <span class="value">
+        {{ laborNumValue }}
+        <span class="unit">{{ laborNumUnit }}人</span>
       </span>
     </div>
   </div>
 </template>
 <script>
+import economicAPI from '@/api/Vitality/EconomicDev';
+import { unitNum } from '@/utils/number';
+
 export default {
-  props: {
-    list: {
-      type: Array,
-      default: () => ({}),
+  data() {
+    return {
+      permanentNum: 0,
+      laborNum: 0,
+    };
+  },
+  computed: {
+    permanentNumValue() {
+      const { value } = unitNum(this.permanentNum);
+      return value.toFixed(2);
+    },
+    permanentNumUnit() {
+      const { unit } = unitNum(this.permanentNum);
+      return unit;
+    },
+    laborNumValue() {
+      const { value } = unitNum(this.laborNum);
+      return value.toFixed(2);
+    },
+    laborNumUnit() {
+      const { unit } = unitNum(this.laborNum);
+      return unit;
+    },
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      const data = await economicAPI.populationInfo();
+      // console.log(data);
+      this.permanentNum = data?.czrk || 0;
+      this.laborNum = data?.ldlrks || 0;
     },
   },
 };
