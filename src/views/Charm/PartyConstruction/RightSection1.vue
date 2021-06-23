@@ -28,8 +28,8 @@
             @click="selectTab(item.name, index)">{{item.name}}</li>
         </ul>
 
-        <div class="content">
-          <p>{{currentContent}}</p>
+        <div >
+          <p class="content">{{currentContent}}</p>
         </div>
       </div>
     </div>
@@ -111,6 +111,9 @@ export default {
 .section-content{
   display: flex;
   padding-top: 1.8rem;
+  *{
+    box-sizing: border-box;
+  }
   .loop-img{
     margin-top: .9rem;
     flex: none;
@@ -170,11 +173,39 @@ export default {
       align-items: center;
       height: 7rem;
       list-style: none;
+      width: 44rem;
+      overflow-x: auto;
+      padding: 0;
+      margin: 1rem 3rem;
+      &::-webkit-scrollbar
+      {
+          width:16px;
+          height:16px;
+          background-color:#413f3f;
+      }
+      /*定义滚动条轨道
+      内阴影+圆角*/
+      &::-webkit-scrollbar-track
+      {
+          -webkit-box-shadow:inset 0 0 6px rgba(20, 34, 49, 0.3);
+          // border-radius:10px;
+          background-color:#0d1f38;
+      }
+      /*定义滑块
+      内阴影+圆角*/
+      &::-webkit-scrollbar-thumb
+      {
+          // border-radius:10px;
+          -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
+          background-color:rgb(70, 70, 70);
+      }
       li{
         font-size: 3.4rem;
         color: rgba(255, 255, 255, .3);
         padding: 0 3rem;
         cursor: pointer;
+        min-width: 14rem;;
+        text-align: center;
         &.active{
           color: white;
           background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
@@ -186,7 +217,33 @@ export default {
       font-size: 1.8rem;
       color: rgba(255, 255, 255, .85);
       line-height: 3rem;
-      padding: 0 2.9rem;
+      padding: 1rem 0rem;
+      padding-left: 3rem;
+      width: 45rem;
+      overflow-y: auto;
+      max-height: 31rem;
+      &::-webkit-scrollbar
+      {
+          width:16px;
+          height:16px;
+          background-color:#413f3f;
+      }
+      /*定义滚动条轨道
+      内阴影+圆角*/
+      &::-webkit-scrollbar-track
+      {
+          -webkit-box-shadow:inset 0 0 6px rgba(20, 34, 49, 0.3);
+          // border-radius:10px;
+          background-color:#0d1f38;
+      }
+      /*定义滑块
+      内阴影+圆角*/
+      &::-webkit-scrollbar-thumb
+      {
+          // border-radius:10px;
+          -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
+          background-color:rgb(70, 70, 70);
+      }
     }
   }
 }
