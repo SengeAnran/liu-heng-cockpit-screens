@@ -13,16 +13,12 @@ export default function getOptions(data) {
     },
     grid: {
       top: 100,
-      left: 50,
+      left: 80,
       bottom: 38,
-      right: 50,
+      right: 80,
     },
     tooltip: {
       trigger: 'axis',
-      // axisPointer: {
-      //   lineStyle: {
-      //   },
-      // },
     },
     legend: {
       top: 0,

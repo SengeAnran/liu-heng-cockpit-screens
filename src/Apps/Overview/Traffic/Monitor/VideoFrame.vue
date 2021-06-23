@@ -7,7 +7,7 @@
 export default {
   data() {
     return {
-      videoUrl: 'http://60.163.192.206:8000/liuheng-pc/views/haikangVideo/window_simple_preview.html?cameraIndexCode=33090305141323050002&width=700&height=500',
+      videoUrl: 'http://60.163.192.206:8000/liuheng-pc/views/haikangVideo/window_simple_preview.html?cameraIndexCode=33090300001310894123&width=700&height=500',
     };
   },
 };
@@ -24,6 +24,5 @@ export default {
     height: 505px;
     transform: translate(-50%, -50%) scale(0.66);
   }
-  // outline: 1px solid red;
 }
 </style>
