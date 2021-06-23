@@ -4,9 +4,6 @@
 <script>
 /**
  * @name 雷达图
- * @param {Object} options 配置项
- * @param {Array} indicatorData indicator数据
- * @param {Array} dataList 数据值
  */
 export default {
   props: {

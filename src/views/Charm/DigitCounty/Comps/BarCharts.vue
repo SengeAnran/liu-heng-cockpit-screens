@@ -45,7 +45,7 @@ export default {
     },
     unit: {
       type: String,
-      default: () => '万人',
+      default: () => '人',
     },
   },
   data() {

@@ -23,7 +23,7 @@
           <Proportion name="男女性别比" :dataList="manAwomenList" />
         </div>
         <div>
-          <Proportion name="民族比例" :dataList="manAwomenList"  />
+          <Proportion name="民族比例" :dataList="nationList" />
         </div>
       </div>
       <!-- 年龄分布 + 学历分布 -->
@@ -49,12 +49,12 @@
       </div>
     </div>
     <div class="center-wrapper">
-      <Map/>
+      <Map />
     </div>
     <div class="right-wrapper">
       <div>
         <SamllTitle name="居民情况" />
-        <pie-charts style="height: 35rem; width: 100%" />
+        <pie-charts style="height: 35rem; width: 100%" :pieData="residentInfo" />
         <SamllTitle name="五类老人" />
         <TableList style="width: 100%; height: 19.7rem" :datalist="oldManInfo" />
         <SamllTitle name="村民信息" />
@@ -62,9 +62,9 @@
       </div>
       <div>
         <SamllTitle name="乡村规划" />
-        <RadarCharts style="height: 45rem; width: 100%" />
+        <RadarCharts style="height: 45rem; width: 100%" :indicatorData="indicatorData" :dataList="indicatorDataList"/>
         <SamllTitle name="村民用水用电趋势" />
-        <LineCharts style="height: 52rem; width: 100%" />
+        <LineCharts style="height: 52rem; width: 100%" :xData="waterXData" :yData1="waterYData1" :yData2="waterYData2" />
       </div>
     </div>
   </div>
@@ -82,6 +82,16 @@ import TableList from './Comps/TableList';
 import RadarCharts from './Comps/RadarCharts';
 import LineCharts from './Comps/LineCharts';
 import Map from './Comps/Map/index';
+import {
+  getCommunityInfo,
+  getAgeDistribution,
+  getEduDistribution,
+  getResidentInfo,
+  getOldPeople,
+  getVillagerInfo,
+  getPlanning,
+  getWaterElectTrend,
+} from '@/api/Charm/DigitCounty';
 
 export default {
   components: {
@@ -97,29 +107,15 @@ export default {
   },
   data() {
     return {
+      defaultName: '荷花小区',
       CommunityOverview: '社区概述',
-      manAwomenName: '男女性别比',
-      manAwomenStyle: {
-        width: '70rem',
-        height: '3.17rem',
-      },
-      manAwomenList: [
-        {
-          name: '男性人口',
-          unit: '人',
-          num: 14336,
-        },
-        {
-          name: '女性人口',
-          unit: '人',
-          num: 1324,
-        },
-      ],
+      nationList: [], // 民族比例
+      manAwomenList: [], // 男女性别比
       contain1: {
         // 社区概述-荷花小区
         img: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3228549874,2173006364&fm=26&gp=0.jpg',
-        title: '荷花小区',
-        content: '荷花小区位于六横峧头，是一个安置小区。记者上周三在小区内看到，矗立楼外的电梯十分抢眼，电333333',
+        title: '',
+        content: '',
       },
       contain2: [
         // 社区概述-社区人口+镇宅住区+小区数量+住宅单元数
@@ -152,8 +148,8 @@ export default {
       ],
       ageName: '年龄分布',
       ageData: {
-        xData: [8, 13, 27, 15, 3, 8],
-        yData: ['0～16岁', '17～25岁', '26～40岁', '27～65岁', '65岁以上'],
+        xData: [],
+        yData: [],
         bgColor: [
           { offset: 0, color: 'rgba(117, 248, 195, 1)' },
           { offset: 0.98, color: 'rgba(185, 251, 224, 1)' },
@@ -163,8 +159,8 @@ export default {
       },
       educationName: '学历分布',
       educationData: {
-        xData: [1, 4, 27, 15, 3, 8],
-        yData: ['研究生学历', '本科学历', '专科学历', '高中文化', '其他'],
+        xData: [],
+        yData: [],
         bgColor: [
           { offset: 0, color: 'rgba(248, 243, 117, 1)' },
           { offset: 0.98, color: 'rgba(255, 164, 64, 1)' },
@@ -173,20 +169,135 @@ export default {
         ],
       },
       oldManInfo: [
-        { name: '高龄老人', value: '44', unit: '人' },
-        { name: '残疾老人', value: '43', unit: '人' },
-        { name: '困难老人', value: '44', unit: '人' },
-        { name: '空巢老人', value: '35', unit: '人' },
-        { name: '孤寡老人', value: '123', unit: '人' },
+        { name: '高龄老人', value: 0, unit: '人' },
+        { name: '残疾老人', value: 0, unit: '人' },
+        { name: '困难老人', value: 0, unit: '人' },
+        { name: '空巢老人', value: 0, unit: '人' },
+        { name: '孤寡老人', value: 0, unit: '人' },
       ], // 五类老人
       villagerInfo: [
-        { name: '低保人员', value: '253', unit: '人' },
-        { name: '残障人员', value: '43', unit: '人' },
-        { name: '退伍军人', value: '44', unit: '人' },
-        { name: '留守儿童', value: '35', unit: '人' },
-        { name: '烈士子女', value: '123', unit: '人' },
+        { name: '低保人员', value: 0, unit: '人' },
+        { name: '残障人员', value: 0, unit: '人' },
+        { name: '退伍军人', value: 0, unit: '人' },
+        { name: '留守儿童', value: 0, unit: '人' },
+        { name: '烈士子女', value: 0, unit: '人' },
       ], // 村民信息
+      residentInfo: [
+        { value: 0, name: '中共党员', unit: '人' },
+        { value: 0, name: '共青团员', unit: '人' },
+        { value: 0, name: '群众', unit: '人' },
+      ],
+      indicatorData: [
+        { name: '耕地', value: 0, unit: 'km²', max: 0 },
+        { name: '林地', value: 0, unit: 'km²', max: 0 },
+        { name: '建设用地', value: 0, unit: 'km²', max: 0 },
+        { name: '水域', value: 0, unit: 'km²', max: 0 },
+        { name: '其他农用地', value: 0, unit: 'km²', max: 0 },
+      ],
+      indicatorDataList: [],
+      waterXData: [],
+      waterYData1: [],
+      waterYData2: [],
     };
+  },
+  methods: {
+    initData(data) {
+      this.getCommunityInfoData(data);
+      this.getAgeDistributionData(data);
+      this.getEduDistributionData(data);
+      this.getResidentInfoData();
+      this.getOldPeopleData(data);
+      this.getVillagerInfoData();
+      this.getPlanningData();
+      this.getWaterElectTrendData();
+    },
+    async getCommunityInfoData(data) {
+      const result = await getCommunityInfo(data).request();
+      if (result) {
+        // 男女比例 + 民族比例
+        this.manAwomenList = result.sex;
+        this.nationList = result.nation;
+        this.contain1.title = result.sqmc;
+        this.contain1.content = result.sqjs;
+        this.contain2[0].count = result.zzzqs; // 镇宅住区数
+        this.contain2[1].count = result.zzdys; // 住宅单元数
+        this.contain3[0].count = result.sqrks; // 社区人口
+        this.contain3[1].count = result.xqsl; // 小区数量
+      }
+    },
+    async getAgeDistributionData(data) {
+      const result = await getAgeDistribution(data).request();
+      if (result) {
+        this.ageData.xData = result.map((i) => i.rs);
+        this.ageData.yData = result.map((i) => i.nld);
+      }
+    },
+    async getEduDistributionData(data) {
+      const result = await getEduDistribution(data).request();
+      if (result) {
+        this.educationData.xData = result.map((i) => i.rs);
+        this.educationData.yData = result.map((i) => i.xl);
+      }
+    },
+    async getOldPeopleData(data) {
+      const result = await getOldPeople(data).request();
+      if (result) {
+        this.oldManInfo[0].value = result.gllrs;
+        this.oldManInfo[1].value = result.cjlrs;
+        this.oldManInfo[2].value = result.knlrs;
+        this.oldManInfo[3].value = result.kclrs;
+        this.oldManInfo[4].value = result.gglrs;
+      }
+    },
+    async getVillagerInfoData() {
+      const result = await getVillagerInfo().request();
+      if (result) {
+        console.log(result);
+        this.villagerInfo[0].value = result.dbrys;
+        this.villagerInfo[1].value = result.czrys;
+        this.villagerInfo[2].value = result.twjrs;
+        this.villagerInfo[3].value = result.lsets;
+        this.villagerInfo[4].value = result.lszns;
+      }
+    },
+    async getResidentInfoData() {
+      const result = await getResidentInfo().request();
+      if (result) {
+        this.residentInfo[0].value = result[0].zgdyrs;
+        this.residentInfo[1].value = result[0].gqtyrs;
+        this.residentInfo[2].value = result[0].qzrs;
+      }
+    },
+    async getPlanningData() {
+      const result = await getPlanning().request();
+      if (result) {
+        this.indicatorData[0].value = result.gdmj;
+        this.indicatorData[0].max = result.gdmj + 1000;
+        this.indicatorData[1].value = result.ldmj;
+        this.indicatorData[1].max = result.ldmj + 1000;
+        this.indicatorData[2].value = result.jsydmj;
+        this.indicatorData[2].max = result.jsydmj + 1000;
+        this.indicatorData[3].value = result.symj;
+        this.indicatorData[3].max = result.symj + 1000;
+        this.indicatorData[4].value = result.qtnydmj;
+        this.indicatorData[4].max = result.qtnydmj + 1000;
+        this.indicatorDataList = this.indicatorData.map((i) => i.value);
+      };
+    },
+    async getWaterElectTrendData() {
+      const result = await getWaterElectTrend().request();
+      if (result) {
+        this.waterXData = result.map((i) => i.yf);
+        this.waterYData1 = result.map((i) => i.ydl);
+        this.waterYData2 = result.map((i) => i.ysl);
+      };
+    },
+  },
+  mounted() {
+    const requestdata = {
+      name: this.defaultName,
+    };
+    this.initData(requestdata);
   },
 };
 </script>

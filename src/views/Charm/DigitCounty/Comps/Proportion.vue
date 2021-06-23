@@ -8,7 +8,7 @@
       class="flex-item"
       :key="index">
         <div class="num-style" :class="'font' + index">
-          {{item.num}}
+          {{item.cnt}}
           <!-- <CountUp :num="item.num" /> -->
         </div>
       </div>
@@ -17,10 +17,10 @@
     <div class="contain-box2" :style="'width: 100%' + '%;height:' + barStyle.height">
       <div v-for="(item, index) in dataList"
       class="flex-item"
-      :style="'width:' + (item.num/sum * (width - 2)) + 'rem;'+ colorList[index].radius + ';background:' + colorList[index].shaow"
+      :style="'width:' + (item.cnt/sum * (width - 2)) + 'rem;'+ colorList[index].radius + ';background:' + colorList[index].shaow"
       :key="index">
         <div class="zhu"
-        :style="'width:' + (item.num/sum * (width - 3)) + 'rem;' + colorList[index].radius + ';background:' + colorList[index].bgColor"
+        :style="'width:' + (item.cnt/sum * (width - 3)) + 'rem;' + colorList[index].radius + ';background:' + colorList[index].bgColor"
          ></div>
       </div>
     </div>
@@ -29,7 +29,7 @@
       class="flex-item"
       :key="index">
         <div class="name-style" :style="'color: ' + colorList[index].fontColor">
-          {{item.name}}
+          {{item.nation ? item.nation : item.sex}}
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     sum() {
-      return this.dataList && this.dataList.length > 0 ? this.dataList.map((i) => i.num).reduce((temp, i) => { return temp + i; }) : 0;
+      return this.dataList && this.dataList.length > 0 ? this.dataList.map((i) => i.cnt).reduce((temp, i) => { return temp + i; }) : 0;
     },
   },
 };
