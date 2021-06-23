@@ -119,7 +119,7 @@ export default function getOptions(data) {
             ],
           },
         },
-        data: data.map((d) => d.value1),
+        data: data.map((d) => d.value),
         z: 1,
       },
     ],

@@ -11,23 +11,42 @@
 
 <script>
 import * as echarts from 'echarts';
+import { terminalThroughputAnalysis } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {
     return {
       chart: null,
       isYear: true,
+      xData: [],
+      da: [], // 大岙码头
+      sa: [], // 沙岙码头
+      tm: [], // 台门码头
     };
   },
   watch: {
-    isYear(val) {
-      console.log(val);
+    isYear() {
+      this.getData();
     },
   },
   mounted() {
     this.chart = echarts.init(this.$refs.lineChart);
-    this.initEcharts();
+    this.getData();
   },
   methods: {
+    getData() {
+      const params = {
+        type: this.isYear ? 0 : 1,
+      };
+      terminalThroughputAnalysis()
+        .request(params)
+        .then((json) => {
+          this.xData = json.da.map((item) => item.sj);
+          this.da = json.da.map((item) => item.ttl);
+          this.sa = json.sa.map((item) => item.ttl);
+          this.tm = json.tm.map((item) => item.ttl);
+          this.initEcharts();
+        });
+    },
     initEcharts() {
       const option = {
         title: {
@@ -82,7 +101,7 @@ export default {
               color: 'rgba(255, 255, 255, .7)',
             },
           },
-          data: ['2015', '2016', '2017', '2018', '2019', '2020', '2021'],
+          data: this.xData,
         },
         yAxis: {
           type: 'value',
@@ -107,6 +126,7 @@ export default {
               fontSize: '20',
               color: 'rgba(255, 255, 255, .7)',
             },
+            formatter: (num) => num,
           },
           splitLine: {
             show: true,
@@ -129,7 +149,7 @@ export default {
                 },
               },
             },
-            data: [220, 182, 191, 294, 290, 330, 310],
+            data: this.da,
           },
           {
             name: '沙岙码头',
@@ -143,7 +163,7 @@ export default {
                 },
               },
             },
-            data: [120, 132, 101, 134, 90, 230, 210],
+            data: this.sa,
           },
           {
             name: '台门码头',
@@ -157,7 +177,7 @@ export default {
                 },
               },
             },
-            data: [240, 112, 201, 234, 190, 130, 210],
+            data: this.tm,
           },
         ],
       };

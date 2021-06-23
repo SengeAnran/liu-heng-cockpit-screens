@@ -100,8 +100,13 @@ export default {
         resizeEnable: true,
         zoom: 13,
         zoomEnable: false,
-        center: [122.140462, 29.734471],
+        center: [122.200254, 29.707613],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
+      });
+      this.map.on('click', (e) => {
+        if (this.infoWindow.close) {
+          this.infoWindow.close();
+        }
       });
     },
     addInfoWindow(markerMsg, lnglat) {
@@ -174,11 +179,10 @@ export default {
     width: 100%;
     height: 2070px;
     ::v-deep .custom-marker {
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
       background: url('../../images/hospital-icon.png') no-repeat center center;
-      background-size: 98% 98%;
-      border-radius: 50%;
+      background-size: 100% 100%;
       z-index: 111;
     }
   }

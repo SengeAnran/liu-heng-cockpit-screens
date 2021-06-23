@@ -5,28 +5,35 @@
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
+import economicAPI from '@/api/Vitality/EconomicDev';
 
 export default {
   data() {
     return {
       list: [
         { name: '18-25岁', value: 6340 },
-        { name: '26-33岁', value: 7340 },
-        { name: '34-40岁', value: 8340 },
-        { name: '41-50岁', value: 9340 },
-        { name: '51-65岁', value: 1034 },
-        { name: '65-80岁', value: 1134 },
-        { name: '81岁以上', value: 1234 },
       ],
     };
   },
   mounted() {
     this.initChart();
+    this.fetchData();
   },
   methods: {
     initChart() {
       this.chart = echarts.init(this.$refs.eleChart);
       this.chart.setOption(getOptions(this.list));
+    },
+    async fetchData() {
+      const data = await economicAPI.ageDistribution();
+      // console.log(data);
+      const list = data
+        .map((d) => ({
+          ...d,
+          name: d.nlfb,
+          value: d.ldlrks,
+        }));
+      this.chart.setOption(getOptions(list));
     },
   },
 };

@@ -13,6 +13,12 @@ export default {
       default: () => ({}),
     },
   },
+  watch: {
+    source() {
+      this.clearInfoWindow();
+      this.renderLayer();
+    },
+  },
   mounted() {
     this.initGeoJSON();
   },
@@ -24,7 +30,6 @@ export default {
         marker: markerStyle = {},
       } = this.geoStyle;
       const layer = new AMap.GeoJSON({
-        geoJSON: this.source,
         getPolygon(feature, path) {
           return new AMap.Polygon({
             ...polygonStyle,
@@ -43,10 +48,14 @@ export default {
       });
       layer.setMap(map);
       this.layer = layer;
-      this.managePopup();
+      this.renderLayer();
       this.$once('hook:beforeDestroy', () => {
         layer.setMap(null);
       });
+    },
+    renderLayer() {
+      this.layer.importData(this.source);
+      this.managePopup();
     },
     async managePopup() {
       if (!this.$scopedSlots.popup) {
@@ -71,8 +80,11 @@ export default {
         this.infoWindow = infoWindow;
       });
       this.$once('hook:beforeDestroy', () => {
-        this.infoWindow && this.infoWindow.close();
+        this.clearInfoWindow();
       });
+    },
+    clearInfoWindow() {
+      this.infoWindow && this.infoWindow.close();
     },
   },
   render() {

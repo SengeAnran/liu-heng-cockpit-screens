@@ -8,7 +8,8 @@ export function getDigitNum(num = 0) {
   }
   return bit;
 }
-//  数字每隔三位加逗号分开
+
+// 数字每隔三位加逗号分开
 export function addCommas(nStr) {
   nStr += '';
   const x = nStr.split('.');
@@ -19,6 +20,12 @@ export function addCommas(nStr) {
     x1 = x1.replace(rgx, '$1' + ',' + '$2');
   }
   return x1 + x2;
+}
+
+export function unitNum(num) {
+  return num < 1e4 ? { value: num, unit: '' }
+    : num < 1e8 ? { value: num / 1e4, unit: '万' }
+      : { value: num / 1e8, unit: '亿' };
 }
 
 //  用于将过大的数字改成以万/亿为单位，并根据type切换以改变他们原有的单位

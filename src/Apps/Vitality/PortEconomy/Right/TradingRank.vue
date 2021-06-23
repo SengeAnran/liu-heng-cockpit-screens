@@ -1,5 +1,6 @@
 <template>
   <div class="TradingRank">
+    <secondary-title name="主要城市贸易额排名TOP10" />
     <div class="chart-wrap">
       <div class="bar-wrap" :key="index" v-for="(item,index) in chartList">
         <div class="bg">
@@ -17,7 +18,11 @@
 </template>
 
 <script>
+import SecondaryTitle from '../components/SecondaryTitle';
 export default {
+  components: {
+    SecondaryTitle,
+  },
   data() {
     return {
       chartList: [
@@ -91,7 +96,6 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
 }
 .sub-title {
   font-size: 24px;
@@ -102,6 +106,7 @@ export default {
 }
 .chart-wrap {
   flex: 1;
+  margin-top: 30px;
 }
 .bar-wrap {
   height: 46px;

@@ -5,28 +5,52 @@
       <div>
         <div>
           <div class="name">
-            <p>港口货物吞吐量 <span>8112.7万吨</span></p>
+            <p>
+              港口货物吞吐量
+              <span>{{gkhwxx.ckhyl + gkhwxx.jkhyl}}万吨</span>
+            </p>
           </div>
           <div class="content">
-            <p>出口货运量 <span>3520.5万吨</span></p>
-            <p>进口货运量 <span>4592.2万吨</span></p>
+            <p>
+              出口货运量
+              <span>{{gkhwxx.ckhyl}}万吨</span>
+            </p>
+            <p>
+              进口货运量
+              <span>{{gkhwxx.jkhyl}}万吨</span>
+            </p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>外贸进出口额 <span>132916万元</span></p>
+            <p>
+              外贸进出口额
+              <span>{{wmxx.jkze + wmxx.ckze}}万元</span>
+            </p>
           </div>
           <div class="content">
-            <p>进口总额 <span>46862万元</span></p>
-            <p>出口总额 <span>86055万元</span></p>
+            <p>
+              进口总额
+              <span>{{wmxx.jkze}}万元</span>
+            </p>
+            <p>
+              出口总额
+              <span>{{wmxx.ckze}}万元</span>
+            </p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>财政总收入 <span>129293万元</span></p>
+            <p>
+              财政总收入
+              <span>{{czxx.czzsr}}万元</span>
+            </p>
           </div>
           <div class="content">
-            <p>其中公共财政收入 <span>95711万元</span></p>
+            <p>
+              其中公共财政收入
+              <span>{{czxx.ggczsr}}万元</span>
+            </p>
           </div>
         </div>
       </div>
@@ -34,22 +58,29 @@
         <div>
           <div class="name">
             <p>公共财政预算支出</p>
-            <p><span>57940万元</span></p>
+            <p>
+              <span>{{total}}万元</span>
+            </p>
           </div>
           <div class="content">
-            <p>教育事业 <span>9440万元</span></p>
-            <p>社会保障和就业 <span>2106万元</span></p>
-            <p>城乡社区服务 <span>20421万元</span></p>
-            <p>农林水事务 <span>2251万元</span></p>
+            <p :key="index" v-for="(item,index) in ggcjyszcxx">
+              {{item.czfl}}
+              <span>{{item.yszce}}万元</span>
+            </p>
           </div>
         </div>
         <div>
           <div class="name">
             <p>游客接待人数</p>
-            <p><span>300.4万人</span></p>
+            <p>
+              <span>{{lyxx.ykjdrs}}万人</span>
+            </p>
           </div>
           <div class="content">
-            <p>旅游收入 <span>17.4亿元</span></p>
+            <p>
+              旅游收入
+              <span>{{lyxx.lysr}}亿元</span>
+            </p>
           </div>
         </div>
       </div>
@@ -59,14 +90,51 @@
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
+import { getCentre } from '@/api/Overview/DataAnalysis/api';
 export default {
   components: {
     SecondaryTitle,
   },
   data() {
-    return {};
+    return {
+      gkhwxx: {
+        ckhyl: 0,
+        jkhyl: 0,
+      },
+      wmxx: {
+        ckze: 0,
+        jkze: 0,
+      },
+      czxx: {
+        czzsr: 0,
+        ggczsr: 0,
+      },
+      ggcjyszcxx: [],
+      total: 0,
+      lyxx: {
+        lysr: 0,
+        ykjdrs: 0,
+      },
+    };
   },
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getCentre()
+        .request()
+        .then((json) => {
+          const { gkhwxx, wmxx, czxx, ggcjyszcxx, lyxx } = json;
+          this.gkhwxx = gkhwxx;
+          this.wmxx = wmxx;
+          this.czxx = czxx;
+          this.ggcjyszcxx = ggcjyszcxx;
+          this.total = ggcjyszcxx.map((item) => item.yszce).reduce((n, m) => n + m);
+          this.lyxx = lyxx;
+        });
+    },
+  },
 };
 </script>
 
@@ -84,18 +152,18 @@ export default {
     &:nth-child(2n + 1) {
       margin-right: 48px;
     }
-    &:nth-child(2n){
-      & > div{
+    &:nth-child(2n) {
+      & > div {
         height: 190px;
         margin-bottom: 30px;
-        &:last-child{
+        &:last-child {
           margin-bottom: 0;
         }
       }
-      .name{
+      .name {
         height: 150px;
         background-image: url(../images/card_bg_1.png);
-        p{
+        p {
           font-size: 30px;
         }
       }
@@ -122,7 +190,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      p{
+      p {
         margin: 0;
         font-size: 24px;
         line-height: 40px;

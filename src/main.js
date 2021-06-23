@@ -13,14 +13,8 @@ Vue.component('view-template', ViewTemplate);
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
 
-const div = document.createElement('div');
 new Vue({
   router,
   store,
-  render: (h) => {
-    console.log(h(App));
-    return h(App);
-  },
+  render: (h) => h(App),
 }).$mount('#app');
-
-document.querySelector('#app').appendChild(div);

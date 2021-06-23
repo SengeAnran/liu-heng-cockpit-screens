@@ -10,15 +10,29 @@
   </div>
 </template>
 <script>
+import economicAPI from '@/api/Vitality/EconomicDev';
+
 export default {
   data() {
     return {
       list: [
-        { name: '企业注册量', value: 112, unit: '户' },
-        { name: '企业密度', value: 25, unit: '户/人' },
-        { name: '上市公司数量', value: 112, unit: '家' },
+        { name: '企业注册量', value: 0, unit: '户' },
+        { name: '企业密度', value: 0, unit: '户/人' },
+        { name: '上市公司数量', value: 0, unit: '家' },
       ],
     };
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      const data = await economicAPI.companyNum();
+      // console.log(data);
+      this.list[0].value = data?.qyzcl || 0;
+      this.list[1].value = data?.qymd || 0;
+      this.list[2].value = data?.ssgssl || 0;
+    },
   },
 };
 </script>

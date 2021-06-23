@@ -7,7 +7,7 @@
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
-import PieChart from '../components/PiceChart';
+import PieChart from '../components/PieChart';
 export default {
   components: {
     SecondaryTitle,

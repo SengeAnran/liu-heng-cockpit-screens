@@ -5,9 +5,8 @@
       <span class="data">
         <span class="value">
           {{ traffic }}
-          <span class="unit">%</span>
         </span>
-        <span class="time" style="color: #93ECF4;">截至：2021.03</span>
+        <span class="time" style="color: #93ECF4;">截至：{{ date }}</span>
       </span>
     </div>
     <div class="item">
@@ -15,20 +14,34 @@
       <span class="data">
         <span class="value">
           {{ crowd }}
-          <span class="unit">%</span>
         </span>
-        <span class="time" style="color: #B3B9F9">截至：2021.03</span>
+        <span class="time" style="color: #B3B9F9">截至：{{ date }}</span>
       </span>
     </div>
   </div>
 </template>
 <script>
+import trafficAPI from '@/api/Overview/Traffic';
+
 export default {
   data() {
     return {
       traffic: 95,
       crowd: 23,
+      date: '2021.03',
     };
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      const data = await trafficAPI.trafficeInfo();
+      // console.log(data);
+      this.traffic = data?.[0]?.jtzs;
+      this.crowd = data?.[0]?.ydzs;
+      this.date = data?.[0]?.sjd;
+    },
   },
 };
 </script>
@@ -91,7 +104,7 @@ export default {
         font-size: 2.1rem;
         font-family: Source Han Sans CN;
         font-weight: 400;
-        line-height: 0.2rem;
+        // line-height: 0.2rem;
       }
     }
   }

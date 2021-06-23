@@ -5,49 +5,38 @@
       <div>
         <div>
           <div class="name">
-            <p>工业企业数量 <span>429个</span></p>
+            <p>工业企业数量 <span>{{gyqyslxxSum}}个</span></p>
           </div>
           <div class="content">
-            <p>集体 <span>2个</span></p>
-            <p>有限责任公司 <span>47个</span></p>
-            <p>私营企业 <span>303个</span></p>
-            <p>个人独资企业 <span>77个</span></p>
+            <p :key="index" v-for="(item,index) in gyqyslxx">{{item.gqyfl}} <span>{{item.qysl}}个</span></p>
           </div>
         </div>
         <div>
           <div class="name">
-            <p>工业产值 <span>952100万元</span></p>
+            <p>工业产值 <span>{{gyczSum}}万元</span></p>
           </div>
           <div class="content">
-            <p>装备制造业 <span>505899万元</span></p>
-            <p>高新技术产业 <span>284746万元</span></p>
-            <p>船舶工业 <span>493234万元</span></p>
-            <p>重工业 <span>928644万元</span></p>
-            <p>轻工业 <span>23456万元</span></p>
+            <p :key="index" v-for="(item,index) in gycz">{{item.gyfl}} <span>{{item.cz}}万元</span></p>
           </div>
         </div>
       </div>
       <div>
         <div>
           <div class="name">
-            <p>规上工业企业数量 <span>19个</span></p>
+            <p>规上工业企业数量 <span>{{gsgyqyxx.yxzrgss + gsgyqyxx.syqys}}个</span></p>
           </div>
           <div class="content">
-            <p>有限责任公司 <span>4个</span></p>
-            <p>私营企业 <span>15个</span></p>
+            <p>有限责任公司 <span>{{gsgyqyxx.yxzrgss}}个</span></p>
+            <p>私营企业 <span>{{gsgyqyxx.syqys}}个</span></p>
           </div>
         </div>
         <div>
           <div class="name">
             <p>工业企业从业人员数</p>
-            <p><span>11752人</span></p>
+            <p><span>{{yqycyryxxSum}}人</span></p>
           </div>
           <div class="content">
-            <p>集体 <span>102人</span></p>
-            <p>有限责任公司 <span>3015人</span></p>
-            <p>私营企业 <span>7820人</span></p>
-            <p>个人独资企业 <span>817人</span></p>
-            <p>其他 <span>0人</span></p>
+            <p  :key="index" v-for="(item,index) in yqycyryxx">{{item.qyfl}} <span>{{item.cyrys}}人</span></p>
           </div>
         </div>
       </div>
@@ -57,14 +46,46 @@
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
+import { getProduce } from '@/api/Overview/DataAnalysis/api';
 export default {
   components: {
     SecondaryTitle,
   },
   data() {
-    return {};
+    return {
+      gyqyslxx: [],
+      gyqyslxxSum: 0,
+      gycz: [],
+      gyczSum: 0,
+      gsgyqyxx: {
+        syqys: 0,
+        yxzrgss: 0,
+      },
+      yqycyryxx: [],
+      yqycyryxxSum: 0,
+
+    };
   },
-  methods: {},
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      getProduce()
+        .request()
+        .then((json) => {
+          const { gyqyslxx, gycz, gsgyqyxx, yqycyryxx } = json;
+          this.gyqyslxx = gyqyslxx;
+          this.gyqyslxxSum = gyqyslxx.map((item) => item.qysl).reduce((n, m) => m + n);
+          this.gycz = gycz;
+          this.gyczSum = gycz.map((item) => item.cz).reduce((n, m) => m + n);
+          this.gsgyqyxx = gsgyqyxx;
+          this.yqycyryxx = yqycyryxx;
+          console.log();
+          this.yqycyryxxSum = yqycyryxx.map((item) => item.cyrys).reduce((n, m) => m + n);
+        });
+    },
+  },
 };
 </script>
 
