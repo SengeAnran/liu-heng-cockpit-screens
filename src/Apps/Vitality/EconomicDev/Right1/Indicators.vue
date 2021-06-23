@@ -33,7 +33,7 @@ export default {
   computed: {
     yearGDPValue() {
       const { value } = unitNum(this.yearGDP);
-      return value.toFixed(2);
+      return +value.toFixed(2);
     },
     yearGDPUnit() {
       const { unit } = unitNum(this.yearGDP);
@@ -41,7 +41,7 @@ export default {
     },
     averageGDPValue() {
       const { value } = unitNum(this.averageGDP);
-      return value.toFixed(2);
+      return +value.toFixed(2);
     },
     averageGDPUnit() {
       const { unit } = unitNum(this.averageGDP);

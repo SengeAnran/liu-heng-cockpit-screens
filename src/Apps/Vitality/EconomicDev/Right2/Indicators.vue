@@ -32,7 +32,7 @@ export default {
   computed: {
     permanentNumValue() {
       const { value } = unitNum(this.permanentNum);
-      return value.toFixed(2);
+      return +value.toFixed(2);
     },
     permanentNumUnit() {
       const { unit } = unitNum(this.permanentNum);
@@ -40,7 +40,7 @@ export default {
     },
     laborNumValue() {
       const { value } = unitNum(this.laborNum);
-      return value.toFixed(2);
+      return +value.toFixed(2);
     },
     laborNumUnit() {
       const { unit } = unitNum(this.laborNum);
