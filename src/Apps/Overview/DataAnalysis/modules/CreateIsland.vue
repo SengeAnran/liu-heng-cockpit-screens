@@ -74,7 +74,6 @@ export default {
       getProduce()
         .request()
         .then((json) => {
-          console.log(json);
           const { gyqyslxx, gycz, gsgyqyxx, yqycyryxx } = json;
           this.gyqyslxx = gyqyslxx;
           this.gyqyslxxSum = gyqyslxx.map((item) => item.qysl).reduce((n, m) => m + n);
