@@ -64,7 +64,6 @@ export default {
       this.primarySchool = this.resolveData(primarySchool);
       this.juniorSchool = this.resolveData(juniorSchool);
       this.heightSchool = this.resolveData(heightSchool);
-      console.log(this.kindergarten, this.primarySchool, this.juniorSchool, this.heightSchool);
     },
     resolveData(data, obj = { xAxis: [], classNum: [], allPeople: [] }) {
       data.forEach((item) => {
@@ -86,6 +85,7 @@ export default {
   right: 140px;
   padding:0 35px;
   box-sizing: border-box;
+  z-index: 10000;
   .title {
     position: absolute;
     left: 35px;
