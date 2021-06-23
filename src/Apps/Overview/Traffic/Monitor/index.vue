@@ -1,7 +1,8 @@
 <template>
   <div class="monitor">
     <div class="video-wrapper">
-      <HLSPlayer class="video" />
+      <HLSPlayer class="video" v-if="false" />
+      <VideoFrame />
       <h3>监控名称</h3>
     </div>
     <div class="video-list">
@@ -20,6 +21,7 @@
 </template>
 <script>
 import HLSPlayer from '../HLSPlayer';
+import VideoFrame from './VideoFrame';
 export default {
   data() {
     return {
@@ -36,6 +38,7 @@ export default {
   },
   components: {
     HLSPlayer,
+    VideoFrame,
   },
 };
 </script>

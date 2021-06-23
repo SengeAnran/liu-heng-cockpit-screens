@@ -1,5 +1,5 @@
 <template>
-  <div class="secondary-title">
+  <div class="secondary-title" :class="{large:isLarge}">
     <span>{{name}}</span>
   </div>
 </template>
@@ -11,6 +11,10 @@ export default {
       default: '',
       required: true,
     },
+    isLarge: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -19,19 +23,16 @@ export default {
   width: 100%;
   height: 64px;
   min-height: 64px;
-  background: linear-gradient(90deg, rgba(18, 38, 46, .8) 10%, rgba(18, 38, 46, 0.1));
-  display: flex;
-  align-items: center;
-  &::before{
-    content: '';
-    display: block;
-    width: 30px;
-    height: 24px;
-    margin: 0 20px;
-    background: url(./images/arrow.png) no-repeat center /cover;
+  background: url(./images/title_bg.png) no-repeat left center;
+  background-size: auto 64px;
+  padding-left: 70px;
+  &.large {
+    background: url(./images/title_bg_large.png) no-repeat left center;
+    background-size: auto 64px;
   }
-  span{
+  span {
     font-size: 32px;
+    line-height: 66px;
     color: #fff;
   }
 }

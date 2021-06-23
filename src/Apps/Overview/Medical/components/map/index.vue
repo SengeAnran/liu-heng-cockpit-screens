@@ -103,6 +103,11 @@ export default {
         center: [122.200254, 29.707613],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
+      this.map.on('click', (e) => {
+        if (this.infoWindow.close) {
+          this.infoWindow.close();
+        }
+      });
     },
     addInfoWindow(markerMsg, lnglat) {
       const { lng, lat } = lnglat;
@@ -126,16 +131,6 @@ export default {
       });
       this.infoWindow = infoWindow;
       infoWindow.open(this.map, [lng, lat]);
-
-      // 点击窗体外关闭窗体
-      const container = document.querySelector('.pop-up-box');
-      window.addEventListener('click', (e) => {
-        if (container) {
-          if (!container.contains(e.target)) { // pop-up-box以外的区域
-            this.map.remove(this.infoWindow);
-          }
-        }
-      });
     },
     addMarkerOneByOne() {
       this.markers.map((item) => {

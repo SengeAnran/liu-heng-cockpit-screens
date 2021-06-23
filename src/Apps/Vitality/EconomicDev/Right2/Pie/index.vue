@@ -18,35 +18,49 @@
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
+import economicAPI from '@/api/Vitality/EconomicDev';
 
 export default {
   data() {
+    const tabs = [
+      '2017',
+      '2018',
+      '2019',
+      '2020',
+      '2021',
+    ];
     return {
       list: [
-        { name: '第一产业产值', value: 12 },
-        { name: '第二产业产值', value: 25 },
-        { name: '第三产业产值', value: 123 },
+        // { name: '第一产业产值', value: 12 },
+        // { name: '第二产业产值', value: 25 },
+        // { name: '第三产业产值', value: 123 },
       ],
-      tabs: [
-        '2015',
-        '2016',
-        '2017',
-        '2018',
-        '2019',
-      ],
-      activeTab: '2015',
+      tabs: tabs,
+      activeTab: tabs[0],
     };
   },
   mounted() {
     this.initChart();
+    this.fetchData();
   },
   methods: {
     changeTab(tab) {
       this.activeTab = tab;
+      this.fetchData();
     },
     initChart() {
       this.chart = echarts.init(this.$refs.eleChart);
       this.chart.setOption(getOptions(this.list));
+    },
+    async fetchData() {
+      const data = await economicAPI.distributionByYear(this.activeTab);
+      const list = data
+        .map((d) => ({
+          ...d,
+          name: d.cyfl,
+          value: d.cyz,
+        }));
+      this.chart.setOption(getOptions(list));
     },
   },
 };

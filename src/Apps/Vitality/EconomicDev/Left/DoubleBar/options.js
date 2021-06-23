@@ -1,7 +1,7 @@
 export default function getOptions(data) {
   return {
     title: {
-      text: '项目行业分布',
+      text: '企业注册注销数量',
       textStyle: {
         height: 26,
         color: '#fff',
