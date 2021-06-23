@@ -49,14 +49,14 @@ export default {
       type: Object,
       default: function () {
         return {
-          width: '80rem',
+          width: '70rem',
           height: '3rem',
         };
       },
     },
     width: {
       type: Number,
-      default: () => 80,
+      default: () => 77,
     },
   },
   data() {

@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <div class="bgBox"></div>
     <div class="left-wrapper">
       <SamllTitle :name="CommunityOverview" />
       <div class="hehua-box">
@@ -19,10 +20,10 @@
       </div>
       <div class="proportion-wrapper">
         <div>
-          <Proportion name="男女性别比" :dataList="manAwomenList" :barStyle="manAwomenStyle" />
+          <Proportion name="男女性别比" :dataList="manAwomenList" />
         </div>
         <div>
-          <Proportion name="民族比例" :dataList="manAwomenList" :barStyle="manAwomenStyle" />
+          <Proportion name="民族比例" :dataList="manAwomenList"  />
         </div>
       </div>
       <!-- 年龄分布 + 学历分布 -->
@@ -47,7 +48,9 @@
         </div>
       </div>
     </div>
-    <div class="center-wrapper"></div>
+    <div class="center-wrapper">
+      <Map/>
+    </div>
     <div class="right-wrapper">
       <div>
         <SamllTitle name="居民情况" />
@@ -78,6 +81,7 @@ import PieCharts from './Comps/PieCharts';
 import TableList from './Comps/TableList';
 import RadarCharts from './Comps/RadarCharts';
 import LineCharts from './Comps/LineCharts';
+import Map from './Comps/Map/index';
 
 export default {
   components: {
@@ -89,13 +93,14 @@ export default {
     TableList,
     RadarCharts,
     LineCharts,
+    Map,
   },
   data() {
     return {
       CommunityOverview: '社区概述',
       manAwomenName: '男女性别比',
       manAwomenStyle: {
-        width: '80rem',
+        width: '70rem',
         height: '3.17rem',
       },
       manAwomenList: [
@@ -192,11 +197,23 @@ export default {
 }
 .wrapper {
   position: relative;
+  .bgBox {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 2070px;
+    z-index: 6;
+    pointer-events: none;
+    background-size: 100% 100%;
+    background: url('./Comps/Map/img/mask_bg.png') no-repeat;
+  }
   .left-wrapper {
     position: absolute;
-    width: 165.2rem;
+    width: 160rem;
     left: 25rem;
     top: 13rem;
+    z-index: 10;
     .hehua-box {
       display: flex;
       color: white;
@@ -259,13 +276,14 @@ export default {
   }
   .right-wrapper {
     position: absolute;
-    width: 165.2rem;
+    width: 160rem;
     right: 25rem;
     top: 13rem;
     display: flex;
+    z-index: 10;
     justify-content: space-between;
     & > div {
-      width: 79.97rem;
+      width: 76rem;
     }
   }
 }
