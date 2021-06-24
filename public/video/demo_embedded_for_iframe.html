@@ -18,7 +18,7 @@
 
     .playWnd {
         width: 100%;
-        height: 400px;
+        height: 100%;
         border: 1px solid red;
     }
 
@@ -65,7 +65,7 @@
                         top: iframePos.top + scrollValue.top
                     });  // 更新插件窗口位置
 
-                    oWebControl.JS_Resize(divWidth, 400);
+                    oWebControl.JS_Resize(divWidth, divHeight);
                     setWndCover();
                     break;
                 case 'updateInitParam':
@@ -99,7 +99,7 @@
             var divWidth = $("#playWnd").width();
             var divHeight = $("#playWnd").height();
 
-            oWebControl.JS_RepairPartWindow(0, 0, divWidth + 1, 401);  // 多1个像素点防止还原后边界缺失一个像素条
+            oWebControl.JS_RepairPartWindow(0, 0, divWidth + 1, divHeight + 1);  // 多1个像素点防止还原后边界缺失一个像素条
 
             // 判断剪切矩形的上边距        
             if (iframeClientPos.top < 0 && Math.abs(iframeClientPos.top) > divTop) {
@@ -112,7 +112,7 @@
             if (iframeClientPos.left < 0 && Math.abs(iframeClientPos.left) > divLeft) {
                 var deltaLeft = Math.abs(iframeClientPos.left) - divLeft;
                 //console.log({deltaLeft: deltaLeft});
-                oWebControl.JS_CuttingPartWindow(0, 0, deltaLeft, 401);  // 多剪掉一个像素条，防止出现剪掉一部分窗口后出现一个像素条
+                oWebControl.JS_CuttingPartWindow(0, 0, deltaLeft, divHeight + 1);  // 多剪掉一个像素条，防止出现剪掉一部分窗口后出现一个像素条
             }
 
             // 判断剪切矩形的右边距
@@ -121,7 +121,7 @@
             if (W2 < divWidth) {
                 var deltaRight = iframeWndWidth - W2 - W1;
                 if (deltaRight > 0) {
-                    oWebControl.JS_CuttingPartWindow(divWidth - deltaRight, 0, deltaRight + 1, 401);
+                    oWebControl.JS_CuttingPartWindow(divWidth - deltaRight, 0, deltaRight + 1, divHeight + 1);
                 }
             }
 
@@ -131,7 +131,7 @@
             var deltaBottom = H1 - H2;
             //console.log({deltaBottom: deltaBottom});		
             if (deltaBottom > 0) {
-                oWebControl.JS_CuttingPartWindow(0, 400 - deltaBottom, divWidth + 1, deltaBottom + 1);
+                oWebControl.JS_CuttingPartWindow(0, divHeight - deltaBottom, divWidth + 1, deltaBottom + 1);
             }
         }
     }
@@ -152,7 +152,7 @@
                     dllPath: "./VideoPluginConnect.dll"
                 }).then(function () {
                     // 步骤2：JS_CreateWnd时指定cbSetDocTitle回调，并在回调中向父页面发送更新标题消息，标题为回调出来的uuid
-                    oWebControl.JS_CreateWnd("playWnd", divWidth, 400, {
+                    oWebControl.JS_CreateWnd("playWnd", divWidth, divHeight, {
                         cbSetDocTitle: function (uuid) {
                             oWebControl._pendBg = false;
                         }
