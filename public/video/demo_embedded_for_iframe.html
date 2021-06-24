@@ -13,145 +13,19 @@
     body {
         padding: 0;
         margin: 0;
+        height: 100%;
     }
 
     .playWnd {
-        margin: 30px 0 0 50px;
-        width: 800px;
+        width: 100%;
         height: 400px;
         border: 1px solid red;
     }
 
-    .cbInfoDiv {
-        float: left;
-        width: 360px;
-        margin-left: 16px;
-        border: 1px solid #7F9DB9;
-    }
-
-    .cbInfo {
-        height: 200px;
-        padding: 5px;
-        border: 1px solid #7F9DB9;
-        word-break: break-all;
-        overflow: scroll／auto;
-    }
-
-    .operate {
-        margin-top: 24px;
-    }
-
-    .operate::after {
-        content: '';
-        display: block;
-        clear: both;
-    }
-
-    .operate .btns {
-        height: 32px;
-    }
-
-    .module {
-        float: left;
-        width: 120px;
-        min-height: 290px;
-        margin-left: 10px;
-        padding: 16px 8px;
-        box-sizing: border-box;
-        border: 1px solid #e5e5e5;
-    }
-
-    .module .item {
-        margin-bottom: 4px;
-    }
-
-    .module .label {
-        width: 150px;
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 8px;
-        text-align: right;
-    }
-
-    .module input[type="text"],
-    .module select {
-        box-sizing: border-box;
-        display: inline-block;
-        vertical-align: middle;
-        margin-left: 0;
-        width: 150px;
-        min-height: 20px;
-    }
-
-    .module .btn {
-        min-width: 80px;
-        min-height: 24px;
-        margin-top: 16px;
-        margin-left: 158px;
-    }
 </style>
 
 <body>
     <div id="playWnd" class="playWnd" style="left: 109px; top: 133px;"></div>
-    <div id="operate" class="operate">
-        <!--初始化、反初始化、设置认证信息接口调用入口。
-        1.插件所有接口都需要在调用初始化并返回成功后才能调用
-        2.设置认证信息仅适用于对接多平台时的情况，具体参照开发指南
-        3.反初始化后，插件资源销毁-->
-        <div class="module" style="left:30px;height:30px;width:280px;padding:10;margin:10;">
-            <div class="item">
-                <label>初始化相关参数：</label>
-                <textarea id="initParam" type="text" style="width:260px;height:200px;">
-                    {
-                        "argument": {
-                            "appkey": "23033722",
-                            "ip": "10.25.96.2",
-                            "port": 8443,
-                            "secret": "P8bQaCSflPwuZVGmChyM",
-                            "enableHTTPS": 1,
-                            "layout": "1x1",
-                            "playMode": 0
-                        },
-                        "funcName": "init"
-                    }
-                </textarea>
-            </div>
-            <div class="item">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button style="width:10px;padding:0;margin:0;" id="initBtn" class="btn">执行</button>
-            </div>
-        </div>
-
-        <!--单个点位播放、批量点位播放、批量停止播放、全部停止播放接口调用入口。
-        1.authUuid为对接多平台时必须的播放字段，对接单平台时，可不指定-->
-        <div class="module" style="height:30;width:280px;padding:10;margin:10;">
-            <div class="item">
-                <label>播放相关参数：</label>
-                <textarea id="playParam" type="text" style="width:260px;height:200px;">
-                    {
-                        "argument": {
-                            "cameraIndexCode": "3dc840c2dae84c6e8ba08ffe8903482b",
-                            "ezvizDirect": 0,
-                            "gpuMode": 0,
-                            "streamMode": 0,
-                            "transMode": 1,
-                            "wndId": -1
-                        },
-                        "funcName": "startPreview"
-                    }
-                </textarea>
-            </div>
-            <div class="item">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button style="width:10px;padding:0;margin:0;" id="playBtn" class="btn">执行</button>
-            </div>
-        </div>
-        <div class="module" style="height:50;width:300px;padding:10;margin:10;">
-            <legend>返回值信息</legend>
-            <div id="cbInfo" class="cbInfo"></div>
-            <button style="width:80px;height:24px;padding:30;margin:0;" id="clear">清空</button>
-        </div>
-    </div>
 </body>
 <script src="jquery.js"></script>
 <script src="jsencrypt.min.js"></script>
@@ -165,8 +39,10 @@
     var iframePos = {};               // iframe相对文档的位置
     var parentTitle = '';	          // 父页面标题
     var iframeClientPos = null;       // iframe相对视窗的位置
-    var iframeParentShowSize = null;  // 视窗大小 width height  	
-
+    var iframeParentShowSize = null;  // 视窗大小 width height
+    
+    var divWidth = $("#playWnd").width();
+    var divHeight = $("#playWnd").height();
     // 标签关闭
     $(window).unload(function () {
         if (oWebControl != null) {
@@ -189,7 +65,7 @@
                         top: iframePos.top + scrollValue.top
                     });  // 更新插件窗口位置
 
-                    oWebControl.JS_Resize(800, 400);
+                    oWebControl.JS_Resize(divWidth, 400);
                     setWndCover();
                     break;
                 case 'updateInitParam':
@@ -223,12 +99,12 @@
             var divWidth = $("#playWnd").width();
             var divHeight = $("#playWnd").height();
 
-            oWebControl.JS_RepairPartWindow(0, 0, 801, 401);  // 多1个像素点防止还原后边界缺失一个像素条
+            oWebControl.JS_RepairPartWindow(0, 0, divWidth + 1, 401);  // 多1个像素点防止还原后边界缺失一个像素条
 
             // 判断剪切矩形的上边距        
             if (iframeClientPos.top < 0 && Math.abs(iframeClientPos.top) > divTop) {
                 var deltaTop = Math.abs(iframeClientPos.top) - divTop;
-                oWebControl.JS_CuttingPartWindow(0, 0, 801, deltaTop + 1);
+                oWebControl.JS_CuttingPartWindow(0, 0, divWidth + 1, deltaTop + 1);
                 //console.log({deltaTop: deltaTop});
             }
 
@@ -245,7 +121,7 @@
             if (W2 < divWidth) {
                 var deltaRight = iframeWndWidth - W2 - W1;
                 if (deltaRight > 0) {
-                    oWebControl.JS_CuttingPartWindow(800 - deltaRight, 0, deltaRight + 1, 401);
+                    oWebControl.JS_CuttingPartWindow(divWidth - deltaRight, 0, deltaRight + 1, 401);
                 }
             }
 
@@ -255,7 +131,7 @@
             var deltaBottom = H1 - H2;
             //console.log({deltaBottom: deltaBottom});		
             if (deltaBottom > 0) {
-                oWebControl.JS_CuttingPartWindow(0, 400 - deltaBottom, 801, deltaBottom + 1);
+                oWebControl.JS_CuttingPartWindow(0, 400 - deltaBottom, divWidth + 1, deltaBottom + 1);
             }
         }
     }
@@ -276,14 +152,9 @@
                     dllPath: "./VideoPluginConnect.dll"
                 }).then(function () {
                     // 步骤2：JS_CreateWnd时指定cbSetDocTitle回调，并在回调中向父页面发送更新标题消息，标题为回调出来的uuid
-                    oWebControl.JS_CreateWnd("playWnd", 800, 400, {
+                    oWebControl.JS_CreateWnd("playWnd", divWidth, 400, {
                         cbSetDocTitle: function (uuid) {
                             oWebControl._pendBg = false;
-                            window.parent.postMessage({
-                                action: 'updateTitle',
-                                msg: '子页面通知父页面修改title',
-                                info: uuid
-                            }, '\*');    // '\*'表示跨域参数，请结合自身业务合理设置
                         }
                     }).then(function () {
                         // 步骤3：JS_CreateWnd成功后通知父页面将其标题修改回去
@@ -292,15 +163,26 @@
                             action: 'updateTitle',
                             msg: '子页面通知父页面更新title',
                             info: parentTitle
-                        }, '\*');
+                        });
 
                         // 步骤4：发消息更新插件窗口位置：这里不直接更新的原因是，父页面默认可能就存在滚动条，此时有滚动量
                         window.parent.postMessage({
                             action: 'updatePos',
                             msg: '更新Pos'
-                        }, '\*');
+                        });
 
-                        initBtnClicked();
+                        requestInterface({
+                            "argument": {
+                                "appkey": "23033722",
+                                "ip": "10.25.96.2",
+                                "port": 8443,
+                                "secret": "P8bQaCSflPwuZVGmChyM",
+                                "enableHTTPS": 1,
+                                "layout": "1x1",
+                                "playMode": 0
+                            },
+                            "funcName": "init"
+                        });
                     });
                 }, function () {
                     console.log("JS_CreateWnd fail");
@@ -336,55 +218,25 @@
 
     initPlugin();
 
-    // 获取公钥
-    function getPubKey(callback) {
-        oWebControl.JS_RequestInterface({
-            funcName: "getRSAPubKey",
-            argument: JSON.stringify({
-                keyLength: 1024
-            })
-        }).then(function (oData) {
-            console.log(oData)
-            if (oData.responseMsg.data) {
-                pubKey = oData.responseMsg.data
-                callback()
-            }
-        })
-    }
-
-    // RSA加密
-    function setEncrypt(value) {
-        var encrypt = new JSEncrypt();
-        encrypt.setPublicKey(pubKey);
-        return encrypt.encrypt(value);
-    }
+    setTimeout(() => {
+        requestInterface({
+            argument: {
+                cameraIndexCode: "33090305541322740429",
+                ezvizDirect: 0,
+                gpuMode: 0,
+                streamMode: 0,
+                transMode: 1,
+                wndId: -1
+            },
+            funcName: "startPreview"
+        });
+    }, 1000)
 
     function requestInterface(value) {
-        oWebControl.JS_RequestInterface(JSON.parse(value)).then(function (oData) {
+        oWebControl.JS_RequestInterface(value).then(function (oData) {
             console.log(oData)
         });
     }
-    function initBtnClicked() {
-        var param = $("#initParam").val();
-        //删除字符串中的回车换行
-        param = param.replace(/(\s*)/g, "");
-
-        // 执行初始化
-        requestInterface(param);
-    }
-
-    $("#initBtn").click(function () {
-        initBtnClicked();
-    })
-
-    $("#playBtn").click(function () {
-        var param = $("#playParam").val();
-        //删除字符串中的回车换行
-        param = param.replace(/(\s*)/g, "");
-
-        // 执行预览
-        requestInterface(param);
-    })
 </script>
 
 </html>
