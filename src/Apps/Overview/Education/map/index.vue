@@ -25,9 +25,10 @@ export default {
     return {
       map: null,
       mapDom: null,
-      currentIndex: '',
+      currentIndex: 0,
       markData: [],
       list: [
+        { type: '幼儿园' },
         { type: '小学' },
         { type: '初中' },
         { type: '高中' },
@@ -43,23 +44,6 @@ export default {
   methods: {
     getData(category = '') {
       getSchoolListByCategory().request({ category: category }).then((res) => {
-        const arr = [
-          [122.1902540000, 29.797613],
-          [122.2002540000, 29.767613],
-          [122.2202540000, 29.727613],
-          [122.0502540000, 29.787613],
-          [122.0602540000, 29.757613],
-        ];
-        // 假数据
-        if (res.length === 1) {
-          res[0].lat = arr[2][0];
-          res[0].lng = arr[2][1];
-        } else {
-          res.forEach((item, index) => {
-            item.lat = arr[index][0];
-            item.lng = arr[index][1];
-          });
-        }
         this.markData = res;
         this.markDown();
       });
@@ -80,8 +64,8 @@ export default {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
-        zoom: 13,
-        zoomEnable: true,
+        zoom: 14,
+        zoomEnable: false,
         center: [122.200254, 29.707613],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
@@ -115,7 +99,7 @@ export default {
     },
     addMarker(item) {
       const marker = new AMap.Marker({
-        position: [item.lat, item.lng],
+        position: [item.lng, item.lat],
         content: "<div class='custom-marker'></div>",
         icon: hosIcon,
       });
