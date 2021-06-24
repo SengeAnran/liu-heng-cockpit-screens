@@ -1,174 +1,160 @@
 <template>
-  <div class="TradingRank">
-    <secondary-title name="主要城市贸易额排名TOP10" />
-    <div class="chart-wrap">
-      <div class="bar-wrap" :key="index" v-for="(item,index) in chartList">
-        <div class="bg">
-          <div class="name" :class="{opacity: item.percent > 0}">{{item.name}}</div>
-          <div class="num" :style="{width:`${item.percent}%`}">
-            <i v-if="item.percent > 0" class="white"></i>
-          </div>
-        </div>
-        <div class="percent">
-          <span>{{item.percent}}</span>吨
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="bar-chart" ref="barChart"></div>
 </template>
 
 <script>
-import SecondaryTitle from '../components/SecondaryTitle';
+import * as echarts from 'echarts';
+// import aa from '../images/bar_shadow.png';
+import { tradeVolumeOfMajorCitiesRanked } from '@/api/Vitality/PortEconomy/api';
 export default {
-  components: {
-    SecondaryTitle,
-  },
   data() {
     return {
-      chartList: [
-        {
-          name: 'Top1 宁波',
-          num: 999,
-          percent: 0,
-        },
-        {
-          name: 'Top2 温州',
-          num: 777,
-          percent: 0,
-        },
-        {
-          name: 'Top3 台州',
-          num: 555,
-          percent: 0,
-        },
-        {
-          name: 'Top4 厦门',
-          num: 333,
-          percent: 0,
-        },
-        {
-          name: 'Top5 深圳',
-          num: 111,
-          percent: 0,
-        },
-        {
-          name: 'Top6 广州',
-          num: 999,
-          percent: 0,
-        },
-        {
-          name: 'Top7 南京',
-          num: 777,
-          percent: 0,
-        },
-        {
-          name: 'Top8 苏州',
-          num: 555,
-          percent: 0,
-        },
-        {
-          name: 'Top9 上海',
-          num: 333,
-          percent: 0,
-        },
-        {
-          name: 'Top10 杭州',
-          num: 111,
-          percent: 0,
-        },
-      ],
+      chart: null,
+      barData: [],
     };
   },
   mounted() {
-    setTimeout(() => {
-      const _arr = [90, 85, 80, 75, 70, 65, 60, 55, 50, 45];
-      _arr.forEach((item, index) => {
-        this.chartList[index].percent = item;
+    this.chart = echarts.init(this.$refs.barChart);
+    tradeVolumeOfMajorCitiesRanked()
+      .request()
+      .then((json) => {
+        const total = json.map((item) => item.mye).reduce((m, n) => m + n);
+        json.map((item) => {
+          item.name = item.csmc;
+          item.value = item.mye;
+          item.percent = ((item.mye / total) * 100).toFixed(2);
+        });
+        this.barData = json;
+        this.chart.setOption(this.optionData(this.barData));
       });
-    }, 0);
   },
-  methods: {},
+  methods: {
+    optionData(data) {
+      return {
+        grid: [
+          {
+            width: '100%',
+            left: '0%',
+            top: '2%',
+            right: '0%',
+            bottom: '0',
+          },
+        ],
+        xAxis: [
+          {
+            gridIndex: 0,
+            show: false,
+          },
+        ],
+        yAxis: [
+          {
+            gridIndex: 0,
+            splitLine: 'none',
+            axisTick: 'none',
+            axisLine: 'none',
+            axisLabel: {
+              align: 'left',
+              padding: [0, 0, 15, 15],
+              textStyle: {
+                color: '#FFFFFF',
+                fontSize: '24',
+              },
+            },
+            data: this.barData.map((item, index) => 'Top' + (index + 1) + ' ' + item.name),
+            inverse: true,
+          },
+          {
+            gridIndex: 0,
+            splitLine: 'none',
+            axisTick: 'none',
+            axisLine: 'none',
+            axisLabel: {
+              padding: [0, 0, 0, -142],
+              textStyle: {
+                color: '#fff',
+                fontSize: '24',
+              },
+              formatter: function (value) {
+                return value + ' 吨';
+              },
+            },
+            data: this.barData.map((item) => item.value),
+            inverse: true,
+          },
+        ],
+        series: [
+          {
+            name: '外框',
+            type: 'bar',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            barGap: '-100%',
+            data: new Array(10).fill(this.barData[0].value * 1.05),
+            barWidth: 46,
+            itemStyle: {
+              normal: {
+                color: 'rgba(158, 158, 158, .1)',
+              },
+            },
+            z: 0,
+          },
+          {
+            type: 'bar',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            data: this.barData.map((item) => item.value),
+            barWidth: 46,
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  1,
+                  0,
+                  ['rgba(92, 111, 255, .01)', 'rgba(92, 111, 255, .9)'].map((color, offset) => ({
+                    color,
+                    offset,
+                  })),
+                ),
+              },
+            },
+            z: 2,
+          },
+          {
+            type: 'pictorialBar',
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  1,
+                  1,
+                  1,
+                  ['rgba(255, 255, 255, .01)', 'rgba(255, 255, 255, .8)'].map((color, offset) => ({
+                    color,
+                    offset,
+                  })),
+                ),
+              },
+            },
+            symbol: 'rect',
+            symbolSize: [54, 46],
+            z: 12,
+            data: this.barData.map((item) => {
+              return {
+                value: item.value,
+                symbolPosition: 'end',
+              };
+            }),
+          },
+        ],
+      };
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.TradingRank {
+.bar-chart {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.sub-title {
-  font-size: 24px;
-  line-height: 24px;
-  min-height: 24px;
-  color: #fff;
-  margin-bottom: 25px;
-}
-.chart-wrap {
-  flex: 1;
-  margin-top: 30px;
-}
-.bar-wrap {
-  height: 46px;
-  margin-bottom: 47px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  &:last-child {
-    margin-bottom: 0;
-  }
-  .bg {
-    // margin-left: 20px;
-    height: 46px;
-    flex: 1;
-    background-color: rgba(158, 158, 158, 0.2);
-  }
-  .num {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg,transparent 10%, rgba(35, 41, 87, 1) 30%, rgba(92, 111, 255, 1));
-    transition: all 2s ease;
-    position: relative;
-    .white {
-      display: block;
-      width: 40px;
-      height: 100%;
-      position: absolute;
-      right: 0;
-      background: linear-gradient(90deg, rgba(92, 111, 255, 1) 10%, #fff);
-    }
-  }
-  .name {
-    height: 46px;
-    line-height: 46px;
-    font-size: 24px;
-    text-indent: 6px;
-    color: rgba(255, 255, 255, 0.8);
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 10;
-    transition: all 2s ease;
-    transition-delay: .4s;
-    opacity: 0;
-    &.opacity {
-      opacity: 1;
-    }
-  }
-  .percent {
-    width: 120px;
-    height: 46px;
-    min-width: 120px;
-    background-color: transparent;
-    color: rgba(255, 255, 255, 0.8);
-    text-align: right;
-    line-height: 26px;
-    font-size: 24px;
-    span {
-      line-height: 40px;
-      font-size: 30px;
-      margin-right: 2px;
-    }
-  }
 }
 </style>
