@@ -39,7 +39,7 @@ import ChangesTrends from './modules/ChangesTrends';
 import IndustryField from './modules/IndustryField';
 import PatentWeight from './modules/PatentWeight';
 import TalentType from './modules/TalentType';
-import AmapMap from './modules/AmapMap';
+import AmapMap from './modules/map';
 import PatentList from './modules/PatentList';
 import PatentCertificate from './modules/PatentCertificate';
 export default {
