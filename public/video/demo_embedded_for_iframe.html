@@ -24,7 +24,7 @@
 </style>
 
 <body>
-    <div id="playWnd" class="playWnd" style="left: 109px; top: 133px;"></div>
+    <div id="playWnd" class="playWnd"></div>
 </body>
 <script src="jquery.js"></script>
 <script src="jsencrypt.min.js"></script>
@@ -36,8 +36,6 @@
     var pubKey = '';                  // demo中未使用加密，可根据需求参照开发指南自行使用加密功能
     var initCount = 0;                // 异常重启计数
     var parentTitle = '';	          // 父页面标题
-    var iframeClientPos = null;       // iframe相对视窗的位置
-    var iframeParentShowSize = null;  // 视窗大小 width height
     
     var divWidth = $("#playWnd").width();
     var divHeight = $("#playWnd").height();
@@ -54,8 +52,8 @@
         if (e && e.data) {
             switch (e.data.action) {
                 case 'updateInitParam':
-                    iframeClientPos = e.data.iframeClientPos;    // iframe相对视窗的位置
-                    iframeParentShowSize = e.data.showSize;      // 视窗大小
+                    var iframeClientPos = e.data.iframeClientPos;    // iframe相对视窗的位置
+                    console.log(iframeClientPos);
                     oWebControl.JS_SetDocOffset({
                         left: iframeClientPos.left,
                         top: iframeClientPos.top,

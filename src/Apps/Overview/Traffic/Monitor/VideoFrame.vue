@@ -1,26 +1,61 @@
 <template>
-  <div class="video-frame" id="playWnd">
-    <iframe :src="videoUrl" frameborder="0" />
+  <div class="video-frame">
+    <iframe
+      frameborder="0"
+      ref="iframeEle"
+    />
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      videoUrl: '/video/demo_for_iframe.html',
+      scaleX: 1,
+      scaleY: 1,
+      videoUrl: '/video/demo_embedded_for_iframe.html',
     };
   },
   mounted() {
     const onResize = this.onResize.bind(this);
-    window.globalScale.resizeCbs.push(onResize);
+    const changeVideoPos = this.changeVideoPos.bind(this);
+    window.globalScale.add(onResize);
+    window.addEventListener('message', changeVideoPos);
     this.$once('hook:beforeDestroy', () => {
-      const index = window.globalScale.resizeCbs.indexOf(onResize);
-      window.globalScale.resizeCbs.splice(index, 1);
+      window.globalScale.remove(onResize);
+      window.removeEventListener('message', changeVideoPos);
     });
+    this.setIframe();
   },
   methods: {
-    onResize(scaleX, scaleY) {
-      console.log(scaleX, scaleY);
+    setIframe() {
+      const iframeWin = this.$refs.iframeEle;
+      const { clientWidth, clientHeight } = iframeWin.parentNode;
+      iframeWin.style.width = clientWidth * this.scaleX + 'px';
+      iframeWin.style.height = clientHeight * this.scaleY + 'px';
+      setTimeout(() => {
+        iframeWin.src = this.videoUrl;
+      }, 1000);
+    },
+    onResize(scaleX = 1, scaleY = 1) {
+      this.scaleX = scaleX;
+      this.scaleY = scaleY;
+    },
+    changeVideoPos(e) {
+      const iframeWin = this.$refs.iframeEle;
+      console.log(iframeWin.getBoundingClientRect());
+      if (e && e.data) {
+        switch (e.data.action) {
+          case 'updateInitParam':
+            iframeWin.contentWindow.postMessage({
+              action: 'updateInitParam',
+              msg: '更新Pos',
+              iframeClientPos: iframeWin.getBoundingClientRect(),
+            });
+            break;
+          default:
+            break;
+        }
+      }
     },
   },
 };
@@ -31,7 +66,7 @@ export default {
   position: relative;
   iframe {
     position: absolute;
-    outline: 5px solid red;
+    // outline: 5px solid red;
     width: 100%;
     height: 100%;
   }

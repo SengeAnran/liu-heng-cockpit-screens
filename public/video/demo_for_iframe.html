@@ -48,22 +48,12 @@
 		iframeWin.contentWindow.postMessage({
 			action:'updateInitParam',    // 告诉子页面一些初始值，包括浏览器视窗高度与宽度、iframe偏离文档的位置、iframe相对视窗的位置
 			msg: '更新子页面一些初始值',
-			showSize: {                       // 浏览器视窗高度与宽度
-				width: $(window).width(),  
-				height: $(window).height(),
-			},
-			iframeClientPos: {	            // iframe相对视窗的位置
-				left: iframeWin.getBoundingClientRect().left,
-				right: iframeWin.getBoundingClientRect().right,
-				top: iframeWin.getBoundingClientRect().top,
-				bottom: iframeWin.getBoundingClientRect().bottom
-			}
+			iframeClientPos: iframeWin.getBoundingClientRect(),
 		});
 	}
 	
 	// 步骤3：监听嵌入子页面的事件
 	window.addEventListener('message', function(e){
-		console.log(e.data);
 		if(e && e.data){
 			switch (e.data.action){
 				case 'updateInitParam':
