@@ -25,7 +25,7 @@ export default {
     return {
       map: null,
       mapDom: null,
-      currentIndex: 0,
+      currentIndex: '',
       markData: [],
       list: [
         { type: '幼儿园' },
