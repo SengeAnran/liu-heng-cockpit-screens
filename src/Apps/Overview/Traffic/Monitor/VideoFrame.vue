@@ -7,7 +7,7 @@
 export default {
   data() {
     return {
-      videoUrl: '/video/test.html',
+      videoUrl: '/video/demo_for_iframe.html',
     };
   },
   mounted() {
