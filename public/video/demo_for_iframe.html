@@ -44,11 +44,12 @@
 				top: iframeWin.getBoundingClientRect().top,
 				bottom: iframeWin.getBoundingClientRect().bottom
 			}
-		});   // '\*'表示跨域参数，请结合自身业务合理设置
+		});
 	}
 	
 	// 步骤3：监听嵌入子页面的事件
 	window.addEventListener('message', function(e){
+		console.log(e.data);
 		if(e && e.data){
 			switch (e.data.action){
 				case 'updatePos':
@@ -61,7 +62,7 @@
 							left: -1 * scrollLeftValue,
 							top: -1 * scrollTopValue,									
 						}
-					});   // '\*'表示跨域参数，请结合自身业务合理设置
+					});
 					break;
 				default:
 					break;
