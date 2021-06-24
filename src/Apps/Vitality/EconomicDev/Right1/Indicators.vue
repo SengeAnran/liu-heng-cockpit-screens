@@ -1,20 +1,61 @@
 <template>
   <div class="indicator">
-    <div class="item" v-for="item in list" :key="item.name">
-      <span class="name">{{ item.name }}</span>
+    <div class="item">
+      <span class="name">全年GDP</span>
       <span class="value">
-        {{ item.value }}
-        <span class="unit">{{ item.unit }}</span>
+        {{ yearGDPValue }}
+        <span class="unit">{{ yearGDPUnit }}元</span>
+      </span>
+    </div>
+    <div class="item">
+      <span class="name">人均可支配收入</span>
+      <span class="value">
+        {{ averageGDPValue }}
+        <span class="unit">{{ averageGDPUnit }}元</span>
       </span>
     </div>
   </div>
 </template>
 <script>
+import economicAPI from '@/api/Vitality/EconomicDev';
+import { unitNum } from '@/utils/number';
 export default {
-  props: {
-    list: {
-      type: Array,
-      default: () => ({}),
+  data() {
+    return {
+      yearGDP: 4820,
+      averageGDP: 6920,
+      // list: [
+      //   { name: '全年GDP', value: 4820, unit: '万元' },
+      //   { name: '人均可支配收入', value: 6920, unit: '元' },
+      // ],
+    };
+  },
+  computed: {
+    yearGDPValue() {
+      const { value } = unitNum(this.yearGDP);
+      return +value.toFixed(2);
+    },
+    yearGDPUnit() {
+      const { unit } = unitNum(this.yearGDP);
+      return unit;
+    },
+    averageGDPValue() {
+      const { value } = unitNum(this.averageGDP);
+      return +value.toFixed(2);
+    },
+    averageGDPUnit() {
+      const { unit } = unitNum(this.averageGDP);
+      return unit;
+    },
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      const data = await economicAPI.economicInfo();
+      this.yearGDP = data?.qngpd;
+      this.averageGDP = data?.rjkzpje;
     },
   },
 };
@@ -46,7 +87,7 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 500;
       background: linear-gradient(180deg, #fff 0%, #99FFFF 100%);
-      -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .value {

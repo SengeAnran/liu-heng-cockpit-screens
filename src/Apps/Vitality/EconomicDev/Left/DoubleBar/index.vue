@@ -5,26 +5,35 @@
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
-function randomInt(min, max) {
-  return Math.ceil(Math.random() * (max - min) + min);
-}
+import economicAPI from '@/api/Vitality/EconomicDev';
+
 export default {
   data() {
     return {
-      list: Array.from({ length: 8 }).map((d, i) => ({
-        name: `${i + 1}月`,
-        value1: randomInt(100, 400),
-        value2: randomInt(100, 400),
-      })),
+      list: [
+        // { name: '202101', value1: 100, value2: 100 },
+      ],
     };
   },
   mounted() {
     this.initChart();
+    this.fetchData();
   },
   methods: {
     initChart() {
       this.chart = echarts.init(this.$refs.eleChart);
       this.chart.setOption(getOptions(this.list));
+    },
+    async fetchData() {
+      const data = await economicAPI.companyRegisterCancelNum();
+      // console.log(data);
+      const list = data.map((d) => ({
+        ...d,
+        name: d.sj,
+        value1: d.xzqyzcl,
+        value2: d.xzqyzxl,
+      }));
+      this.chart.setOption(getOptions(list));
     },
   },
 };

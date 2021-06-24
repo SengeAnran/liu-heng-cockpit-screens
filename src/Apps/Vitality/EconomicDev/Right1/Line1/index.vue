@@ -5,28 +5,38 @@
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
+import economicAPI from '@/api/Vitality/EconomicDev';
 
 export default {
   data() {
     return {
       list: [
-        { name: '2015', value: 63403 },
-        { name: '2016', value: 73403 },
-        { name: '2017', value: 83403 },
-        { name: '2018', value: 93403 },
-        { name: '2019', value: 103403 },
-        { name: '2020', value: 113403 },
-        { name: '2021', value: 123403 },
+        // { name: '2015', value: 63403 },
       ],
     };
   },
   mounted() {
     this.initChart();
+    this.fetchData();
   },
   methods: {
     initChart() {
       this.chart = echarts.init(this.$refs.eleChart);
       this.chart.setOption(getOptions(this.list));
+    },
+    async fetchData() {
+      const data = await economicAPI.gdp();
+      // console.log(data);
+      const list = data
+        .map((d) => ({
+          ...d,
+          name: d.sj,
+          value: d.rjed,
+        }))
+        .sort((a, b) => {
+          return +a.name - (+b.name);
+        });
+      this.chart.setOption(getOptions(list));
     },
   },
 };

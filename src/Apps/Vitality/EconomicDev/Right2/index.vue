@@ -1,7 +1,7 @@
 <template>
   <div class="right-2">
     <Title>人口宏观情况</Title>
-    <Indicators :list="list" />
+    <Indicators />
     <Bar />
     <Pie />
   </div>
@@ -13,14 +13,6 @@ import Bar from './Bar';
 import Pie from './Pie';
 
 export default {
-  data() {
-    return {
-      list: [
-        { name: '常住人口\n数量', value: 113456, unit: '人' },
-        { name: '劳动力\n人口数量', value: 17221, unit: '人' },
-      ],
-    };
-  },
   components: {
     Title,
     Indicators,

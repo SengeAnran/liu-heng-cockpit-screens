@@ -11,28 +11,38 @@
     </div>
     <div class="t-body">
       <div class="tr" v-for="item in list" :key="item.name">
-        <div class="item">{{ item.plate }}</div>
-        <div class="item">{{ item.date }}</div>
-        <div class="item">{{ item.road }}</div>
-        <div class="item">{{ item.monitor }}</div>
-        <div class="item">{{ item.status }}</div>
+        <div class="item">{{ item.cp }}</div>
+        <div class="item">{{ item.sj }}</div>
+        <div class="item">{{ item.ccld }}</div>
+        <div class="item">{{ item.dwbh }}</div>
+        <div class="item">{{ item.fxqk }}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import trafficAPI from '@/api/Overview/Traffic';
+
 export default {
   data() {
     return {
       list: [
-        { plate: '浙A22222', date: '2021.03.07', road: '六横', monitor: 'NO.656', status: '预警' },
-        { plate: '浙A22222', date: '2021.03.07', road: '六横', monitor: 'NO.656', status: '预警' },
-        { plate: '浙A22222', date: '2021.03.07', road: '六横', monitor: 'NO.656', status: '预警' },
-        { plate: '浙A22222', date: '2021.03.07', road: '六横', monitor: 'NO.656', status: '预警' },
-        { plate: '浙A22222', date: '2021.03.07', road: '六横', monitor: 'NO.656', status: '预警' },
-        { plate: '浙A22222', date: '2021.03.07', road: '六横', monitor: 'NO.656', status: '预警' },
+        // { cp: '浙A22222', sj: '2021.03.07', ccld: '六横', dwbh: 'NO.656', fxqk: '预警' },
       ],
     };
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    async fetchData() {
+      const data = await trafficAPI.illegalInfo();
+      console.log(data);
+      this.list = data;
+      // this.traffic = data?.[0]?.jtzs;
+      // this.crowd = data?.[0]?.ydzs;
+      // this.date = data?.[0]?.sjd;
+    },
   },
 };
 </script>

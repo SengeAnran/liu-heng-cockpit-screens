@@ -5,7 +5,7 @@
       <div class="bar-item" v-for="item in list" :key="item.name">
         <div class="name">
           <span>{{ item.name }}</span>
-          <span class="value">{{ item.value }}%</span>
+          <span class="value">{{ item.percent }}%</span>
         </div>
         <div class="bar-outer">
           <div class="bar-inner" :style="barStyle(item)" />
@@ -19,12 +19,18 @@ import * as echarts from 'echarts/core';
 import { PieChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import getOptions from './options';
+import trafficAPI from '@/api/Overview/Traffic';
 
 echarts.use([
   PieChart,
   CanvasRenderer,
 ]);
-
+const colors = [
+  ['#EFB690', '#A96F5E'],
+  ['#A7FBB2', '#56BC68'],
+  ['#92B4F9', '#0329B8'],
+  ['#FAE2FD', '#AD8FF8'],
+];
 export default {
   data() {
     return {
@@ -38,26 +44,40 @@ export default {
   },
   mounted() {
     const chart = echarts.init(this.$refs.chartEle);
-    chart.setOption(
-      getOptions(this.list),
-    );
+
     this.chart = chart;
+    this.fetchData();
     this.resetData(this.list);
   },
   methods: {
+    async fetchData() {
+      const data = await trafficAPI.passengerTrend();
+      // console.log(data);
+      const total = data.reduce((pre, cur) => pre + cur.zkyl, 0);
+      const list = data.map((d, i) => ({
+        ...d,
+        name: d.jtgj,
+        value: d.zkyl,
+        percent: (d.zkyl / total * 100).toFixed(2),
+        unit: '%',
+        color: colors[i],
+      }));
+      this.resetData(list);
+      this.chart.setOption(getOptions(list));
+    },
     resetData(data) {
-      this.list = data.map((d) => ({ ...d, value: 0 }));
+      this.list = data.map((d) => ({ ...d, percent: 0 }));
       setTimeout(() => {
         this.list = data;
-      }, 200);
+      }, 0);
     },
     barStyle(bar) {
-      const { color, value } = bar;
+      const { color, percent } = bar;
       // console.log(bar);
       return {
         background: `linear-gradient(to right, ${color[0]} 0%, ${color[1]} 100%)`,
         backgroundRepeat: 'no-repeat',
-        width: `${value}%`,
+        width: `${percent}%`,
       };
     },
   },

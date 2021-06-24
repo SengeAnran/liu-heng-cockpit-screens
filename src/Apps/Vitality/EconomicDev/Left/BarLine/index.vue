@@ -1,32 +1,41 @@
 <template>
   <div class="bar-line" ref="eleChart"></div>
 </template>
-
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
+import economicAPI from '@/api/Vitality/EconomicDev';
 
 export default {
   data() {
     return {
       list: [
-        { name: '房地产项目', line: 100, bar: 221 },
-        { name: '光伏项目', line: 123, bar: 321 },
-        { name: '小型项目', line: 132, bar: 245 },
-        { name: '电子政务', line: 213, bar: 342 },
-        { name: '交通项目', line: 492, bar: 352 },
-        { name: '能源项目', line: 541, bar: 233 },
-        { name: '水利项目', line: 264, bar: 123 },
+        // { name: '水利项目', line: 264, bar: 123 },
       ],
     };
   },
   mounted() {
     this.initChart();
+    this.fetchData();
   },
   methods: {
     initChart() {
       this.chart = echarts.init(this.$refs.eleChart);
       this.chart.setOption(getOptions(this.list));
+    },
+    async fetchData() {
+      const data = await economicAPI.industryDistribution();
+      // console.log(data);
+      const list = data.map((d) => ({
+        ...d,
+        name: d.xmzl,
+        bar: d.xmk,
+        line: d.tze,
+      }));
+      this.chart.setOption(getOptions(list));
+      // this.list[0].value = data?.qyzcl || 0;
+      // this.list[1].value = data?.qymd || 0;
+      // this.list[2].value = data?.ssgssl || 0;
     },
   },
 };

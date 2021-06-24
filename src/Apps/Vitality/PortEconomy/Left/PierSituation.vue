@@ -1,5 +1,5 @@
 <template>
-  <div class="ThroughoutCapacity">
+  <div class="PierSituation">
     <div :key="index" v-for="(item,index) in dataList">
       <div class="icon-wrap">
         <p>{{item.name}}</p>
@@ -17,21 +17,22 @@
 
 <script>
 import ICountUp from '../components/ICountUp';
+import { terminalHandlingSituation } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {
     return {
       dataList: [
         {
           name: '货物吞吐量',
-          num: 14278,
+          num: 0,
           type: 0,
-          percent: 1.1,
+          percent: 0,
         },
         {
           name: '集装箱吞吐量',
-          num: 27661,
+          num: 0,
           type: 1,
-          percent: 0.8,
+          percent: 0,
         },
       ],
     };
@@ -39,11 +40,27 @@ export default {
   components: {
     ICountUp,
   },
+  mounted() {
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      terminalHandlingSituation().request().then((json) => {
+        const { hwttl, jzxttl, qnhwttl, qnjzxttl } = json[0];
+        this.dataList[0].num = hwttl;
+        this.dataList[0].type = hwttl > qnhwttl ? 0 : 1;
+        this.dataList[0].percent = (Math.abs(hwttl - qnhwttl) / qnhwttl * 100).toFixed(2);
+        this.dataList[1].num = jzxttl;
+        this.dataList[1].type = jzxttl > qnjzxttl ? 0 : 1;
+        this.dataList[1].percent = (Math.abs(jzxttl - qnjzxttl) / qnjzxttl * 100).toFixed(2);
+      });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.ThroughoutCapacity {
+.PierSituation {
   flex-direction: row !important;
   justify-content: space-between;
   & > div {
