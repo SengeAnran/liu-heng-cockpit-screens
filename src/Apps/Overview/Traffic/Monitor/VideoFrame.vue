@@ -1,5 +1,5 @@
 <template>
-  <div class="video-frame">
+  <div class="video-frame" id="playWnd">
     <iframe :src="videoUrl" frameborder="0" />
   </div>
 </template>
@@ -7,8 +7,21 @@
 export default {
   data() {
     return {
-      videoUrl: 'http://60.163.192.206:8000/liuheng-pc/views/haikangVideo/window_simple_preview.html?cameraIndexCode=33090300001310894123&width=700&height=500',
+      videoUrl: '/video/test.html',
     };
+  },
+  mounted() {
+    const onResize = this.onResize.bind(this);
+    window.globalScale.resizeCbs.push(onResize);
+    this.$once('hook:beforeDestroy', () => {
+      const index = window.globalScale.resizeCbs.indexOf(onResize);
+      window.globalScale.resizeCbs.splice(index, 1);
+    });
+  },
+  methods: {
+    onResize(scaleX, scaleY) {
+      console.log(scaleX, scaleY);
+    },
   },
 };
 </script>
@@ -18,11 +31,9 @@ export default {
   position: relative;
   iframe {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 705px;
-    height: 505px;
-    transform: translate(-50%, -50%) scale(0.66);
+    outline: 5px solid red;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>
