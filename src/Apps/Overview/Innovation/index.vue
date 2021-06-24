@@ -9,7 +9,7 @@
           <patent-number />
           <!-- 变化趋势 -->
           <changes-trends />
-          <!-- 申报产业领域 Top5 -->
+          <!-- 申报产业领域 Top -->
           <industry-field />
         </div>
         <div>
