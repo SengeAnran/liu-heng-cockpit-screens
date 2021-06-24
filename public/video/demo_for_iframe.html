@@ -55,10 +55,11 @@
 				case 'updatePos':
 					var scrollLeftValue = document.documentElement.scrollLeft;
 					var scrollTopValue = document.documentElement.scrollTop;
+					console.log({ scrollLeftValue, scrollTopValue });
 					iframeWin.contentWindow.postMessage({
 						action:'updatePos',  
 						msg: '更新Pos',
-						scrollValue: {          // 滚动条滚动的偏移量
+						scrollValue: {
 							left: -1 * scrollLeftValue,
 							top: -1 * scrollTopValue,									
 						}
