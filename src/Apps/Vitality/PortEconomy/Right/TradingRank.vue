@@ -4,7 +4,6 @@
 
 <script>
 import * as echarts from 'echarts';
-// import aa from '../images/bar_shadow.png';
 import { tradeVolumeOfMajorCitiesRanked } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {

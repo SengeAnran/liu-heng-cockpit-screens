@@ -17,7 +17,7 @@ export default {
       resizeEnable: true,
       zoom: 13,
       zooms: [3, 16],
-      center: [122.13756, 29.678873],
+      center: [122.138836, 29.730147],
       mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
     });
     this.resolveMap(this.map);
@@ -34,7 +34,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 207rem;
+  height: 135rem;
   background: #1e1e1e;
   &::after {
     position: absolute;
@@ -42,7 +42,7 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 207rem;
     pointer-events: none;
     background: url('./img/mask.png') no-repeat;
     background-size: 100% 100%;

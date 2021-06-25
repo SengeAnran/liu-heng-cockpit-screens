@@ -21,6 +21,14 @@
       ratioX: 1,
       ratioY: 1,
       resizeCbs: [],
+      add(cb) {
+        this.resizeCbs.push(cb);
+        cb(this.ratioX, this.ratioY);
+      },
+      remove(cb) {
+        const index = this.resizeCbs.indexOf(onResize);
+        this.resizeCbs.splice(index, 1);
+      },
       setScale(ratioX, ratioY) {
         this.ratioX = ratioX;
         this.ratioY = ratioY;

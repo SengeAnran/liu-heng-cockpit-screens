@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      /* overflow: hidden; */
+    }
+    #mapEle {
+      height: 100%;
+    }
+    body {
+      width: 5760px;
+      height: 2080px;
+    }
+  </style>
+</head>
+<body>
+  <div id="mapEle"></div>
+  <script src="http://webapi.amap.com/maps?v=1.4.15&key=7fbaa402922cfec0fb3a1829c4677776"></script>
+  <script>
+    const map = new AMap.Map(mapEle, {
+      resizeEnable: true,
+      zoom: 13,
+      zooms: [3, 16],
+      center: [122.13756, 29.678873],
+      mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
+    });
+  </script>
+</body>
+</html>
