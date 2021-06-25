@@ -2,7 +2,10 @@
   <div class="right-webview">
     <div class="right-webview_l">
       <!-- 六横航运贸易总额 -->
-      <trading-total />
+      <div>
+        <secondary-title name="六横航运贸易总额" />
+        <trading-total />
+      </div>
       <!-- 主要商品贸易额占比TOP5 -->
       <div>
         <secondary-title name="主要商品贸易额占比TOP5" />
@@ -18,6 +21,7 @@
     </div>
     <div class="right-webview_r">
       <!-- 主要城市贸易额排名TOP10 -->
+      <secondary-title name="主要城市贸易额排名TOP10" />
       <trading-rank />
     </div>
   </div>
@@ -51,7 +55,6 @@ export default {
     topFiveMajorCommodityTradeAccounted()
       .request()
       .then((json) => {
-        console.log(json);
         json.map((item) => {
           item.name = item.spzl;
           item.value = item.mye;
@@ -74,17 +77,27 @@ export default {
     display: flex;
     flex-direction: column;
     & > div {
-      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
       &:first-child {
-        margin-bottom: 60px;
-        flex: 1.2;
+        flex: 1;
+        & > div {
+          &:nth-child(2) {
+            flex: 1;
+            margin-top: 24px;
+          }
+        }
+      }
+      &:nth-child(2) {
+        height: 510px;
+        min-height: 510px;
+        position: relative;
+        top: 60px;
       }
       .chart {
         flex: 1;
-        padding-top: 20px;
       }
     }
   }

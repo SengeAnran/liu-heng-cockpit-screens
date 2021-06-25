@@ -2,22 +2,13 @@
   <div class="map_wrapper">
     <div class="main-map" ref="map"></div>
     <div class="mask"></div>
-    <div class="toggle-layer">
-      <h3>医院图例</h3>
-      <ul>
-        <li v-for="(item,i) in list" :key="`toggle-${i}`">
-          <span @click="selectMark(item,i)" :class="{'active':currentIndex===i}"></span>
-          <span>{{item.type}}</span>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
 <script>
 import AMap from 'AMap';
-import hosIcon from '../images/hospital-icon.png';
-import { getSchoolListByCategory } from '@/api/Overview/Education/api';
+import hosIcon from './img/hospital-icon.png';
+import { getCompanyList } from '@/api/Overview/Innovation/api';
 export default {
   name: 'MedicalMap',
   components: {},
@@ -27,12 +18,7 @@ export default {
       mapDom: null,
       currentIndex: '',
       markData: [],
-      list: [
-        { type: '幼儿园' },
-        { type: '小学' },
-        { type: '初中' },
-        { type: '高中' },
-      ],
+      list: [{ type: '幼儿园' }, { type: '小学' }, { type: '初中' }, { type: '高中' }],
       markers: [],
       infoWindow: {},
     };
@@ -42,11 +28,13 @@ export default {
     this.getData();
   },
   methods: {
-    getData(category = '') {
-      getSchoolListByCategory().request({ category: category }).then((res) => {
-        this.markData = res;
-        this.markDown();
-      });
+    getData() {
+      getCompanyList()
+        .request()
+        .then((res) => {
+          this.markData = res;
+          this.markDown();
+        });
     },
     markDown() {
       this.markers.forEach((item) => {
@@ -78,16 +66,11 @@ export default {
     addInfoWindow(markerMsg, lnglat) {
       const { lng, lat } = lnglat;
       const html = `<div class='pop-up-box'>
-          <h3>${markerMsg.xxmc}</h3>
-          <div>
-            <label>联系电话：</label><br>
-            <span>${markerMsg.lxdh || '暂无'}<span>
-          </div>
+          <h3>${markerMsg.gsmc}</h3>
           <div class='flex'>
-            <div><label>教职人数：</label><br><span>${markerMsg.jzrs || 0}人</span></div>
-            <div><label>学生人数：</label><br><span>${markerMsg.xszs || 0}人</span></div>
+            <div><label>人才数量：</label><br><span>${markerMsg.rcsl || 0}人</span></div>
+            <div><label>拥有专利发明：</label><br><span>${markerMsg.yyzlfmsl || 0}项</span></div>
           </div>
-          <div><label>地址：</label><br><span>${markerMsg.dz}</span></div>
         </div>`;
       const infoWindow = new AMap.InfoWindow({
         isCustom: true, // 使用自定义窗体
@@ -99,6 +82,7 @@ export default {
     },
     addMarker(item) {
       const marker = new AMap.Marker({
+        // position: [item.lng || 122.200254, item.lat || 29.707613],
         position: [item.lng, item.lat],
         content: "<div class='custom-marker'></div>",
         icon: hosIcon,
@@ -147,54 +131,10 @@ export default {
     ::v-deep .custom-marker {
       width: 90px;
       height: 90px;
-      background: url('../images/hospital-icon.png') no-repeat center center;
+      background: url('./img/hospital-icon.png') no-repeat center center;
       background-size: 98% 98%;
       border-radius: 50%;
       z-index: 111;
-    }
-  }
-  .toggle-layer {
-    width: 274px;
-    height: 360px;
-    position: absolute;
-    left: 3326px;
-    top: 943px;
-    background: url('../images/toggle-bg.png') no-repeat;
-    background-size: 100% 100%;
-    z-index: 1000;
-    color: #fff;
-    font-size: 26px;
-    font-family: Source Han Sans CN;
-    padding-left: 42px;
-    h3 {
-      height: 94px;
-      line-height: 94px;
-      margin: 0;
-    }
-    ul {
-      margin: 0;
-      padding: 0;
-    }
-    li {
-      list-style: none;
-      height: 51px;
-      line-height: 51px;
-      span {
-        display: inline-block;
-        vertical-align: middle;
-        &:nth-child(1) {
-          width: 28px;
-          height: 28px;
-          background: url('../images/rect-bg.png') no-repeat;
-          background-size: 100% 100%;
-          border-radius: 4px;
-          margin-right: 20px;
-          cursor: pointer;
-        }
-      }
-      .active {
-        background: url('../images/checked-icon.png') no-repeat !important;
-      }
     }
   }
   ::v-deep .pop-up-box {
@@ -203,7 +143,7 @@ export default {
     position: absolute;
     left: 2126px;
     top: 503px;
-    background: url('../images/pop-up-bg.png') no-repeat;
+    background: url('./img/pop-up-bg.png') no-repeat;
     background-size: 100% 100%;
     padding-left: 53px;
     padding-right: 53px;
@@ -221,7 +161,10 @@ export default {
       width: 100%;
       margin-bottom: 46px;
       > div {
-        width: 45%;
+        width: 46%;
+        &:nth-child(1) {
+          margin-right: 8%;
+        }
       }
       label {
         font-size: 30px;

@@ -1,0 +1,144 @@
+<template>
+  <div ref="mapChart" class="chart-map"></div>
+</template>
+
+<script>
+import * as echarts from 'echarts';
+import { getPortDetail } from '@/api/Vitality/PortEconomy/api';
+import features from './word';
+export default {
+  data() {
+    return {
+      geoCoordMap: [],
+      series: [],
+    };
+  },
+  mounted() {
+    this.chart = echarts.init(this.$refs.mapChart);
+    this.loadData();
+    echarts.registerMap('world', {
+      type: 'FeatureCollection',
+      crs: {
+        type: 'name',
+        properties: {
+          name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
+        },
+      },
+      features,
+    });
+    this.initEcharts();
+  },
+  methods: {
+    loadData() {
+      getPortDetail()
+        .request()
+        .then((json) => {
+          json.map((item) => {
+            item.name = item.gkmc;
+            item.position = [item.lng, item.lat];
+          });
+          this.geoCoordMap = json;
+        });
+    },
+    initEcharts() {
+      this.series = [];
+      this.series.push({
+        type: 'lines',
+        zlevel: 1,
+        symbol: ['none'],
+        symbolSize: 1,
+        effect: {
+          show: true,
+          period: 5,
+          trailLength: 0.1,
+          color: '#2be5f8',
+          symbolSize: 5,
+        },
+        lineStyle: {
+          normal: {
+            color: '#2be5f8',
+            width: 1,
+            opacity: 0.5,
+            curveness: 0.2,
+          },
+        },
+        data: this.geoCoordMap.map((item) => {
+          return {
+            coords: [item.position, [114.195466, 22.282751]],
+          };
+        }),
+      });
+      this.geoCoordMap.forEach((item, i) => {
+        this.series.push({
+          type: 'effectScatter',
+          coordinateSystem: 'geo',
+          zlevel: 2,
+          rippleEffect: {
+            period: 4,
+            brushType: 'stroke',
+            scale: 4,
+          },
+          label: {
+            normal: {
+              show: true,
+              position: 'bottom',
+              offset: [0, 10],
+              formatter: '{b}',
+              fontSize: 18,
+              backgroundColor: 'rgba(9,23,55,.2)',
+              padding: [12, 60],
+              color: '#fff',
+            },
+          },
+          symbol: 'circle',
+          symbolSize: 12,
+          // color: '#eac737',
+          color: '#2be5f8',
+          data: this.geoCoordMap.map((item) => {
+            return {
+              name: item.name,
+              value: item.position,
+            };
+          }),
+        });
+      });
+
+      const option = {
+        backgroundColor: '#013954',
+        geo: {
+          map: 'world',
+          label: {
+            // show: true,
+            emphasis: {
+              show: false,
+            },
+          },
+          roam: false, // 是否允许缩放
+          layoutCenter: ['50%', '56%'], // 地图位置
+          layoutSize: '170%',
+          itemStyle: {
+            normal: {
+              color: ['#335f7b'], // 地图背景色
+              borderColor: '#29d0ff', // 省市边界线
+            },
+            emphasis: {
+              color: '#335f7b', // 悬浮背景
+            },
+          },
+        },
+        series: this.series,
+      };
+      this.chart.setOption(option);
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.chart-map {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+</style>

@@ -1,5 +1,10 @@
 import MetroApi from '@/utils/http';
 
+// 港口信息
+export const getPortDetail = () => {
+  return new MetroApi({ myType: 0, url: '/port/economy/detail' });
+};
+
 // 运输货物城市分布
 export const distributionOfTransportGoodsInCities = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/port/economy/distributionOfTransportGoodsInCities' });

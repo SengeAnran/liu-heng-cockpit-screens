@@ -3,7 +3,7 @@
     <secondary-title name="六横镇人才专利发明证书" />
     <div class="container">
       <div class="item" :key="index" v-for="(item,index) in imageList">
-        <img :src="item" />
+        <img :src="item.tpdz" />
       </div>
     </div>
   </div>
@@ -18,20 +18,7 @@ export default {
   },
   data() {
     return {
-      imageList: [
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-        require('../images/temp.png'),
-      ],
+      imageList: [],
     };
   },
   mounted() {
@@ -40,8 +27,7 @@ export default {
   methods: {
     loadData() {
       getPatentPicList().request().then((json) => {
-        console.log('六横镇人才专利发明证书', json);
-        // this.imageList = json;
+        this.imageList = json;
       });
     },
   },
