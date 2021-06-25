@@ -7,7 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { getPopIn, getPopOut } from '@/api/Overview/PopulationMap/api';
+import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'FlowRank',
   data() {
@@ -23,17 +23,11 @@ export default {
   },
   methods: {
     loadData() {
-      if (this.activeIndex === 0) {
-        getPopIn().request().then((json) => {
-          this.barData = this.resolveData(json);
-          this.chart.setOption(this.optionData(this.barData));
-        });
-      } else {
-        getPopOut().request().then((json) => {
-          this.barData = this.resolveData(json);
-          this.chart.setOption(this.optionData(this.barData));
-        });
-      }
+      getPopuliationNumRank().request().then((json) => {
+        console.log('户籍人口排名', json);
+        // this.barData = this.resolveData(json);
+        // this.chart.setOption(this.optionData(this.barData));
+      });
     },
     resolveData(data) {
       return data.map((item) => {

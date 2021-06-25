@@ -1,41 +1,36 @@
 import MetroApi from '@/utils/http';
 
 // 获取户籍人口信息
-export const getResidenceTrend = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getResidenceTrend' });
+export const getNewPopulationTrend = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/population/getNewPopulationTrend' });
 };
 
-// 获取流动人口信息
-export const getFlowTrend = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getFlowTrend' });
+// 获取户籍人口性别
+export const getPopuliationBySex = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/population/getPopuliationBySex' });
 };
 
-// 获取人口迁入信息排名
-export const getPopIn = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getPopIn' });
+// 获取户籍人口排名
+export const getPopuliationNumRank = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/population/getPopuliationNumRank' });
 };
 
-// 获取人口迁出信息排名
-export const getPopOut = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getPopOut' });
+// 获取出生与死亡情况
+export const getBornAndDeathByYear = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/population/getBornAndDeathByYear' });
 };
 
-// 获取户籍人口年龄分布
-export const getAgeDistribution = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getAgeDistribution' });
+// 获取劳动资源情况
+export const getLabourByYear = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/population/getLabourByYear' });
 };
 
-// 获取户籍人口学历占比
-export const getEducation = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getEducation' });
+// 获取自然增长情况
+export const getNaturalGrowth = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/population/getNaturalGrowth' });
 };
 
-// 获取户籍人口婚龄单身比
-export const getMarriedSingle = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getMarriedSingle' });
-};
-
-// 获取户籍人口工作占比
-export const getWrok = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/population/getWrok' });
+// 获取财政供给人员情况
+export const getFinancialSupportNum = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/population/getFinancialSupportNum' });
 };

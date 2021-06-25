@@ -7,7 +7,7 @@
 
 <script>
 import * as echarts from 'echarts';
-import { getFlowTrend } from '@/api/Overview/PopulationMap/api';
+import { getPopuliationBySex } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Register',
   data() {
@@ -23,8 +23,9 @@ export default {
   },
   methods: {
     loadData() {
-      getFlowTrend().request().then((json) => {
-        this.chart.setOption(this.getOptions(json));
+      getPopuliationBySex().request().then((json) => {
+        console.log('户籍人口性别', json);
+        // this.chart.setOption(this.getOptions(json));
       });
     },
     getOptions(data) {

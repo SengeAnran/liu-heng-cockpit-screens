@@ -1,21 +1,35 @@
 <template>
   <div class="register">
     <BaseTitle title="户籍人口" />
+    <div class="top-box">
+      <div class="total">
+        总人数: <CountUp :num="total.hjzrs" />人
+      </div>
+      <div class="rate">
+        <span class="last-year">比上年 {{ (total.rkzzl * 100).toFixed(2)}}%</span>
+        <CountUp :num="total.hjxzrs" />人
+      </div>
+    </div>
     <div class="line-chart" ref="chart"></div>
   </div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import { getResidenceTrend } from '@/api/Overview/PopulationMap/api';
+import { getNewPopulationTrend } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Register',
   data() {
     return {
       chart: null,
+      total: {
+        hjzrs: 0,
+        hjxzrs: 0,
+        rkzzl: 0,
+      },
     };
   },
-  components: {
+  computed: {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.chart);
@@ -23,21 +37,18 @@ export default {
   },
   methods: {
     loadData() {
-      getResidenceTrend().request().then((json) => {
-        // console.log(json, '户籍信息');
-        this.chart.setOption(this.getOptions(json));
+      getNewPopulationTrend().request().then((json) => {
+        this.total.hjzrs = json.hjrks.hjzrs || 0;
+        this.total.hjxzrs = json.hjrks.hjxzrs || 0;
+        this.total.rkzzl = json.hjrks.rkzzl || 0;
+        this.chart.setOption(this.getOptions(json.hjrkqs));
       });
     },
     getOptions(data) {
-      // const xAxisData = [];
-      // for (let i = 1; i <= 12; i++) {
-      //   const temp = i + '月';
-      //   xAxisData.push(temp);
-      // }
       const option = {
         grid: {
-          top: '18%',
-          left: '6%',
+          top: '15%',
+          left: '10%',
           right: '5%',
           bottom: '16%',
         },
@@ -83,10 +94,10 @@ export default {
             show: false,
           },
           boundaryGap: true,
-          data: data.map((item) => item.hjyf),
+          data: data.map((item) => item.hjnf),
         },
         yAxis: {
-          name: '指数',
+          name: '人数',
           type: 'value',
           nameTextStyle: {
             align: 'center',
@@ -177,6 +188,37 @@ export default {
   top: 262px;
   width: 835px;
   height: 535px;
+  .top-box {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    font-size: 22px;
+    color: #fff;
+    width: 70%;
+    display: flex;
+    >div {
+      flex-grow: 1;
+      text-align: center;
+      &.total {
+        .count-up {
+          font-size: 35px;
+          color: #ffa800;
+          font-family: 'DIN Alternate';
+        }
+      }
+       &.rate {
+        .last-year {
+          display: inline-block;
+          margin-right: 20px;
+        }
+        .count-up {
+          font-size: 35px;
+          color: #60f2bb;
+          font-family: 'DIN Alternate';
+        }
+      }
+    }
+  }
   .line-chart {
     position: absolute;
     bottom: 0;

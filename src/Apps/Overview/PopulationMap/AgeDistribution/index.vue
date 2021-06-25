@@ -1,13 +1,13 @@
 <template>
   <div class="age-distribution">
-    <BaseTitle title="户籍人口年龄分布" />
+    <BaseTitle title="出生与死亡情况" />
     <div class="bar-chart" ref="chart"></div>
   </div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import { getAgeDistribution } from '@/api/Overview/PopulationMap/api';
+import { getBornAndDeathByYear } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'AgeDistribution',
   data() {
@@ -23,8 +23,9 @@ export default {
   },
   methods: {
     loadData() {
-      getAgeDistribution().request().then((json) => {
-        this.chart.setOption(this.getOptions(json));
+      getBornAndDeathByYear().request().then((json) => {
+        console.log(json, '出生与死亡情况');
+        // this.chart.setOption(this.getOptions(json));
       });
     },
     getOptions(data) {

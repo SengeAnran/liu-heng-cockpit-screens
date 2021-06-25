@@ -1,13 +1,13 @@
 <template>
   <div class="degree">
-    <BaseTitle title="户籍人口学历占比" />
+    <BaseTitle title="劳动力资源情况" />
     <PieChart :chartData="{ pieData: personData, title: '户籍人口学历占比' }" />
   </div>
 </template>
 
 <script>
 import PieChart from '../components/PieChart';
-import { getEducation } from '@/api/Overview/PopulationMap/api';
+import { getLabourByYear } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Degree',
   data() {
@@ -23,8 +23,9 @@ export default {
   },
   methods: {
     loadData() {
-      getEducation().request().then((json) => {
-        this.personData = this.resolveData(json);
+      getLabourByYear().request().then((json) => {
+        console.log('劳动资源情况', json);
+        // this.personData = this.resolveData(json);
       });
     },
     resolveData(data) {
