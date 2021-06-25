@@ -1,6 +1,6 @@
 <template>
   <div class="float-population">
-    <BaseTitle title="流动人口" />
+    <BaseTitle title="户籍人口性别情况" />
     <div class="line-chart" ref="chart"></div>
   </div>
 </template>

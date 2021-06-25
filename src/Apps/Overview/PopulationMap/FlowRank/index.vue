@@ -1,15 +1,6 @@
 <template>
   <view-template class="flow-rank">
-    <BaseTitle title="户籍人口流动排名" />
-    <div class="btn-list">
-      <div
-        @click="handleClick(index)"
-        :class="{active: activeIndex===index}"
-        v-for="(item, index) of btnList"
-        :key="index">
-        {{ item }}
-      </div>
-    </div>
+    <BaseTitle title="户籍人口排名" />
     <div class="bar-chart" ref="barChart"></div>
   </view-template>
 </template>
@@ -21,8 +12,6 @@ export default {
   name: 'FlowRank',
   data() {
     return {
-      activeIndex: 0,
-      btnList: ['迁入', '迁出'],
       barData: [],
     };
   },
@@ -45,10 +34,6 @@ export default {
           this.chart.setOption(this.optionData(this.barData));
         });
       }
-    },
-    handleClick(index) {
-      this.activeIndex = index;
-      this.loadData();
     },
     resolveData(data) {
       return data.map((item) => {
@@ -162,38 +147,6 @@ export default {
   top: 262px;
   width: 835px;
   height: 1050px;
-  .btn-list {
-    position: absolute;
-    top: 0;
-    right: 60px;
-    width: 200px;
-    height: 64px;
-    display: flex;
-    >div {
-      position: relative;
-      cursor: pointer;
-      width: 50%;
-      height: 100%;
-      line-height: 64px;
-      font-size: 24px;
-      color: #fff;
-      text-align: center;
-      &.active {
-        text-shadow: 1px 1px 5px deepskyblue;
-      }
-      &.active:before {
-        position: absolute;
-        left: 10px;
-        top: 25px;
-        width: 10px;
-        height: 10px;
-        content: '';
-        display: block;
-        background-color: #fff;
-        border-radius: 50%;
-      }
-    }
-  }
   .bar-chart {
     position: absolute;
     bottom: 0;
