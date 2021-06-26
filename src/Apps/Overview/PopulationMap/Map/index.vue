@@ -7,6 +7,8 @@
 
 <script>
 import AMap from 'AMap';
+import iconImg from './img/circle.png';
+import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Map',
   components: {
@@ -14,23 +16,52 @@ export default {
   data() {
     return {
       map: null,
-      mapDom: null,
+      markerList: [],
     };
   },
   mounted() {
-    this.mapDom = this.$refs.map;
-    this.map = new AMap.Map(this.mapDom, {
-      resizeEnable: true,
-      zoom: 13.4,
-      zooms: [3, 16],
-      center: [122.200254, 29.717613],
-      mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
-    });
+    this.initMap();
+    this.loadData();
     // const marker = new AMap.Marker({
     //   position: [122.200254, 29.767613],
     //   content: "<div style='display: inline-block; width: 20px; height: 20px;'>13444</div>",
     // });
     // marker.setMap(this.map);
+  },
+  methods: {
+    loadData() {
+      getPopuliationNumRank().request().then((json) => {
+        if (json) {
+          // console.log(json);
+          this.addMarker(json);
+        }
+      });
+    },
+    initMap() {
+      this.map = new AMap.Map(this.$refs.map, {
+        resizeEnable: true,
+        zoom: 13,
+        zooms: [3, 20],
+        center: [122.138836, 29.730147],
+        mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
+      });
+    },
+    addMarker(data) {
+      console.log(data);
+      data.forEach((item) => {
+        const marker = new AMap.Marker({
+          map: this.map,
+          icon: iconImg,
+          position: [item.lng, item.lat],
+          content: "<div style='display: inline-block; width: 20px; height: 20px;'>13444</div>",
+        });
+        this.markerList.push(marker);
+      });
+    },
+    createText() {
+      return `
+      `;
+    },
   },
 };
 </script>
