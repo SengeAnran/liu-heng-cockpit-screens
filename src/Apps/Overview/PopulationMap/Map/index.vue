@@ -7,7 +7,7 @@
 
 <script>
 import AMap from 'AMap';
-import iconImg from './img/circle.png';
+import './map.scss';
 import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Map',
@@ -47,15 +47,12 @@ export default {
       });
     },
     addMarker(data) {
-      console.log(data);
       data.forEach((item) => {
         const marker = new AMap.Marker({
-          map: this.map,
-          icon: iconImg,
           position: [item.lng, item.lat],
-          content: "<div style='display: inline-block; width: 20px; height: 20px;'>13444</div>",
+          content: '<div class="custom-marker">13444</div>',
         });
-        this.markerList.push(marker);
+        marker.setMap(this.map);
       });
     },
     createText() {
