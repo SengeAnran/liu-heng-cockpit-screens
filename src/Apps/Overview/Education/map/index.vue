@@ -64,9 +64,10 @@ export default {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
-        zoom: 14,
+        zoom: 13,
+        zooms: [3, 20],
         zoomEnable: true,
-        center: new AMap.LngLat(122.200254, 29.707613),
+        center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
       this.map.on('click', (e) => {
