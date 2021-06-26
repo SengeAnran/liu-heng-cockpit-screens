@@ -99,7 +99,7 @@ export default {
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
         zoom: 13,
-        zoomEnable: false,
+        // zoomEnable: false,
         center: [122.200254, 29.707613],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
@@ -177,7 +177,7 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 2070px;
+    height: 1350px;
     ::v-deep .custom-marker {
       width: 70px;
       height: 70px;

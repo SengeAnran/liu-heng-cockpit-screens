@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>预览Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+<style>
+    html,
+    body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+    }
+
+    .playWnd {
+        width: 100%;
+        height: 100%;
+    }
+
+</style>
+
+<body>
+    <div id="playWnd" class="playWnd"></div>
+</body>
+<script src="jquery.js"></script>
+<script src="jsencrypt.min.js"></script>
+<script src="jsWebControl-1.0.0.min.js"></script>
+
+<script type="text/javascript">
+    // 插件对象实例，初始化为null，需要创建多个插件窗口时，需要定义多个插件对象实例变量，各个变量唯一标志对应的插件实例
+    var oWebControl = null;
+    var pubKey = '';                  // demo中未使用加密，可根据需求参照开发指南自行使用加密功能
+    var initCount = 0;                // 异常重启计数
+    var parentTitle = '';	          // 父页面标题
+    
+    var divWidth = $("#playWnd").width();
+    var divHeight = $("#playWnd").height();
+    // 标签关闭
+    $(window).unload(function () {
+        if (oWebControl != null) {
+            oWebControl.JS_HideWnd();  // 先让窗口隐藏，规避可能的插件窗口滞后于浏览器消失问题
+            oWebControl.JS_Disconnect();
+        }
+    });
+
+    // 步骤1：监听父页面的消息
+    window.addEventListener('message', function (e) {
+        if (e && e.data) {
+            switch (e.data.action) {
+                case 'updateInitParam':
+                    var iframeClientPos = e.data.iframeClientPos;    // iframe相对视窗的位置
+                    console.log(iframeClientPos);
+                    oWebControl.JS_SetDocOffset({
+                        left: iframeClientPos.left,
+                        top: iframeClientPos.top,
+                    });  // 更新插件窗口位置
+                    oWebControl.JS_Resize(divWidth, divHeight);
+                    // setWndCover();
+                    break;
+                default:
+                    break;
+            }
+        }
+    });
+
+    // function setWndCover() {
+    //     if (oWebControl) {
+    //         // 准备要用到的一些数据
+    //         var iframeWndHeight = $(window).height();  // iframe窗口高度
+    //         var iframeWndWidth = $(window).width();    // iframe窗口宽度
+    //         var divLeft = $("#playWnd").get(0).getBoundingClientRect().left;
+    //         var divTop = $("#playWnd").get(0).getBoundingClientRect().top;
+    //         var divRight = $("#playWnd").get(0).getBoundingClientRect().right;
+    //         var divBottom = $("#playWnd").get(0).getBoundingClientRect().bottom;
+
+    //         oWebControl.JS_RepairPartWindow(0, 0, divWidth + 1, divHeight + 1);  // 多1个像素点防止还原后边界缺失一个像素条
+
+    //         // 判断剪切矩形的上边距        
+    //         if (iframeClientPos.top < 0 && Math.abs(iframeClientPos.top) > divTop) {
+    //             var deltaTop = Math.abs(iframeClientPos.top) - divTop;
+    //             oWebControl.JS_CuttingPartWindow(0, 0, divWidth + 1, deltaTop + 1);
+    //             //console.log({deltaTop: deltaTop});
+    //         }
+
+    //         // 判断剪切矩形的左边距
+    //         if (iframeClientPos.left < 0 && Math.abs(iframeClientPos.left) > divLeft) {
+    //             var deltaLeft = Math.abs(iframeClientPos.left) - divLeft;
+    //             //console.log({deltaLeft: deltaLeft});
+    //             oWebControl.JS_CuttingPartWindow(0, 0, deltaLeft, divHeight + 1);  // 多剪掉一个像素条，防止出现剪掉一部分窗口后出现一个像素条
+    //         }
+
+    //         // 判断剪切矩形的右边距
+    //         var W1 = iframeWndWidth - divRight;
+    //         var W2 = iframeParentShowSize.width - iframeClientPos.left;
+    //         if (W2 < divWidth) {
+    //             var deltaRight = iframeWndWidth - W2 - W1;
+    //             if (deltaRight > 0) {
+    //                 oWebControl.JS_CuttingPartWindow(divWidth - deltaRight, 0, deltaRight + 1, divHeight + 1);
+    //             }
+    //         }
+
+    //         // 判断剪切矩形的下边距
+    //         var H1 = iframeClientPos.bottom - iframeParentShowSize.height;
+    //         var H2 = iframeWndHeight - divBottom;
+    //         var deltaBottom = H1 - H2;
+    //         console.log(0, divHeight - deltaBottom, divWidth + 1, deltaBottom + 1);		
+    //         if (deltaBottom > 0) {
+    //             oWebControl.JS_CuttingPartWindow(0, divHeight - deltaBottom, divWidth + 1, deltaBottom + 1);
+    //         }
+    //     }
+    // }
+
+    // 创建插件实例，并启动本地服务建立websocket连接，创建插件窗口
+    function initPlugin() {
+        oWebControl = new WebControl({
+            szPluginContainer: "playWnd",
+            iServicePortStart: 15900,
+            iServicePortEnd: 15909,
+            szClassId: "23BF3B0A-2C56-4D97-9C03-0CB103AA8F11",   // 用于IE10使用ActiveX的clsid
+            cbConnectSuccess: function () {
+                initCount = 0;
+                oWebControl.JS_SetWindowControlCallback({
+                    cbIntegrationCallBack: console.log,
+                });
+                oWebControl.JS_StartService("window", {
+                    dllPath: "./VideoPluginConnect.dll"
+                }).then(function () {
+                    // 步骤2：JS_CreateWnd时指定cbSetDocTitle回调，并在回调中向父页面发送更新标题消息，标题为回调出来的uuid
+                    oWebControl.JS_CreateWnd("playWnd", divWidth, divHeight, {
+                        cbSetDocTitle: function (uuid) {
+                            oWebControl._pendBg = false;
+                        }
+                    }).then(function () {
+                        // 步骤4：发消息更新插件窗口位置：这里不直接更新的原因是，父页面默认可能就存在滚动条，此时有滚动量
+                        window.parent.postMessage({
+                            action: 'updateInitParam',
+                            msg: '更新Pos'
+                        });
+
+                        requestInterface({
+                            argument: {
+                                appkey: '23033722',
+                                ip: '10.25.96.2',
+                                port: 8443,
+                                secret: 'P8bQaCSflPwuZVGmChyM',
+                                enableHTTPS: 1,
+                                layout: '1x1',
+                                playMode: 0
+                            },
+                            funcName: 'init'
+                        });
+                    });
+                }, function () {
+                    console.log("JS_CreateWnd fail");
+                });
+            },
+            cbConnectError: function () {
+                console.log("cbConnectError");
+                oWebControl = null;
+                $("#playWnd").html("插件未启动，正在尝试启动，请稍候...");
+                WebControl.JS_WakeUp("VideoWebPlugin://");
+                initCount++;
+                if (initCount < 3) {
+                    setTimeout(function () {
+                        initPlugin();
+                    }, 3000);
+                } else {
+                    $("#playWnd").html("插件启动失败，请检查插件是否安装！");
+                }
+            },
+            cbConnectClose: function (bNormalClose) {
+                // 异常断开：bNormalClose = false
+                // JS_Disconnect正常断开：bNormalClose = true
+                if (true == bNormalClose) {
+                    console.log("cbConnectClose normal");
+                } else {
+                    console.log("cbConnectClose exception");
+                }
+
+                oWebControl = null;
+            }
+        });
+    }
+
+    initPlugin();
+
+    setTimeout(() => {
+        requestInterface({
+            argument: {
+                cameraIndexCode: "33090305541322740429",
+                ezvizDirect: 0,
+                gpuMode: 0,
+                streamMode: 0,
+                transMode: 1,
+                wndId: -1
+            },
+            funcName: "startPreview"
+        });
+    }, 1000)
+
+    function requestInterface(value) {
+        oWebControl.JS_RequestInterface(value).then(function (oData) {
+            console.log(oData)
+        });
+    }
+</script>
+
+</html>

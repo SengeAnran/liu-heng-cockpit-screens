@@ -42,7 +42,6 @@ export default {
   right: 0;
   width: 100%;
   height: 2070px;
-  background-size: 100% 100%;
   .mask {
     position: absolute;
     left: 0;
@@ -59,7 +58,7 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 2070px;
+    height: 1350px;
   }
 }
 </style>
