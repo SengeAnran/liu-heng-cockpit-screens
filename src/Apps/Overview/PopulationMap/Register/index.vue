@@ -146,7 +146,6 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   { offset: 0, color: 'rgba(117, 248, 195, 1)' },
                   { offset: 1, color: 'rgba(117, 248, 195, 0.1)' },
-
                 ]),
               },
             },

@@ -4,7 +4,6 @@
     <div class="line-chart" ref="chart"></div>
   </div>
 </template>
-
 <script>
 import * as echarts from 'echarts';
 import { getFinancialSupportNum } from '@/api/Overview/PopulationMap/api';
@@ -24,9 +23,7 @@ export default {
   methods: {
     loadData() {
       getFinancialSupportNum().request().then((json) => {
-        console.log('财政供给', json);
         this.chart.setOption(this.getOptions(json));
-        // this.personData = this.resolveData(json);
       });
     },
     resolveData(data) {

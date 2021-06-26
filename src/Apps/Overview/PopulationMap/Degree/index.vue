@@ -1,22 +1,22 @@
 <template>
   <div class="degree">
     <BaseTitle title="劳动力资源情况" />
-    <PieChart :chartData="{ pieData: personData, title: '户籍人口学历占比' }" />
+    <LineChart :lineData="{title: ['男', '女'], chartData }" />
   </div>
 </template>
 
 <script>
-import PieChart from '../components/PieChart';
+import LineChart from '../components/LineChart';
 import { getLabourByYear } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Degree',
   data() {
     return {
-      personData: [],
+      chartData: [],
     };
   },
   components: {
-    PieChart,
+    LineChart,
   },
   mounted() {
     this.loadData();
@@ -24,15 +24,15 @@ export default {
   methods: {
     loadData() {
       getLabourByYear().request().then((json) => {
-        console.log('劳动资源情况', json);
+        if (json) {
+          this.chartData = json.map((item) => {
+            item.name = item.nf || '';
+            item.value1 = item.manldl || '';
+            item.value2 = item.felmanldl || '';
+            return item;
+          });
+        }
         // this.personData = this.resolveData(json);
-      });
-    },
-    resolveData(data) {
-      return data.map((item) => {
-        item.name = item.xl;
-        item.value = +item.rs;
-        return item;
       });
     },
   },
