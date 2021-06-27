@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       map: null,
-      popup: null,
+      infoWindow: null,
     };
   },
   mounted() {
@@ -45,10 +45,22 @@ export default {
         center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
-      this.popup = new AMap.InfoWindow({
-        isCustom: true,
-        offset: new AMap.Pixel(0, -30),
+    },
+    addInfoWindow(item) {
+      const html = `<div class='info'>
+        <div>社区名称: ${item.sqmc}</div>
+        <div>总人口数: ${item.zrks}</div>
+        <div>户口数: ${item.hksl}</div>
+        <div>男性人口数: ${item.manrk}</div>
+        <div>女性人口数: ${item.felmanrk}</div>
+      </div>`;
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗体
+        content: html, // 传入 dom 对象，或者 html 字符串
+        offset: new AMap.Pixel(165, 243),
       });
+      this.infoWindow = infoWindow;
+      infoWindow.open(this.map, [item.lng, item.lat]);
     },
     addMarker(data) {
       data.forEach((item) => {
@@ -57,7 +69,9 @@ export default {
           content: '<div class="custom-marker">13444</div>',
         });
         marker.setMap(this.map);
-        marker.on('click', this.markerClick(item));
+        marker.on('click', (e) => {
+          this.addInfoWindow(item);
+        });
       });
     },
     markerClick(item) {
@@ -131,8 +145,24 @@ export default {
       }
     }
     ::v-deep .info {
-      font-size: 30px;
-      color: red;
+      position: relative;
+      z-index: 999;
+      width: 274px;
+      height: 282px;
+      padding: 10px;
+      background: url('./img/info.png');
+      box-sizing: border-box;
+      color: #fff;
+      >div {
+        font-size: 26px;
+        font-family: 'Source Han Sans SC';
+        margin-top: 15px;
+        margin-left: 10px;
+        &:nth-child(1) {
+          font-size: 28px;
+          color: #00ffff;
+        }
+      }
     }
   }
 }
