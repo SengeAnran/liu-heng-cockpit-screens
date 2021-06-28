@@ -1,18 +1,6 @@
 <template>
   <div class="map_wrapper" >
-    <!-- <div class="mask"></div> -->
     <div class="main-map" ref="map"></div>
-    <!-- <div class="map-legend">
-      <p class="legend-title">党群建设图例</p>
-      <ul class="legend-list">
-        <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
-          <span class="select-rect">
-            <span class="selected-inner" v-show="currentLegend === item.value"></span>
-          </span>
-          {{item.label}}
-        </li>
-      </ul>
-    </div> -->
   </div>
 </template>
 
@@ -38,7 +26,7 @@ export default {
   },
   mounted() {
     this.initMap();
-    this.renderMarker();
+    // this.renderMarker();
   },
   methods: {
     selectLegend(item) {
