@@ -136,7 +136,7 @@ export default {
               fontSize: 22,
             },
           },
-          data: [9.5, 11.5, 8, 6.5, 6.5, 3.8],
+          data: [9.5, 11.5, 9, 6.5, 6.5, 3.8],
         }],
       };
       return option;
