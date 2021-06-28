@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="渔农村常住居民人均可支配收入" :width='720' />
+    <BaseTitle title="旅游接待人数和旅游收入" :width='720' />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -36,17 +36,8 @@ export default {
         grid: {
           top: '15%',
           left: '10%',
-          right: '10%',
+          right: '17%',
           bottom: '15%',
-        },
-        legend: {
-          data: ['渔农村常住居民人均可支配收入', '增幅'],
-          bottom: 7,
-          textStyle: {
-            color: '#FFFFFF',
-            fontSize: 20,
-            fontFamily: 'DIN Alternate',
-          },
         },
         tooltip: {
           trigger: 'axis',
@@ -91,7 +82,7 @@ export default {
         },
         yAxis: [{
           type: 'value',
-          name: '收入（元）',
+          name: '（万人次）',
           nameTextStyle: {
             align: 'center',
             color: '#fff',
@@ -120,7 +111,7 @@ export default {
             show: true,
           },
         }, {
-          name: '增长（%）',
+          name: '（亿元）',
           type: 'value',
           position: 'right',
           nameTextStyle: {
@@ -150,11 +141,19 @@ export default {
           axisTick: {
             show: true,
           },
-
         }],
+        legend: {
+          data: ['接待人数', '旅游收入'],
+          bottom: 7,
+          textStyle: {
+            color: '#FFFFFF',
+            fontSize: 20,
+            fontFamily: 'DIN Alternate',
+          },
+        },
         series: [{
           type: 'bar',
-          name: '渔农村常住居民人均可支配收入',
+          name: '接待人数',
           barWidth: 20,
           yAxisIndex: '0', // 第一个柱状图的数据
           itemStyle: {
@@ -179,18 +178,18 @@ export default {
           },
           label: {
             show: true,
-            position: 'top',
+            position: 'inside',
             distance: 10,
             color: '#FFFFFF',
             textStyle: {
               fontSize: 22,
             },
           },
-          data: [26290, 31020, 34122, 37534, 41368, 45505],
+          data: [165.2, 190.9, 229, 261.3, 300.4, 313.3],
         }, {
           type: 'line',
           yAxisIndex: '1', // 第一个柱状图的数据
-          name: '增幅',
+          name: '旅游收入',
           barWidth: 20,
           itemStyle: {
             color: '#31EABC',
@@ -204,12 +203,12 @@ export default {
               fontSize: 22,
             },
           },
-          data: [12.4, 18.0, 10.0, 10.0, 10.2, 10.0],
+          data: [9.22, 10.88, 13.28, 15.16, 17.42, 18.17],
         }],
       };
       return option;
     },
-    loadData() {
+    loadData() { // 社区信息
       this.setData();
     },
   },
@@ -221,7 +220,8 @@ export default {
   width: 840px;
   height: 550px;
   top: 550px;
-  left: 0;
+  // top: 0;
+  left: 850px;
   padding-top: 20px;
   padding-left: 20px;
   box-sizing: border-box;

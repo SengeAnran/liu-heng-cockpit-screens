@@ -127,7 +127,7 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 2070px;
+    height: 1354px;
     ::v-deep .custom-marker {
       width: 90px;
       height: 90px;

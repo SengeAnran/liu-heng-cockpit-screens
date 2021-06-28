@@ -64,9 +64,10 @@ export default {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
-        zoom: 14,
-        zoomEnable: false,
-        center: [122.200254, 29.707613],
+        zoom: 13,
+        zooms: [3, 20],
+        zoomEnable: true,
+        center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
       this.map.on('click', (e) => {
@@ -123,7 +124,6 @@ export default {
   right: 0;
   width: 100%;
   height: 2070px;
-  background-size: 100% 100%;
   .mask {
     position: absolute;
     left: 0;
@@ -143,7 +143,7 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 2070px;
+    height: 1350px;
     ::v-deep .custom-marker {
       width: 90px;
       height: 90px;

@@ -15,17 +15,8 @@
         往下切换
       </div>
       <div class="line_clum">
-        <div class="item">
-          <span>2000</span>
-        </div>
-        <div class="item">
-          <span>2005</span>
-        </div>
-        <div class="item">
-          <span>2010</span>
-        </div>
-        <div class="item">
-          <span>2015</span>
+        <div class="item" v-for="(item, index) in years" :key="index">
+          <span>{{ item }}</span>
         </div>
       </div>
       <div class="last">
@@ -45,6 +36,7 @@ export default {
   },
   data() {
     return {
+      years: [2015, 2016, 2017, 2018, 2019],
       map: null,
       mapDom: null,
       markList: [],
@@ -56,19 +48,19 @@ export default {
           name: '常驻人口',
           count: 2345,
           unit: '人',
-          position: [122.1902540000, 29.797613],
+          position: [122.1302540000, 29.747613],
         },
         {
           name: '流动人口',
           count: 2345,
           unit: '人',
-          position: [122.2002540000, 29.767613],
+          position: [122.1202540000, 29.717613],
         },
         {
           name: '户籍人口',
           count: 2345,
           unit: '人',
-          position: [122.2202540000, 29.727613],
+          position: [122.1502540000, 29.677613],
         },
       ],
       rightMarkMessage: [
@@ -76,19 +68,19 @@ export default {
           name: '陆地面积',
           count: 2345,
           unit: '平方千米',
-          position: [122.0502540000, 29.787613],
+          position: [121.95000000000, 29.767613],
         },
         {
           name: 'GDP',
           count: 2345,
           unit: '万元',
-          position: [122.0602540000, 29.757613],
+          position: [121.9700000000, 29.730613],
         },
         {
           name: '企业数量',
           count: 2345,
           unit: '家',
-          position: [122.0682540000, 29.707613],
+          position: [121.9812540000, 29.690613],
         },
       ],
     };
@@ -127,9 +119,10 @@ export default {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
-        zoom: 13.4,
+        zoom: 13,
+        zooms: [3, 20],
         zoomEnable: false,
-        center: [122.200254, 29.707613],
+        center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
     },
@@ -155,10 +148,10 @@ export default {
       this.timer = setTimeout(() => {
         this.paly();
         this.autoPlay();
-      }, 5 * 1000);
+      }, 2 * 1000);
     },
     paly() {
-      if (this.activeIndex >= 4) {
+      if (this.activeIndex >= this.years.length) {
         return;
       }
       this.activeIndex += 1;
@@ -208,12 +201,11 @@ export default {
       this.markList.push(marker);
     },
     lineTask(index) {
-      this.length = 4;
-      this.marskLine.style.width = (1035 / 4) * index + 'px';
+      this.marskLine.style.width = (1035 / this.years.length) * index + 'px';
     },
     next() {
       clearTimeout(this.timer);
-      if (this.activeIndex === 4) {
+      if (this.activeIndex === this.years.length) {
         this.activeIndex = 0;
         this.lineTask(this.activeIndex); // 进度条
       } else {
@@ -232,7 +224,6 @@ export default {
   right: 0;
   width: 100%;
   height: 2070px;
-  background-size: 100% 100%;
   .mask {
     position: absolute;
     left: 0;
@@ -249,7 +240,7 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 2070px;
+    height: 1350px;
   }
   .swipper {
     width: 1400px;
