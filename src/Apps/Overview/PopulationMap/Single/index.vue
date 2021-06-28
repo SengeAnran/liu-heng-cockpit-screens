@@ -4,7 +4,7 @@
     <div class="show-box">
       <div v-for="(item, index) of list" :key="index">
         <CountUp  :num="item.value" />
-        <span class="unit">{{ index === 0 ? '人' : '%' }}</span>
+        <span class="unit">{{ index === 0 ? '人' : '‰' }}</span>
       </div>
     </div>
   </div>

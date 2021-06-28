@@ -112,35 +112,36 @@ export default {
     height: 1350px;
     ::v-deep .custom-marker {
       position: absolute;
-      width: 71px;
-      height: 61px;
+      width: 49.7px;
+      height: 42.7px;
       background: url('./img/circle.png');
+      background-size: contain;
       &:before {
         display: block;
         content: '';
-        width: 70px;
-        height: 50px;
-        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 80%);
+        width: 49px;
+        height: 35px;
+        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 90%);
         border: 1px solid #ffea78;
         box-shadow: 0 0 1px #ffea78;
         border-radius: 50% / 50%;
         position: absolute;
         left: 0;
-        top: 5px;
+        top: 3px;
         animation: circleChange 3s 1s linear infinite;
       }
       &:after {
         display: block;
         content: '';
-        width: 70px;
-        height: 50px;
-        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 80%);
+        width: 49px;
+        height: 35px;
+        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 90%);
         border: 1px solid #ffea78;
         box-shadow: 0 0 1px #ffea78;
         border-radius: 50% / 50%;
         position: absolute;
         left: 0;
-        top: 5px;
+        top: 3px;
         animation: circleChange 3s 2s linear infinite;
       }
     }
