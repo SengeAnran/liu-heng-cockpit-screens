@@ -1,141 +1,79 @@
 <template>
   <view-template class="flow-rank">
     <BaseTitle title="户籍人口排名" />
-    <div class="bar-chart" ref="barChart"></div>
+    <div class="bar-chart" @mouseenter="stopAnimation" @mouseleave="startAnimation">
+      <Swiper ref="mySwiper" :options="swiperOption">
+        <SwiperSlider v-for="(item, index) of list" class="bar-item" :key="`bar-chart${index}`">
+          <span class="bar-name">{{ index + 1 }}. {{ item.sqmc }}</span>
+          <span :class="['opacity-bar', `opacity-bar-${index}`]">
+            <div :style="{width: item.percent}">
+              <span :class="['true-bar', { active: index === 0 || index === 1 }]"></span>
+            </div>
+          </span>
+          <span class="total">
+            <span class="number">{{ item.zrks }}</span> 人
+          </span>
+        </SwiperSlider>
+      </Swiper>
+    </div>
   </view-template>
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import { getPopIn, getPopOut } from '@/api/Overview/PopulationMap/api';
+import Swiper from '@/Apps/Overview/Medical/components/Swiper';
+import SwiperSlider from '@/Apps/Overview/Medical/components/SwiperSlider';
+import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'FlowRank',
   data() {
     return {
-      barData: [],
+      list: [],
+      swiperOption: {
+        direction: 'vertical',
+        speed: 2000,
+        loop: true,
+        // autoplay: false,
+        autoplay: {
+          delay: 1000,
+          disableOnInteraction: false,
+          // reverseDirection: true
+        },
+        slidesPerView: 10,
+      },
     };
   },
   components: {
+    Swiper,
+    SwiperSlider,
   },
   mounted() {
-    this.chart = echarts.init(this.$refs.barChart);
     this.loadData();
   },
   methods: {
     loadData() {
-      if (this.activeIndex === 0) {
-        getPopIn().request().then((json) => {
-          this.barData = this.resolveData(json);
-          this.chart.setOption(this.optionData(this.barData));
-        });
-      } else {
-        getPopOut().request().then((json) => {
-          this.barData = this.resolveData(json);
-          this.chart.setOption(this.optionData(this.barData));
-        });
-      }
+      getPopuliationNumRank().request().then((json) => {
+        if (json) {
+          const curData = json.sort((a, b) => b.zrks - a.zrks);
+          this.resolveArr(curData);
+        }
+      });
     },
-    resolveData(data) {
-      return data.map((item) => {
-        item.label = item.sf;
-        item.value = +item.rs;
+    resolveArr(data) {
+      const maxVal = Math.max.apply(Math, data.map((item) => item.zrks));
+      this.list = data.map((item) => {
+        item.percent = `${parseInt(item.zrks / maxVal * 100)}%`;
         return item;
       });
     },
-    optionData(data) {
-      const colors = [['#f8f375', '#ffa340'], ['#75f8c3', '#befbe3']];
-      return {
-        grid: {
-          top: 70,
-          left: 33,
-          right: 150,
-          bottom: 15,
-          containLabel: true,
-        },
-        xAxis: {
-          type: 'value',
-          show: false,
-        },
-        yAxis: {
-          show: true,
-          inverse: true,
-          type: 'category',
-          axisLine: {
-            show: false,
-          },
-        },
-        series: [{
-          name: 'label',
-          type: 'bar',
-          barWidth: 20,
-          yAxisIndex: 0,
-          label: {
-            show: true,
-            position: [10, -10],
-            color: '#fff',
-            fontSize: 24,
-          },
-          data: data.map((item, index) => {
-            return {
-              value: 0,
-              label: {
-                formatter() {
-                  return `${index + 1}. ${item.label}`;
-                },
-              },
-            };
-          }),
-        },
-        {
-          name: 'value',
-          type: 'bar',
-          barWidth: 24,
-          barMinHeight: 20, // 最小高度
-          yAxisIndex: 0,
-          label: {
-            show: true,
-            position: 'right',
-            color: '#fff',
-            offset: [10, 0],
-            formatter({ value }) {
-              return `{c|''}{a|${value}} {b|万人}`;
-            },
-            rich: {
-              a: {
-                padding: [0, 0, 0, 50],
-                fontSize: 40,
-                fontFamily: 'DIN Alternate',
-              },
-              b: {
-                fontSize: 24,
-              },
-              c: {
-                padding: [0, 0, 0, -15],
-                width: 0,
-                height: 24,
-                align: 'left',
-                backgroundColor: '#ff6ed',
-              },
-            },
-          },
-          data: data.map(({ value }, index) => {
-            const color = index < 2 ? colors[0] : colors[1];
-            return {
-              value,
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                  offset: 0,
-                  color: color[0],
-                },
-                {
-                  offset: 1,
-                  color: color[1],
-                }]),
-              },
-            };
-          }),
-        }],
-      };
+    startAnimation() {
+      if (this.$refs.mySwiper) {
+        this.$refs.mySwiper.swiper.autoplay.start();
+      }
+    },
+    stopAnimation() {
+      if (this.$refs.mySwiper) {
+        this.$refs.mySwiper.swiper.autoplay.stop();
+      }
     },
   },
 };
@@ -149,9 +87,66 @@ export default {
   height: 1050px;
   .bar-chart {
     position: absolute;
-    bottom: 0;
+    top: 100px;
     width: 100%;
     height: 980px;
+    overflow: hidden;
+    cursor: pointer;
+    >div {
+      height: 100%;
+      .bar-item {
+        font-size: 28px;
+        height: 98px;
+        >span {
+          display: inline-block;
+          &.bar-name {
+            display: block;
+            font-size: 26px;
+            color: #fff;
+          }
+          &.opacity-bar {
+            position: relative;
+            width: 600px;
+            height: 24px;
+            background-color: transparent;
+            >div {
+              position: absolute;
+              left: 0;
+              max-width: 600px;
+              height: 24px;
+              min-width: 20px;
+              .true-bar {
+                display: block;
+                height: 100%;
+                background: linear-gradient(to right, #75f8c3, #b9fbe0);
+                &.active {
+                  background: linear-gradient(to right, #f8f375, #ffa340);
+                }
+                &:after {
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  content: '';
+                  display: block;
+                  width: 15px;
+                  height: 24px;
+                  background: url('./img/small-hat.png') no-repeat;
+                }
+              }
+            }
+          }
+          &.total {
+            margin-left: 20px;
+            font-size: 26px;
+            color: #fff;
+            .number {
+              font-family: 'DIN Alternate';
+              font-size: 40px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

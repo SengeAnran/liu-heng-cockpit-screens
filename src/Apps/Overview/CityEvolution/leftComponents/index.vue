@@ -2,23 +2,23 @@
   <div class="left_componemt">
     <PeopleComposeIndex />
     <CommunityAddress />
-    <PeopleComposeCharts />
-    <PeopleAgeSex />
+    <CityAddress />
+    <MainComponeny />
   </div>
 </template>
 
 <script>
 import PeopleComposeIndex from './component/PeopleComposeIndex';
-import PeopleComposeCharts from './component/PeopleComposeCharts';
 import CommunityAddress from './component/CommunityAddress';
-import PeopleAgeSex from './component/PeopleAgeSex';
+import CityAddress from './component/CityAddress';
+import MainComponeny from './component/MainComponeny';
 export default {
   name: 'LeftComponents',
   components: {
     PeopleComposeIndex,
-    PeopleComposeCharts,
     CommunityAddress,
-    PeopleAgeSex,
+    CityAddress,
+    MainComponeny,
   },
 };
 </script>
@@ -29,8 +29,6 @@ export default {
   height: 1076px;
   top: 240px;
   left: 140px;
-  // background: red;
-  // opacity: 0.6;
   z-index: 100;
 }
 </style>

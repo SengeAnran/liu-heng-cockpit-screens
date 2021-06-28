@@ -56,19 +56,19 @@ export default {
           name: '常驻人口',
           count: 2345,
           unit: '人',
-          position: [122.1902540000, 29.797613],
+          position: [122.1302540000, 29.747613],
         },
         {
           name: '流动人口',
           count: 2345,
           unit: '人',
-          position: [122.2002540000, 29.767613],
+          position: [122.1202540000, 29.717613],
         },
         {
           name: '户籍人口',
           count: 2345,
           unit: '人',
-          position: [122.2202540000, 29.727613],
+          position: [122.1502540000, 29.677613],
         },
       ],
       rightMarkMessage: [
@@ -76,19 +76,19 @@ export default {
           name: '陆地面积',
           count: 2345,
           unit: '平方千米',
-          position: [122.0502540000, 29.787613],
+          position: [121.95000000000, 29.767613],
         },
         {
           name: 'GDP',
           count: 2345,
           unit: '万元',
-          position: [122.0602540000, 29.757613],
+          position: [121.9700000000, 29.730613],
         },
         {
           name: '企业数量',
           count: 2345,
           unit: '家',
-          position: [122.0682540000, 29.707613],
+          position: [121.9812540000, 29.690613],
         },
       ],
     };
@@ -127,9 +127,10 @@ export default {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
-        zoom: 13.4,
+        zoom: 13,
+        zooms: [3, 20],
         zoomEnable: false,
-        center: [122.200254, 29.707613],
+        center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
     },

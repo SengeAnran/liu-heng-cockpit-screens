@@ -11,7 +11,7 @@ export default {
     };
   },
   props: {
-    chartData: {
+    lineData: {
       type: Object,
       default: () => [],
     },
@@ -23,17 +23,14 @@ export default {
       type: String,
       default: '460',
     },
-    title: {
-      type: String,
-      default: '',
-    },
   },
   watch: {
-    chartData: {
+    lineData: {
       handler(val) {
         if (val) {
           this.$nextTick(() => {
-            this.initChart(val);
+            // console.log(val);
+            this.chart.setOption(this.optionData(val));
           });
         }
       },
@@ -45,42 +42,26 @@ export default {
     this.chart = echarts.init(this.$refs.lineChart);
   },
   methods: {
-    initChart(val) {
-      this.chart.setOption(this.optionData(val));
-    },
     optionData(data) {
-      const total = data.pieData.reduce((prev, next) => prev + next.value, 0);
-      data.pieData = data.pieData.map((item) => {
-        item.percent = ((item.value / total) * 100).toFixed(1);
-        return item;
-      });
       return {
         grid: {
-          top: '25%',
+          top: '15%',
           left: '10%',
           right: '3%',
           bottom: '15%',
         },
         legend: {
-          data: ['初升高', '高考升学'],
-          right: 10,
-          top: 7,
-          orient: 'vertical',
+          data: data.title,
+          left: 'center',
           textStyle: {
             color: '#FFFFFF',
-            fontSize: 20,
+            fontSize: 24,
             fontFamily: 'DIN Alternate',
           },
           icon: 'rect',
-        },
-        title: {
-          text: '人数',
-          textStyle: {
-            align: 'center',
-            color: '#fff',
-          },
-          top: '15%',
-          left: '5%',
+          itemWidth: 30,
+          itemHeight: 20,
+          itemGap: 25,
         },
         tooltip: {
           trigger: 'axis',
@@ -123,11 +104,12 @@ export default {
           splitLine: {
             show: false,
           },
-          boundaryGap: false,
-          data: this.xData,
+          boundaryGap: true,
+          data: data.chartData.map((item) => item.name),
         },
         yAxis: {
           type: 'value',
+          name: '人数',
           nameTextStyle: {
             align: 'center',
             color: '#fff',
@@ -136,7 +118,7 @@ export default {
           splitLine: {
             show: true,
             lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
+              color: 'rgba(255, 255, 255, 0.2)',
             },
           },
           axisLine: {
@@ -158,12 +140,12 @@ export default {
         },
         series: [
           {
-            name: '初升高',
+            name: data.title[0],
             type: 'line',
             showAllSymbol: true,
             symbolSize: 6,
             itemStyle: {
-              color: '#59DBE6',
+              color: '#75f8c3',
               borderColor: '#fff',
               borderWidth: 3,
               shadowColor: 'rgba(0, 0, 0, .3)',
@@ -174,8 +156,8 @@ export default {
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: 'rgba(89, 219, 230, 1)' },
-                  { offset: 1, color: 'rgba(89, 219, 230, 0.1)' },
+                  { offset: 0, color: 'rgba(117, 248, 195, 1)' },
+                  { offset: 1, color: 'rgba(117, 248, 195, 0.1)' },
                 ]),
               },
             },
@@ -201,15 +183,15 @@ export default {
                 },
               },
             },
-            data: this.highSchool,
+            data: data.chartData.map((item) => item.value1),
           },
           {
-            name: '高考升学',
+            name: data.title[1],
             type: 'line',
             showAllSymbol: true,
             symbolSize: 6,
             itemStyle: {
-              color: 'rgba(200, 114, 242, 1)',
+              color: 'rgb(253, 200, 83)',
               borderColor: '#fff',
               borderWidth: 3,
               shadowColor: 'rgba(0, 0, 0, .3)',
@@ -220,8 +202,8 @@ export default {
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: 'rgba(200, 114, 242, 1)' },
-                  { offset: 1, color: 'rgba(200, 114, 242, 0)' },
+                  { offset: 0, color: 'rgba(253, 200, 83, 1)' },
+                  { offset: 1, color: 'rgba(253, 200, 83, 0.1)' },
                 ]),
               },
             },
@@ -247,7 +229,7 @@ export default {
                 },
               },
             },
-            data: this.university,
+            data: data.chartData.map((item) => item.value2),
           },
         ],
       };

@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="渔农村常住居民人均可支配收入" :width='720' />
+    <BaseTitle title="工业生产总值" :width='720' />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -36,17 +36,8 @@ export default {
         grid: {
           top: '15%',
           left: '10%',
-          right: '10%',
+          right: '17%',
           bottom: '15%',
-        },
-        legend: {
-          data: ['渔农村常住居民人均可支配收入', '增幅'],
-          bottom: 7,
-          textStyle: {
-            color: '#FFFFFF',
-            fontSize: 20,
-            fontFamily: 'DIN Alternate',
-          },
         },
         tooltip: {
           trigger: 'axis',
@@ -91,7 +82,7 @@ export default {
         },
         yAxis: [{
           type: 'value',
-          name: '收入（元）',
+          name: '（亿元）',
           nameTextStyle: {
             align: 'center',
             color: '#fff',
@@ -120,7 +111,7 @@ export default {
             show: true,
           },
         }, {
-          name: '增长（%）',
+          name: '%',
           type: 'value',
           position: 'right',
           nameTextStyle: {
@@ -150,11 +141,19 @@ export default {
           axisTick: {
             show: true,
           },
-
         }],
+        legend: {
+          data: ['工业产值', '增速'],
+          bottom: 7,
+          textStyle: {
+            color: '#FFFFFF',
+            fontSize: 20,
+            fontFamily: 'DIN Alternate',
+          },
+        },
         series: [{
           type: 'bar',
-          name: '渔农村常住居民人均可支配收入',
+          name: '工业产值',
           barWidth: 20,
           yAxisIndex: '0', // 第一个柱状图的数据
           itemStyle: {
@@ -186,11 +185,11 @@ export default {
               fontSize: 22,
             },
           },
-          data: [26290, 31020, 34122, 37534, 41368, 45505],
+          data: [224.5, 256.8, 85.2, 87.3, 95.2, 110.7],
         }, {
           type: 'line',
           yAxisIndex: '1', // 第一个柱状图的数据
-          name: '增幅',
+          name: '增速',
           barWidth: 20,
           itemStyle: {
             color: '#31EABC',
@@ -204,7 +203,7 @@ export default {
               fontSize: 22,
             },
           },
-          data: [12.4, 18.0, 10.0, 10.0, 10.2, 10.0],
+          data: [17.0, 14.4, 14.4, 2.4, 19.7, 11.3],
         }],
       };
       return option;
@@ -220,8 +219,9 @@ export default {
   position: absolute;
   width: 840px;
   height: 550px;
-  top: 550px;
-  left: 0;
+  top: 0;
+  // top: 0;
+  left: 850px;
   padding-top: 20px;
   padding-left: 20px;
   box-sizing: border-box;
