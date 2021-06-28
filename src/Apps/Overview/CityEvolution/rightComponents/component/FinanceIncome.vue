@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="渔农村常住居民人均可支配收入" :width='720' />
+    <BaseTitle title="财政总收入和公共财政预算收入" :width='720' />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -40,7 +40,7 @@ export default {
           bottom: '15%',
         },
         legend: {
-          data: ['渔农村常住居民人均可支配收入', '增幅'],
+          data: ['财政总收入', '公共财政预算收入'],
           bottom: 7,
           textStyle: {
             color: '#FFFFFF',
@@ -91,14 +91,14 @@ export default {
         },
         yAxis: [{
           type: 'value',
-          name: '收入（元）',
+          name: '亿元',
           nameTextStyle: {
             align: 'center',
             color: '#fff',
             fontSize: 20,
           },
           splitLine: {
-            show: false,
+            show: true,
             lineStyle: {
               color: 'rgba(255,255,255,0.2)',
             },
@@ -119,44 +119,11 @@ export default {
           axisTick: {
             show: true,
           },
-        }, {
-          name: '增长（%）',
-          type: 'value',
-          position: 'right',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          axisTick: {
-            show: true,
-          },
-
         }],
         series: [{
           type: 'bar',
-          name: '渔农村常住居民人均可支配收入',
+          name: '财政总收入',
           barWidth: 20,
-          yAxisIndex: '0', // 第一个柱状图的数据
           itemStyle: {
             color: {
               type: 'linear',
@@ -186,11 +153,10 @@ export default {
               fontSize: 22,
             },
           },
-          data: [26290, 31020, 34122, 37534, 41368, 45505],
+          data: [8.54, 10.80, 13.13, 13.25, 12.90, 12.93],
         }, {
-          type: 'line',
-          yAxisIndex: '1', // 第一个柱状图的数据
-          name: '增幅',
+          type: 'bar',
+          name: '公共财政预算收入',
           barWidth: 20,
           itemStyle: {
             color: '#31EABC',
@@ -204,7 +170,7 @@ export default {
               fontSize: 22,
             },
           },
-          data: [12.4, 18.0, 10.0, 10.0, 10.2, 10.0],
+          data: [4.64, 6.14, 7.59, 8.43, 8.88, 9.57],
         }],
       };
       return option;
@@ -221,6 +187,7 @@ export default {
   width: 840px;
   height: 550px;
   top: 550px;
+  // top: 0;
   left: 0;
   padding-top: 20px;
   padding-left: 20px;
