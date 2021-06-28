@@ -15,17 +15,8 @@
         往下切换
       </div>
       <div class="line_clum">
-        <div class="item">
-          <span>2000</span>
-        </div>
-        <div class="item">
-          <span>2005</span>
-        </div>
-        <div class="item">
-          <span>2010</span>
-        </div>
-        <div class="item">
-          <span>2015</span>
+        <div class="item" v-for="(item, index) in years" :key="index">
+          <span>{{ item }}</span>
         </div>
       </div>
       <div class="last">
@@ -45,6 +36,7 @@ export default {
   },
   data() {
     return {
+      years: [2015, 2016, 2017, 2018, 2019],
       map: null,
       mapDom: null,
       markList: [],
@@ -156,10 +148,10 @@ export default {
       this.timer = setTimeout(() => {
         this.paly();
         this.autoPlay();
-      }, 5 * 1000);
+      }, 2 * 1000);
     },
     paly() {
-      if (this.activeIndex >= 4) {
+      if (this.activeIndex >= this.years.length) {
         return;
       }
       this.activeIndex += 1;
@@ -209,12 +201,11 @@ export default {
       this.markList.push(marker);
     },
     lineTask(index) {
-      this.length = 4;
-      this.marskLine.style.width = (1035 / 4) * index + 'px';
+      this.marskLine.style.width = (1035 / this.years.length) * index + 'px';
     },
     next() {
       clearTimeout(this.timer);
-      if (this.activeIndex === 4) {
+      if (this.activeIndex === this.years.length) {
         this.activeIndex = 0;
         this.lineTask(this.activeIndex); // 进度条
       } else {
