@@ -11,7 +11,7 @@
             </div>
           </span>
           <span class="total">
-            <span class="number">{{ item.zrks }}</span>人
+            <span class="number">{{ item.zrks }}</span> 人
           </span>
         </SwiperSlider>
       </Swiper>
@@ -55,7 +55,6 @@ export default {
         if (json) {
           const curData = json.sort((a, b) => b.zrks - a.zrks);
           this.resolveArr(curData);
-          console.log('户籍人口排名', this.list);
         }
       });
     },
@@ -142,7 +141,7 @@ export default {
             color: #fff;
             .number {
               font-family: 'DIN Alternate';
-              font-size: 45px;
+              font-size: 40px;
             }
           }
         }
