@@ -31,183 +31,6 @@ export default {
       this.charts.clear();
       this.charts.setOption(this.getOptions());
     },
-    getOptions1() {
-      const option = {
-        grid: {
-          top: '15%',
-          left: '10%',
-          right: '17%',
-          bottom: '15%',
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow',
-          },
-          textStyle: {
-            color: '#fff',
-            fontSize: 22,
-          },
-          borderColor: 'rgba(255, 255, 255, 0.4)',
-          backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        },
-        xAxis: {
-          data: [2015, 2016, 2017, 2018, 2019, 2020],
-          type: 'category',
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255,255,255,0.5)',
-            },
-          },
-          axisTick: {
-            show: false,
-            alignWithLabel: true,
-          },
-          splitArea: {
-            color: '#f00',
-            lineStyle: {
-              color: '#f00',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          splitLine: {
-            show: false,
-          },
-          boundaryGap: true,
-        },
-        yAxis: [{
-          type: 'value',
-          name: '（万人次）',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          axisTick: {
-            show: true,
-          },
-        }, {
-          name: '（亿元）',
-          type: 'value',
-          position: 'right',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          axisTick: {
-            show: true,
-          },
-        }],
-        legend: {
-          data: ['接待人数', '旅游收入'],
-          bottom: 7,
-          textStyle: {
-            color: '#FFFFFF',
-            fontSize: 20,
-            fontFamily: 'DIN Alternate',
-          },
-        },
-        series: [{
-          type: 'bar',
-          name: '接待人数',
-          barWidth: 20,
-          yAxisIndex: '0', // 第一个柱状图的数据
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: '#66CCFF',
-                },
-                {
-                  offset: 1,
-                  color: '#72DCEE',
-                },
-              ],
-              global: false,
-            },
-          },
-          label: {
-            show: true,
-            position: 'inside',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          data: [145.7, 165.2, 190.9, 229, 261.3, 300.4],
-        }, {
-          type: 'line',
-          yAxisIndex: '1', // 第一个柱状图的数据
-          name: '旅游收入',
-          barWidth: 20,
-          itemStyle: {
-            color: '#31EABC',
-          },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          data: [8.01, 9.22, 10.88, 13.28, 15.16, 17.04],
-        }],
-      };
-      return option;
-    },
     getOptions() {
       const mockData = [
         { total: '62225', detail: '中远船务' },
@@ -226,8 +49,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#9B66FF' },
-              { offset: 1, color: '#6236FF' },
+              { offset: 0, color: 'rgba(155, 102, 255, 0.7)' },
+              { offset: 1, color: 'rgba(98, 54, 255, 0.7)' },
             ],
           ),
         },
@@ -239,8 +62,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#EC66FF' },
-              { offset: 1, color: '#B620E0' },
+              { offset: 0, color: 'rgba(236,102,255,0.7)' },
+              { offset: 1, color: 'rgba(182,32,224,0.7)' },
             ],
           ),
         },
@@ -252,8 +75,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#F572A4' },
-              { offset: 1, color: '#D72552' },
+              { offset: 0, color: 'rgba(245,114,164,0.7)' },
+              { offset: 1, color: 'rgba(215,37,82,0.7)' },
             ],
           ),
         },
@@ -263,8 +86,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#FD9D00' },
-              { offset: 1, color: '#FA6400' },
+              { offset: 0, color: 'rgba(253,157,0,0.6)' },
+              { offset: 1, color: 'rgba(250,100,0,0.6)' },
             ],
           ),
           shadowColor: 'rgba(238,101,0,0.4)',
@@ -276,8 +99,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#FCDB00' },
-              { offset: 1, color: '#F7B500' },
+              { offset: 0, color: 'rgba(252,219,0,0.6)' },
+              { offset: 1, color: 'rgba(247,181,0,0.6)' },
             ],
           ),
         },
@@ -289,8 +112,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#A6EC00' },
-              { offset: 1, color: '#6DD400' },
+              { offset: 0, color: 'rgba(166,236,0,0.6)' },
+              { offset: 1, color: 'rgba(109,212,0,0.6)' },
             ],
           ),
         },
@@ -302,8 +125,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#7297FF' },
-              { offset: 1, color: '#364BEC' },
+              { offset: 0, color: 'rgba(114,151,255,0.7)' },
+              { offset: 1, color: 'rgba(54,75,236,0.7)' },
             ],
           ),
         },
@@ -315,8 +138,8 @@ export default {
           color: new echarts.graphic.LinearGradient(
             0, 0, 0, 1,
             [
-              { offset: 0, color: '#31BDD1' },
-              { offset: 1, color: '#4388C6' },
+              { offset: 0, color: 'rgba(49,189,209,0.7)' },
+              { offset: 1, color: 'rgba(67,136,198,0.7)' },
             ],
           ),
         },
@@ -339,7 +162,7 @@ export default {
           bottom: '0%',
           orient: 'vertical',
           data: mockData.map((item) => item.detail),
-          icon: 'circle',
+          icon: 'rect',
           formatter: (params) => {
             const dataAll = mockData.map((item) => Number(item.total));
             const total = dataAll.reduce((x, y) => parseInt(x, 10) + parseInt(y, 10));
@@ -369,8 +192,8 @@ export default {
           },
           selectorPosition: 'start',
           align: 'left',
-          itemHeight: 8,
-          itemWidth: 8,
+          itemHeight: 10,
+          itemWidth: 10,
           itemGap: 30,
         },
         tooltip: {
