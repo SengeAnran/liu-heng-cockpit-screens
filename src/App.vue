@@ -56,4 +56,19 @@ body {
   position: relative;
   height: 135rem;
 }
+::-webkit-scrollbar {
+    width: 1rem;
+    height: 1rem;
+    background-color: #F5F5F533;
+}
+::-webkit-scrollbar-track {
+    border-radius:10px;
+    background-color: #F5F5F533;
+}
+/*定义滑块
+ 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(73, 215, 220, 0.3);
+}
 </style>
