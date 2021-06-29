@@ -213,13 +213,10 @@ export default {
     },
     async loadData() {
       const res = await getTourNumAndIncomeTrend().request();
-      console.log(res, 'res');
       res.reverse().forEach((item, index) => {
         this.xAxisData.push(item.nf);
         this.travellerData.push(item.jdrs);
         this.incomeData.push(item.ggys);
-        // this.industrialIncome.push(item.gycz);
-        // this.increaseRate.push(item.gyczzs);
       });
       this.setData();
     },
