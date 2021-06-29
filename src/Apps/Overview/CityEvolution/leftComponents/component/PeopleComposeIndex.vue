@@ -8,7 +8,7 @@
           户籍人口数量
         </div>
         <div class="count_wrapper">
-          <CountUp  :num="item.hjrks" />
+          <CountUp  :num="item.hjrksl" />
           <span class="unit">人</span>
         </div>
       </div>
@@ -18,7 +18,7 @@
           新生儿出生数量
         </div>
         <div class="count_wrapper children">
-          <CountUp  :num="item.chks" />
+          <CountUp  :num="item.xscssl" />
           <span class="unit">人</span>
         </div>
       </div>
@@ -28,7 +28,7 @@
           人口死亡数量
         </div>
         <div class="count_wrapper dead">
-          <CountUp  :num="item.rksw" />
+          <CountUp  :num="item.rkswsl" />
           <span class="unit">人</span>
         </div>
       </div>
@@ -38,7 +38,7 @@
 
 <script>
 import BaseTitle from '../../components/BaseTitle';
-import { getPopulationTarget } from '@/api/Overview/CityEvolution/api';
+import { getPoputionForm } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   components: {
@@ -47,9 +47,9 @@ export default {
   data() {
     return {
       item: {
-        hjrks: 10345,
-        chks: 34,
-        rksw: 12,
+        hjrksl: 10345,
+        xscssl: 34,
+        rkswsl: 12,
       },
     };
   },
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getPopulationTarget() {
-      getPopulationTarget().request().then((res) => {
+      getPoputionForm().request().then((res) => {
         this.item = res;
       });
     },

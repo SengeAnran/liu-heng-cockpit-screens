@@ -29,7 +29,7 @@
 <script>
 import './mark.scss';
 import AMap from 'AMap';
-import { getMapData } from '@/api/Overview/CityEvolution/api';
+import { getAreaStatisticsByYear } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   components: {
@@ -45,15 +45,15 @@ export default {
       timer: null,
       leftMarkMessage: [
         {
-          name: '常驻人口',
+          name: '工业生产总值',
           count: 2345,
-          unit: '人',
+          unit: '亿元',
           position: [122.1202540000, 29.777613],
         },
         {
-          name: '流动人口',
+          name: '旅游收入',
           count: 2345,
-          unit: '人',
+          unit: '亿元',
           position: [122.1202540000, 29.737613],
         },
         {
@@ -73,13 +73,13 @@ export default {
         {
           name: 'GDP',
           count: 2345,
-          unit: '万元',
+          unit: '亿元',
           position: [122.1100000000, 29.730613],
         },
         {
-          name: '企业数量',
+          name: '财政总收入',
           count: 2345,
-          unit: '家',
+          unit: '亿元',
           position: [122.136267, 29.701412],
         },
       ],
@@ -94,24 +94,14 @@ export default {
   methods: {
     getData() {
       const year = (this.activeIndex < this.years.length) ? (this.years[this.activeIndex]) : (this.years[this.activeIndex - 1] + 1);
-      getMapData().request({ year: year }).then((res) => {
-        if (res.length) {
-          this.leftMarkMessage[0].count = res[0].czrk;
-          this.leftMarkMessage[1].count = res[0].ldrk;
-          this.leftMarkMessage[2].count = res[0].hjrk;
-          // 陆地面积
-          this.rightMarkMessage[0].count = res[0].ldmj;
-          this.rightMarkMessage[1].count = res[0].gdp;
-          this.rightMarkMessage[2].count = res[0].qysl;
-        } else {
-          this.leftMarkMessage[0].count = '暂无数据';
-          this.leftMarkMessage[1].count = '暂无数据';
-          this.leftMarkMessage[2].count = '暂无数据';
-          // 陆地面积
-          this.rightMarkMessage[0].count = '暂无数据';
-          this.rightMarkMessage[1].count = '暂无数据';
-          this.rightMarkMessage[2].count = '暂无数据';
-        }
+      getAreaStatisticsByYear().request({ year: year }).then((res) => {
+        this.leftMarkMessage[0].count = res.gysczz || '暂无数据';
+        this.leftMarkMessage[1].count = res.lysr || '暂无数据';
+        this.leftMarkMessage[2].count = res.hjrk || '暂无数据';
+        // 陆地面积
+        this.rightMarkMessage[0].count = res.ldmj || '暂无数据';
+        this.rightMarkMessage[1].count = res.gdp || '暂无数据';
+        this.rightMarkMessage[2].count = res.czzsr || '暂无数据';
         this.markerDownList();
       });
     },
@@ -181,12 +171,6 @@ export default {
       });
       marker.setMap(this.map);
       this.markList.push(marker);
-      // const infoWindow = new AMap.InfoWindow({
-      //   isCustom: true, // 使用自定义窗体
-      //   content: content, // 传入 dom 对象，或者 html 字符串
-      //   offset: new AMap.Pixel(760.7, -590),
-      // });
-      // infoWindow.open(this.map, [message.position[0], lat]);
     },
     markRightContent(message) {
       return `
