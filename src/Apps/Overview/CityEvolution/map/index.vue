@@ -48,19 +48,19 @@ export default {
           name: '常驻人口',
           count: 2345,
           unit: '人',
-          position: [122.1302540000, 29.747613],
+          position: [122.1202540000, 29.777613],
         },
         {
           name: '流动人口',
           count: 2345,
           unit: '人',
-          position: [122.1202540000, 29.717613],
+          position: [122.1202540000, 29.737613],
         },
         {
           name: '户籍人口',
           count: 2345,
           unit: '人',
-          position: [122.1502540000, 29.677613],
+          position: [122.1502540000, 29.707613],
         },
       ],
       rightMarkMessage: [
@@ -68,19 +68,19 @@ export default {
           name: '陆地面积',
           count: 2345,
           unit: '平方千米',
-          position: [121.95000000000, 29.767613],
+          position: [122.1100000000, 29.767613],
         },
         {
           name: 'GDP',
           count: 2345,
           unit: '万元',
-          position: [121.9700000000, 29.730613],
+          position: [122.1100000000, 29.730613],
         },
         {
           name: '企业数量',
           count: 2345,
           unit: '家',
-          position: [121.9812540000, 29.690613],
+          position: [122.136267, 29.701412],
         },
       ],
     };
@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     getData() {
-      const year = (this.activeIndex * 5 + 2000) + '';
+      const year = (this.activeIndex < this.years.length) ? (this.years[this.activeIndex]) : (this.years[this.activeIndex - 1] + 1);
       getMapData().request({ year: year }).then((res) => {
         if (res.length) {
           this.leftMarkMessage[0].count = res[0].czrk;
@@ -121,7 +121,7 @@ export default {
         resizeEnable: true,
         zoom: 13,
         zooms: [3, 20],
-        zoomEnable: false,
+        zoomEnable: true,
         center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
@@ -148,7 +148,7 @@ export default {
       this.timer = setTimeout(() => {
         this.paly();
         this.autoPlay();
-      }, 2 * 1000);
+      }, 3 * 1000);
     },
     paly() {
       if (this.activeIndex >= this.years.length) {
@@ -158,8 +158,8 @@ export default {
       this.getData();
       this.lineTask(this.activeIndex); // 进度条
     },
-    makeLeftMarker(message) {
-      const content = `
+    markLeftContent(message) {
+      return `
         <div class='mark_wrapper_left'>
           <img class='mark_img_bg' src="${require('./img/mark_left.png')}" style=''></img>
           <div class='mark_address'>六横</div>
@@ -170,17 +170,26 @@ export default {
               ${message.unit}
             </span>
           </div>
-        </div>`
-      ;
+        </div>`;
+    },
+    makeLeftMarker(message) {
+      const content = this.markLeftContent(message);
       const marker = new AMap.Marker({
         position: message.position,
+        offset: new AMap.Pixel(-890, 0),
         content: content,
       });
       marker.setMap(this.map);
       this.markList.push(marker);
+      // const infoWindow = new AMap.InfoWindow({
+      //   isCustom: true, // 使用自定义窗体
+      //   content: content, // 传入 dom 对象，或者 html 字符串
+      //   offset: new AMap.Pixel(760.7, -590),
+      // });
+      // infoWindow.open(this.map, [message.position[0], lat]);
     },
-    makeRightMarker(message) {
-      const content = `
+    markRightContent(message) {
+      return `
         <div class='mark_wrapper_right'>
           <img class='mark_img_bg' src="${require('./img/mark_right.png')}" style=''></img>
           <div class='mark_address'>六横</div>
@@ -193,8 +202,12 @@ export default {
           </div>
         </div>`
       ;
+    },
+    makeRightMarker(message) {
+      const content = this.markRightContent(message);
       const marker = new AMap.Marker({
         position: message.position,
+        offset: new AMap.Pixel(0, 0),
         content: content,
       });
       marker.setMap(this.map);
