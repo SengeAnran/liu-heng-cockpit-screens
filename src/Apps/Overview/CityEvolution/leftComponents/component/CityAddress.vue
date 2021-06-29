@@ -15,10 +15,10 @@
       </div>
       <div class="item">
         <div class="title">
-          行政辖区面积
+          陆地面积
         </div>
         <div class="count administration_title">
-          <CountUp  :num="sqmj.xqmj || 0" />
+          <CountUp  :num="sqmj.xzsqmj || 0" />
         </div>
         <div class="unit administration_unit">
           平方千米
@@ -26,13 +26,13 @@
       </div>
       <div class="item">
         <div class="title">
-          海域面积
+          人口密度
         </div>
         <div class="count seal_title">
-          <CountUp  :num="sqmj.hymj || 0" />
+          <CountUp  :num="sqmj.rkmd || 0" />
         </div>
         <div class="unit seal_unit">
-          平方千米
+          人/平方千米
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
 
 <script>
 import BaseTitle from '../../components/BaseTitle';
-import { getAreaInfo } from '@/api/Overview/CityEvolution/api';
+import { getAreaDistribution } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   components: {
@@ -57,9 +57,8 @@ export default {
   },
   methods: {
     getAreaInfo() {
-      getAreaInfo().request().then((res) => {
-        const { sqmj } = res;
-        this.sqmj = sqmj;
+      getAreaDistribution().request().then((res) => {
+        this.sqmj = res;
       });
     },
   },

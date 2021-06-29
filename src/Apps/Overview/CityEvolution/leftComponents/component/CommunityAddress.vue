@@ -10,12 +10,15 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getPCDI } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   data() {
     return {
       charts: null,
-      data: [],
+      xAxisData: [],
+      incomeData: [],
+      increaseRate: [],
     };
   },
   components: {
@@ -61,7 +64,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: [2015, 2016, 2017, 2018, 2019, 2020],
+          data: this.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -186,7 +189,7 @@ export default {
               fontSize: 22,
             },
           },
-          data: [26290, 31020, 34122, 37534, 41368, 45505],
+          data: this.incomeData,
         }, {
           type: 'line',
           yAxisIndex: '1', // 第一个柱状图的数据
@@ -204,12 +207,18 @@ export default {
               fontSize: 22,
             },
           },
-          data: [12.4, 18.0, 10.0, 10.0, 10.2, 10.0],
+          data: this.increaseRate,
         }],
       };
       return option;
     },
-    loadData() {
+    async loadData() {
+      const res = await getPCDI().request();
+      res.reverse().forEach((item, index) => {
+        this.xAxisData.push(item.nf);
+        this.incomeData.push(item.nrjsr);
+        this.increaseRate.push(item.srzf * 100);
+      });
       this.setData();
     },
   },

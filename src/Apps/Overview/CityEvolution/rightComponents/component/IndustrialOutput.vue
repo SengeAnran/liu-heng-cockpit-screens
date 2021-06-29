@@ -10,12 +10,14 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getIndustryValueTrend } from '@/api/Overview/CityEvolution/api';
 export default {
-  name: 'CityEvolution',
   data() {
     return {
       charts: null,
-      data: [],
+      industrialIncome: [],
+      increaseRate: [],
+      xAxisData: [],
     };
   },
   components: {
@@ -52,7 +54,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: [2015, 2016, 2017, 2018, 2019, 2020],
+          data: this.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -111,7 +113,7 @@ export default {
             show: true,
           },
         }, {
-          name: '%',
+          name: '(%)',
           type: 'value',
           position: 'right',
           nameTextStyle: {
@@ -185,7 +187,7 @@ export default {
               fontSize: 22,
             },
           },
-          data: [224.5, 256.8, 85.2, 87.3, 95.2, 110.7],
+          data: this.industrialIncome,
         }, {
           type: 'line',
           yAxisIndex: '1', // 第一个柱状图的数据
@@ -203,12 +205,18 @@ export default {
               fontSize: 22,
             },
           },
-          data: [17.0, 14.4, 14.4, 2.4, 19.7, 11.3],
+          data: this.increaseRate,
         }],
       };
       return option;
     },
-    loadData() {
+    async loadData() {
+      const res = await getIndustryValueTrend().request();
+      res.reverse().forEach((item, index) => {
+        this.xAxisData.push(item.nf);
+        this.industrialIncome.push(item.gycz);
+        this.increaseRate.push(item.gyczzs);
+      });
       this.setData();
     },
   },
