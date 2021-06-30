@@ -1,6 +1,6 @@
 <template>
   <div class="right-section2">
-    <Title title="劳动竞赛" />
+    <Title title="活动掠影" />
     <div class="section-content">
       <div class="loop-img">
         <Swiper
@@ -30,6 +30,14 @@
       </div>
 
       <div class="loop-content">
+        <ul class="loop-tab">
+          <li
+            :class="{'active': currentTab === item.name}"
+            v-for="(item, index) in tabList"
+            :key="index"
+            @click="selectTab(item.name, index)">{{item.name}}</li>
+        </ul>
+
         <h2 class="activity-title">{{currentData.bt}}</h2>
         <p class="activity-label">举办时间：{{currentData.jbsj}}</p>
         <p class="activity-label">举办单位：{{currentData.jbdw}}</p>
@@ -68,6 +76,12 @@ export default {
           el: '.swiper-pagination',
         },
       },
+      tabList: [
+        { name: '工会' },
+        { name: '妇联' },
+        { name: '团委' },
+      ],
+      currentTab: '工会',
       dataList: [],
       currentData: {},
     };
@@ -77,6 +91,9 @@ export default {
   },
   methods: {
     onSlideChange() {
+    },
+    selectTab(name, index) {
+      this.currentTab = name;
     },
     async getData() {
       const result = await workCompetition().request();
@@ -155,13 +172,59 @@ export default {
 
   .loop-content{
     padding-left: 2.9rem;
+    .loop-tab{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 7rem;
+      list-style: none;
+      width: 44rem;
+      overflow-x: auto;
+      padding: 0;
+      margin: 1rem 0rem;
+      &::-webkit-scrollbar
+      {
+          width:16px;
+          height:16px;
+          background-color:#413f3f;
+      }
+      /*定义滚动条轨道
+      内阴影+圆角*/
+      &::-webkit-scrollbar-track
+      {
+          -webkit-box-shadow:inset 0 0 6px rgba(20, 34, 49, 0.3);
+          // border-radius:10px;
+          background-color:#0d1f38;
+      }
+      /*定义滑块
+      内阴影+圆角*/
+      &::-webkit-scrollbar-thumb
+      {
+          // border-radius:10px;
+          -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
+          background-color:rgb(70, 70, 70);
+      }
+      li{
+        font-size: 3.4rem;
+        color: rgba(255, 255, 255, .3);
+        padding: 0 3rem;
+        cursor: pointer;
+        width: 14rem;;
+        text-align: center;
+        &.active{
+          color: white;
+          background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
+          background-size: 160%;
+        }
+      }
+    }
     .activity-title{
       background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
       color: #fff;
       font-size: 3.4rem;
       background-size: 100% 100%;
       display: inline-block;
-      margin: 1.5rem 0;
+      margin: 0 0 1rem 0;
     }
     .activity-label{
       font-size: 2.4rem;
@@ -173,6 +236,11 @@ export default {
       font-size: 1.8rem;
       color: rgba(255, 255, 255, .85);
       line-height: 3rem;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

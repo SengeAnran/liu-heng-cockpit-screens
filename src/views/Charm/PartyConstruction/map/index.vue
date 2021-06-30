@@ -6,10 +6,23 @@
       <p class="legend-title">党群建设图例</p>
       <ul class="legend-list">
         <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
-          <span class="select-rect">
-            <span class="selected-inner" v-show="currentLegend === item.value"></span>
-          </span>
-          {{item.label}}
+          <div class="main-label-wrap">
+            <span class="select-rect">
+              <span class="selected-inner" v-show="currentLegend === item.value"></span>
+            </span>
+            {{item.label}}
+          </div>
+          <ul v-if="item.children" class="legend-children-list">
+            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">
+              <div class="main-label-wrap">
+                <span class="select-rect">
+                  <span class="selected-inner" v-show="currentLegend === item.value"></span>
+                </span>
+                {{item2.label}}
+              </div>
+
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -32,9 +45,16 @@ export default {
       mapDom: null,
       currentLegend: 0,
       legendList: [
-        { value: 1, label: '文化礼堂' },
-        { value: 2, label: '党建中心' },
-        { value: 3, label: '党组织' },
+        { value: 1, label: '党组织' },
+        { value: 2, label: '群团阵地' },
+        {
+          value: 3,
+          label: '新时代站所',
+          children: [
+            { value: 4, label: '文化礼堂' },
+            { value: 5, label: '综合文化站' },
+          ],
+        },
       ],
       lastDetailMarker: null,
     };
@@ -183,13 +203,14 @@ export default {
   .map-legend{
     position: absolute;
     z-index: 10;
-    top: 95.6rem;
+    top: 90.6rem;
     right: 37%;
     width: 27.4rem;
-    height: 28.2rem;
+    // height: 28.2rem;
+    height: auto;
     background: url('./img/legend-bg.png') no-repeat 0 0;
     box-sizing: border-box;
-    background-size: 100%;
+    background-size: 100% 100%;
     color: #fff;
     padding: 3rem;
     .legend-title{
@@ -203,9 +224,15 @@ export default {
       font-size: 2.6rem;
       line-height: 2.2;
       li{
-        display: flex;
-        align-items: center;
-        cursor: pointer;
+        .main-label-wrap{
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
+      .legend-children-list{
+        list-style: none;
+        padding-left: 2rem;
       }
       .select-rect{
         display: inline-block;
