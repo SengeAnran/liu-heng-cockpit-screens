@@ -1,16 +1,16 @@
 <template>
   <div class="single">
-    <BaseTitle title="户籍人口婚龄单身比" />
+    <BaseTitle title="自然增长情况" />
     <div class="show-box">
       <div v-for="(item, index) of list" :key="index">
         <CountUp  :num="item.value" />
-        <span class="unit"> 万人</span>
+        <span class="unit">{{ index === 0 ? '人' : '‰' }}</span>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { getMarriedSingle } from '@/api/Overview/PopulationMap/api';
+import { getNaturalGrowth } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Single',
   data() {
@@ -34,9 +34,9 @@ export default {
   },
   methods: {
     loadData() {
-      getMarriedSingle().request().then((json) => {
-        this.list[0].value = json.dsman || 0;
-        this.list[1].value = json.dsfemale || 0;
+      getNaturalGrowth().request().then((json) => {
+        this.list[0].value = json.zrzzrks || 0;
+        this.list[1].value = +(json.zrzzl * 100).toFixed(2) || 0;
       });
     },
   },
@@ -67,7 +67,7 @@ export default {
       .unit {
         position: relative;
         top: 50px;
-        font-size: 25px;
+        font-size: 35px;
       }
       &:first-child {
         background: url('./img/male.png');

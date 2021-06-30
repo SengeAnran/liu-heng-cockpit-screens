@@ -121,7 +121,7 @@ export default [
     props: {
       url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/sanfang.html',
       width: 5760,
-      height: 1620,
+      height: 1350,
     },
   },
   {
@@ -131,7 +131,7 @@ export default [
     props: {
       url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/cityManage.html',
       width: 5760,
-      height: 1620,
+      height: 1350,
     },
   },
   {
@@ -141,7 +141,7 @@ export default [
     props: {
       url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/safeLiuheng.html',
       width: 5760,
-      height: 1620,
+      height: 1350,
     },
   },
   {
@@ -151,7 +151,7 @@ export default [
     props: {
       url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/safeProduction.html',
       width: 5760,
-      height: 1620,
+      height: 1350,
     },
   },
   {

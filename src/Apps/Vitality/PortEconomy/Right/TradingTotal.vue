@@ -1,25 +1,20 @@
 <template>
-  <div class="TradingTotal">
-    <secondary-title name="六横航运贸易总额" />
-    <div class="line_charts" ref="charts"></div>
-  </div>
+  <div ref="barChart"></div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import SecondaryTitle from '../components/SecondaryTitle';
+import { totalShippingTrade } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {
     return {
       charts: null,
+      yData: [],
+      xData: [],
     };
   },
-  components: {
-    SecondaryTitle,
-  },
   mounted() {
-    const charts = this.$refs.charts;
-    this.charts = echarts.init(charts);
+    this.charts = echarts.init(this.$refs.barChart);
     this.loadData();
   },
   methods: {
@@ -27,12 +22,16 @@ export default {
       this.setData();
     },
     setData() {
-      this.charts.clear();
-      this.charts.setOption(this.getOptions());
+      totalShippingTrade()
+        .request()
+        .then((json) => {
+          this.xData = json.map((item) => item.sj);
+          this.yData = json.map((item) => item.myze);
+          this.charts.clear();
+          this.charts.setOption(this.getOptions());
+        });
     },
     getOptions() {
-      const data = [2887, 3581, 3006, 3899, 3611, 3017, 1866];
-      const xData = ['2015', '2016', '2017', '2018', '2019', '2020', '2021'];
       const option = {
         title: {
           text: '贸易总额',
@@ -49,31 +48,23 @@ export default {
           bottom: '10%',
         },
         xAxis: {
-          data: xData,
+          data: this.xData,
           type: 'category',
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
           axisTick: {
             show: false,
-            alignWithLabel: true,
           },
-          splitArea: {
-            color: '#f00',
+          axisLine: {
+            show: false,
             lineStyle: {
-              color: '#f00',
+              color: 'rgba(151, 151, 151, .5)',
+              width: 1,
             },
           },
           axisLabel: {
-            color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: '20',
+              color: 'rgba(255, 255, 255, .7)',
             },
-          },
-          splitLine: {
-            show: false,
           },
           boundaryGap: true,
         },
@@ -87,31 +78,33 @@ export default {
           name: '万元',
           nameTextStyle: {
             fontSize: 20,
-            color: 'rgba(255, 255, 255, 1)',
+            color: 'rgba(255, 255, 255, .7)',
             align: 'right',
           },
           type: 'value',
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
+          axisTick: {
+            show: false,
           },
           axisLine: {
             show: true,
             lineStyle: {
-              color: '#979797',
+              color: 'rgba(151, 151, 151, .5)',
+              width: 1,
             },
           },
           axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
             textStyle: {
-              fontSize: 22,
+              fontSize: '20',
+              color: 'rgba(255, 255, 255, .7)',
             },
+            formatter: (num) => num,
           },
-          axisTick: {
-            show: false,
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: 'rgba(151, 151, 151, .5)',
+              width: 1,
+            },
           },
         },
         series: [
@@ -147,7 +140,7 @@ export default {
                 fontSize: 22,
               },
             },
-            data: data,
+            data: this.yData,
           },
         ],
       };
@@ -156,13 +149,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.TradingTotal {
-  display: flex;
-  flex-direction: column;
-  .line_charts {
-    flex: 1;
-    margin-top: 20px;
-  }
-}
-</style>

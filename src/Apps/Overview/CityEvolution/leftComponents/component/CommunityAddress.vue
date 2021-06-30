@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="各社区人口分布" :width='720' />
+    <BaseTitle title="渔农村常住居民人均可支配收入" :width='720' />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -10,13 +10,15 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
-import { getCommunityInfo } from '@/api/Overview/CityEvolution/api';
+import { getPCDI } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   data() {
     return {
       charts: null,
-      data: [],
+      xAxisData: [],
+      incomeData: [],
+      increaseRate: [],
     };
   },
   components: {
@@ -34,20 +36,20 @@ export default {
     },
     getOptions() {
       const option = {
-        title: {
-          text: '（人）',
-          textStyle: {
-            align: 'center',
-            color: '#fff',
-          },
-          top: '5%',
-          left: '1%',
-        },
         grid: {
           top: '15%',
           left: '10%',
-          right: '3%',
-          bottom: '10%',
+          right: '10%',
+          bottom: '15%',
+        },
+        legend: {
+          data: ['渔农村常住居民人均可支配收入', '增幅'],
+          bottom: 7,
+          textStyle: {
+            color: '#FFFFFF',
+            fontSize: 20,
+            fontFamily: 'DIN Alternate',
+          },
         },
         tooltip: {
           trigger: 'axis',
@@ -66,7 +68,7 @@ export default {
           type: 'category',
           axisLine: {
             lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
+              color: 'rgba(255,255,255,0.5)',
             },
           },
           axisTick: {
@@ -90,10 +92,16 @@ export default {
           },
           boundaryGap: true,
         },
-        yAxis: {
+        yAxis: [{
           type: 'value',
+          name: '收入（元）',
+          nameTextStyle: {
+            align: 'center',
+            color: '#fff',
+            fontSize: 20,
+          },
           splitLine: {
-            show: true,
+            show: false,
             lineStyle: {
               color: 'rgba(255,255,255,0.2)',
             },
@@ -112,12 +120,46 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
           },
-        },
+        }, {
+          name: '增长（%）',
+          type: 'value',
+          position: 'right',
+          nameTextStyle: {
+            align: 'center',
+            color: '#fff',
+            fontSize: 20,
+          },
+          splitLine: {
+            show: false,
+            lineStyle: {
+              color: 'rgba(255,255,255,0.2)',
+            },
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: '#979797',
+            },
+          },
+          axisLabel: {
+            color: '#FFFFFF',
+            margin: 10,
+            textStyle: {
+              fontSize: 22,
+            },
+          },
+          axisTick: {
+            show: true,
+          },
+
+        }],
         series: [{
           type: 'bar',
+          name: '渔农村常住居民人均可支配收入',
           barWidth: 20,
+          yAxisIndex: '0', // 第一个柱状图的数据
           itemStyle: {
             color: {
               type: 'linear',
@@ -147,23 +189,37 @@ export default {
               fontSize: 22,
             },
           },
-          data: this.data,
+          data: this.incomeData,
+        }, {
+          type: 'line',
+          yAxisIndex: '1', // 第一个柱状图的数据
+          name: '增幅',
+          barWidth: 20,
+          itemStyle: {
+            color: '#31EABC',
+          },
+          label: {
+            show: true,
+            position: 'top',
+            distance: 10,
+            color: '#FFFFFF',
+            textStyle: {
+              fontSize: 22,
+            },
+          },
+          data: this.increaseRate,
         }],
       };
       return option;
     },
-    loadData() { // 社区信息
-      getCommunityInfo().request().then((res) => {
-        const arr = [];
-        const xAxisData = [];
-        res.forEach((item) => {
-          arr.push(item.cqks);
-          xAxisData.push(item.sqmc);
-        });
-        this.xAxisData = xAxisData;
-        this.data = arr;
-        this.setData();
+    async loadData() {
+      const res = await getPCDI().request();
+      res.reverse().forEach((item, index) => {
+        this.xAxisData.push(item.nf);
+        this.incomeData.push(item.nrjsr);
+        this.increaseRate.push(item.srzf * 100);
       });
+      this.setData();
     },
   },
 };

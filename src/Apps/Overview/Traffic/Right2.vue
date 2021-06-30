@@ -2,7 +2,7 @@
   <div class="right-2">
     <Title>道路监控</Title>
     <Monitor />
-    <Title>非营运车辆载客情况</Title>
+    <Title>环岛客流数据</Title>
     <Table />
   </div>
 </template>

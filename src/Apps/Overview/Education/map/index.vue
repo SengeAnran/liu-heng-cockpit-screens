@@ -28,6 +28,7 @@ export default {
       currentIndex: '',
       markData: [],
       list: [
+        { type: '幼儿园' },
         { type: '小学' },
         { type: '初中' },
         { type: '高中' },
@@ -43,23 +44,6 @@ export default {
   methods: {
     getData(category = '') {
       getSchoolListByCategory().request({ category: category }).then((res) => {
-        const arr = [
-          [122.1902540000, 29.797613],
-          [122.2002540000, 29.767613],
-          [122.2202540000, 29.727613],
-          [122.0502540000, 29.787613],
-          [122.0602540000, 29.757613],
-        ];
-        // 假数据
-        if (res.length === 1) {
-          res[0].lat = arr[2][0];
-          res[0].lng = arr[2][1];
-        } else {
-          res.forEach((item, index) => {
-            item.lat = arr[index][0];
-            item.lng = arr[index][1];
-          });
-        }
         this.markData = res;
         this.markDown();
       });
@@ -81,8 +65,9 @@ export default {
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
         zoom: 13,
+        zooms: [3, 20],
         zoomEnable: true,
-        center: [122.200254, 29.707613],
+        center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
       this.map.on('click', (e) => {
@@ -115,7 +100,7 @@ export default {
     },
     addMarker(item) {
       const marker = new AMap.Marker({
-        position: [item.lat, item.lng],
+        position: [item.lng, item.lat],
         content: "<div class='custom-marker'></div>",
         icon: hosIcon,
       });
@@ -139,7 +124,6 @@ export default {
   right: 0;
   width: 100%;
   height: 2070px;
-  background-size: 100% 100%;
   .mask {
     position: absolute;
     left: 0;
@@ -159,7 +143,7 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 2070px;
+    height: 1350px;
     ::v-deep .custom-marker {
       width: 90px;
       height: 90px;

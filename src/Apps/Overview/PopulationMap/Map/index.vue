@@ -7,6 +7,8 @@
 
 <script>
 import AMap from 'AMap';
+import './map.scss';
+import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Map',
   components: {
@@ -14,23 +16,73 @@ export default {
   data() {
     return {
       map: null,
-      mapDom: null,
+      infoWindow: null,
     };
   },
   mounted() {
-    this.mapDom = this.$refs.map;
-    this.map = new AMap.Map(this.mapDom, {
-      resizeEnable: true,
-      zoom: 13.4,
-      zooms: [3, 16],
-      center: [122.200254, 29.717613],
-      mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
-    });
+    this.initMap();
+    this.loadData();
     // const marker = new AMap.Marker({
     //   position: [122.200254, 29.767613],
     //   content: "<div style='display: inline-block; width: 20px; height: 20px;'>13444</div>",
     // });
     // marker.setMap(this.map);
+  },
+  methods: {
+    loadData() {
+      getPopuliationNumRank().request().then((json) => {
+        if (json) {
+          // console.log(json);
+          this.addMarker(json);
+        }
+      });
+    },
+    initMap() {
+      this.map = new AMap.Map(this.$refs.map, {
+        resizeEnable: true,
+        zoom: 13.3,
+        zooms: [3, 20],
+        center: [122.138836, 29.730147],
+        mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
+      });
+    },
+    addInfoWindow(item) {
+      const html = `<div class='info'>
+        <div>社区名称: ${item.sqmc}</div>
+        <div>总人口数: ${item.zrks}</div>
+        <div>户口数: ${item.hksl}</div>
+        <div>男性人口数: ${item.manrk}</div>
+        <div>女性人口数: ${item.felmanrk}</div>
+      </div>`;
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗体
+        content: html, // 传入 dom 对象，或者 html 字符串
+        offset: new AMap.Pixel(165, 243),
+      });
+      this.infoWindow = infoWindow;
+      infoWindow.open(this.map, [item.lng, item.lat]);
+    },
+    addMarker(data) {
+      data.forEach((item) => {
+        const marker = new AMap.Marker({
+          position: [item.lng, item.lat],
+          content: '<div class="custom-marker">13444</div>',
+        });
+        marker.setMap(this.map);
+        marker.on('click', (e) => {
+          this.addInfoWindow(item);
+        });
+      });
+    },
+    markerClick(item) {
+      this.popup.setContent(this.createText(item));
+      this.popup.open(this.map, [item.lng, item.lat]);
+    },
+    createText() {
+      return `
+        <div class="info"></div>
+      `;
+    },
   },
 };
 </script>
@@ -41,7 +93,6 @@ export default {
   right: 0;
   width: 100%;
   height: 2070px;
-  background-size: 100% 100%;
   .mask {
     position: absolute;
     left: 0;
@@ -58,7 +109,84 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 2070px;
+    height: 1350px;
+    ::v-deep .custom-marker {
+      position: absolute;
+      width: 49.7px;
+      height: 42.7px;
+      background: url('./img/circle.png');
+      background-size: contain;
+      &:before {
+        display: block;
+        content: '';
+        width: 49px;
+        height: 35px;
+        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 90%);
+        border: 1px solid #ffea78;
+        box-shadow: 0 0 1px #ffea78;
+        border-radius: 50% / 50%;
+        position: absolute;
+        left: 0;
+        top: 3px;
+        animation: circleChange 3s 1s linear infinite;
+      }
+      &:after {
+        display: block;
+        content: '';
+        width: 49px;
+        height: 35px;
+        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 90%);
+        border: 1px solid #ffea78;
+        box-shadow: 0 0 1px #ffea78;
+        border-radius: 50% / 50%;
+        position: absolute;
+        left: 0;
+        top: 3px;
+        animation: circleChange 3s 2s linear infinite;
+      }
+    }
+    ::v-deep .info {
+      position: relative;
+      z-index: 999;
+      width: 274px;
+      height: 282px;
+      padding: 10px;
+      background: url('./img/info.png');
+      box-sizing: border-box;
+      color: #fff;
+      >div {
+        font-size: 26px;
+        font-family: 'Source Han Sans SC';
+        margin-top: 15px;
+        margin-left: 10px;
+        &:nth-child(1) {
+          font-size: 28px;
+          color: #00ffff;
+        }
+      }
+    }
+  }
+}
+@keyframes circleChange{
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.35;
+  }
+  75% {
+    transform: scale(1.6);
+    opacity: 0.15;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0.01;
   }
 }
 </style>

@@ -16,7 +16,7 @@ export default {
     },
     height: {
       type: Number,
-      default: 1620,
+      default: 1350,
     },
   },
   computed: {
@@ -24,7 +24,7 @@ export default {
       return {
         width: `${this.width}px`,
         height: `${this.height}px`,
-        transform: 'scale(1, 0.833)',
+        // transform: 'scale(1, 0.833)',
       };
     },
   },
