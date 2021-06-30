@@ -110,6 +110,8 @@ export default {
         yAxis: {
           type: 'value',
           name: '人数',
+          min: data.min,
+          interval: data.interval,
           nameTextStyle: {
             align: 'center',
             color: '#fff',

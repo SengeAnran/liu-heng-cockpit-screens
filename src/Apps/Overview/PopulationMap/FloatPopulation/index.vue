@@ -1,7 +1,7 @@
 <template>
   <div class="float-population">
     <BaseTitle title="户籍人口性别情况" />
-    <LineChart :lineData="{title: ['男', '女'], chartData }" />
+    <LineChart :lineData="{title: ['男', '女'], min: 30000, interval: 1000, chartData }" />
   </div>
 </template>
 
