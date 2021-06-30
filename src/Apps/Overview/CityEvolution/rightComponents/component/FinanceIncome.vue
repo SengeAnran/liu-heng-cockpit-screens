@@ -85,7 +85,7 @@ export default {
           axisLabel: {
             color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           splitLine: {
@@ -117,7 +117,7 @@ export default {
             color: '#FFFFFF',
             margin: 10,
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           axisTick: {
