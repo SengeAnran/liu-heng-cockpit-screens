@@ -2,7 +2,7 @@
   <div class="party-construction">
     <div class="left-part">
       <LeftSection1 class="section-item" />
-      <LeftSection2 class="section-item" />
+      <!-- <LeftSection2 class="section-item" /> -->
     </div>
 
     <div class="right-part">
@@ -17,7 +17,7 @@
 </template>
 <script>
 import LeftSection1 from './LeftSection1';
-import LeftSection2 from './LeftSection2';
+// import LeftSection2 from './LeftSection2';
 import RightSection1 from './RightSection1';
 import RightSection2 from './RightSection2';
 import RightSection3 from './RightSection3';
@@ -26,7 +26,7 @@ import Map from './map/index';
 export default {
   components: {
     LeftSection1,
-    LeftSection2,
+    // LeftSection2,
     RightSection1,
     RightSection2,
     RightSection3,

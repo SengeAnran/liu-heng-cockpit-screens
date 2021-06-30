@@ -204,7 +204,8 @@ export default {
         color: rgba(255, 255, 255, .3);
         padding: 0 3rem;
         cursor: pointer;
-        min-width: 14rem;;
+        min-width: 14rem;
+        width: 14rem;
         text-align: center;
         &.active{
           color: white;

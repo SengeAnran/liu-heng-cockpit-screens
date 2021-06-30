@@ -1,7 +1,14 @@
 <template>
   <div class="right-section3">
-    <Title title="工会维权统计" />
+    <Title title="维权统计" />
     <div class="section-content">
+      <ul class="loop-tab">
+        <li
+          :class="{'active': currentTab === item.name}"
+          v-for="(item, index) in tabList"
+          :key="index"
+          @click="selectTab(item.name, index)">{{item.name}}</li>
+      </ul>
       <div class="total-legend">
         维权总数 <span class="value">{{totalNum}}</span> 件
       </div>
@@ -40,6 +47,12 @@ export default {
   data() {
     return {
       chart: null,
+      tabList: [
+        { name: '工会' },
+        { name: '妇联' },
+        { name: '团委' },
+      ],
+      currentTab: '工会',
       chartOpt: {
         tooltip: {
           trigger: 'axis',
@@ -142,6 +155,9 @@ export default {
     this.getData();
   },
   methods: {
+    selectTab(name, index) {
+      this.currentTab = name;
+    },
     async getData() {
       const result = await protectRights().request();
       this.totalNum = sumBy(result, 'wqsl');
@@ -156,9 +172,55 @@ export default {
 .right-section3{
   .section-content{
     position: relative;
+    .loop-tab{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 7rem;
+      list-style: none;
+      width: 100%;
+      overflow-x: auto;
+      padding: 0;
+      margin: 1rem 0rem -2rem 0;
+      &::-webkit-scrollbar
+      {
+          width:16px;
+          height:16px;
+          background-color:#413f3f;
+      }
+      /*定义滚动条轨道
+      内阴影+圆角*/
+      &::-webkit-scrollbar-track
+      {
+          -webkit-box-shadow:inset 0 0 6px rgba(20, 34, 49, 0.3);
+          // border-radius:10px;
+          background-color:#0d1f38;
+      }
+      /*定义滑块
+      内阴影+圆角*/
+      &::-webkit-scrollbar-thumb
+      {
+          // border-radius:10px;
+          -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
+          background-color:rgb(70, 70, 70);
+      }
+      li{
+        font-size: 3.4rem;
+        color: rgba(255, 255, 255, .3);
+        padding: 0 3rem;
+        cursor: pointer;
+        width: 14rem;;
+        text-align: center;
+        &.active{
+          color: white;
+          background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
+          background-size: 160%;
+        }
+      }
+    }
     .total-legend{
       position: absolute;
-      top: 0;
+      // top: 0;
       right: 1rem;
       font-size: 2.1rem;
       color: rgba(255,255 ,255, .7);
