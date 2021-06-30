@@ -62,7 +62,7 @@ export default {
           borderColor: 'rgba(255, 255, 255, 0.4)',
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
-        xAxis: {
+        xAxis: [{
           data: this.xAxisData,
           type: 'category',
           axisLine: {
@@ -82,15 +82,16 @@ export default {
           },
           axisLabel: {
             color: '#FFFFFF',
+            margin: 10,
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           splitLine: {
             show: false,
           },
           boundaryGap: true,
-        },
+        }],
         yAxis: [{
           name: '%',
           type: 'value',
@@ -135,7 +136,7 @@ export default {
             distance: 10,
             color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           data: this.GdpData,

@@ -83,7 +83,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-// @import './mark.scss';
+// @import './item.scss';
 .map_wrapper {
   position: absolute;
   left: 0;
