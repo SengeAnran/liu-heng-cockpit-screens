@@ -1,7 +1,8 @@
-export default function getOptions(data) {
+export default function getOptions(data, content) {
+  console.log(data, content);
   return {
     title: {
-      text: '项目行业分布',
+      text: content.title,
       textStyle: {
         height: 26,
         color: '#fff',
@@ -9,21 +10,22 @@ export default function getOptions(data) {
         fontWeight: 500,
         fontFamily: 'Source Han Sans CN',
       },
-      top: 0,
+      top: 20,
     },
     grid: {
-      top: 100,
+      top: 120,
       left: 80,
-      bottom: 38,
+      bottom: 88,
       right: 80,
     },
     tooltip: {
       trigger: 'axis',
     },
     legend: {
-      top: 0,
-      right: 0,
-      orient: 'vertical',
+      // top: 0,
+      // right: 0,
+      // orient: 'vertical',
+      bottom: 0,
       itemWidth: 20,
       itemHeight: 20,
       icon: 'rect',
@@ -62,7 +64,7 @@ export default function getOptions(data) {
     },
     yAxis: [{
       type: 'value',
-      name: '数量/个',
+      name: content.leftUnit,
       nameTextStyle: {
         fontSize: 22,
         fontFamily: 'Source Han Sans CN',
@@ -95,7 +97,7 @@ export default function getOptions(data) {
       },
     }, {
       type: 'value',
-      name: '数量/亿元',
+      name: content.rightUnit,
       nameTextStyle: {
         color: 'rgba(225,225,225,.7)',
         fontSize: 21,
@@ -127,7 +129,7 @@ export default function getOptions(data) {
     series: [
       {
         type: 'bar',
-        name: '项目数',
+        name: content.barName,
         yAxisIndex: 1,
         data: data.map((d) => d.bar),
         label: {
@@ -160,7 +162,7 @@ export default function getOptions(data) {
       },
       {
         type: 'line',
-        name: '投资额',
+        name: content.lineName,
         symbol: 'emptyCircle',
         symbolSize: 5,
         itemStyle: {
