@@ -1,6 +1,6 @@
 <template>
   <div class="right-section4">
-    <Title title="党建文件" />
+    <Title title="政策文件" />
     <div class="section-content">
       <ul class="loop-tab">
         <li
