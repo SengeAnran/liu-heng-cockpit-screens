@@ -1,0 +1,38 @@
+.public-voice {
+  .box {
+    background: url(./img/bg-box.png);
+    width: 592px;
+    height: 463px;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    padding: 20px 0 0 100px;
+    box-sizing: border-box;
+    .content {
+      width: 438px;
+      min-height: 250px;
+      font-size: 18px;
+      font-family: Source Han Sans SC;
+      font-weight: 400;
+      text-align: justify;
+      color: #FFFFFF;
+      line-height: 36px;
+      white-space: normal;
+    }
+    .title {
+      font-size: 34px;
+      font-family: Source Han Sans SC;
+      font-weight: bold;
+      color: #77ffff;
+      width: 100%;
+    }
+    .time {
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 500;
+      color: #ffffff;
+    }
+  }
+}

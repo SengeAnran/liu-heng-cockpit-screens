@@ -3,18 +3,21 @@
     <Left1 />
     <Left2 />
     <Right />
+    <Map/>
   </div>
 </template>
 <script>
 import Left1 from './Left1';
 import Left2 from './Left2';
 import Right from './Right';
+import Map from './Map';
 
 export default {
   components: {
     Left1,
     Left2,
     Right,
+    Map,
   },
 };
 </script>

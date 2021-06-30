@@ -19,29 +19,54 @@ export default {
     return {
       list: [
         {
-          name: '微博',
-          value: 92,
-          percent: 90,
-        },
-        {
           name: '微信',
-          value: 87,
-          percent: 70,
-        },
-        {
-          name: '贴吧',
-          value: 63,
-          percent: 66,
+          value: 168,
+          percent: 69,
         },
         {
           name: '今日头条',
-          value: 18,
-          percent: 62,
+          value: 15,
+          percent: 6,
         },
         {
-          name: '天天快报',
-          value: 21,
-          percent: 60,
+          name: 'uc头条',
+          value: 14,
+          percent: 6,
+        },
+        {
+          name: '腾讯网',
+          value: 9,
+          percent: 4,
+        },
+        {
+          name: '新浪新闻',
+          value: 8,
+          percent: 3,
+        },
+        {
+          name: 'QQ看点',
+          value: 7,
+          percent: 3,
+        },
+        {
+          name: '普陀新闻网',
+          value: 6,
+          percent: 2,
+        },
+        {
+          name: '一点资讯',
+          value: 5,
+          percent: 2,
+        },
+        {
+          name: '大舟山',
+          value: 5,
+          percent: 2,
+        },
+        {
+          name: '舟山',
+          value: 5,
+          percent: 2,
         },
       ],
     };
@@ -70,7 +95,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin-bottom: 3.8rem;
+    margin-bottom: -0.2rem;
     .bar-bg {
       background: rgba(158, 158, 158, 0.2);
       position: absolute;
