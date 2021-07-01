@@ -1,5 +1,5 @@
 export default function getOptions(data, content) {
-  console.log(data, content);
+  // console.log(data, content);
   return {
     title: {
       text: content.title,
@@ -15,17 +15,17 @@ export default function getOptions(data, content) {
     grid: {
       top: 100,
       left: 80,
-      bottom: 88,
+      bottom: 38,
       right: 80,
     },
     tooltip: {
       trigger: 'axis',
     },
     legend: {
-      // top: 0,
-      // right: 0,
+      top: 0,
+      right: 0,
       // orient: 'vertical',
-      bottom: 0,
+      // bottom: 0,
       itemWidth: 20,
       itemHeight: 20,
       icon: 'rect',
@@ -97,6 +97,7 @@ export default function getOptions(data, content) {
       },
     }, {
       type: 'value',
+      show: false,
       name: content.rightUnit,
       nameTextStyle: {
         color: 'rgba(225,225,225,.7)',
@@ -180,6 +181,7 @@ export default function getOptions(data, content) {
           fontFamily: 'DINPro',
           color: '#fff',
         },
+        barWidth: 16,
       },
     ],
   };

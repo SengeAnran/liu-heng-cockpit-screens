@@ -66,7 +66,7 @@ export default {
 .item{
   width: 80rem;
   margin-right: 8rem;
-  margin-bottom: 8rem;
+  margin-bottom: 2.5rem;
   .bar-line {
     flex: auto;
     margin-left: 4rem;

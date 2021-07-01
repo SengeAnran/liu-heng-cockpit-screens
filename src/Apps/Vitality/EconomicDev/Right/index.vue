@@ -1,50 +1,49 @@
 <template>
-  <div class="left">
-    <Title>工业生产总值与工业企业数</Title>
+  <div class="right">
+    <Title>对外经济和旅游业</Title>
     <div class="first-row">
       <BarLine
         :data="list1"
         :content="content1"
         :refresh-key="key1"
       />
-      <Pie />
-<!--      <BarLine />-->
-    </div>
-    <Title>渔业</Title>
-    <div class="second-row">
-
-<!--      <DoubleBar />-->
-      <BarBar
+      <BarLine
         :data="list2"
         :content="content2"
         :refresh-key="key2"
       />
-      <span class="row-right">
-        <BarBar
-          :data="list3"
-          :content="content3"
-          :refresh-key="key3"
-        />
-      </span>
+    </div>
+    <Title>人口经济情况</Title>
+    <div class="second-row">
+      <div>
+        <Indicators />
+        <PopulationEconomy />
+      </div>
+      <BarLine
+        :data="list3"
+        :content="content3"
+        :refresh-key="key3"
+      />
     </div>
   </div>
 </template>
 <script>
 import Title from '../Title';
 import BarLine from '../components/BarLine';
-import BarBar from '../components/BarBar';
+import Indicators from './Indicators';
+import PopulationEconomy from './PopulationEconomy';
+// import BarBar from '../components/BarBar';
 // import DoubleBar from './DoubleBar';
-import Pie from './Pie';
 import economicAPI from '@/api/Vitality/EconomicDev';
 
 export default {
   components: {
     Title,
-    // Indicators,
+    Indicators,
     BarLine,
-    BarBar,
+    PopulationEconomy,
     // DoubleBar,
-    Pie,
+    // Pie,
   },
   data() {
     return {
@@ -61,69 +60,69 @@ export default {
     };
   },
   mounted() {
-    this.industrialAndEnterprises();
-    this.fishAndAgricultural();
-    this.aquaticProductsTotal();
+    this.foreignTradeAndGrowthRates();
+    this.tourismReceptionIncome();
+    this.perCapitaDisposableIncome();
   },
   methods: {
-    // 工业生产总值与工业企业数
-    async industrialAndEnterprises() {
-      const data = await economicAPI.industrialAndEnterprises();
+    // 外贸总额和增长率
+    async foreignTradeAndGrowthRates() {
+      const data = await economicAPI.foreignTradeAndGrowthRates();
       // console.log(data);
       this.list1 = data.map((d) => ({
         // ...d,
         name: d.sj,
-        bar: d.gycl,
-        line: d.gyqys,
+        bar: d.jckze,
+        line: d.zf,
       }));
       this.content1 = {
-        title: '工业生产总值',
-        rightUnit: '工业企业数',
-        leftUnit: '（亿元）',
-        barName: '工业产值',
-        lineName: '工业企业数',
+        title: '外贸总额和增长率',
+        rightUnit: '（%）',
+        leftUnit: '（元）',
+        barName: '进出口总额',
+        lineName: '增幅',
       };
       this.key1 = true;
       // console.log(data);
       // console.log(this.list1);
     },
-    // 渔农业总产值
-    async fishAndAgricultural() {
-      const data = await economicAPI.fishAndAgricultural();
+    // 旅游接待人数和旅游收入
+    async tourismReceptionIncome() {
+      const data = await economicAPI.tourismReceptionIncome();
       // console.log(data);
       this.list2 = data.map((d) => ({
         // ...d,
         name: d.sj,
-        bar: d.yyzcz,
-        line: d.nyzcz,
+        bar: d.jdrs,
+        line: d.lysr,
       }));
       this.content2 = {
-        title: '渔农业总产值',
-        // rightUnit: '（亿元）',
-        leftUnit: '（亿元）',
-        barName: '渔业总产值',
-        lineName: '农业总产值',
+        title: '旅游接待人数和旅游收入',
+        rightUnit: '（亿元）',
+        leftUnit: '（万人次）',
+        barName: '接待人数',
+        lineName: '旅游收入',
       };
       this.key2 = true;
       // console.log(data);
       // console.log(this.list1);
     },
-    // 全年水产品总产量
-    async aquaticProductsTotal() {
-      const data = await economicAPI.aquaticProductsTotal();
+    // 渔农村常住居民人均支配收入
+    async perCapitaDisposableIncome() {
+      const data = await economicAPI.perCapitaDisposableIncome();
       // console.log(data);
       this.list3 = data.map((d) => ({
         // ...d,
         name: d.sj,
-        bar: d.yzcl,
-        line: d.blcl,
+        bar: d.rjkzpsr,
+        line: d.zf,
       }));
       this.content3 = {
-        title: '全年水产品总产量',
-        // rightUnit: '（亿元）',
-        leftUnit: '亿吨',
-        barName: '捕捞产量',
-        lineName: '养殖产量',
+        title: '渔农村常住居民人均可支配收入',
+        rightUnit: '（%）',
+        leftUnit: '（元）',
+        barName: '渔农村常住居民人均可支配收入',
+        lineName: '增幅',
       };
       this.key3 = true;
       // console.log(data);
@@ -133,10 +132,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.left {
+.right {
   position: absolute;
   top: 26rem;
-  left: 16rem;
+  right: 16rem;
   width: 165rem;
   .first-row {
     margin-top: 2rem;

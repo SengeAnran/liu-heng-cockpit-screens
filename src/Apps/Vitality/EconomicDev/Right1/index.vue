@@ -41,7 +41,7 @@ export default {
     this.tourismReceptionIncome();
   },
   methods: {
-    // 工业生产总值与工业企业数
+    // 外贸总额和增长率
     async foreignTradeAndGrowthRates() {
       const data = await economicAPI.foreignTradeAndGrowthRates();
       // console.log(data);

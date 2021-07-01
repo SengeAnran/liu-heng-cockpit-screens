@@ -6,14 +6,14 @@ export default {
     return axios.get('/energy/getAgeDistribution');
   },
   // 三类产业占比
-  distributionByYear(year) {
-    return axios.get('/energy/getAgeDistributionByYear', {
+  threeTypeIndustries(year) {
+    return axios.get('/energy/getThreeTypeIndustries', {
       params: { year },
     });
   },
   // 人均GDP趋势
   gdp() {
-    return axios.get('/energy/getGdp');
+    return axios.get('/energy/getGDPTrend');
   },
   // 财政收入情况
   financialRevenue() {
@@ -21,7 +21,7 @@ export default {
   },
   // 人口经济情况
   economicInfo() {
-    return axios.get('/energy/getEconomicInfo');
+    return axios.get('/energy/getPopulationAndEconomic');
   },
   // 人口宏观情况
   populationInfo() {
@@ -46,6 +46,10 @@ export default {
   // 渔农业总产值
   fishAndAgricultural() {
     return axios.get('/energy/getFishAndAgricultural');
+  },
+  // 全年水产品总产量
+  aquaticProductsTotal() {
+    return axios.get('/energy/getAquaticProductsTotal');
   },
   // 企业注册注销数量
   companyRegisterCancelNum() {

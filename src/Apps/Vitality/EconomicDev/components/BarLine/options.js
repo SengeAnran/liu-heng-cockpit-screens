@@ -1,5 +1,4 @@
 export default function getOptions(data, content) {
-  console.log(data, content);
   return {
     title: {
       text: content.title,
@@ -15,17 +14,17 @@ export default function getOptions(data, content) {
     grid: {
       top: 120,
       left: 80,
-      bottom: 88,
+      bottom: 38,
       right: 80,
     },
     tooltip: {
       trigger: 'axis',
     },
     legend: {
-      // top: 0,
-      // right: 0,
-      // orient: 'vertical',
-      bottom: 0,
+      top: 0,
+      right: 0,
+      orient: 'vertical',
+      // bottom: 0,
       itemWidth: 20,
       itemHeight: 20,
       icon: 'rect',

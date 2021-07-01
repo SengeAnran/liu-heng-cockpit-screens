@@ -1,17 +1,19 @@
 <template>
   <div class="indicator">
     <div class="item">
-      <span class="name">全年GDP</span>
+      <span class="name">
+        常住人口<br />数量
+      </span>
       <span class="value">
-        {{ yearGDPValue }}
-        <span class="unit">{{ yearGDPUnit }}元</span>
+        {{ permanentNumValue }}
+        <span class="unit">{{ permanentNumUnit }}人</span>
       </span>
     </div>
     <div class="item">
-      <span class="name">人均可支配收入</span>
+      <span class="name">劳动力<br />人口数量</span>
       <span class="value">
-        {{ averageGDPValue }}
-        <span class="unit">{{ averageGDPUnit }}元</span>
+        {{ laborNumValue }}
+        <span class="unit">{{ laborNumUnit }}人</span>
       </span>
     </div>
   </div>
@@ -19,32 +21,29 @@
 <script>
 import economicAPI from '@/api/Vitality/EconomicDev';
 import { unitNum } from '@/utils/number';
+
 export default {
   data() {
     return {
-      yearGDP: 4820,
-      averageGDP: 6920,
-      // list: [
-      //   { name: '全年GDP', value: 4820, unit: '万元' },
-      //   { name: '人均可支配收入', value: 6920, unit: '元' },
-      // ],
+      permanentNum: 0,
+      laborNum: 0,
     };
   },
   computed: {
-    yearGDPValue() {
-      const { value } = unitNum(this.yearGDP);
+    permanentNumValue() {
+      const { value } = unitNum(this.permanentNum);
       return +value.toFixed(2);
     },
-    yearGDPUnit() {
-      const { unit } = unitNum(this.yearGDP);
+    permanentNumUnit() {
+      const { unit } = unitNum(this.permanentNum);
       return unit;
     },
-    averageGDPValue() {
-      const { value } = unitNum(this.averageGDP);
+    laborNumValue() {
+      const { value } = unitNum(this.laborNum);
       return +value.toFixed(2);
     },
-    averageGDPUnit() {
-      const { unit } = unitNum(this.averageGDP);
+    laborNumUnit() {
+      const { unit } = unitNum(this.laborNum);
       return unit;
     },
   },
@@ -53,9 +52,10 @@ export default {
   },
   methods: {
     async fetchData() {
-      const data = await economicAPI.economicInfo();
-      this.yearGDP = data?.qngpd;
-      this.averageGDP = data?.rjkzpje;
+      const data = await economicAPI.populationInfo();
+      // console.log(data);
+      this.permanentNum = data?.czrk || 0;
+      this.laborNum = data?.ldlrks || 0;
     },
   },
 };
@@ -79,6 +79,7 @@ export default {
       align-items: center;
       justify-content: center;
       text-align: center;
+      white-space: break-spaces;
       border: 1px solid rgba(168, 247, 237, 0.2);
       width: 15rem;
       height: 12.3rem;
@@ -87,7 +88,7 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 500;
       background: linear-gradient(180deg, #fff 0%, #99FFFF 100%);
-      background-clip: text;
+      -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .value {

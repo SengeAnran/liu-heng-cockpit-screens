@@ -1,8 +1,8 @@
 <template>
   <div class="right-2">
-    <Title>人口宏观情况</Title>
+    <Title>人口经济情况</Title>
     <Indicators />
-    <Bar />
+    <PopulationEconomy />
     <!-- 渔农村常住居民人均可支配收入   -->
     <BarLine
       :data="list1"
@@ -14,7 +14,7 @@
 <script>
 import Title from '../Title';
 import Indicators from './Indicators';
-import Bar from './Bar';
+import PopulationEconomy from './PopulationEconomy';
 import BarLine from '../components/BarLine';
 import economicAPI from '@/api/Vitality/EconomicDev';
 
@@ -22,7 +22,7 @@ export default {
   components: {
     Title,
     Indicators,
-    Bar,
+    PopulationEconomy,
     BarLine,
   },
   data() {
