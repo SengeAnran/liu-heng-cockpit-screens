@@ -37,14 +37,14 @@ export default {
   methods: {
     initMap() {
       this.map = new AMap.Map(this.$refs.map, {
-        resizeEnable: true,
-        zoom: 13.4,
-        zoomEnable: false,
-        center: [122.218762, 29.731102],
+        zoom: 13,
+        zooms: [3, 20],
+        zoomEnable: true,
+        center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
       const marker = new AMap.Marker({
-        position: [122.218762, 29.751102],
+        position: [122.138836, 29.730147],
         content: this.boxTemp(),
         offset: new AMap.Pixel(0, 0),
       });
