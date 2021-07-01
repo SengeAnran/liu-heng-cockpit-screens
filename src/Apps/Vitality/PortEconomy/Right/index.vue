@@ -1,44 +1,42 @@
 <template>
   <div class="right-webview">
     <div class="right-webview_l">
-      <!-- 六横航运贸易总额 -->
       <div>
-        <secondary-title name="六横航运贸易总额" />
-        <trading-total />
+        <secondary-title name="外贸进出口总额与增速" />
+        <Chart1 />
       </div>
-      <!-- 主要商品贸易额占比TOP5 -->
       <div>
-        <secondary-title name="主要商品贸易额占比TOP5" />
-        <pie-chart
-          class="chart"
-          :list="tradingPercent.data"
-          :title="tradingPercent.title"
-          :color="tradingPercent.color"
-          :isPercent="tradingPercent.isPercent"
-          :itemGap="tradingPercent.itemGap"
-        />
+        <secondary-title name="进口总额及增速" />
+        <Chart2 />
       </div>
     </div>
     <div class="right-webview_r">
-      <!-- 主要城市贸易额排名TOP10 -->
-      <secondary-title name="主要城市贸易额排名TOP10" />
-      <trading-rank />
+      <div>
+        <secondary-title name="出口总额及增速" />
+        <Chart3 />
+      </div>
+      <div>
+        <secondary-title name="主要企业进出口总额" />
+        <Chart4 />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
-import TradingTotal from './TradingTotal';
-import PieChart from '../components/PieChart';
-import TradingRank from './TradingRank';
-import { topFiveMajorCommodityTradeAccounted } from '@/api/Vitality/PortEconomy/api';
+import Chart1 from './chart1';
+import Chart2 from './chart2';
+import Chart3 from './chart3';
+import Chart4 from './chart4';
+// import { topFiveMajorCommodityTradeAccounted } from '@/api/Vitality/PortEconomy/api';
 export default {
   components: {
     SecondaryTitle,
-    TradingTotal,
-    PieChart,
-    TradingRank,
+    Chart1,
+    Chart2,
+    Chart3,
+    Chart4,
   },
   data() {
     return {
@@ -52,15 +50,15 @@ export default {
     };
   },
   mounted() {
-    topFiveMajorCommodityTradeAccounted()
-      .request()
-      .then((json) => {
-        json.map((item) => {
-          item.name = item.spzl;
-          item.value = item.mye;
-        });
-        this.tradingPercent.data = json;
-      });
+    // topFiveMajorCommodityTradeAccounted()
+    //   .request()
+    //   .then((json) => {
+    //     json.map((item) => {
+    //       item.name = item.spzl;
+    //       item.value = item.mye;
+    //     });
+    //     this.tradingPercent.data = json;
+    //   });
   },
 };
 </script>
@@ -73,28 +71,24 @@ export default {
     display: flex;
     flex-direction: column;
   }
-  .right-webview_l {
+  .right-webview_l,
+  .right-webview_r {
     display: flex;
     flex-direction: column;
     & > div {
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
-      &:first-child {
-        flex: 1;
-        & > div {
-          &:nth-child(2) {
-            flex: 1;
-            margin-top: 24px;
-          }
-        }
+      &:nth-child(2){
+        margin-top: 24px;
       }
-      &:nth-child(2) {
-        height: 510px;
-        min-height: 510px;
-        position: relative;
-        top: 60px;
+      & > div {
+        &:nth-child(2) {
+          flex:1;
+          margin-top: 24px;
+        }
       }
       .chart {
         flex: 1;

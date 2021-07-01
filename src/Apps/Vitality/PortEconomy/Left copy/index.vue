@@ -3,20 +3,28 @@
     <!-- 六横镇科技情况 -->
     <secondary-title name="港口货运能力" isLarge />
     <div class="left-container">
-      <Chart1 />
-      <Chart2 />
-      <Chart3 />
-      <Chart4 />
+      <pier-analysis />
+      <!-- 吞吐量 -->
+      <pier-situation />
+      <!-- 码头吞吐量分析 -->
+      <!-- 运输货物分类占比 -->
+      <pie-chart :list="sortPercent.data" :title="sortPercent.title" :color="sortPercent.color" />
+      <!-- 运输货物城市分布 -->
+      <pie-chart
+        :list="citySpread.data"
+        :title="citySpread.title"
+        :color="citySpread.color"
+        :itemGap="citySpread.itemGap"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
-import Chart1 from './chart1';
-import Chart2 from './chart2';
-import Chart3 from './chart3';
-import Chart4 from './chart4';
+import PierSituation from './PierSituation';
+import PierAnalysis from './PierAnalysis';
+import PieChart from '../components/PieChart';
 import {
   proportionOfCargoTransportedByCategory,
   distributionOfTransportGoodsInCities,
@@ -24,10 +32,9 @@ import {
 export default {
   components: {
     SecondaryTitle,
-    Chart1,
-    Chart2,
-    Chart3,
-    Chart4,
+    PierSituation,
+    PierAnalysis,
+    PieChart,
   },
   data() {
     return {
@@ -45,7 +52,7 @@ export default {
     };
   },
   mounted() {
-    // this.loadData();
+    this.loadData();
   },
   methods: {
     loadData() {
