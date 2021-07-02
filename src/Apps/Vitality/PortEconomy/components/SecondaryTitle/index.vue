@@ -20,6 +20,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .secondary-title {
+  box-sizing: border-box;
   width: 100%;
   height: 64px;
   min-height: 64px;

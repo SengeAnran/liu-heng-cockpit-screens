@@ -1,17 +1,12 @@
 <template>
   <div class="PierAnalysis">
-    <div class="tab-wrap">
-      <span :class="{active:isYear}" @click="isYear=true">历年</span>
-      <i>/</i>
-      <span :class="{active:!isYear}" @click="isYear=false">历月</span>
-    </div>
     <div class="chart" ref="lineChart"></div>
   </div>
 </template>
 
 <script>
 import * as echarts from 'echarts';
-import { terminalThroughputAnalysis } from '@/api/Vitality/PortEconomy/api';
+// import { terminalThroughputAnalysis } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {
     return {
@@ -20,7 +15,6 @@ export default {
       xData: [],
       da: [], // 大岙码头
       sa: [], // 沙岙码头
-      tm: [], // 台门码头
     };
   },
   watch: {
@@ -34,23 +28,22 @@ export default {
   },
   methods: {
     getData() {
-      const params = {
-        type: this.isYear ? 0 : 1,
-      };
-      terminalThroughputAnalysis()
-        .request(params)
-        .then((json) => {
-          this.xData = json.da.map((item) => item.sj);
-          this.da = json.da.map((item) => item.ttl);
-          this.sa = json.sa.map((item) => item.ttl);
-          this.tm = json.tm.map((item) => item.ttl);
-          this.initEcharts();
-        });
+      // const params = {
+      //   type: this.isYear ? 0 : 1,
+      // };
+      // terminalThroughputAnalysis()
+      // .request(params)
+      // .then((json) => {
+      this.xData = [2015, 2016, 2018, 2019, 2020];
+      this.da = [60, 51, 75, 71, 63];
+      this.sa = [35.3, 26.9, 28.6, 21.7, 24.4];
+      this.initEcharts();
+      // });
     },
     initEcharts() {
       const option = {
         title: {
-          text: '码头吞吐量分析',
+          text: '货运船舶运力',
           textStyle: {
             color: '#fff',
             fontSize: 24,
@@ -72,7 +65,7 @@ export default {
             color: '#fff',
             fontSize: 20,
           },
-          data: ['大岙码头', '沙岙码头', '台门码头'],
+          data: ['货运船舶数', '货运船舶运力'],
         },
         color: ['#6FD8EE', '#FF9798', '#31EABC'],
         grid: {
@@ -138,7 +131,7 @@ export default {
         },
         series: [
           {
-            name: '大岙码头',
+            name: '货运船舶数',
             type: 'line',
             itemStyle: {
               normal: {
@@ -152,7 +145,7 @@ export default {
             data: this.da,
           },
           {
-            name: '沙岙码头',
+            name: '货运船舶运力',
             type: 'line',
             itemStyle: {
               normal: {
@@ -164,20 +157,6 @@ export default {
               },
             },
             data: this.sa,
-          },
-          {
-            name: '台门码头',
-            type: 'line',
-            itemStyle: {
-              normal: {
-                label: {
-                  show: true,
-                  fontSize: '22',
-                  color: 'rgba(255, 255, 255, 1)',
-                },
-              },
-            },
-            data: this.tm,
           },
         ],
       };
