@@ -137,6 +137,7 @@ export default {
   top: 26rem;
   right: 16rem;
   width: 165rem;
+  z-index: 999;
   .first-row {
     margin-top: 2rem;
     display: flex;

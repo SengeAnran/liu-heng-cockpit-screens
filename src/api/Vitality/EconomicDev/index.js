@@ -11,6 +11,10 @@ export default {
       params: { year },
     });
   },
+  // 三类产业占比
+  threeTypeIndustriesYears() {
+    return axios.get('/energy/getYears');
+  },
   // 人均GDP趋势
   gdp() {
     return axios.get('/energy/getGDPTrend');

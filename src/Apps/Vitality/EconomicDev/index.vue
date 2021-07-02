@@ -10,7 +10,7 @@
 import Left from './Left';
 import Right from './Right';
 // import Right2 from './Right2';
-import Map from './Map';
+import Map from './newMap';
 
 export default {
   components: {

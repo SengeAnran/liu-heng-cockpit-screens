@@ -167,7 +167,23 @@ export default function getOptions(data, content) {
         symbol: 'emptyCircle',
         symbolSize: 5,
         itemStyle: {
-          color: 'rgba(237, 191, 100, 1)',
+          color: {
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            type: 'linear',
+            colorStops: [
+              {
+                offset: 0,
+                color: 'rgba(49, 234, 188, 0.99)',
+              },
+              {
+                offset: 1,
+                color: 'rgba(49, 234, 188, 0.2)',
+              },
+            ],
+          },
         },
         lineStyle: {
           width: 3,
