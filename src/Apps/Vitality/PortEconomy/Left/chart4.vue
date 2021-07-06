@@ -6,15 +6,13 @@
 
 <script>
 import * as echarts from 'echarts';
-// import { terminalThroughputAnalysis } from '@/api/Vitality/PortEconomy/api';
+import { getOilImportAndExport } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {
     return {
       chart: null,
       isYear: true,
-      xData: [],
-      da: [], // 大岙码头
-      sa: [], // 沙岙码头
+      list: [],
     };
   },
   watch: {
@@ -27,18 +25,14 @@ export default {
     this.getData();
   },
   methods: {
-    getData() {
-      // const params = {
-      //   type: this.isYear ? 0 : 1,
-      // };
-      // terminalThroughputAnalysis()
-      // .request(params)
-      // .then((json) => {
-      this.xData = [2015, 2016, 2018, 2019, 2020];
-      // this.da = [60, 51, 75, 71, 63];
-      // this.sa = [35.3, 26.9, 28.6, 21.7, 24.4];
+    async getData() {
+      const data = await getOilImportAndExport().request();
+      this.list = data.map((d) => ({
+        name: d.sj,
+        bar: d.ypjckhyl,
+        line: d.zzl,
+      }));
       this.initEcharts();
-      // });
     },
     initEcharts() {
       const option = {
@@ -93,7 +87,7 @@ export default {
               color: 'rgba(255, 255, 255, .7)',
             },
           },
-          data: this.xData,
+          data: this.list.map((d) => d.name),
         },
         yAxis: [
           {
@@ -195,14 +189,14 @@ export default {
                 fontSize: 20,
               },
             },
-            data: [182.2, 351.5, 637.7, 478.9, 563.4],
+            data: this.list.map((d) => d.bar / 10000),
           },
           {
             name: '增长率',
             type: 'line',
             color: '#FF9798',
             yAxisIndex: 1,
-            data: [-4.6, -3.4, 1.1, 0.3, -2.9],
+            data: this.list.map((d) => d.line),
           },
         ],
       };

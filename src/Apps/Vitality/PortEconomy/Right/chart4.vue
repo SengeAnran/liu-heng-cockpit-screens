@@ -6,15 +6,20 @@
 
 <script>
 import * as echarts from 'echarts';
-// import { terminalThroughputAnalysis } from '@/api/Vitality/PortEconomy/api';
+import { getMajorEnterprisesImports } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {
     return {
       chart: null,
       isYear: true,
-      xData: [],
-      da: [], // 大岙码头
-      sa: [], // 沙岙码头
+      sj: [],
+      name: [],
+      line: [],
+      line2: [],
+      line3: [],
+      line4: [],
+      line5: [],
+      line6: [],
     };
   },
   watch: {
@@ -27,16 +32,19 @@ export default {
     this.getData();
   },
   methods: {
-    getData() {
-      // const params = {
-      //   type: this.isYear ? 0 : 1,
-      // };
-      // terminalThroughputAnalysis()
-      // .request(params)
-      // .then((json) => {
-      this.xData = [2015, 2016, 2018, 2019, 2020];
+    async getData() {
+      const data = await getMajorEnterprisesImports().request();
+      const nameData = data.map((d) => d.zdqymc);
+      this.name.push(nameData[0]);
+      for (let j = 0; j < nameData.length; j++) {
+        for (let i = 0; i < this.name.length && nameData[j] !== this.name[i]; i++) {
+          if (i + 1 === this.name.length) {
+            this.name.push(nameData[j]);
+          }
+        }
+      }
+      console.log(this.name);
       this.initEcharts();
-      // });
     },
     initEcharts() {
       const option = {

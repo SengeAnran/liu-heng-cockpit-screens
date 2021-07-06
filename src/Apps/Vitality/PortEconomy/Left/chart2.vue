@@ -6,15 +6,16 @@
 
 <script>
 import * as echarts from 'echarts';
-// import { terminalThroughputAnalysis } from '@/api/Vitality/PortEconomy/api';
+import { getPortThroughput } from '@/api/Vitality/PortEconomy/api';
 export default {
   data() {
     return {
       chart: null,
       isYear: true,
-      xData: [],
-      da: [], // 大岙码头
-      sa: [], // 沙岙码头
+      list: [],
+      // xData: [],
+      // da: [], // 大岙码头
+      // sa: [], // 沙岙码头
     };
   },
   watch: {
@@ -27,16 +28,22 @@ export default {
     this.getData();
   },
   methods: {
-    getData() {
+    async getData() {
       // const params = {
       //   type: this.isYear ? 0 : 1,
       // };
       // terminalThroughputAnalysis()
       // .request(params)
       // .then((json) => {
-      this.xData = [2015, 2016, 2018, 2019, 2020];
+      // this.xData = [2015, 2016, 2018, 2019, 2020];
       // this.da = [60, 51, 75, 71, 63];
       // this.sa = [35.3, 26.9, 28.6, 21.7, 24.4];
+      const data = await getPortThroughput().request();
+      this.list = data.map((d) => ({
+        name: d.sj,
+        bar: d.ckhyl,
+        bar2: d.jkhyl,
+      }));
       this.initEcharts();
       // });
     },
@@ -94,7 +101,7 @@ export default {
               color: 'rgba(255, 255, 255, .7)',
             },
           },
-          data: this.xData,
+          data: this.list.map((d) => d.name),
         },
         yAxis: [{
           type: 'value',
@@ -142,7 +149,7 @@ export default {
                 fontSize: 20,
               },
             },
-            data: [3661, 3838, 3715.4, 3520.5, 3677.2],
+            data: this.list.map((d) => d.bar / 10000),
           },
           {
             name: '出口货运量',
@@ -157,7 +164,7 @@ export default {
                 fontSize: 20,
               },
             },
-            data: [3260, 3603, 4379.8, 4592.2, 4522.9],
+            data: this.list.map((d) => d.bar2 / 10000),
           },
         ],
       };
