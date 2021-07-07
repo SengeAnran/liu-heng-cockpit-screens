@@ -12,14 +12,10 @@ export default {
     return {
       chart: null,
       isYear: true,
+      data: [],
       sj: [],
       name: [],
       line: [],
-      line2: [],
-      line3: [],
-      line4: [],
-      line5: [],
-      line6: [],
     };
   },
   watch: {
@@ -33,9 +29,12 @@ export default {
   },
   methods: {
     async getData() {
-      const data = await getMajorEnterprisesImports().request();
-      const nameData = data.map((d) => d.zdqymc);
+      this.data = await getMajorEnterprisesImports().request();
+      const nameData = this.data.map((d) => d.zdqymc);
+      const sjData = this.data.map((d) => d.sj);
       this.name.push(nameData[0]);
+      this.sj.push(sjData[0]);
+      // 获取企业名字
       for (let j = 0; j < nameData.length; j++) {
         for (let i = 0; i < this.name.length && nameData[j] !== this.name[i]; i++) {
           if (i + 1 === this.name.length) {
@@ -43,8 +42,30 @@ export default {
           }
         }
       }
+      // 获取时间
+      for (let j = 0; j < sjData.length; j++) {
+        for (let i = 0; i < this.sj.length && sjData[j] !== this.sj[i]; i++) {
+          if (i + 1 === this.sj.length) {
+            this.sj.push(sjData[j]);
+          }
+        }
+      }
       console.log(this.name);
+      for (let i = 0; i < this.name.length; i++) {
+        this.line.push(this.getLine(this.name[i]));
+      }
+      console.log(this.line);
       this.initEcharts();
+    },
+    // 提取每个数组的数据
+    getLine(name) {
+      const line = [];
+      for (let j = 0; j < this.data.length; j++) {
+        if (name === this.data[j].zdqymc) {
+          line.push(this.data[j].qyjkze / 10000);
+        }
+      }
+      return line;
     },
     initEcharts() {
       const option = {
@@ -93,7 +114,7 @@ export default {
               color: 'rgba(255, 255, 255, .7)',
             },
           },
-          data: this.xData,
+          data: this.sj,
         },
         yAxis: [
           {
@@ -131,35 +152,60 @@ export default {
         ],
         series: [
           {
-            name: '中远船务',
+            name: this.name[0],
             type: 'line',
-            data: [48185, 26439, 37862, 64187, 62225],
+            data: this.line[0],
           },
           {
-            name: '鑫亚船舶',
+            name: this.name[1],
             type: 'line',
-            data: [13714, 11008, 11239, 28955, 44761],
+            data: this.line[1],
           },
           {
-            name: '龙山船厂',
+            name: this.name[2],
             type: 'line',
-            data: [6389, 3435, 4737, 6847, 15696],
+            data: this.line[2],
           },
           {
-            name: '金润石油',
+            name: this.name[3],
             type: 'line',
-            data: [2656, 12573, 2073, 19121, 34712],
+            data: this.line[3],
           },
           {
-            name: '海港中奥',
+            name: this.name[4],
             type: 'line',
-            data: [0, 0, 0, 13156, 1973],
+            data: this.line[4],
           },
           {
-            name: '宏基水产',
+            name: this.name[5],
             type: 'line',
-            data: [1537, 922, 765, 553, 390],
+            data: this.line[5],
           },
+          // {
+          //   name: '鑫亚船舶',
+          //   type: 'line',
+          //   data: [13714, 11008, 11239, 28955, 44761],
+          // },
+          // {
+          //   name: '龙山船厂',
+          //   type: 'line',
+          //   data: [6389, 3435, 4737, 6847, 15696],
+          // },
+          // {
+          //   name: '金润石油',
+          //   type: 'line',
+          //   data: [2656, 12573, 2073, 19121, 34712],
+          // },
+          // {
+          //   name: '海港中奥',
+          //   type: 'line',
+          //   data: [0, 0, 0, 13156, 1973],
+          // },
+          // {
+          //   name: '宏基水产',
+          //   type: 'line',
+          //   data: [1537, 922, 765, 553, 390],
+          // },
         ],
       };
       this.chart.setOption(option);

@@ -31,6 +31,8 @@
 </template>
 <script>
 import Title from './Title';
+import economicAPI from '@/api/Strength/PublicVoice';
+
 export default {
   data() {
     return {
@@ -219,16 +221,30 @@ export default {
   },
   mounted() {
     this.list = this.list0;
+    this.getData();
   },
   methods: {
-    selectTab(name, index) {
+    async getData(qgqx) {
+      const data = await economicAPI.threeTypeIndustries(qgqx);
+      this.list = data.map((d) => ({
+        title: d.bt,
+        type: d.qgqx,
+        date: d.fbsj,
+        content: d.nrzy,
+        link: d.ywlj,
+        source: d.lywz,
+        media: d.mtlx,
+      }));
+    },
+    selectTab(name) {
       this.currentTab = name;
-      switch (index) {
-        case 0 : this.list = this.list0; break;
-        case 1 : this.list = this.list1; break;
-        case 2 : this.list = this.list2; break;
-        default : this.list = this.list3; break;
-      }
+      name === '全部' ? this.getData() : this.getData(name);
+      // switch (index) {
+      //   case 0 : this.list = this.list0; break;
+      //   case 1 : this.list = this.list1; break;
+      //   case 2 : this.list = this.list2; break;
+      //   default : this.list = this.list3; break;
+      // }
     },
     onClick(link) {
       window.open(link);
