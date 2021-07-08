@@ -1,6 +1,6 @@
 <template>
   <div class="left-2">
-    <Title>媒体传播态势</Title>
+    <Title>事件趋势</Title>
     <Bar />
     <Title style="margin-top: 6.5rem">热词词云</Title>
     <WordCloud />
