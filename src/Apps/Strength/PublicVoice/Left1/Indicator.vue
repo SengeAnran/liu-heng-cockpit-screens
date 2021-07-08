@@ -1,9 +1,9 @@
 <template>
   <div class="indicator">
     <div class="item">
-      <span class="name">本月事件</span>
+      <span class="name">本周事件</span>
       <span class="value">
-        {{ 1416 }}
+        {{ week }}
         <span class="unit">件</span>
       </span>
     </div>
@@ -15,26 +15,44 @@
 <!--      </span>-->
       <div class="little-item">
         <span class="item-title">正面</span>
-        <span class="item-number" style="color: rgb(0,254,95)">659</span>
+        <span class="item-number" style="color: rgb(0,254,95)">{{ positive }}</span>
       </div>
       <div class="little-item">
         <span class="item-title">负面</span>
-        <span class="item-number" style="color: rgb(247,0,50)">742</span>
+        <span class="item-number" style="color: rgb(247,0,50)">{{ negative }}</span>
       </div>
       <div class="little-item">
         <span class="item-title">中性</span>
-        <span class="item-number" style="color: rgb(94,127,129)">15</span>
+        <span class="item-number" style="color: rgb(94,127,129)">{{ neutral }}</span>
       </div>
     </div>
   </div>
 </template>
 <script>
+import economicAPI from '@/api/Strength/PublicVoice';
+
 export default {
   data() {
     return {
       mouth: 13,
       week: 7,
+      positive: null,
+      neutral: null,
+      negative: null,
     };
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      const data = await economicAPI.eventSituation();
+      this.week = data[0].bzsjs;
+      this.positive = data[0].zmsjs;
+      this.negative = data[0].fmsjs;
+      this.neutral = data[0].zxsjs;
+      console.log(data);
+    },
   },
 };
 </script>

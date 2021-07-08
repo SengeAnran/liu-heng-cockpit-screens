@@ -32,7 +32,9 @@ export default {
       getCompanyList()
         .request()
         .then((res) => {
-          this.markData = res;
+          console.log(res);
+          const filterRes = res.filter((item) => item.lng && item.lat);
+          this.markData = filterRes;
           this.markDown();
         });
     },

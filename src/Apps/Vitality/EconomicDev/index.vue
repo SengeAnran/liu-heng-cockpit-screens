@@ -2,22 +2,22 @@
   <div class="economic-dev">
     <Map />
     <Left />
-    <Right1 />
-    <Right2 />
+    <Right />
+<!--    <Right2 />-->
   </div>
 </template>
 <script>
 import Left from './Left';
-import Right1 from './Right1';
-import Right2 from './Right2';
-import Map from './Map';
+import Right from './Right';
+// import Right2 from './Right2';
+import Map from './newMap';
 
 export default {
   components: {
     Map,
     Left,
-    Right1,
-    Right2,
+    Right,
+    // Right2,
   },
 };
 </script>

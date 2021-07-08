@@ -166,9 +166,9 @@ export default [
         component: () => import('@/Apps/Vitality/EconomicDev'),
         meta: {
           indicator: [
-            { name: 'GDP总量    ', value: 4320, unit: '万' },
+            { name: '工业生产总值', value: 4320, unit: '万' },
             { name: '企业工业数  ', value: 429, unit: '家' },
-            { name: '劳动力资源数', value: 41586, unit: '人' },
+            { name: '渔农业总产值', value: 41586, unit: '万' },
           ],
         },
       },

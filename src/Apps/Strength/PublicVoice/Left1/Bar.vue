@@ -14,67 +14,32 @@
   </div>
 </template>
 <script>
+import economicAPI from '@/api/Strength/PublicVoice';
+
 export default {
   data() {
     return {
-      list: [
-        {
-          name: '微信',
-          value: 168,
-          percent: 69,
-        },
-        {
-          name: '今日头条',
-          value: 15,
-          percent: 6,
-        },
-        {
-          name: 'uc头条',
-          value: 14,
-          percent: 6,
-        },
-        {
-          name: '腾讯网',
-          value: 9,
-          percent: 4,
-        },
-        {
-          name: '新浪新闻',
-          value: 8,
-          percent: 3,
-        },
-        {
-          name: 'QQ看点',
-          value: 7,
-          percent: 3,
-        },
-        {
-          name: '普陀新闻网',
-          value: 6,
-          percent: 2,
-        },
-        {
-          name: '一点资讯',
-          value: 5,
-          percent: 2,
-        },
-        {
-          name: '大舟山',
-          value: 5,
-          percent: 2,
-        },
-        {
-          name: '舟山',
-          value: 5,
-          percent: 2,
-        },
-      ],
+      list: [],
     };
   },
   mounted() {
-    this.setValue(this.list);
+    this.getData();
+    // this.setValue(this.list);
   },
   methods: {
+    async getData() {
+      const data = await economicAPI.getHotWebsiteSource();
+      let tatal = 0;
+      // console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        tatal = tatal + data[i].sl;
+      }
+      this.list = data.map((d) => ({
+        name: d.mtmc,
+        value: d.sl,
+        percent: (d.sl / tatal * 100).toFixed(0),
+      }));
+    },
     setValue(data) {
       this.list = data.map((d) => ({ ...d, percent: 0 }));
       setTimeout(() => {
@@ -87,6 +52,10 @@ export default {
 <style lang="scss" scoped>
 .bar {
   // outline: 1px solid red;
+  height: 400px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   margin-top: 2.4rem;
   .bar-item {
     // outline: 1px solid red;

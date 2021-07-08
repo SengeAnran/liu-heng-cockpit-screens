@@ -1,6 +1,7 @@
 <template>
   <div class="bar-line" ref="eleChart"></div>
 </template>
+
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
@@ -10,7 +11,7 @@ export default {
   data() {
     return {
       list: [
-        // { name: '水利项目', line: 264, bar: 123 },
+        // { name: '2015', value: 63403 },
       ],
     };
   },
@@ -24,18 +25,18 @@ export default {
       this.chart.setOption(getOptions(this.list));
     },
     async fetchData() {
-      const data = await economicAPI.industryDistribution();
+      const data = await economicAPI.gdp();
       // console.log(data);
-      const list = data.map((d) => ({
-        ...d,
-        name: d.xmzl,
-        bar: d.xmk,
-        line: d.tze,
-      }));
+      const list = data
+        .map((d) => ({
+          ...d,
+          name: d.sj,
+          value: d.rjed,
+        }))
+        .sort((a, b) => {
+          return +a.name - (+b.name);
+        });
       this.chart.setOption(getOptions(list));
-      // this.list[0].value = data?.qyzcl || 0;
-      // this.list[1].value = data?.qymd || 0;
-      // this.list[2].value = data?.ssgssl || 0;
     },
   },
 };
@@ -43,8 +44,8 @@ export default {
 <style lang="scss" scoped>
 .bar-line {
   flex: auto;
-  margin-left: 4rem;
+  margin-top: 5rem;
   // outline: 1px solid red;
-  height: 41rem;
+  height: 33rem;
 }
 </style>

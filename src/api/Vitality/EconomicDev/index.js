@@ -6,14 +6,18 @@ export default {
     return axios.get('/energy/getAgeDistribution');
   },
   // 三类产业占比
-  distributionByYear(year) {
-    return axios.get('/energy/getAgeDistributionByYear', {
+  threeTypeIndustries(year) {
+    return axios.get('/energy/getThreeTypeIndustries', {
       params: { year },
     });
   },
+  // 三类产业占比
+  threeTypeIndustriesYears() {
+    return axios.get('/energy/getYears');
+  },
   // 人均GDP趋势
   gdp() {
-    return axios.get('/energy/getGdp');
+    return axios.get('/energy/getGDPTrend');
   },
   // 财政收入情况
   financialRevenue() {
@@ -21,15 +25,35 @@ export default {
   },
   // 人口经济情况
   economicInfo() {
-    return axios.get('/energy/getEconomicInfo');
+    return axios.get('/energy/getPopulationAndEconomic');
   },
   // 人口宏观情况
   populationInfo() {
     return axios.get('/energy/getPopulationInfo');
   },
-  // 项目行业分布
-  industryDistribution() {
-    return axios.get('/energy/getIndustryDistribution');
+  // 工业生产总值与工业企业数
+  industrialAndEnterprises() {
+    return axios.get('/energy/getIndustrialAndEnterprises');
+  },
+  // 外贸总额和增长率
+  foreignTradeAndGrowthRates() {
+    return axios.get('/energy/getForeignTradeAndGrowthRates');
+  },
+  // 旅游接待人数和旅游收入
+  tourismReceptionIncome() {
+    return axios.get('/energy/getTourismReceptionIncome');
+  },
+  // 渔农村常住居民人均可支配收入
+  perCapitaDisposableIncome() {
+    return axios.get('/energy/getPerCapitaDisposableIncome');
+  },
+  // 渔农业总产值
+  fishAndAgricultural() {
+    return axios.get('/energy/getFishAndAgricultural');
+  },
+  // 全年水产品总产量
+  aquaticProductsTotal() {
+    return axios.get('/energy/getAquaticProductsTotal');
   },
   // 企业注册注销数量
   companyRegisterCancelNum() {

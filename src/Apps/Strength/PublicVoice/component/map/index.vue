@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import { getInfoGovernment } from '@/api/Strength/GovernServe/api';
+// import { getInfoGovernment } from '@/api/Strength/GovernServe/api';
 import './item.scss';
 import AMap from 'AMap';
 export default {
@@ -28,6 +28,7 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.initMap();
   },
   methods: {
     initMap() {
@@ -56,12 +57,12 @@ export default {
       </div>`;
     },
     loadData() {
-      getInfoGovernment()
-        .request()
-        .then((json) => {
-          if (!json) { return; }
-          this.data = json;
-        });
+      // getInfoGovernment()
+      //   .request()
+      //   .then((json) => {
+      //     if (!json) { return; }
+      //     this.data = json;
+      //   });
     },
   },
 };

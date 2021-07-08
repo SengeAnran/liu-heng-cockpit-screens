@@ -65,7 +65,7 @@ export default {
   display: flex;
   width: 80rem;
   justify-content: space-between;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   .item {
     width: 38.2rem;
     height: 12.3rem;
