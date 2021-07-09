@@ -4,10 +4,10 @@
     <div class="section-content">
       <ul class="loop-tab">
         <li
-          :class="{'active': currentTab === item.name}"
-          v-for="(item, index) in tabList"
+          :class="{'active': currentTab === item.type}"
+          v-for="(item, index) in dataList"
           :key="index"
-          @click="selectTab(item.name, index)">{{item.name}}</li>
+          @click="selectTab(item.type, index)">{{item.type}}</li>
       </ul>
       <div class="total-legend">
         维权总数 <span class="value">{{totalNum}}</span> 件
@@ -19,7 +19,7 @@
 <script>
 import Title from './components/Title';
 import { protectRights } from '@/api/Charm/PartyConstruction';
-import { sumBy } from 'lodash';
+import { sumBy, groupBy } from 'lodash';
 import * as echarts from 'echarts/core';
 import {
   BarChart,
@@ -47,12 +47,13 @@ export default {
   data() {
     return {
       chart: null,
-      tabList: [
-        { name: '工会' },
-        { name: '妇联' },
-        { name: '团委' },
-      ],
+      // tabList: [
+      //   { name: '工会' },
+      //   { name: '妇联' },
+      //   { name: '团委' },
+      // ],
       currentTab: '工会',
+      dataList: [],
       chartOpt: {
         tooltip: {
           trigger: 'axis',
@@ -155,11 +156,26 @@ export default {
     this.getData();
   },
   methods: {
-    selectTab(name, index) {
-      this.currentTab = name;
+    selectTab(type, index) {
+      this.currentTab = type;
+      this.formatChartData();
     },
     async getData() {
       const result = await protectRights().request();
+      console.log('Right Section3', result);
+      const tempGroupData = groupBy(result, 'qtlx');
+      console.log('tempGroupData', tempGroupData);
+      this.dataList = Object.keys(tempGroupData).map((key) => {
+        return {
+          type: key,
+          data: tempGroupData[key],
+        };
+      });
+      this.currentTab = this.dataList[0].type;
+      this.formatChartData();
+    },
+    formatChartData() {
+      const result = this.dataList.find((i) => i.type === this.currentTab).data;
       this.totalNum = sumBy(result, 'wqsl');
       this.chartOpt.xAxis[0].data = result.map((i) => i.jgmc);
       this.chartOpt.series[0].data = result.map((i) => i.wqsl);

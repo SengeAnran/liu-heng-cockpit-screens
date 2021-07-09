@@ -4,7 +4,7 @@
     <div class="section-content">
       <div class="loop-img">
         <Swiper
-          ref="mySwiper"
+          ref="mySwiper2"
           :options="swiperOptions"
           @slideChange="onSlideChange"
           class="swiper-main"
@@ -32,10 +32,10 @@
       <div class="loop-content">
         <ul class="loop-tab">
           <li
-            :class="{'active': currentTab === item.name}"
-            v-for="(item, index) in tabList"
+            :class="{'active': currentTab === item.qtlx}"
+            v-for="(item, index) in dataList"
             :key="index"
-            @click="selectTab(item.name, index)">{{item.name}}</li>
+            @click="selectTab(item.qtlx, index)">{{item.qtlx}}</li>
         </ul>
 
         <h2 class="activity-title">{{currentData.bt}}</h2>
@@ -89,11 +89,18 @@ export default {
   mounted() {
     this.getData();
   },
+  computed: {
+    mySwiper() {
+      return this.$refs.mySwiper2.$swiper;
+    },
+  },
   methods: {
     onSlideChange() {
+      this.currentTab = this.tabList[this.mySwiper.activeIndex].name;
+      this.currentData = this.dataList[this.mySwiper.activeIndex];
     },
     selectTab(name, index) {
-      this.currentTab = name;
+      this.mySwiper.slideTo(index);
     },
     async getData() {
       const result = await workCompetition().request();
