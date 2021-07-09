@@ -51,7 +51,7 @@ export default {
       this.positive = data[0].zmsjs;
       this.negative = data[0].fmsjs;
       this.neutral = data[0].zxsjs;
-      console.log(data);
+      // console.log(data);
     },
   },
 };

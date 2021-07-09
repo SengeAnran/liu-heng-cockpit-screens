@@ -50,11 +50,11 @@ export default {
           }
         }
       }
-      console.log(this.name);
+      // console.log(this.name);
       for (let i = 0; i < this.name.length; i++) {
         this.line.push(this.getLine(this.name[i]));
       }
-      console.log(this.line);
+      // console.log(this.line);
       this.initEcharts();
     },
     // 提取每个数组的数据

@@ -15,6 +15,10 @@ export default {
   eventSituation() {
     return axios.get('/opinion/analysis/eventSituation');
   },
+  // 事件趋势
+  getDevelopmentTrend() {
+    return axios.get('/opinion/analysis/getDevelopmentTrend');
+  },
   // 热门网站来源
   getHotWebsiteSource() {
     return axios.get('/opinion/analysis/getHotWebsiteSource');

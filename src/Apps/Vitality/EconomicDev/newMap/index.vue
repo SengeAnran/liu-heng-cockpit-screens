@@ -75,7 +75,7 @@ export default {
       marker.on('click', this.handleMarkerClick);
     },
     handleMarkerClick(ev) {
-      console.log(ev);
+      // console.log(ev);
       this.clearLastMarkerDetail();
       const marker = ev.target;
 
