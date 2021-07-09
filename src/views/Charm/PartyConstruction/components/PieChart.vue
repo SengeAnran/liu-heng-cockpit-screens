@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       chart: null,
-      sexAgeColor: ['#fde8c2', '#f9dba6', '#f1c579', '#eab65d', '#c0f5f0', '#a9e4e2', '#7ad5d2', '#4cbfbb'],
+      sexAgeColor: ['#fffbe6', '#fff1b8', '#ffe58f', '#ffd666', '#ffc53d', '#faad14', '#e6fffb', '#b5f5ec', '#87e8de', '#5cdbd3', '#36cfc9', '#13c2c2'],
       educationColor: ['#77ff5c', '#8680ef', '#357cff', '#4fb7f3', '#77ffff', '#ffe477', '#f1b348', '#f29477'],
       chartOpt: {
         tooltip: {

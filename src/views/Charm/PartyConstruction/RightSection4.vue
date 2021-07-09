@@ -16,8 +16,8 @@
       >
         <swiper-slide class="swiper-slide" v-for="(item, index) in dataList" :key="index">
           <div class="row">
-            <div class="file-label">{{item.label}}</div>
-            <div class="file-time">{{item.time}}</div>
+            <div class="file-label">{{item.wjm}}</div>
+            <div class="file-time">{{item.rq}}</div>
           </div>
         </swiper-slide>
       </swiper>
@@ -29,6 +29,7 @@ import { partyDocument } from '@/api/Charm/PartyConstruction';
 import Title from './components/Title';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
+import { groupBy } from 'lodash';
 export default {
   components: {
     Title,
@@ -51,27 +52,9 @@ export default {
           delay: 3000,
         },
       },
+      data: [],
+      allDataList: [],
       dataList: [
-        {
-          label: '中共中央印发《中国共产党中央委员会工作条例》',
-          time: '2021-05-23',
-        },
-        {
-          label: '中共中央印发《中国共产党中央委员会工作条例》',
-          time: '2021-05-23',
-        },
-        {
-          label: '中共中央印发《中国共产党中央委员会工作条例》',
-          time: '2021-05-23',
-        },
-        {
-          label: '中共中央印发《中国共产党中央委员会工作条例》',
-          time: '2021-05-23',
-        },
-        {
-          label: '中共中央印发《中国共产党中央委员会工作条例》',
-          time: '2021-05-23',
-        },
       ],
     };
   },
@@ -86,13 +69,19 @@ export default {
       const result = await partyDocument().request();
       console.log('partyDocument', result);
       if (result) {
-        this.dataList = result.map((i) => {
+        const tempGroupData = groupBy(result, 'qtlx');
+        this.allDataList = Object.keys(tempGroupData).map((key) => {
           return {
-            label: i.wjm,
-            time: i.rq,
+            type: key,
+            data: tempGroupData[key],
           };
         });
       }
+      this.currentTab = this.allDataList[0].type;
+      this.formatDataList();
+    },
+    formatDataList() {
+      this.dataList = this.allDataList.find((i) => i.type === this.currentTab).data;
     },
   },
 };
