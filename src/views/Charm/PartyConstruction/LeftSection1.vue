@@ -22,7 +22,7 @@
         </div>
 
         <div class="bottom-chart">
-          <div ref="lineChart" style="width: 100%;height: 26rem;"></div>
+          <div ref="lineChart" style="width: 100%;height: 45rem;"></div>
         </div>
       </div>
 
@@ -215,6 +215,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .left-section1{
+  // height: 85rem;
   p{
     margin: 0;
   }
@@ -227,14 +228,16 @@ export default {
         background: linear-gradient(90deg,rgba(129, 157, 186, .06) 100%, rgba(129, 157, 186, 0) 0%);
         display: flex;
         align-items: center;
-        margin-top: 3rem;
+        margin-top: 6rem;
+        height: 33rem;
+        padding-left: 3rem;
         .party-icon{
           display: inline-block;
-          width: 10rem;
+          width: 12rem;
           text-align: center;
           p{
             background-image: -webkit-linear-gradient(bottom, #4ECDD8, white);
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             -webkit-text-fill-color: transparent;
             -webkit-background-clip: text;
           }
@@ -247,16 +250,16 @@ export default {
             position: relative;
             .value{
               background-image: -webkit-linear-gradient(bottom, #4ECDD8, white);
-              font-size: 4.8rem;
+              font-size: 5.6rem;
               -webkit-text-fill-color: transparent;
               -webkit-background-clip: text;
             }
             .unit{
-              font-size: 2.2rem;
+              font-size: 2.4rem;
               color: #fff;
             }
             .bottom-text{
-              font-size: 2.2rem;
+              font-size: 2.4rem;
               color: rgba(255, 255, 255, .5);
             }
             .vertical-line{
@@ -278,6 +281,7 @@ export default {
     }
     .right-area{
       width: 49%;
+      height: 80rem;
       .tab-bar{
         margin-top: 2rem;
         height: 6rem;
