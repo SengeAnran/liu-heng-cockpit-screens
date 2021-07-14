@@ -1,6 +1,7 @@
+import { unitNum } from '@/utils/number';
 export default function getOptions(data) {
-  const total = data.reduce((pre, d) => pre + d.value, 0);
-  const center = ['26%', '57%'];
+  // const total = data.reduce((pre, d) => pre + d.value, 0);
+  const center = ['26%', '47%'];
   return {
     color: ['#6182AE', '#66CCFF', '#31EABC', '#EDC063'],
     legend: {
@@ -9,7 +10,7 @@ export default function getOptions(data) {
       itemHeight: 21,
       itemGap: 31,
       left: '51%',
-      top: '36%',
+      top: '30%',
       orient: 'vertical',
       textStyle: {
         color: '#fff',
@@ -43,8 +44,10 @@ export default function getOptions(data) {
       bottom: 26,
       formatter: function (name) {
         const item = data.find((d) => d.name === name);
-        const percent = (item.value / total * 100).toFixed(1);
-        return [`{name|${name}}`, `{value|${item.value}家}`, `{percent|${percent}%}`].join('');
+        // const percent = (item.value / total * 100).toFixed(1);
+        // return [`{name|${name}}`, `{value|${item.value}家}`, `{percent|${percent}%}`].join('');
+        const { value, unit } = unitNum(item.value);
+        return [`{name|${name}}`, `{value|${value}${unit}}`].join('');
       },
     },
     series: [
@@ -55,7 +58,7 @@ export default function getOptions(data) {
         label: {
           // show: false,
           position: 'center',
-          formatter: '企业类型\n分布',
+          formatter: '三类产业\n占比',
           color: '#fff',
           fontSize: 34,
           lineHeight: 46,

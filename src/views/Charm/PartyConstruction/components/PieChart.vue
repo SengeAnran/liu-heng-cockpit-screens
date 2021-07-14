@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       chart: null,
-      sexAgeColor: ['#fde8c2', '#f9dba6', '#f1c579', '#eab65d', '#c0f5f0', '#a9e4e2', '#7ad5d2', '#4cbfbb'],
+      sexAgeColor: ['#fffbe6', '#fff1b8', '#ffe58f', '#ffd666', '#ffc53d', '#faad14', '#e6fffb', '#b5f5ec', '#87e8de', '#5cdbd3', '#36cfc9', '#13c2c2'],
       educationColor: ['#77ff5c', '#8680ef', '#357cff', '#4fb7f3', '#77ffff', '#ffe477', '#f1b348', '#f29477'],
       chartOpt: {
         tooltip: {
@@ -78,7 +78,7 @@ export default {
           left: '16%',
           top: '2%',
         },
-        color: ['#fde8c2', '#f9dba6', '#f1c579', '#eab65d', '#c0f5f0', '#a9e4e2', '#7ad5d2', '#4cbfbb'],
+        color: ['#fffbe6', '#fff1b8', '#ffe58f', '#ffd666', '#ffc53d', '#faad14', '#e6fffb', '#b5f5ec', '#87e8de', '#5cdbd3', '#36cfc9', '#13c2c2'],
         series: [
           {
             name: 'series1',
@@ -250,6 +250,8 @@ export default {
 <style lang="scss" scoped>
 .pie-chart-wrapper{
   display: flex;
+  align-items: center;
+  height: 70rem;
   p{
     margin: 0;
   }
@@ -263,7 +265,7 @@ export default {
     .legend-block{
       display: flex;
       .legend-label{
-        line-height: 1.3;
+        line-height: 1.6;
         width: 3rem;
         font-size: 2.8rem;
         color: #FFFEFE;
@@ -273,7 +275,7 @@ export default {
         color: #FFFEFE;
         font-size: 2.4rem;
         p{
-          line-height: 1.6;
+          line-height: 2;
         }
         .color-block{
           display: inline-block;

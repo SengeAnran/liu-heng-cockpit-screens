@@ -1,25 +1,22 @@
 <template>
   <div class="left-webview">
     <!-- 六横镇科技情况 -->
-    <secondary-title name="六横镇科技情况" isLarge />
+    <secondary-title name="港口货运能力" isLarge />
     <div class="left-container">
-      <!-- 吞吐量 -->
-      <pier-situation />
-      <!-- 码头吞吐量分析 -->
-      <pier-analysis />
-      <!-- 运输货物分类占比 -->
-      <pie-chart :list="sortPercent.data" :title="sortPercent.title" :color="sortPercent.color" />
-      <!-- 运输货物城市分布 -->
-      <pie-chart :list="citySpread.data" :title="citySpread.title" :color="citySpread.color" :itemGap="citySpread.itemGap" />
+      <Chart1 />
+      <Chart2 />
+      <Chart3 />
+      <Chart4 />
     </div>
   </div>
 </template>
 
 <script>
 import SecondaryTitle from '../components/SecondaryTitle';
-import PierSituation from './PierSituation';
-import PierAnalysis from './PierAnalysis';
-import PieChart from '../components/PieChart';
+import Chart1 from './chart1';
+import Chart2 from './chart2';
+import Chart3 from './chart3';
+import Chart4 from './chart4';
 import {
   proportionOfCargoTransportedByCategory,
   distributionOfTransportGoodsInCities,
@@ -27,9 +24,10 @@ import {
 export default {
   components: {
     SecondaryTitle,
-    PierSituation,
-    PierAnalysis,
-    PieChart,
+    Chart1,
+    Chart2,
+    Chart3,
+    Chart4,
   },
   data() {
     return {
@@ -47,7 +45,7 @@ export default {
     };
   },
   mounted() {
-    this.loadData();
+    // this.loadData();
   },
   methods: {
     loadData() {

@@ -15,17 +15,8 @@
         往下切换
       </div>
       <div class="line_clum">
-        <div class="item">
-          <span>2000</span>
-        </div>
-        <div class="item">
-          <span>2005</span>
-        </div>
-        <div class="item">
-          <span>2010</span>
-        </div>
-        <div class="item">
-          <span>2015</span>
+        <div class="item" v-for="(item, index) in years" :key="index">
+          <span>{{ item }}</span>
         </div>
       </div>
       <div class="last">
@@ -38,13 +29,14 @@
 <script>
 import './mark.scss';
 import AMap from 'AMap';
-import { getMapData } from '@/api/Overview/CityEvolution/api';
+import { getAreaStatisticsByYear } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   components: {
   },
   data() {
     return {
+      years: [2015, 2016, 2017, 2018, 2019],
       map: null,
       mapDom: null,
       markList: [],
@@ -53,22 +45,22 @@ export default {
       timer: null,
       leftMarkMessage: [
         {
-          name: '常驻人口',
+          name: '工业生产总值',
           count: 2345,
-          unit: '人',
-          position: [122.1302540000, 29.747613],
+          unit: '亿元',
+          position: [122.1202540000, 29.777613],
         },
         {
-          name: '流动人口',
+          name: '旅游收入',
           count: 2345,
-          unit: '人',
-          position: [122.1202540000, 29.717613],
+          unit: '亿元',
+          position: [122.1202540000, 29.737613],
         },
         {
           name: '户籍人口',
           count: 2345,
           unit: '人',
-          position: [122.1502540000, 29.677613],
+          position: [122.1502540000, 29.707613],
         },
       ],
       rightMarkMessage: [
@@ -76,19 +68,19 @@ export default {
           name: '陆地面积',
           count: 2345,
           unit: '平方千米',
-          position: [121.95000000000, 29.767613],
+          position: [122.1100000000, 29.767613],
         },
         {
           name: 'GDP',
           count: 2345,
-          unit: '万元',
-          position: [121.9700000000, 29.730613],
+          unit: '亿元',
+          position: [122.1100000000, 29.730613],
         },
         {
-          name: '企业数量',
+          name: '财政总收入',
           count: 2345,
-          unit: '家',
-          position: [121.9812540000, 29.690613],
+          unit: '亿元',
+          position: [122.136267, 29.701412],
         },
       ],
     };
@@ -101,25 +93,15 @@ export default {
   },
   methods: {
     getData() {
-      const year = (this.activeIndex * 5 + 2000) + '';
-      getMapData().request({ year: year }).then((res) => {
-        if (res.length) {
-          this.leftMarkMessage[0].count = res[0].czrk;
-          this.leftMarkMessage[1].count = res[0].ldrk;
-          this.leftMarkMessage[2].count = res[0].hjrk;
-          // 陆地面积
-          this.rightMarkMessage[0].count = res[0].ldmj;
-          this.rightMarkMessage[1].count = res[0].gdp;
-          this.rightMarkMessage[2].count = res[0].qysl;
-        } else {
-          this.leftMarkMessage[0].count = '暂无数据';
-          this.leftMarkMessage[1].count = '暂无数据';
-          this.leftMarkMessage[2].count = '暂无数据';
-          // 陆地面积
-          this.rightMarkMessage[0].count = '暂无数据';
-          this.rightMarkMessage[1].count = '暂无数据';
-          this.rightMarkMessage[2].count = '暂无数据';
-        }
+      const year = (this.activeIndex < this.years.length) ? (this.years[this.activeIndex]) : (this.years[this.activeIndex - 1] + 1);
+      getAreaStatisticsByYear().request({ year: year }).then((res) => {
+        this.leftMarkMessage[0].count = res.gysczz || '暂无数据';
+        this.leftMarkMessage[1].count = res.lysr || '暂无数据';
+        this.leftMarkMessage[2].count = res.hjrk || '暂无数据';
+        // 陆地面积
+        this.rightMarkMessage[0].count = res.ldmj || '暂无数据';
+        this.rightMarkMessage[1].count = res.gdp || '暂无数据';
+        this.rightMarkMessage[2].count = res.czzsr || '暂无数据';
         this.markerDownList();
       });
     },
@@ -129,7 +111,7 @@ export default {
         resizeEnable: true,
         zoom: 13,
         zooms: [3, 20],
-        zoomEnable: false,
+        zoomEnable: true,
         center: [122.138836, 29.730147],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
@@ -156,18 +138,18 @@ export default {
       this.timer = setTimeout(() => {
         this.paly();
         this.autoPlay();
-      }, 5 * 1000);
+      }, 3 * 1000);
     },
     paly() {
-      if (this.activeIndex >= 4) {
+      if (this.activeIndex >= this.years.length) {
         return;
       }
       this.activeIndex += 1;
       this.getData();
       this.lineTask(this.activeIndex); // 进度条
     },
-    makeLeftMarker(message) {
-      const content = `
+    markLeftContent(message) {
+      return `
         <div class='mark_wrapper_left'>
           <img class='mark_img_bg' src="${require('./img/mark_left.png')}" style=''></img>
           <div class='mark_address'>六横</div>
@@ -178,17 +160,20 @@ export default {
               ${message.unit}
             </span>
           </div>
-        </div>`
-      ;
+        </div>`;
+    },
+    makeLeftMarker(message) {
+      const content = this.markLeftContent(message);
       const marker = new AMap.Marker({
         position: message.position,
+        offset: new AMap.Pixel(-890, 0),
         content: content,
       });
       marker.setMap(this.map);
       this.markList.push(marker);
     },
-    makeRightMarker(message) {
-      const content = `
+    markRightContent(message) {
+      return `
         <div class='mark_wrapper_right'>
           <img class='mark_img_bg' src="${require('./img/mark_right.png')}" style=''></img>
           <div class='mark_address'>六横</div>
@@ -201,20 +186,23 @@ export default {
           </div>
         </div>`
       ;
+    },
+    makeRightMarker(message) {
+      const content = this.markRightContent(message);
       const marker = new AMap.Marker({
         position: message.position,
+        offset: new AMap.Pixel(0, 0),
         content: content,
       });
       marker.setMap(this.map);
       this.markList.push(marker);
     },
     lineTask(index) {
-      this.length = 4;
-      this.marskLine.style.width = (1035 / 4) * index + 'px';
+      this.marskLine.style.width = (1035 / this.years.length) * index + 'px';
     },
     next() {
       clearTimeout(this.timer);
-      if (this.activeIndex === 4) {
+      if (this.activeIndex === this.years.length) {
         this.activeIndex = 0;
         this.lineTask(this.activeIndex); // 进度条
       } else {
@@ -355,6 +343,4 @@ export default {
     }
   }
 }
-</style>
-<style lang="scss">
 </style>

@@ -10,12 +10,14 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getGdpSpeed } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   data() {
     return {
       charts: null,
-      data: [],
+      xAxisData: [],
+      GdpData: [],
     };
   },
   components: {
@@ -60,8 +62,8 @@ export default {
           borderColor: 'rgba(255, 255, 255, 0.4)',
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
-        xAxis: {
-          data: [2015, 2016, 2017, 2018, 2019, 2020],
+        xAxis: [{
+          data: this.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -80,15 +82,16 @@ export default {
           },
           axisLabel: {
             color: '#FFFFFF',
+            margin: 10,
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           splitLine: {
             show: false,
           },
           boundaryGap: true,
-        },
+        }],
         yAxis: [{
           name: '%',
           type: 'value',
@@ -133,15 +136,24 @@ export default {
             distance: 10,
             color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
-          data: [9.5, 11.5, 9, 6.5, 6.5, 3.8],
+          data: this.GdpData,
         }],
       };
       return option;
     },
-    loadData() { // 社区信息
+    async loadData() { // 社区信息
+      const res = await getGdpSpeed().request();
+      const xAxisData = [];
+      const GdpData = [];
+      res.reverse().forEach((item, index) => {
+        xAxisData.push(item.nf);
+        GdpData.push(item.gdpzs);
+      });
+      this.xAxisData = xAxisData;
+      this.GdpData = GdpData;
       this.setData();
     },
   },

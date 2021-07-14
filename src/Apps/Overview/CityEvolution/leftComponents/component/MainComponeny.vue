@@ -10,6 +10,7 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getExportImportTotal } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   data() {
@@ -32,14 +33,7 @@ export default {
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
-      const mockData = [
-        { total: '62225', detail: '中远船务' },
-        { total: '44761', detail: '鑫亚船舶' },
-        { total: '15696', detail: '龙山船厂' },
-        { total: '34712', detail: '金润石油' },
-        { total: '1973', detail: '海港中奥' },
-        { total: '390', detail: '宏基水产' },
-      ];
+      const mockData = this.data;
       const dataItems = [
         {
           shadowBlur: 15,
@@ -146,8 +140,8 @@ export default {
       ];
       const chartsData = mockData.map((item, index) => {
         return {
-          value: item.total,
-          name: item.detail,
+          value: item.jcke,
+          name: item.qymc,
           itemStyle: dataItems[index],
         };
       });
@@ -161,17 +155,17 @@ export default {
           left: '60%',
           bottom: '0%',
           orient: 'vertical',
-          data: mockData.map((item) => item.detail),
+          data: mockData.map((item) => item.qymc),
           icon: 'rect',
           formatter: (params) => {
-            const dataAll = mockData.map((item) => Number(item.total));
-            const total = dataAll.reduce((x, y) => parseInt(x, 10) + parseInt(y, 10));
-            const value = Number(mockData.filter((item) => item.detail === params)[0].total);
-            if (total === 0) {
+            const dataAll = mockData.map((item) => Number(item.jcke));
+            const jcke = dataAll.reduce((x, y) => parseInt(x, 10) + parseInt(y, 10));
+            const value = Number(mockData.filter((item) => item.qymc === params)[0].jcke);
+            if (jcke === 0) {
               return `{a|${params}：}{b}`;
             }
             const name = params;
-            return `{a|${name}：}{b|${((value * 100) / total).toFixed(2)}%}`;
+            return `{a|${name}：}{b|${((value * 100) / jcke).toFixed(2)}%}`;
           },
           textStyle: {
             rich: {
@@ -241,8 +235,11 @@ export default {
       };
       return option;
     },
-    loadData() { // 社区信息
-      this.setData();
+    loadData() {
+      getExportImportTotal().request().then((res) => {
+        this.data = res;
+        this.setData();
+      });
     },
   },
 };

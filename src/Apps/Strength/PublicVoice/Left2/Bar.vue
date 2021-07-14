@@ -5,6 +5,7 @@
 <script>
 import * as echarts from 'echarts/lib/echarts';
 import getOptions from './options';
+import economicAPI from '@/api/Strength/PublicVoice';
 
 export default {
   data() {
@@ -19,9 +20,21 @@ export default {
     };
   },
   mounted() {
-    this.initChart();
+    this.getData();
+    // this.initChart();
   },
   methods: {
+    async getData() {
+      const data = await economicAPI.getDevelopmentTrend();
+      this.list = data.map((d) => ({
+        name: d.rq,
+        value1: d.sjzs,
+        value2: d.zmsjs,
+        value3: d.fmsjs,
+        value4: d.zxsjs,
+      }));
+      this.initChart();
+    },
     initChart() {
       this.chart = echarts.init(this.$refs.eleChart);
       this.chart.setOption(getOptions(this.list));

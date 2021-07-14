@@ -10,11 +10,15 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getFinancePublicTrend } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   data() {
     return {
       charts: null,
+      xAxisData: [],
+      financeIncome: [],
+      publickPre: [],
       data: [],
     };
   },
@@ -61,7 +65,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: [2015, 2016, 2017, 2018, 2019, 2020],
+          data: this.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -81,7 +85,7 @@ export default {
           axisLabel: {
             color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           splitLine: {
@@ -113,7 +117,7 @@ export default {
             color: '#FFFFFF',
             margin: 10,
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           axisTick: {
@@ -153,7 +157,7 @@ export default {
               fontSize: 22,
             },
           },
-          data: [10.80, 13.13, 13.25, 12.90, 12.93, 10.63],
+          data: this.financeIncome,
         }, {
           type: 'bar',
           name: '公共财政预算收入',
@@ -170,12 +174,24 @@ export default {
               fontSize: 22,
             },
           },
-          data: [6.14, 8.18, 8.21, 8.88, 9.57, 7.27],
+          data: this.publickPre,
         }],
       };
       return option;
     },
-    loadData() {
+    async loadData() {
+      const res = await getFinancePublicTrend().request();
+      const xAxisData = [];
+      const financeIncome = [];
+      const publickPre = [];
+      res.reverse().forEach((item, index) => {
+        xAxisData.push(item.nf);
+        financeIncome.push(item.czsr);
+        publickPre.push(item.ggys);
+      });
+      this.xAxisData = xAxisData;
+      this.financeIncome = financeIncome;
+      this.publickPre = publickPre;
       this.setData();
     },
   },

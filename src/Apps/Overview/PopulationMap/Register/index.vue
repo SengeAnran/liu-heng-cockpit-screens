@@ -99,6 +99,8 @@ export default {
         yAxis: {
           name: '人数',
           type: 'value',
+          min: 60000,
+          interval: 500,
           nameTextStyle: {
             align: 'center',
             color: '#fff',

@@ -14,42 +14,32 @@
   </div>
 </template>
 <script>
+import economicAPI from '@/api/Strength/PublicVoice';
+
 export default {
   data() {
     return {
-      list: [
-        {
-          name: '微博',
-          value: 92,
-          percent: 90,
-        },
-        {
-          name: '微信',
-          value: 87,
-          percent: 70,
-        },
-        {
-          name: '贴吧',
-          value: 63,
-          percent: 66,
-        },
-        {
-          name: '今日头条',
-          value: 18,
-          percent: 62,
-        },
-        {
-          name: '天天快报',
-          value: 21,
-          percent: 60,
-        },
-      ],
+      list: [],
     };
   },
   mounted() {
-    this.setValue(this.list);
+    this.getData();
+    // this.setValue(this.list);
   },
   methods: {
+    async getData() {
+      const data = await economicAPI.getHotWebsiteSource();
+      let tatal = 0;
+      // console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        tatal = tatal + data[i].sl;
+      }
+      this.list = data.map((d) => ({
+        name: d.mtmc,
+        value: d.sl,
+        percent: (d.sl / tatal * 100).toFixed(0),
+      }));
+    },
     setValue(data) {
       this.list = data.map((d) => ({ ...d, percent: 0 }));
       setTimeout(() => {
@@ -62,6 +52,10 @@ export default {
 <style lang="scss" scoped>
 .bar {
   // outline: 1px solid red;
+  height: 400px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   margin-top: 2.4rem;
   .bar-item {
     // outline: 1px solid red;
@@ -70,7 +64,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin-bottom: 3.8rem;
+    margin-bottom: -0.2rem;
     .bar-bg {
       background: rgba(158, 158, 158, 0.2);
       position: absolute;

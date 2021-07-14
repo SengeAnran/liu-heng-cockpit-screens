@@ -10,12 +10,15 @@
 <script>
 import * as echarts from 'echarts';
 import BaseTitle from '../../components/BaseTitle';
+import { getTourNumAndIncomeTrend } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   data() {
     return {
       charts: null,
-      data: [],
+      incomeData: [],
+      travellerData: [],
+      xAxisData: [],
     };
   },
   components: {
@@ -52,7 +55,7 @@ export default {
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
-          data: [2015, 2016, 2017, 2018, 2019, 2020],
+          data: this.xAxisData,
           type: 'category',
           axisLine: {
             lineStyle: {
@@ -72,7 +75,7 @@ export default {
           axisLabel: {
             color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           splitLine: {
@@ -104,7 +107,7 @@ export default {
             color: '#FFFFFF',
             margin: 10,
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           axisTick: {
@@ -135,7 +138,7 @@ export default {
             color: '#FFFFFF',
             margin: 10,
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
           axisTick: {
@@ -182,10 +185,10 @@ export default {
             distance: 10,
             color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
-          data: [165.2, 190.9, 229, 261.3, 300.4, 313.3],
+          data: this.travellerData,
         }, {
           type: 'line',
           yAxisIndex: '1', // 第一个柱状图的数据
@@ -200,15 +203,21 @@ export default {
             distance: 10,
             color: '#FFFFFF',
             textStyle: {
-              fontSize: 22,
+              fontSize: 20,
             },
           },
-          data: [9.22, 10.88, 13.28, 15.16, 17.42, 18.17],
+          data: this.incomeData,
         }],
       };
       return option;
     },
-    loadData() { // 社区信息
+    async loadData() {
+      const res = await getTourNumAndIncomeTrend().request();
+      res.reverse().forEach((item, index) => {
+        this.xAxisData.push(item.nf);
+        this.travellerData.push(item.jdrs);
+        this.incomeData.push(item.ggys);
+      });
       this.setData();
     },
   },
