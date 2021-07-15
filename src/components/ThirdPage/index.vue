@@ -25,10 +25,18 @@ export default {
     window.globalScale.add((scaleX, scaleY) => {
       x = scaleX;
       y = scaleY;
-      this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({ scaleX, scaleY }));
+      this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({
+        scaleX,
+        scaleY,
+        source: 'scale',
+      }));
     });
     this.$refs.thirdPage.contentWindow.onload = () => {
-      this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({ scaleX: x, scaleY: y }));
+      this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({
+        scaleX: x,
+        scaleY: y,
+        source: 'scale',
+      }));
     };
   },
   computed: {
