@@ -16,8 +16,8 @@ export default [
         meta: {
           indicator: [
             { name: '全镇面积', value: 654, unit: '平方公里' },
-            { name: '陆地面积', value: 140, unit: '平方公里' },
-            { name: '行政区划 ', value: 654, unit: '个村' },
+            { name: '陆地面积', value: 145.5, unit: '平方公里' }, // 140
+            { name: '海洋面积 ', value: 514, unit: '平方公里' },
           ],
         },
       },
@@ -27,9 +27,9 @@ export default [
         component: () => import('@/Apps/Overview/PopulationMap'),
         meta: {
           indicator: [
-            { name: '户籍人口', value: 62824, unit: '人' },
-            { name: '流动人口', value: 40991, unit: '人' },
-            { name: '人口密度 ', value: 449, unit: '人/平方公里' },
+            { name: '户籍人口', value: 62161, unit: '人' }, // 62824
+            { name: '出生人口', value: 298, unit: '人' },
+            { name: '人口增长率 ', value: -0.44, unit: '%' },
           ],
         },
       },
@@ -178,9 +178,9 @@ export default [
         component: () => import('@/Apps/Vitality/PortEconomy'),
         meta: {
           indicator: [
-            { name: '港口货物吞吐量', value: 8112, unit: '万吨' },
-            { name: '外贸进出口额', value: 13.3, unit: '亿美元' },
-            { name: '到位市外资金', value: 12.26, unit: '亿元' },
+            { name: '货运船舶运力', value: 8324.4, unit: '万吨' },
+            { name: '外贸进出口总额', value: 13.3, unit: '亿美元' },
+            { name: '港口总货运量', value: 8200.1, unit: '万吨' },
           ],
         },
       },
@@ -240,9 +240,9 @@ export default [
         component: () => import('@/Apps/Strength/PublicVoice'),
         meta: {
           indicator: [
-            { name: '本月事件', value: 1416, unit: '件' },
-            { name: '本周事件', value: 30, unit: '件' },
-            { name: '舆情评论总数', value: 32456, unit: '个' },
+            { name: '本周事件', value: 346, unit: '件' },
+            { name: '正面', value: 106, unit: '件' },
+            { name: '负面', value: 8, unit: '件' },
           ],
         },
       },
@@ -260,9 +260,9 @@ export default [
         component: () => import(/* webpackChunkName: "charm" */ '@/views/Charm/PartyConstruction'),
         meta: {
           indicator: [
-            { name: '正式党员数量', value: 100, unit: '人' },
-            { name: '月劳动竞赛次数', value: 3, unit: '次' },
-            { name: '月工会维权总数', value: 100, unit: '件' },
+            { name: '正式党员数量', value: 275, unit: '人' },
+            { name: '预备党员', value: 27, unit: '人' },
+            { name: '发展党员', value: 23, unit: '人' },
           ],
         },
       },
