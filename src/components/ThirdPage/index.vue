@@ -1,6 +1,11 @@
 <template>
   <div class="third-page" :style="pageStyle">
-    <iframe :src="url" frameborder="0" ref="thirdPage"></iframe>
+    <iframe
+      :src="formatUrl"
+      v-if="formatUrl"
+      frameborder="0"
+      ref="thirdPage"
+    />
   </div>
 </template>
 <script>
@@ -19,24 +24,10 @@ export default {
       default: 1350,
     },
   },
-  mounted() {
-    let x;
-    let y;
-    window.globalScale.add((scaleX, scaleY) => {
-      x = scaleX;
-      y = scaleY;
-      this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({
-        scaleX,
-        scaleY,
-        source: 'scale',
-      }));
-    });
-    this.$refs.thirdPage.contentWindow.onload = () => {
-      this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({
-        scaleX: x,
-        scaleY: y,
-        source: 'scale',
-      }));
+  data() {
+    return {
+      scaleX: 1,
+      scaleY: 1,
     };
   },
   computed: {
@@ -47,6 +38,36 @@ export default {
         // transform: 'scale(1, 0.833)',
       };
     },
+    formatUrl() {
+      if (this.scaleX && this.scaleY) {
+        return this.url + `?scaleX=${this.scaleX}&scaleY=${this.scaleY}`;
+      }
+      return undefined;
+    },
+  },
+  mounted() {
+    let init = false;
+    const url = this.url;
+    const originIndex = url.indexOf('/', url.indexOf('://') + 3);
+    const origin = originIndex > -1 ? url.substr(0, originIndex) : url;
+    console.log(origin);
+    const handler = (scaleX, scaleY) => {
+      if (!init) {
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+        init = true;
+      } else {
+        this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({
+          scaleX,
+          scaleY,
+          source: 'scale',
+        }), origin);
+      }
+    };
+    window.globalScale.add(handler);
+    this.$once('hook:beforeDestroy', () => {
+      window.globalScale.remove(handler);
+    });
   },
 };
 </script>
