@@ -28,6 +28,7 @@ export default {
     return {
       scaleX: 1,
       scaleY: 1,
+      formatUrl: undefined,
     };
   },
   computed: {
@@ -38,11 +39,10 @@ export default {
         // transform: 'scale(1, 0.833)',
       };
     },
-    formatUrl() {
-      if (this.scaleX && this.scaleY) {
-        return this.url + `?scaleX=${this.scaleX}&scaleY=${this.scaleY}`;
-      }
-      return undefined;
+  },
+  watch: {
+    url() {
+      this.updateFormatUrl();
     },
   },
   mounted() {
@@ -50,11 +50,12 @@ export default {
     const url = this.url;
     const originIndex = url.indexOf('/', url.indexOf('://') + 3);
     const origin = originIndex > -1 ? url.substr(0, originIndex) : url;
-    console.log(origin);
+    // console.log(origin);
     const handler = (scaleX, scaleY) => {
+      this.scaleX = scaleX;
+      this.scaleY = scaleY;
       if (!init) {
-        this.scaleX = scaleX;
-        this.scaleY = scaleY;
+        this.updateFormatUrl();
         init = true;
       } else {
         this.$refs.thirdPage.contentWindow.postMessage(JSON.stringify({
@@ -68,6 +69,11 @@ export default {
     this.$once('hook:beforeDestroy', () => {
       window.globalScale.remove(handler);
     });
+  },
+  methods: {
+    updateFormatUrl() {
+      this.formatUrl = this.url + `?scaleX=${this.scaleX}&scaleY=${this.scaleY}`;
+    },
   },
 };
 </script>
