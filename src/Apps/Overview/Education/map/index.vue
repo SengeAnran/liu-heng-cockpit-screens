@@ -1,15 +1,22 @@
 <template>
   <div class="map_wrapper">
-    <div class="main-map" ref="map"></div>
+    <div class="main-map" ref="map" v-show="!threeDMap"></div>
     <div class="mask"></div>
-    <div class="toggle-layer">
-      <h3>医院图例</h3>
+    <div class="toggle-layer" v-show="!threeDMap">
+      <h3>学校图例</h3>
       <ul>
         <li v-for="(item,i) in list" :key="`toggle-${i}`">
           <span @click="selectMark(item,i)" :class="{'active':currentIndex===i}"></span>
           <span>{{item.type}}</span>
         </li>
       </ul>
+    </div>
+    <div class="main-map" v-show="threeDMap">
+      <iframe src="http://60.163.192.206:8000/srit3d/" width="100%" height="100%"></iframe>
+    </div>
+    <div class="switch">
+      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
     </div>
   </div>
 </template>
@@ -23,6 +30,7 @@ export default {
   components: {},
   data() {
     return {
+      threeDMap: false,
       map: null,
       mapDom: null,
       currentIndex: '',
@@ -42,6 +50,13 @@ export default {
     this.getData();
   },
   methods: {
+    changeMap(type) {
+      if (type === 3) {
+        this.threeDMap = true;
+      } else {
+        this.threeDMap = false;
+      }
+    },
     getData(category = '') {
       getSchoolListByCategory().request({ category: category }).then((res) => {
         this.markData = res;
@@ -153,12 +168,37 @@ export default {
       z-index: 111;
     }
   }
+  .switch {
+    width: 274px;
+    height: 360px;
+    position: absolute;
+    bottom: 48rem;
+    right: 200rem;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    .button{
+      width: 114px;
+      height: 44px;
+      font-size: 24px;
+      line-height: 44px;
+      text-align: center;
+      color: #82e2e4;
+      cursor: pointer;
+      background: url("./img/mmexport.jpg") no-repeat;
+      &.active {
+        color: white;
+        background: url("./img/mmexport1.jpg") no-repeat;
+      }
+    }
+  }
   .toggle-layer {
     width: 274px;
     height: 360px;
     position: absolute;
     left: 3326px;
-    top: 943px;
+    top: 843px;
+    //top: 943px;
     background: url('../images/toggle-bg.png') no-repeat;
     background-size: 100% 100%;
     z-index: 1000;

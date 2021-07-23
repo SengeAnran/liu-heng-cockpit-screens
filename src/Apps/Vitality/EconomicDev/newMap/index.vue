@@ -181,7 +181,7 @@ export default {
     width: 274px;
     height: 360px;
     position: absolute;
-    bottom: 50rem;
+    bottom: 48rem;
     right: 200rem;
     display: flex;
     justify-content: space-around;
