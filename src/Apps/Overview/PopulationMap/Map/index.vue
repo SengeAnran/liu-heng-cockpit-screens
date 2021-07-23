@@ -1,7 +1,14 @@
 <template>
   <div class="map-container" >
     <div class="mask"></div>
-    <div class="main-map" ref="map"></div>
+    <div class="main-map" ref="map" v-show="!threeDMap"></div>
+    <div class="main-map" v-show="threeDMap">
+      <iframe src="http://60.163.192.206:8000/srit3d/" width="100%" height="100%"></iframe>
+    </div>
+    <div class="switch">
+      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
+    </div>
   </div>
 </template>
 
@@ -17,6 +24,7 @@ export default {
     return {
       map: null,
       infoWindow: null,
+      threeDMap: false,
     };
   },
   mounted() {
@@ -29,6 +37,13 @@ export default {
     // marker.setMap(this.map);
   },
   methods: {
+    changeMap(type) {
+      if (type === 3) {
+        this.threeDMap = true;
+      } else {
+        this.threeDMap = false;
+      }
+    },
     loadData() {
       getPopuliationNumRank().request().then((json) => {
         if (json) {
@@ -163,6 +178,30 @@ export default {
           font-size: 28px;
           color: #00ffff;
         }
+      }
+    }
+  }
+  .switch {
+    width: 274px;
+    height: 360px;
+    position: absolute;
+    bottom: 48rem;
+    right: 200rem;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    .button{
+      width: 114px;
+      height: 44px;
+      font-size: 24px;
+      line-height: 44px;
+      text-align: center;
+      color: #82e2e4;
+      cursor: pointer;
+      background: url("./img/mmexport.jpg") no-repeat;
+      &.active {
+        color: white;
+        background: url("./img/mmexport1.jpg") no-repeat;
       }
     }
   }
