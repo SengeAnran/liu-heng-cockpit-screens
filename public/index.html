@@ -26,7 +26,7 @@
         cb(this.ratioX, this.ratioY);
       },
       remove(cb) {
-        const index = this.resizeCbs.indexOf(onResize);
+        const index = this.resizeCbs.indexOf(cb);
         this.resizeCbs.splice(index, 1);
       },
       setScale(ratioX, ratioY) {
