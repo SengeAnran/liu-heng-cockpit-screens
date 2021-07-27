@@ -134,7 +134,7 @@ export default {
           </div>
           <div class='flex'>
             <div><label>医生人数：</label><br><span>${markerMsg.ysrs || 0}人</span></div>
-            <div><label>护士人数：</label><br><span>${markerMsg.hsrs || 0}人</span></div>
+            <div><label>卫技人员：</label><br><span>${markerMsg.hsrs || 0}人</span></div>
           </div>
           <div><label>地址：</label><br><span>${markerMsg.dz}</span></div>
         </div>`;

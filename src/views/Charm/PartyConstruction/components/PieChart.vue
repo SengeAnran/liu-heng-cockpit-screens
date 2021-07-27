@@ -5,12 +5,12 @@
     <div class="legend-wrap" v-if="type === 'sexAge' ">
       <div class="top-legend legend-block">
         <div class="legend-label">
-          男性占比
+          男性数量
         </div>
         <div class="legend-list">
           <p v-for="(item, index) in legendMale" :key="index">
             <span class="color-block" :style="{'background': sexAgeColor[item.index]}"></span>
-            <span class="legend-text">{{item.label}}占比</span>
+            <span class="legend-text">{{item.label}}数量</span>
             <span class="legend-percent">{{item.percent}}</span>
           </p>
         </div>
@@ -18,12 +18,12 @@
 
       <div class="bottom-legend legend-block">
         <div class="legend-label">
-          女性占比
+          女性数量
         </div>
         <div class="legend-list">
           <p v-for="(item, index) in legendFemale" :key="index">
             <span class="color-block" :style="{'background': sexAgeColor[item.index]}"></span>
-            <span class="legend-text">{{item.label}}占比</span>
+            <span class="legend-text">{{item.label}}数量</span>
             <span class="legend-percent">{{item.percent}}</span>
           </p>
         </div>
@@ -34,7 +34,7 @@
       <div class="legend-list-education">
         <div v-for="(item, index) in formatEducation" :key="index" class="list-item">
           <span class="color-block" :style="{'background': educationColor[index]}"></span>
-          <span class="legend-text">{{item.label}}占比</span>
+          <span class="legend-text">{{item.label}}数量</span>
           <span class="legend-percent">{{item.percent}}</span>
         </div>
       </div>
