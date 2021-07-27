@@ -72,7 +72,7 @@ export default [
           indicator: [
             { name: '医院数量', value: 5, unit: '个' },
             { name: '医生数量', value: 3352, unit: '人' },
-            { name: '护士数量', value: 424, unit: '人' },
+            { name: '卫技人员', value: 424, unit: '人' },
           ],
         },
       },
