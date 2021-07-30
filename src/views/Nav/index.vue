@@ -46,6 +46,17 @@
 </template>
 <script>
 import routes from '@/config/routes';
+import {
+  getBottomInfo,
+  peopleBasicInfo,
+  getVillagerInfo,
+  getRealtimeHandling,
+  realtimeInvestment,
+  getCountyAirQualityStatus,
+  eventSituation,
+  getEconomicDevelopmentIndicator,
+  getGkjjGoal,
+} from '@/api/IndexItem';
 
 export default {
   data() {
@@ -56,10 +67,18 @@ export default {
   },
   computed: {
     primalNavActiveName() {
+      // console.log(this.$route);
       return this.$route.matched?.[0]?.name || '';
     },
     secondaryNav() {
       // console.log(this.routes);
+      switch (this.primalNavActiveName) {
+        case '六横总览' : this.loadData(); break;
+        case '魅力六横' : this.charmLoadData(); break;
+        case '实力六横' : this.strengthLoadData(); break;
+        case '活力六横' : this.vitalityLoadData(); break;
+        default : break;
+      }
       // console.log(this.primalNavActiveName);
       const matched = this.routes.find((d) => d.name === this.primalNavActiveName);
       return matched?.children || [];
@@ -67,6 +86,7 @@ export default {
     leftSecondaryNav() {
       const len = Math.min(this.secondaryNav.length / 2, 3);
       const start = this.secondNavStart;
+      // console.log(this.secondaryNav.slice(start, start + len));
       return this.secondaryNav.slice(start, start + len);
     },
     rightSecondaryNav() {
@@ -84,6 +104,68 @@ export default {
     },
   },
   methods: {
+    // 六横总览
+    async loadData() {
+      const res = await getBottomInfo().request();
+      // console.log(res);
+      // console.log(this.secondaryNav);
+      for (let i = 0; i < res.length; i++) {
+        this.secondaryNav[i].meta.indicator[0].value = res[i].value1;
+        this.secondaryNav[i].meta.indicator[1].value = res[i].value2;
+        this.secondaryNav[i].meta.indicator[2].value = res[i].value3;
+      }
+    },
+    // 魅力六横
+    async charmLoadData() {
+      const res = await peopleBasicInfo().request();
+      const res2 = await getVillagerInfo().request();
+      // console.log(res);
+      // console.log(this.secondaryNav);
+      // for (let i = 0; i < res.length; i++) {
+      this.secondaryNav[0].meta.indicator[0].value = res.basicCnt.zsdyrs;
+      this.secondaryNav[0].meta.indicator[1].value = res.basicCnt.ybdyrs;
+      this.secondaryNav[0].meta.indicator[2].value = res.basicCnt.fzdyrs;
+      this.secondaryNav[1].meta.indicator[0].value = res2.sqrks;
+      this.secondaryNav[1].meta.indicator[1].value = res2.sqldls;
+      this.secondaryNav[1].meta.indicator[2].value = res2.rsqts;
+      // }
+    },
+    // 实力六横
+    async strengthLoadData() {
+      const res1 = await getRealtimeHandling().request();
+      const res2 = await realtimeInvestment().request();
+      const res3 = await getCountyAirQualityStatus().request();
+      const res4 = await eventSituation().request();
+      // console.log(res1);
+      // console.log(res2);
+      // console.log(res3);
+      // console.log(this.secondaryNav);
+      this.secondaryNav[0].meta.indicator[0].value = res1[0].jrbll;
+      this.secondaryNav[0].meta.indicator[1].value = res1[0].bzbll;
+      this.secondaryNav[0].meta.indicator[2].value = res1[0].ydbll;
+      this.secondaryNav[1].meta.indicator[0].value = res2[0].ysxrzxms;
+      this.secondaryNav[1].meta.indicator[1].value = res2[0].yssrzzl;
+      // this.secondaryNav[1].meta.indicator[2].value = res2.ydbll;
+      this.secondaryNav[2].meta.indicator[0].value = res3[0].aqi;
+      this.secondaryNav[2].meta.indicator[1].value = res3[0].pm25;
+      // this.secondaryNav[2].meta.indicator[2].value = res3.ydbll;
+      this.secondaryNav[3].meta.indicator[0].value = res4[0].bzsjs;
+      this.secondaryNav[3].meta.indicator[1].value = res4[0].zmsjs;
+      this.secondaryNav[3].meta.indicator[2].value = res4[0].fmsjs;
+    },
+    // 活力六横
+    async vitalityLoadData() {
+      const res = await getEconomicDevelopmentIndicator().request();
+      const res1 = await getGkjjGoal().request();
+      console.log(res);
+      console.log(this.secondaryNav);
+      this.secondaryNav[0].meta.indicator[0].value = res.gysczz / 10000;
+      this.secondaryNav[0].meta.indicator[1].value = res.gyqys;
+      this.secondaryNav[0].meta.indicator[2].value = res.ynyzcz / 10000;
+      this.secondaryNav[1].meta.indicator[0].value = res1.hycpyl / 10000;
+      this.secondaryNav[1].meta.indicator[1].value = res1.wmjckze / 100000000;
+      this.secondaryNav[1].meta.indicator[2].value = res1.gkhyzhyl / 10000;
+    },
     toPrimalLeft() {
       const nextIndex = (this.routes.length + this.activePrimalIndex - 1) % this.routes.length;
       this.$router.push(this.routes[nextIndex].path);

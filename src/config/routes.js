@@ -240,7 +240,7 @@ export default [
         component: () => import('@/Apps/Strength/PublicVoice'),
         meta: {
           indicator: [
-            { name: '本周事件', value: 346, unit: '件' },
+            { name: '本月事件', value: 346, unit: '件' },
             { name: '正面', value: 106, unit: '件' },
             { name: '负面', value: 8, unit: '件' },
           ],

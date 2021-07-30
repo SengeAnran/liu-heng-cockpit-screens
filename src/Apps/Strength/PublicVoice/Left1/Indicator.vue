@@ -1,7 +1,7 @@
 <template>
   <div class="indicator">
     <div class="item">
-      <span class="name">本周事件</span>
+      <span class="name">本月事件</span>
       <span class="value">
         {{ week }}
         <span class="unit">件</span>
