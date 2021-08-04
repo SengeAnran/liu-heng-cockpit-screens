@@ -6,31 +6,22 @@
           :class="{'active': currentTab === item.name}"
           v-for="(item, index) in listData"
           :key="index"
-          @click="selectTab(item.name, index)"
+          @click="selectTab(item.name, item.index)"
         >{{item.name}}</li>
       </ul>
     </div>
-    <Map />
-    <Left1 />
-    <Left2 />
-    <Right1 />
-    <Right2 />
+    <TrafficOverview v-if="tabIndex === 1"></TrafficOverview>
+    <BridgeAndTunnel v-if="tabIndex === 2"></BridgeAndTunnel>
   </div>
 </template>
 <script>
-import Map from './Map';
-import Left1 from './Left1';
-import Left2 from './Left2';
-import Right1 from './Right1';
-import Right2 from './Right2';
+import TrafficOverview from './components/TrafficOverview';
+import BridgeAndTunnel from './components/BridgeAndTunnel';
 
 export default {
   components: {
-    Map,
-    Left1,
-    Left2,
-    Right1,
-    Right2,
+    TrafficOverview,
+    BridgeAndTunnel,
   },
   data() {
     return {
@@ -61,11 +52,13 @@ export default {
         },
       ],
       currentTab: '交通概况',
+      tabIndex: 1,
     };
   },
   methods: {
-    selectTab(name) {
+    selectTab(name, index) {
       this.currentTab = name;
+      this.tabIndex = index;
     },
   },
 };

@@ -3,7 +3,7 @@
     <div class="video-wrapper">
       <HLSPlayer class="video" v-if="false" />
       <VideoFrame />
-      <h3>监控名称</h3>
+<!--      <h3>监控名称</h3>-->
     </div>
     <div class="video-list">
       <div
@@ -68,7 +68,7 @@ export default {
   }
   .video-list {
     flex: auto;
-    height: 31rem;
+    height: 40rem;
     overflow: auto;
     .item {
       cursor: pointer;

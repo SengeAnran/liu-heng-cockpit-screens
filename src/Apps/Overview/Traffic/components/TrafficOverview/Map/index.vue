@@ -34,6 +34,8 @@ export default {
       '公交车',
       '出租车',
       '码头',
+      '长途客运',
+      '维修厂',
     ];
     return {
       list,
@@ -60,10 +62,10 @@ export default {
 <style lang="scss" scoped>
 .map-legend {
   width: 27.4rem;
-  height: 28.1rem;
+  height: 38.1rem;
   position: absolute;
   left: 332rem;
-  top: 100rem;
+  top: 92rem;
   background: url('./img/legend.png') no-repeat;
   background-size: 100% 100%;
   padding-left: 4.2rem;
