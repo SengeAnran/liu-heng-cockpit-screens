@@ -8,11 +8,17 @@
 </template>
 <script>
 export default {
+  props: {
+    videoUrl: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       scaleX: 1,
       scaleY: 1,
-      videoUrl: '/video/demo_embedded_for_iframe.html',
+      // videoUrl: '',
     };
   },
   mounted() {
@@ -29,9 +35,9 @@ export default {
   methods: {
     setIframe() {
       const iframeWin = this.$refs.iframeEle;
-      const { clientWidth, clientHeight } = iframeWin.parentNode;
-      iframeWin.style.width = clientWidth * this.scaleX + 'px';
-      iframeWin.style.height = clientHeight * this.scaleY + 'px';
+      // const { clientWidth, clientHeight } = iframeWin.parentNode;
+      // iframeWin.style.width = clientWidth * this.scaleX + 'px';
+      // iframeWin.style.height = clientHeight * this.scaleY + 'px';
       setTimeout(() => {
         iframeWin.src = this.videoUrl;
       }, 1000);

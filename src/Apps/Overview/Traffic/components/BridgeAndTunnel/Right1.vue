@@ -1,9 +1,9 @@
 <template>
   <div class="right-1">
     <Title>邬家红绿灯监控</Title>
-    <Monitor />
+    <Monitor :video-url="url1" />
     <Title>世大梅线与六横路叉口监控位</Title>
-    <Monitor />
+    <Monitor :video-url="url2" />
   </div>
 </template>
 <script>
@@ -18,6 +18,12 @@ export default {
     // Bar2,
     Title,
     // Line1,
+  },
+  data() {
+    return {
+      url1: 'http://60.163.192.206:8000/liuheng-pc/views/haikangVideo/window_simple_preview.html?cameraIndexCode=33090305011321460328&width=540&height=380',
+      url2: 'http://60.163.192.206:8000/liuheng-pc/views/haikangVideo/window_simple_preview.html?cameraIndexCode=33090305141323020001&width=540&height=380',
+    };
   },
 };
 </script>

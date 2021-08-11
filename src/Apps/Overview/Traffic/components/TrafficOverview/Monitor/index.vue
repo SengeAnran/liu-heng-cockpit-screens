@@ -2,7 +2,9 @@
   <div class="monitor">
     <div class="video-wrapper">
       <HLSPlayer class="video" v-if="false" />
-      <VideoFrame />
+      <VideoFrame
+        :video-url="videoUrl"
+      />
 <!--      <h3>监控名称</h3>-->
     </div>
     <div class="video-list">
@@ -23,6 +25,12 @@
 import HLSPlayer from '../HLSPlayer';
 import VideoFrame from './VideoFrame';
 export default {
+  props: {
+    videoUrl: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       videoList: [
@@ -52,7 +60,8 @@ export default {
     width: 56rem;
     flex: none;
     .video {
-      height: 31.5rem;
+      /*height: 31.5rem;*/
+      height: 38.5rem;
     }
     h3 {
       font-size: 2.8rem;
