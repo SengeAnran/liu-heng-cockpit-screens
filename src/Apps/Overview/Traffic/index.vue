@@ -34,22 +34,22 @@ export default {
           index: 2,
           name: '公路桥隧',
         },
-        {
-          index: 3,
-          name: '道路客运',
-        },
-        {
-          index: 4,
-          name: '水路客运',
-        },
-        {
-          index: 5,
-          name: '道路货运',
-        },
-        {
-          index: 6,
-          name: '交通运行分析',
-        },
+        // {
+        //   index: 3,
+        //   name: '道路客运',
+        // },
+        // {
+        //   index: 4,
+        //   name: '水路客运',
+        // },
+        // {
+        //   index: 5,
+        //   name: '道路货运',
+        // },
+        // {
+        //   index: 6,
+        //   name: '交通运行分析',
+        // },
       ],
       currentTab: '交通概况',
       tabIndex: 1,
@@ -77,7 +77,7 @@ export default {
     z-index: 99999;
     .loop-tab{
       display: flex;
-      justify-content: space-between;
+      //justify-content: space-between;
       align-items: center;
       height: 7rem;
       list-style: none;
