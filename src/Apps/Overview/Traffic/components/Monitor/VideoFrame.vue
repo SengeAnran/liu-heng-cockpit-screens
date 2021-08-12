@@ -19,7 +19,7 @@ export default {
     return {
       scaleX: 1,
       scaleY: 1,
-      // videoUrl: '',
+      videoUrl: '/video/demo_embedded_for_iframe.html',
     };
   },
   mounted() {
@@ -69,7 +69,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .video-frame {
-  height: 31.5rem;
+  height: 42.5rem;
   position: relative;
   iframe {
     position: absolute;
