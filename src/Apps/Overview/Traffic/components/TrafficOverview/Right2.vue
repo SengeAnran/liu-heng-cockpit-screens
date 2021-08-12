@@ -1,14 +1,14 @@
 <template>
   <div class="right-2">
     <Title>大岙码头监控位</Title>
-    <Monitor :video-url="url1" />
+    <Monitor :camera-index-code="url1" />
     <Title>危险品企业监控</Title>
-    <Monitor :video-url="url2" />
+    <Monitor :camera-index-code="url2" />
   </div>
 </template>
 <script>
 import Title from './Title';
-import Monitor from './Monitor';
+import Monitor from '../Monitor';
 // import Table from './Table';
 
 export default {
@@ -19,8 +19,8 @@ export default {
   },
   data() {
     return {
-      url1: 'http://60.163.192.206:8000/liuheng-pc/views/haikangVideo/window_simple_preview.html?cameraIndexCode=33090305141323020001&width=540&height=380',
-      url2: 'http://60.163.192.206:8000/liuheng-pc/views/haikangVideo/window_simple_preview.html?cameraIndexCode=33090462081310237534&width=540&height=380',
+      url1: '33090305141323020001',
+      url2: '33090462081310237534',
     };
   },
 };

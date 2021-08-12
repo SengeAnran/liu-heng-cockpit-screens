@@ -3,13 +3,14 @@
     <iframe
       frameborder="0"
       ref="iframeEle"
+      :key="cameraIndexCode"
     />
   </div>
 </template>
 <script>
 export default {
   props: {
-    videoUrl: {
+    cameraIndexCode: {
       type: String,
       default: '',
     },
@@ -35,11 +36,11 @@ export default {
   methods: {
     setIframe() {
       const iframeWin = this.$refs.iframeEle;
-      // const { clientWidth, clientHeight } = iframeWin.parentNode;
-      // iframeWin.style.width = clientWidth * this.scaleX + 'px';
-      // iframeWin.style.height = clientHeight * this.scaleY + 'px';
+      const { clientWidth, clientHeight } = iframeWin.parentNode;
+      iframeWin.style.width = clientWidth * this.scaleX + 'px';
+      iframeWin.style.height = clientHeight * this.scaleY + 'px';
       setTimeout(() => {
-        iframeWin.src = this.videoUrl;
+        iframeWin.src = this.videoUrl + '#' + this.cameraIndexCode;
       }, 1000);
     },
     onResize(scaleX = 1, scaleY = 1) {

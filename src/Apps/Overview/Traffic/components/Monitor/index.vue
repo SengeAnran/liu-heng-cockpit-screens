@@ -3,7 +3,7 @@
     <div class="video-wrapper">
       <HLSPlayer class="video" v-if="false" />
       <VideoFrame
-        :video-url="videoUrl"
+        :camera-index-code="cameraIndexCode"
       />
 <!--      <h3>监控名称</h3>-->
     </div>
@@ -26,7 +26,7 @@ import HLSPlayer from '../HLSPlayer';
 import VideoFrame from './VideoFrame';
 export default {
   props: {
-    videoUrl: {
+    cameraIndexCode: {
       type: String,
       default: '',
     },
@@ -35,11 +35,11 @@ export default {
     return {
       videoList: [
         { name: '监控名称1', date: '2021.06.17 12:58:23', id: 0 },
-        { name: '监控名称2', date: '2021.06.17 12:58:23', id: 1 },
-        { name: '监控名称3', date: '2021.06.17 12:58:23', id: 2 },
-        { name: '监控名称4', date: '2021.06.17 12:58:23', id: 3 },
-        { name: '监控名称5', date: '2021.06.17 12:58:23', id: 4 },
-        { name: '监控名称6', date: '2021.06.17 12:58:23', id: 5 },
+        // { name: '监控名称2', date: '2021.06.17 12:58:23', id: 1 },
+        // { name: '监控名称3', date: '2021.06.17 12:58:23', id: 2 },
+        // { name: '监控名称4', date: '2021.06.17 12:58:23', id: 3 },
+        // { name: '监控名称5', date: '2021.06.17 12:58:23', id: 4 },
+        // { name: '监控名称6', date: '2021.06.17 12:58:23', id: 5 },
       ],
       activeId: 0,
     };

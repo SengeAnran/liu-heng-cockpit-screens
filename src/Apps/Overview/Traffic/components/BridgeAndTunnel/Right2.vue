@@ -8,7 +8,7 @@
 </template>
 <script>
 import Title from './Title';
-import Monitor from './Monitor';
+import Monitor from '../Monitor';
 // import Table from './Table';
 
 export default {
