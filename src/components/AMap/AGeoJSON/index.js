@@ -28,6 +28,7 @@ export default {
       const {
         polygon: polygonStyle = {},
         marker: markerStyle = {},
+        polyline: polylineStyle = {},
       } = this.geoStyle;
       const layer = new AMap.GeoJSON({
         getPolygon(feature, path) {
@@ -37,7 +38,19 @@ export default {
             extData: feature,
           });
         },
-        // getPolyline
+        getPolyline(feature, path) {
+          return new AMap.Polyline({
+            ...polylineStyle,
+            path: path,
+            strokeWeight: 6,
+            // strokeColor: 'rgb(135, 227, 0)',
+            // strokeColor: 'rgb(255, 203, 0)',
+            // strokeColor: 'rgb(255, 75, 215)',
+            lineJoin: 'round',
+            cursor: 'pointer',
+            extData: feature,
+          });
+        },
         getMarker(feature, position) {
           return new AMap.Marker({
             ...markerStyle,

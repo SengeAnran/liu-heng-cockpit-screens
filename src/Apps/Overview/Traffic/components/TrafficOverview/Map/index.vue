@@ -1,11 +1,43 @@
 <template>
   <div>
     <Map>
-      <AGeoJSON key="bus-points" :source="points" :geoStyle="{ marker: markerStyle }">
+      <AGeoJSON v-if="activeItem === '长途客运'" key="bus-points" :source="busStation" :geoStyle="{ marker: busStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
+      <AGeoJSON v-if="activeItem === '岛屿'" key="wharf-points" :source="wharf" :geoStyle="{ marker: wharfStyle }">
+        <template v-slot:popup="feature">
+          <PointPopup :feature="feature" />
+        </template>
+      </AGeoJSON>
+      <AGeoJSON v-if="activeItem === '码头'" key="island-points" :source="island" :geoStyle="{ marker: islandStyle }">
+        <template v-slot:popup="feature">
+          <PointPopup :feature="feature" />
+        </template>
+      </AGeoJSON>
+      <template v-if="activeItem === '县道'">
+        <AGeoJSON key="line1" :source="line1" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
+          <template v-slot:popup="feature">
+            <LinePopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+        <AGeoJSON key="line2" :source="line2" :geoStyle="{ polyline: { strokeColor: 'rgb(255, 203, 0)' } }">
+          <template v-slot:popup="feature">
+            <LinePopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+        <AGeoJSON key="line3" :source="line3" :geoStyle="{ polyline: { strokeColor: 'rgb(255, 75, 215)' } }">
+          <template v-slot:popup="feature">
+            <LinePopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+        <AGeoJSON key="line4" :source="line4" :geoStyle="{ polyline: { strokeColor: 'rgb(0, 125, 255)' } }">
+          <template v-slot:popup="feature">
+            <LinePopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+      </template>
     </Map>
     <div class="map-legend">
       <h3>交通运营图例</h3>
@@ -26,24 +58,45 @@
 import Map from '@/components/AMap';
 import AGeoJSON from '@/components/AMap/AGeoJSON';
 import PointPopup from './PointPopup';
-import points from './mock.json';
+import LinePopup from './LinePopup';
+import line1 from './line1.json';
+import line2 from './line2.json';
+import line3 from './line3.json';
+import line4 from './line4.json';
+import { wharf, busStation, island } from './data';
 
 export default {
   data() {
     const list = [
-      '公交车',
-      '出租车',
+      '岛屿',
       '码头',
       '长途客运',
-      '维修厂',
+      '县道',
+      '公交车',
+      // '公交车',
+      // '出租车',
+      // '码头',
+      // '长途客运',
+      // '维修厂',
     ];
     return {
       list,
       activeItem: list[0],
-      points: Object.freeze(points),
-      markerStyle: Object.freeze({
-        content: '<div style="width: 2rem; height: 2rem; border: 0.8rem solid #FDF17950; background: #FDF179; background-clip: content-box; border-radius: 50%;"></div>',
-        offset: new AMap.Pixel(-18, -18),
+      wharf: Object.freeze(wharf),
+      busStation: Object.freeze(busStation),
+      island: Object.freeze(island),
+      line1: Object.freeze(line1),
+      line2: Object.freeze(line2),
+      line3: Object.freeze(line3),
+      line4: Object.freeze(line4),
+      wharfStyle: Object.freeze({
+        content: '<div style="width: 6rem; height: 6rem;" class="wharf-point-afhwa"></div>',
+      }),
+      busStyle: Object.freeze({
+        content: '<div style="width: 6rem; height: 6rem;" class="bus-point-afhwa"></div>',
+      }),
+      islandStyle: Object.freeze({
+        content: '<div style="width: 6rem; height: 6rem;" class="island-point-afhwa"></div>',
       }),
     };
   },
@@ -54,7 +107,9 @@ export default {
   },
   components: {
     Map,
+    // Line1,
     AGeoJSON,
+    LinePopup,
     PointPopup,
   },
 };
@@ -110,5 +165,19 @@ export default {
       background: rgba(155, 252, 253, 0.3);
     }
   }
+}
+</style>
+<style lang="scss">
+.wharf-point-afhwa {
+  background: url('./img/wharf.png') no-repeat;
+  background-size: 100% 100%;
+}
+.bus-point-afhwa {
+  background: url('./img/bus.png') no-repeat;
+  background-size: 100% 100%;
+}
+.island-point-afhwa {
+  background: url('./img/island.png') no-repeat;
+  background-size: 100% 100%;
 }
 </style>
