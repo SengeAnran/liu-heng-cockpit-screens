@@ -1,14 +1,14 @@
 <template>
   <div class="right-2">
-    <Title>大吞码头监控位</Title>
-    <Monitor />
+    <Title>大岙码头监控位</Title>
+    <Monitor :camera-index-code="url1" />
     <Title>危险品企业监控</Title>
-    <Monitor />
+    <Monitor :camera-index-code="url2" />
   </div>
 </template>
 <script>
 import Title from './Title';
-import Monitor from './Monitor';
+import Monitor from '../Monitor';
 // import Table from './Table';
 
 export default {
@@ -16,6 +16,12 @@ export default {
     Title,
     Monitor,
     // Table,
+  },
+  data() {
+    return {
+      url1: '33090305141323020001',
+      url2: '33090462081310237534',
+    };
   },
 };
 </script>

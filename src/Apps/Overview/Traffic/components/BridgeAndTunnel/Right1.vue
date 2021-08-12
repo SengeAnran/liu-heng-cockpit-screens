@@ -1,23 +1,25 @@
 <template>
   <div class="right-1">
     <Title>邬家红绿灯监控</Title>
-    <Monitor />
+    <Monitor :camera-index-code="url1" />
     <Title>世大梅线与六横路叉口监控位</Title>
-    <Monitor />
+    <Monitor :camera-index-code="url2" />
   </div>
 </template>
 <script>
 import Title from './Title';
-// import Bar2 from './Bar2';
-// import Line1 from './Line1';
-import Monitor from './Monitor';
+import Monitor from '../Monitor';
 
 export default {
   components: {
     Monitor,
-    // Bar2,
     Title,
-    // Line1,
+  },
+  data() {
+    return {
+      url1: '33090305011321460328',
+      url2: '33090305141323020001',
+    };
   },
 };
 </script>

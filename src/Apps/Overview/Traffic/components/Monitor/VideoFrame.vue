@@ -3,16 +3,23 @@
     <iframe
       frameborder="0"
       ref="iframeEle"
+      :key="cameraIndexCode"
     />
   </div>
 </template>
 <script>
 export default {
+  props: {
+    cameraIndexCode: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       scaleX: 1,
       scaleY: 1,
-      videoUrl: '/video/demo_embedded_for_iframe.html',
+      // videoUrl: '',
     };
   },
   mounted() {
@@ -33,7 +40,7 @@ export default {
       iframeWin.style.width = clientWidth * this.scaleX + 'px';
       iframeWin.style.height = clientHeight * this.scaleY + 'px';
       setTimeout(() => {
-        iframeWin.src = this.videoUrl;
+        iframeWin.src = this.videoUrl + '#' + this.cameraIndexCode;
       }, 1000);
     },
     onResize(scaleX = 1, scaleY = 1) {
