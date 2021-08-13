@@ -16,6 +16,11 @@
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
+      <AGeoJSON v-if="activeItem === '隧道'" key="island-points" :source="tunnel" :geoStyle="{ polyline: { strokeColor: 'rgb(0, 255, 124)' } }">
+        <template v-slot:popup="feature">
+          <LinePopup :feature="feature" />
+        </template>
+      </AGeoJSON>
       <template v-if="activeItem === '县道'">
         <AGeoJSON key="line1" :source="line1" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
           <template v-slot:popup="feature">
@@ -63,6 +68,7 @@ import line1 from './line1.json';
 import line2 from './line2.json';
 import line3 from './line3.json';
 import line4 from './line4.json';
+import tunnel from './tunnel.json';
 import { wharf, busStation, island } from './data';
 
 export default {
@@ -72,7 +78,7 @@ export default {
       '码头',
       '长途客运',
       '县道',
-      '公交车',
+      '隧道',
       // '公交车',
       // '出租车',
       // '码头',
@@ -89,6 +95,7 @@ export default {
       line2: Object.freeze(line2),
       line3: Object.freeze(line3),
       line4: Object.freeze(line4),
+      tunnel: Object.freeze(tunnel),
       wharfStyle: Object.freeze({
         content: '<div style="width: 6rem; height: 6rem;" class="wharf-point-afhwa"></div>',
       }),

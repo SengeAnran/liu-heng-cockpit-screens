@@ -1,6 +1,6 @@
 <template>
   <div class="popup">
-    县道：{{ name }}
+    {{ name }}
   </div>
 </template>
 <script>
@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     name() {
-      return this.feature?.properties?._parentProperities?.name || '';
+      return this.feature?.properties?.name || this.feature?.properties?._parentProperities?.name || '';
     },
   },
   // mounted() {
