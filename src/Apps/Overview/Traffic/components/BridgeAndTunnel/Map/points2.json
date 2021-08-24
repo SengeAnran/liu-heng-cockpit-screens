@@ -1,0 +1,109 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "台门桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.10479736328125,
+          29.754541914052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "后山弄桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.1075439453125,
+          29.73248312878873
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "外湾桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.14324951171874,
+          29.73009810461113
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "孙家1号桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.16590881347656,
+          29.70296446463708
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "石柱头１号桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.13226318359375,
+          29.710419491983224
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "石柱头2号桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.12368011474611,
+          29.745003575393607
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "石柱头3号桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.08248138427734,
+          29.735762444449076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "下宅山桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.16110229492186,
+          29.687157976593504
+        ]
+      }
+    }
+  ]
+}
