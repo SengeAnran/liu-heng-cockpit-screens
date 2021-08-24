@@ -46,7 +46,7 @@ export default {
             // strokeColor: 'rgb(135, 227, 0)',
             // strokeColor: 'rgb(255, 203, 0)',
             // strokeColor: 'rgb(255, 75, 215)',
-            lineJoin: 'round',
+            lineJoin: 'round', // 折线拐点连接处样式
             cursor: 'pointer',
             extData: feature,
           });

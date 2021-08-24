@@ -6,12 +6,12 @@
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '岛屿'" key="wharf-points" :source="wharf" :geoStyle="{ marker: wharfStyle }">
+      <AGeoJSON v-if="activeItem === '码头'" key="wharf-points" :source="wharf" :geoStyle="{ marker: wharfStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '码头'" key="island-points" :source="island" :geoStyle="{ marker: islandStyle }">
+      <AGeoJSON v-if="activeItem === '岛屿'" key="island-points" :source="island" :geoStyle="{ marker: islandStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
@@ -78,12 +78,12 @@ export default {
       '码头',
       '长途客运',
       '县道',
-      '隧道',
+      // '隧道',
       // '公交车',
       // '出租车',
       // '码头',
-      // '长途客运',
-      // '维修厂',
+      '危险品运输企业',
+      '二类维修厂',
     ];
     return {
       list,
@@ -124,10 +124,10 @@ export default {
 <style lang="scss" scoped>
 .map-legend {
   width: 27.4rem;
-  height: 38.1rem;
+  height: 44.1rem;
   position: absolute;
   left: 332rem;
-  top: 92rem;
+  top: 88rem;
   background: url('./img/legend.png') no-repeat;
   background-size: 100% 100%;
   padding-left: 4.2rem;

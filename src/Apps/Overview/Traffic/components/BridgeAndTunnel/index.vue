@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Map from '../TrafficOverview/Map';
+import Map from './Map';
 import Left1 from './Left1';
 import Left2 from './Left2';
 import Right1 from './Right1';

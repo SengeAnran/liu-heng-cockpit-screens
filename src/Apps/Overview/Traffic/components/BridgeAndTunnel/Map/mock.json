@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point 1"
+        "name": "台门桥"
       },
       "geometry": {
         "type": "Point",
@@ -17,7 +17,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point 2"
+        "name": "后山弄桥"
       },
       "geometry": {
         "type": "Point",
@@ -30,7 +30,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point 3"
+        "name": "外湾桥"
       },
       "geometry": {
         "type": "Point",
@@ -43,7 +43,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point 4"
+        "name": "孙家1号桥"
       },
       "geometry": {
         "type": "Point",
@@ -56,7 +56,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point 5"
+        "name": "石柱头１号桥"
       },
       "geometry": {
         "type": "Point",
@@ -69,7 +69,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point xxxx"
+        "name": "石柱头2号桥"
       },
       "geometry": {
         "type": "Point",
@@ -82,7 +82,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point xxxx"
+        "name": "石柱头3号桥"
       },
       "geometry": {
         "type": "Point",
@@ -95,7 +95,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "point xxxx"
+        "name": "下宅山桥"
       },
       "geometry": {
         "type": "Point",
