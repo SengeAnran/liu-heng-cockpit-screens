@@ -373,7 +373,7 @@ export default {
   width: 795px;
   margin-top: 34px;
   background: url('./images/list-bg.png') no-repeat 100% 100%;
-  display: flex;
+  //display: flex;
   align-items: center;
   font-size: 26px;
   span {
