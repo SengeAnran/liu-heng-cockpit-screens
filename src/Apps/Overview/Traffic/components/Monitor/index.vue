@@ -5,18 +5,18 @@
       <VideoFrame
         :camera-index-code="cameraIndexCode"
       />
-<!--      <h3>监控名称</h3>-->
+      <h3>{{name}}</h3>
     </div>
     <div class="video-list">
       <div
         class="item"
-        v-for="item in videoList"
+        v-for="(item,index) in videoList"
         :key="item.name"
         :class="{ active: item.id === activeId }"
-        @click="activeId = item.id"
+        @click="onClick(index, item.id)"
       >
         <span class="name">{{ item.name }}</span>
-        <span class="date">{{ item.date }}</span>
+        <span class="date">{{ item.date | dateFormat('yyyy-MM-dd hh:mm:ss') }}</span>
       </div>
     </div>
   </div>
@@ -24,25 +24,32 @@
 <script>
 import HLSPlayer from '../HLSPlayer';
 import VideoFrame from './VideoFrame';
+import { formatDate } from '@/utils/date';
 export default {
   props: {
-    cameraIndexCode: {
-      type: String,
-      default: '',
+    videoList: {
+      type: Array,
+      default: () => {},
     },
   },
   data() {
     return {
-      videoList: [
-        { name: '监控名称1', date: '2021.06.17 12:58:23', id: 0 },
-        // { name: '监控名称2', date: '2021.06.17 12:58:23', id: 1 },
-        // { name: '监控名称3', date: '2021.06.17 12:58:23', id: 2 },
-        // { name: '监控名称4', date: '2021.06.17 12:58:23', id: 3 },
-        // { name: '监控名称5', date: '2021.06.17 12:58:23', id: 4 },
-        // { name: '监控名称6', date: '2021.06.17 12:58:23', id: 5 },
-      ],
+      formatDate,
+      cameraIndexCode: '',
+      name: '',
       activeId: 0,
     };
+  },
+  mounted() {
+    this.cameraIndexCode = this.videoList[0].url;
+    this.name = this.videoList[0].name;
+  },
+  methods: {
+    onClick(index, id) {
+      this.activeId = id;
+      this.cameraIndexCode = this.videoList[index].url;
+      this.name = this.videoList[index].name;
+    },
   },
   components: {
     HLSPlayer,
@@ -60,8 +67,8 @@ export default {
     width: 56rem;
     flex: none;
     .video {
-      /*height: 31.5rem;*/
-      height: 38.5rem;
+      height: 31.5rem;
+      //height: 38.5rem;
     }
     h3 {
       font-size: 2.8rem;
@@ -109,6 +116,9 @@ export default {
         font-weight: 400;
         color: #FFFFFF;
         opacity: 0.5;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
       }
       .date {
         font-size: 18px;

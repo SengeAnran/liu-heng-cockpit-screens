@@ -1,9 +1,9 @@
 <template>
   <div class="right-2">
-    <Title>大岙码头监控位</Title>
-    <Monitor :camera-index-code="url1" />
-    <Title>危险品企业监控</Title>
-    <Monitor :camera-index-code="url2" />
+    <Title>道路监控</Title>
+    <Monitor :videoList="videoList1" />
+    <Title>道路监控</Title>
+    <Monitor :videoList="videoList2" />
   </div>
 </template>
 <script>
@@ -19,8 +19,34 @@ export default {
   },
   data() {
     return {
-      url1: '33090305741324711954',
-      url2: '33090462081310237534',
+      videoList1: [
+        {
+          name: '大岙码头监控位',
+          date: new Date(),
+          id: 0,
+          url: '33090305741324711954',
+        },
+        {
+          name: '世大梅线与六横路叉口监控位',
+          date: new Date(),
+          id: 1,
+          url: '33090305741324711954',
+        },
+      ],
+      videoList2: [
+        {
+          name: '危险品企业监控',
+          date: new Date(),
+          id: 0,
+          url: '33090462081310237534',
+        },
+        {
+          name: '邬家红绿灯监控',
+          date: new Date(),
+          id: 1,
+          url: '33090305011321460328',
+        },
+      ],
     };
   },
 };

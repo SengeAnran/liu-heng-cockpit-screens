@@ -69,7 +69,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .video-frame {
-  height: 42.5rem;
+  //height: 42.5rem;
+  height: 31.5rem;
   position: relative;
   iframe {
     position: absolute;

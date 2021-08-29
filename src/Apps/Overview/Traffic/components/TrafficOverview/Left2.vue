@@ -3,20 +3,24 @@
     <Title>水路客运</Title>
 <!--    <Indicator />-->
     <div class="block">
+      <div class="line titles">
+        <div class="second_item">类型</div>
+        <div class="second_item">数量</div>
+        <div class="second_item">客位</div>
+        <div class="second_item">车位(个)</div>
+      </div>
       <div class="line" v-for="(item, index) in passenger" :key="index">
-        <div class="second_item" style="width: 16rem;">{{ item.name }}</div>
+        <div class="second_item">{{ item.name }}</div>
         <div class="second_item">{{ item.number }}</div>
-        <div class="second_item" v-show="item.seat">客位</div>
         <div class="second_item" >{{ item.seat }}</div>
-        <div class="second_item" v-show="item.shiftLine">班线</div>
         <div class="second_item" >{{ item.shiftLine }}</div>
       </div>
     </div>
     <Title>道路货运及维修</Title>
     <div class="second_block">
       <div class="item" v-for="(item, index) in dataList" :key="index">
-        <div class="first_item">{{ item.name }}:</div>
-        <div class="second_item">{{ item.number }} {{ item.unit }}</div>
+        <div class="first_item"><span style="font-size: 48px">{{ item.number }}</span> {{ item.unit }}</div>
+        <div class="second_item">{{ item.name }}</div>
       </div>
     </div>
 <!--    <LineChart />-->
@@ -46,14 +50,19 @@ export default {
           name: '客船',
           number: '14艘',
           seat: 3041,
+          shiftLine: '-',
         },
         {
           name: '市际班车',
           number: '7条',
+          seat: '-',
+          shiftLine: '-',
         },
         {
           name: '码头',
           number: '4座',
+          seat: '-',
+          shiftLine: '-',
         },
       ],
       dataList: [
@@ -99,35 +108,86 @@ export default {
   left: 100rem;
   width: 80rem;
   .block {
-    font-size: 3.4rem;
-    color: white;
+    margin-top: 27px;
+    margin-bottom: 70px;
+    .titles{
+      .second_item {
+        font-size: 24px;
+        font-family: Source Han Sans SC;
+        font-weight: 500;
+        color: #ffffff;
+      }
+    }
     .line {
-      margin: 4rem 0;
+      margin: 1.4rem 0;
+      width: 793px;
+      height: 64px;
+      line-height: 44px;
+      background: url('./img/list-bg.png') no-repeat 100% 100%;
+      font-family: Source Han Sans SC;
+      font-weight: 500;
+      color: #AECACA;
       display: flex;
+      justify-content: space-around;
+      &:first-child {
+        height: 74px;
+        line-height: 55px;
+      }
       .item {
-        width: 13rem;
+        width: 15rem;
         padding: 0.9rem;
       }
       .second_item {
-        width: 10rem;
+        font-size: 24px;
+        width: 17rem;
         padding: 0.9rem;
+        text-align: right;
+        &:first-child{
+          width: 12rem;
+          text-align: left;
+          margin-left: 2rem;
+        }
+        &:nth-child(2){
+          width: 11rem;
+        }
+        &:last-child{
+          margin-right: 4rem;
+        }
       }
     }
   }
   .second_block {
-    font-size: 3.4rem;
-    color: white;
+    font-size: 22px;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 15.1px;
     .item{
-      width: 30rem;
-      margin: 2rem;
+      width: 265px;
+      height: 175px;
+      background: url("./img/dlhyjwx.png") 100% 100%;
+      margin-bottom: 18px;
+      //margin: 2rem;
       .first_item {
+        font-family: DINPro;
+        font-weight: 500;
+        text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.24);
+        margin-top: 40px;
         text-align: center;
+        background: linear-gradient(180deg, #FFFFFF 0%, #4ECDD8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
       .second_item {
+        margin-top: 5px;
         text-align: center;
-        font-size: 4.4rem;
+        font-family: DINPro;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 44px;
+        text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.24);
+        background: linear-gradient(180deg, #FFFFFF 0%, #4ECDD8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     }
   }

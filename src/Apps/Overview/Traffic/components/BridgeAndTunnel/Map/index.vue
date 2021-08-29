@@ -51,13 +51,17 @@
       </ul>
     </div>
     <div class="map-Statistics">
-      <table>
-        <tr v-for="(item, index) in statisticsList" :key="index">
-          <td style="width: 10rem">{{item.name}}</td>
-          <td style="width: 12rem">{{item.number}}</td>
-          <td>{{item.length}}</td>
-        </tr>
-      </table>
+      <div class="item" v-for="(item, index) in statisticsList" :key="index">
+        <div class="item-top">{{item.name}}</div>
+        <div class="item-bottom" :style="{color: item.color }">
+          <div class="item-bottom-left bottom-item">
+            <span>{{item.number}}</span>{{item.unit}}
+          </div>
+          <div class="item-bottom-right bottom-item">
+            <span>{{item.length}}</span>{{item.lengthUnit}}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -90,23 +94,35 @@ export default {
     const statisticsList = [
       {
         name: '县道',
-        number: '共4条',
-        length: '总长61.991公里',
-      },
-      {
-        name: '村道',
-        number: '共90条',
-        length: '总长109.683公里',
+        number: '4',
+        length: '61.991',
+        unit: '条',
+        lengthUnit: '公里',
+        color: '#7DF5E9',
       },
       {
         name: '隧道',
-        number: '共9条',
-        length: '总长4217米',
+        number: '9',
+        length: '4217',
+        unit: '条',
+        lengthUnit: '米',
+        color: '#7DF5E9',
+      },
+      {
+        name: '村道',
+        number: '90',
+        length: '109.683',
+        unit: '条',
+        lengthUnit: '公里',
+        color: '#87B3FA',
       },
       {
         name: '桥梁',
-        number: '共27座',
-        length: '总长637.2米',
+        number: '27',
+        length: '637.2',
+        unit: '条',
+        lengthUnit: '米',
+        color: '#87B3FA',
       },
     ];
     return {
@@ -192,19 +208,78 @@ export default {
   }
 }
 .map-Statistics{
-  width: 49rem;
-  height: 24.1rem;
+  width: 705px;
+  height: 299px;
   position: absolute;
-  left: 208rem;
-  top: 106rem;
-  background: url('./img/legend.png') no-repeat;
+  left: 2063px;
+  top: 1000px;
+  background: url('./img/zpsjbj.png') no-repeat;
   background-size: 100% 100%;
   padding-left: 4.2rem;
   padding-top: 4rem;
   font-size: 2.6rem;
   color: white;
-  tr{
-    height: 5rem;
+  display: flex;
+  flex-flow: wrap;
+  .item {
+    height: 147px;
+    width: 45%;
+
+    padding-left: 30px;
+    .item-top{
+      font-size: 32px;
+      font-family: Source Han Sans CN;
+      font-weight: 500;
+      color: #FFFFFF;
+      position: relative;
+      &::before {
+        position: absolute;
+        content: " ";
+        top: 50%;
+        left: -30px;
+        transform: translateY(-50%);
+        width: 22px;
+        height: 17px;
+        background: url("./img/sjtb.png");
+        background-size: 100% 100%;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50px;
+        display: block;
+        width: 257px;
+        height: 1px;
+        background: #82E2E4;
+        opacity: 0.3;
+      }
+    }
+    .item-bottom {
+      width: 257px;
+      display: flex;
+      height: 46px;
+      line-height: 87px;
+      justify-content: space-between;
+      .bottom-item{
+        //width: 50%;
+        span{
+          font-size: 32px;
+          font-family: Oswald;
+          display: inline-block;
+          margin: 0 4px;
+          font-weight: 500;
+        }
+      }
+      .item-bottom-left{
+        width: 28%;
+      }
+      .item-bottom-right{
+
+      }
+    }
   }
+  //tr{
+  //  height: 5rem;
+  //}
 }
 </style>
