@@ -1,7 +1,7 @@
 <template>
   <div class="left-1">
     <Title>县道</Title>
-    <div class="block">
+    <div class="block" >
       <div class="block-top">
         <div class="top-left item">
           <div class="top-left-img">
@@ -26,17 +26,33 @@
           </div>
         </div>
       </div>
-      <div class="line titles">
-        <div class="second_item">线路名称</div>
-        <div class="second_item">起点名称</div>
-        <div class="second_item">里程总计(公里)</div>
-        <div class="second_item">迄点名称</div>
-      </div>
-      <div class="line" v-for="(item, index) in highway" :key="index">
-        <div class="second_item">{{ item.name }}</div>
-        <div class="second_item">{{ item.startName }}</div>
-        <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
-        <div class="second_item">{{ item.endName }}</div>
+      <div
+        @mouseenter="mouseEnter(highway)"
+        @mouseleave="mouseleave(highway)">
+        <div class="line titles">
+          <div class="second_item">线路名称</div>
+          <div class="second_item">起点名称</div>
+          <div class="second_item">里程总计(公里)</div>
+          <div class="second_item">迄点名称</div>
+        </div>
+        <swiper ref="mySwiper"
+                :options="swiperOption"
+                v-if="highway.length > 3">
+          <swiper-slider v-for="(item, index) in highway" :key="index">
+            <div class="line">
+              <div class="second_item">{{ item.name }}</div>
+              <div class="second_item">{{ item.startName }}</div>
+              <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+              <div class="second_item">{{ item.endName }}</div>
+            </div>
+          </swiper-slider>
+        </swiper>
+        <div v-else class="line" v-for="(item, index) in highway" :key="index" >
+          <div class="second_item">{{ item.name }}</div>
+          <div class="second_item">{{ item.startName }}</div>
+          <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+          <div class="second_item">{{ item.endName }}</div>
+        </div>
       </div>
     </div>
     <Title>村道</Title>
@@ -65,17 +81,34 @@
           </div>
         </div>
       </div>
-      <div class="line titles">
-        <div class="second_item">线路名称</div>
-        <div class="second_item">起点名称</div>
-        <div class="second_item">里程总计(公里)</div>
-        <div class="second_item">迄点名称</div>
-      </div>
-      <div class="line" v-for="(item, index) in passenger" :key="index">
-        <div class="second_item">{{ item.name }}</div>
-        <div class="second_item">{{ item.startName }}</div>
-        <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
-        <div class="second_item">{{ item.endName }}</div>
+      <div
+        @mouseenter="mouseEnter(passenger)"
+        @mouseleave="mouseleave(passenger)"
+      >
+        <div class="line titles">
+          <div class="second_item">线路名称</div>
+          <div class="second_item">起点名称</div>
+          <div class="second_item">里程总计(公里)</div>
+          <div class="second_item">迄点名称</div>
+        </div>
+        <swiper ref="mySwiper"
+                :options="swiperOption"
+                v-if="passenger.length > 3">
+          <swiper-slider v-for="(item, index) in passenger" :key="index">
+            <div class="line">
+              <div class="second_item">{{ item.name }}</div>
+              <div class="second_item">{{ item.startName }}</div>
+              <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+              <div class="second_item">{{ item.endName }}</div>
+            </div>
+          </swiper-slider>
+        </swiper>
+        <div v-else class="line" v-for="(item, index) in passenger" :key="index" >
+          <div class="second_item">{{ item.name }}</div>
+          <div class="second_item">{{ item.startName }}</div>
+          <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+          <div class="second_item">{{ item.endName }}</div>
+        </div>
       </div>
     </div>
 <!--    <Bar1 />-->
@@ -85,12 +118,16 @@
 import Title from './Title';
 // import BarPie from './BarPie';
 // import Bar1 from './Bar1';
+import swiper from '@/components/Swiper';
+import SwiperSlider from '@/components/SwiperSlider';
 
 export default {
   components: {
     Title,
     // BarPie,
     // Bar1,
+    swiper,
+    SwiperSlider,
   },
   data() {
     return {
@@ -113,12 +150,12 @@ export default {
           endName: '梅峙岙',
           length: '9.32',
         },
-        // {
-        //   name: '孙干线',
-        //   startName: '孙家',
-        //   endName: '干岩',
-        //   length: '2.975',
-        // },
+        {
+          name: '孙干线',
+          startName: '孙家',
+          endName: '干岩',
+          length: '2.975',
+        },
       ],
       passenger: [
         {
@@ -139,14 +176,77 @@ export default {
           endName: '平蛟水库',
           length: '0.553',
         },
-        // {
-        //   name: '台外线',
-        //   startName: '外平蛟',
-        //   endName: '外平蛟',
-        //   length: '0.536',
-        // },
+        {
+          name: '台外线',
+          startName: '外平蛟',
+          endName: '外平蛟',
+          length: '0.536',
+        },
+        {
+          name: '里城线',
+          startName: '里平蛟',
+          endName: '城子岗',
+          length: '1.317',
+        },
+        {
+          name: '大后线',
+          startName: '大岙码头',
+          endName: '后岙',
+          length: '0.635',
+        },
+        {
+          name: '大大线',
+          startName: '大梅线',
+          endName: '大岙村',
+          length: '0.794',
+        },
+        {
+          name: '大邵线',
+          startName: '大梅线',
+          endName: '邵家',
+          length: '0.592',
+        },
+        {
+          name: '台外线',
+          startName: '外平蛟',
+          endName: '外平蛟',
+          length: '0.536',
+        },
+        {
+          name: '大荷线',
+          startName: '大梅线',
+          endName: '荷花村',
+          length: '0.806',
+        },
       ],
+      swiperOption: {
+        direction: 'vertical',
+        speed: 1000,
+        slidesPerView: 3,
+        spaceBetween: 0,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false,
+        },
+        // autoplay: true,
+      },
     };
+  },
+  methods: {
+    mouseEnter(lists) {
+      if (lists.length < 3) {
+        return;
+      }
+      this.swiper.autoplay.stop();
+    },
+    mouseleave(lists) {
+      if (lists.length < 3) {
+        return;
+      }
+      this.swiper.autoplay.start();
+    },
   },
 };
 </script>
@@ -302,6 +402,14 @@ $main-font: 24px;
           //margin-right: 4rem;
         }
       }
+    }
+  }
+  .swiper-container {
+    width: 100%;
+    height: 227px;
+    .swiper-slide {
+      //height: 76px;
+      box-sizing: border-box;
     }
   }
   // outline: 1px solid red;

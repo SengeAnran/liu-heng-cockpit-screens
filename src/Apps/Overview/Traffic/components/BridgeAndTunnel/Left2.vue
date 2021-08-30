@@ -27,17 +27,33 @@
           </div>
         </div>
       </div>
-      <div class="line titles">
-        <div class="second_item">隧道名称</div>
-        <div class="second_item">路线名称</div>
-        <div class="second_item">长度(米)</div>
-        <div class="second_item">分类</div>
-      </div>
-      <div class="line" v-for="(item, index) in highway" :key="index">
-        <div class="second_item">{{ item.name }}</div>
-        <div class="second_item">{{ item.startName }}</div>
-        <div class="second_item" style="color: #63CEB3;">{{ item.length }}</div>
-        <div class="second_item">{{ item.endName }}</div>
+      <div
+        @mouseenter="mouseEnter(highway)"
+        @mouseleave="mouseleave(highway)">
+        <div class="line titles">
+          <div class="second_item">隧道名称</div>
+          <div class="second_item">路线名称</div>
+          <div class="second_item">长度(米)</div>
+          <div class="second_item">分类</div>
+        </div>
+        <swiper ref="mySwiper"
+                :options="swiperOption"
+                v-if="highway.length > 3">
+          <swiper-slider v-for="(item, index) in highway" :key="index">
+            <div class="line">
+              <div class="second_item">{{ item.name }}</div>
+              <div class="second_item">{{ item.startName }}</div>
+              <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+              <div class="second_item">{{ item.endName }}</div>
+            </div>
+          </swiper-slider>
+        </swiper>
+        <div v-else class="line" v-for="(item, index) in highway" :key="index" >
+          <div class="second_item">{{ item.name }}</div>
+          <div class="second_item">{{ item.startName }}</div>
+          <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+          <div class="second_item">{{ item.endName }}</div>
+        </div>
       </div>
     </div>
     <Title>桥梁</Title>
@@ -66,18 +82,41 @@
           </div>
         </div>
       </div>
-      <div class="line titles">
-        <div class="second_item">隧道名称</div>
-        <div class="second_item"  style="text-align: center">全长</div>
-        <div class="second_item">跨径总长</div>
-        <div class="second_item">跨径分类</div>
+      <div
+        @mouseenter="mouseEnter(passenger)"
+        @mouseleave="mouseleave(passenger)"
+      >
+        <div class="line titles">
+          <div class="second_item">隧道名称</div>
+          <div class="second_item"  style="text-align: center">全长</div>
+          <div class="second_item">跨径总长</div>
+          <div class="second_item">跨径分类</div>
+        </div>
+        <swiper ref="mySwiper"
+                :options="swiperOption"
+                v-if="passenger.length > 3">
+          <swiper-slider v-for="(item, index) in passenger" :key="index">
+            <div class="line">
+              <div class="second_item">{{ item.name }}</div>
+              <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>
+              <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>
+              <div class="second_item">{{ item.length }}</div>
+            </div>
+          </swiper-slider>
+        </swiper>
+        <div v-else class="line" v-for="(item, index) in passenger" :key="index" >
+          <div class="second_item">{{ item.name }}</div>
+          <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>
+          <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>
+          <div class="second_item">{{ item.length }}</div>
+        </div>
       </div>
-      <div class="line" v-for="(item, index) in passenger" :key="index">
-        <div class="second_item">{{ item.name }}</div>
-        <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>
-        <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>
-        <div class="second_item">{{ item.length }}</div>
-      </div>
+<!--      <div class="line" v-for="(item, index) in passenger" :key="index">-->
+<!--        <div class="second_item">{{ item.name }}</div>-->
+<!--        <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>-->
+<!--        <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>-->
+<!--        <div class="second_item">{{ item.length }}</div>-->
+<!--      </div>-->
     </div>
     <!--    <Bar1 />-->
   </div>
@@ -86,12 +125,16 @@
 import Title from './Title';
 // import Indicator from './Indicator';
 // import LineChart from './LineChart';
+import swiper from '@/components/Swiper';
+import SwiperSlider from '@/components/SwiperSlider';
 
 export default {
   components: {
     Title,
     // Indicator,
     // LineChart,
+    swiper,
+    SwiperSlider,
   },
   data() {
     return {
@@ -109,17 +152,47 @@ export default {
           length: '367',
         },
         {
-          name: '龙山隧道右',
+          name: '双屿隧道右',
           startName: '台台线',
           endName: '短隧道',
           length: '290',
         },
-        // {
-        //   name: '龙山隧道左',
-        //   startName: '台台线',
-        //   endName: '短隧道',
-        //   length: '361',
-        // },
+        {
+          name: '双屿隧道左',
+          startName: '台台线',
+          endName: '短隧道',
+          length: '361',
+        },
+        {
+          name: '棕榈湾隧道',
+          startName: '台台线',
+          endName: '短隧道',
+          length: '305',
+        },
+        {
+          name: '竹湾隧道',
+          startName: '台台线',
+          endName: '短隧道',
+          length: '232',
+        },
+        {
+          name: '小湖隧道',
+          startName: '台台线',
+          endName: '中隧道',
+          length: '744',
+        },
+        {
+          name: '苍洞隧道',
+          startName: '台台线',
+          endName: '中隧道',
+          length: '929',
+        },
+        {
+          name: '田岙隧道',
+          startName: '台台线',
+          endName: '中隧道',
+          length: '604',
+        },
       ],
       passenger: [
         {
@@ -140,14 +213,77 @@ export default {
           endName: '8',
           length: '小桥',
         },
-        // {
-        //   name: '孙家1号桥',
-        //   startName: '13.54',
-        //   endName: '10',
-        //   length: '小桥',
-        // },
+        {
+          name: '孙家1号桥',
+          startName: '13.54',
+          endName: '10',
+          length: '小桥',
+        },
+        {
+          name: '石柱头１号桥',
+          startName: '15.54',
+          endName: '10',
+          length: '小桥',
+        },
+        {
+          name: '石柱头2号桥',
+          startName: '15.54',
+          endName: '10',
+          length: '小桥',
+        },
+        {
+          name: '石柱头3号桥',
+          startName: '15.54',
+          endName: '10',
+          length: '小桥',
+        },
+        {
+          name: '浦西桥',
+          startName: '182',
+          endName: '178',
+          length: '大桥',
+        },
+        {
+          name: '龙浦桥',
+          startName: '41',
+          endName: '39',
+          length: '中桥',
+        },
+        {
+          name: '小通桥',
+          startName: '17',
+          endName: '13',
+          length: '小桥',
+        },
       ],
+      swiperOption: {
+        direction: 'vertical',
+        speed: 1000,
+        slidesPerView: 3,
+        spaceBetween: 0,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false,
+        },
+        // autoplay: true,
+      },
     };
+  },
+  methods: {
+    mouseEnter(lists) {
+      if (lists.length < 3) {
+        return;
+      }
+      this.swiper.autoplay.stop();
+    },
+    mouseleave(lists) {
+      if (lists.length < 3) {
+        return;
+      }
+      this.swiper.autoplay.start();
+    },
   },
 };
 </script>
@@ -303,5 +439,13 @@ export default {
     }
   }
   // outline: 1px solid red;
+  .swiper-container {
+    width: 100%;
+    height: 227px;
+    .swiper-slide {
+      //height: 76px;
+      box-sizing: border-box;
+    }
+  }
 }
 </style>
