@@ -3,7 +3,6 @@
     <iframe
       frameborder="0"
       ref="iframeEle"
-      :key="cameraIndexCode"
     />
   </div>
 </template>
@@ -17,13 +16,12 @@ export default {
   },
   watch: {
     cameraIndexCode() {
-      this.setIframe();
       const iframeWin = this.$refs.iframeEle;
       iframeWin.contentWindow.postMessage({
-        action: 'updateInitParam',
-        msg: '更新Pos',
-        iframeClientPos: iframeWin.getBoundingClientRect(),
-      });
+        action: 'updateCameraIndexCode',
+        msg: '更新cameraIndexCode',
+        cameraIndexCode: this.cameraIndexCode,
+      }, '*');
     },
   },
   data() {
@@ -34,7 +32,8 @@ export default {
     };
   },
   mounted() {
-    const onResize = this.onResize.bind(this);
+    // console.log(this);
+    const onResize = this.onResize.bind(this); // onResize 绑定新函数 可以使用当前组件的属性和方法
     const changeVideoPos = this.changeVideoPos.bind(this);
     window.globalScale.add(onResize);
     window.addEventListener('message', changeVideoPos);
@@ -46,7 +45,7 @@ export default {
   },
   methods: {
     setIframe() {
-      console.log(this.cameraIndexCode);
+      // console.log(this.cameraIndexCode);
       const iframeWin = this.$refs.iframeEle;
       const { clientWidth, clientHeight } = iframeWin.parentNode;
       iframeWin.style.width = clientWidth * this.scaleX + 'px';
@@ -61,7 +60,8 @@ export default {
     },
     changeVideoPos(e) {
       const iframeWin = this.$refs.iframeEle;
-      console.log(iframeWin.getBoundingClientRect());
+      // console.log(iframeWin);
+      // console.log(iframeWin.getBoundingClientRect());
       if (e && e.data) {
         switch (e.data.action) {
           case 'updateInitParam':

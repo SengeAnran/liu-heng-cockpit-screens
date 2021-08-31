@@ -64,6 +64,11 @@
           oWebControl.JS_Resize(divWidth, divHeight);
           // setWndCover();
           break;
+        case 'updateCameraIndexCode':
+          var cameraIndexCode = e.data.cameraIndexCode; // 获得更新后的cameraIndexCode
+          // initPlugin();
+          updataCameraIndexCode(cameraIndexCode);
+          break;
         default:
           break;
       }
@@ -200,7 +205,22 @@
   }
 
   initPlugin();
-
+  function updataCameraIndexCode(cameraIndexCode) {
+    setTimeout(() => {
+      // ⑥ 开始视频预览或录像回放 JS_RequestInterface/startPreview(startPlayback)
+      requestInterface({
+        argument: {
+          cameraIndexCode: cameraIndexCode,
+          ezvizDirect: 0,
+          gpuMode: 0,
+          streamMode: 0,
+          transMode: 1,
+          wndId: -1
+        },
+        funcName: "startPreview"
+      });
+    }, 1000)
+  }
   setTimeout(() => {
     // ⑥ 开始视频预览或录像回放 JS_RequestInterface/startPreview(startPlayback)
     requestInterface({
