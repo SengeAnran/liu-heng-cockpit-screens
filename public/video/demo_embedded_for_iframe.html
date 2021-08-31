@@ -31,6 +31,7 @@
 <script src="jsWebControl-1.0.0.min.js"></script>
 
 <script type="text/javascript">
+  console.log(location.hash.substr(1));
   // 插件对象实例，初始化为null，需要创建多个插件窗口时，需要定义多个插件对象实例变量，各个变量唯一标志对应的插件实例
   var oWebControl = null;
   var pubKey = '';                  // demo中未使用加密，可根据需求参照开发指南自行使用加密功能
@@ -50,11 +51,12 @@
 
   // 步骤1：监听父页面的消息
   window.addEventListener('message', function (e) {
+    console.log(e);
     if (e && e.data) {
       switch (e.data.action) {
         case 'updateInitParam':
           var iframeClientPos = e.data.iframeClientPos;    // iframe相对视窗的位置
-          console.log(iframeClientPos);
+          // console.log(iframeClientPos);
           oWebControl.JS_SetDocOffset({
             left: iframeClientPos.left,
             top: iframeClientPos.top,

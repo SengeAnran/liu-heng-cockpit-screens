@@ -35,12 +35,13 @@ export default {
   data() {
     return {
       formatDate,
-      cameraIndexCode: '',
+      cameraIndexCode: this.videoList[0].url,
       name: '',
       activeId: 0,
     };
   },
   mounted() {
+    // console.log(this.videoList[0].url);
     this.cameraIndexCode = this.videoList[0].url;
     this.name = this.videoList[0].name;
   },

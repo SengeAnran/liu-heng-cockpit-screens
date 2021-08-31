@@ -15,6 +15,17 @@ export default {
       default: '',
     },
   },
+  watch: {
+    cameraIndexCode() {
+      this.setIframe();
+      const iframeWin = this.$refs.iframeEle;
+      iframeWin.contentWindow.postMessage({
+        action: 'updateInitParam',
+        msg: '更新Pos',
+        iframeClientPos: iframeWin.getBoundingClientRect(),
+      });
+    },
+  },
   data() {
     return {
       scaleX: 1,
@@ -35,6 +46,7 @@ export default {
   },
   methods: {
     setIframe() {
+      console.log(this.cameraIndexCode);
       const iframeWin = this.$refs.iframeEle;
       const { clientWidth, clientHeight } = iframeWin.parentNode;
       iframeWin.style.width = clientWidth * this.scaleX + 'px';
