@@ -14,6 +14,8 @@ import FitScreen from '@/components/FitScreen';
 import AppTitle from '@/components/AppTitle';
 import Nav from '@/views/Nav';
 
+import './assets/css/common.css';
+
 export default {
   name: 'App',
   data() {
