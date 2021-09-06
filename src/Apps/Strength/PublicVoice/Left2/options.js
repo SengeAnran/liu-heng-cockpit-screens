@@ -101,7 +101,7 @@ export default function getOptions(data) {
           color: 'rgb(79,194,204)',
         },
         label: {
-          show: true,
+          show: false,
           position: 'top',
           formatter: '{c}',
           fontSize: 20,
@@ -152,7 +152,7 @@ export default function getOptions(data) {
           color: 'rgb(49,234,188)',
         },
         label: {
-          show: true,
+          show: false,
           position: 'top',
           formatter: '{c}',
           fontSize: 20,
@@ -203,7 +203,7 @@ export default function getOptions(data) {
           color: 'rgb(237,191,100)',
         },
         label: {
-          show: true,
+          show: false,
           position: 'top',
           formatter: '{c}',
           fontSize: 20,
@@ -254,7 +254,7 @@ export default function getOptions(data) {
           color: 'rgb(255,151,152)',
         },
         label: {
-          show: true,
+          show: false,
           position: 'top',
           formatter: '{c}',
           fontSize: 20,

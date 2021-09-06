@@ -70,9 +70,9 @@ export default [
         },
         meta: {
           indicator: [
-            { name: '医院数量', value: 5, unit: '个' },
-            { name: '医生数量', value: 3352, unit: '人' },
-            { name: '卫技人员', value: 424, unit: '人' },
+            { name: '医院数量', value: 2, unit: '个' },
+            { name: '医生数量', value: 176, unit: '人' },
+            { name: '卫技人员', value: 282, unit: '人' },
           ],
         },
       },
