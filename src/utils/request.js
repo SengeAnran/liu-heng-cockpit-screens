@@ -22,7 +22,7 @@ service.interceptors.response.use(
     return response.data;
   }, err,
 );
-const baseUrl = 'http://10.25.17.237:18156/wydaas/public/rs/dataService';
+const baseUrl = '/guoyan';
 
 export const request = axios.create({
   baseURL: baseUrl,
@@ -34,18 +34,21 @@ request.interceptors.request.use(
     // config.headers['Content-Type'] = 'application/json';
     if (config.method === 'post') {
       const data = config.data;
-      config.data = JSON.stringify({
-        auth: {
-          serviceId: 'f16bb5eeecb144e38d5469189224bf0a', // 数据开放服务Id
-          subServiceId: 'db6d1f6b59c04adcab65bc00106e0a84', // 数据开放订阅服务Id
-          // signature: localStorage.autograph, // 请求参数签名
-          signatureVersion: '2.0', // 当前使用的签名版本
-          timestamp: new Date().getTime(), // 请求的时间戳
-        }, // 认证参数
-        size: '100',
-        includeColumns: 'true',
+      // config.data = JSON.stringify({
+      //   auth: {
+      //     serviceId: '4e8820bbf0f34e60b609259b982ae76b', // 数据开放服务Id
+      //     subServiceId: '9e5d711193874ff2b3204f5e8303cfa6', // 数据开放订阅服务Id
+      //     // signature: localStorage.autograph, // 请求参数签名
+      //     signatureVersion: '2.0', // 当前使用的签名版本
+      //     timestamp: new Date().getTime(), // 请求的时间戳
+      //   }, // 认证参数
+      //   size: 100,
+      //   includeColumns: true,
+      //   ...data,
+      // });
+      config.data = {
         ...data,
-      });
+      };
     }
     return config;
   },

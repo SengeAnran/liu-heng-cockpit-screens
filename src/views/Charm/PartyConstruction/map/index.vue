@@ -62,11 +62,26 @@ export default {
   mounted() {
     this.initMap();
     this.renderMarker();
-    getCameraPosition().then((res) => {
-      console.log(res);
-    });
+    this.getPosition();
   },
   methods: {
+    getPosition() {
+      const data = {
+        auth: {
+          serviceId: 'ff590480a17548d4b3dae8d5790b013a', // 数据开放服务Id
+          subServiceId: '93471aa24c7c4f4393786f2512d8c54e', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: true,
+        params: [],
+      };
+      getCameraPosition(data).then((res) => {
+        console.log(res);
+      });
+    },
     selectLegend(item) {
       this.currentLegend = item.value;
     },
