@@ -1,5 +1,5 @@
 import MetroApi from '@/utils/http';
-
+import { request } from '@/utils/request';
 // 党员基本情况
 export const peopleBasicInfo = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/party/peopleBasicInfo' });
@@ -39,3 +39,76 @@ export const partyBuild = () => {
 export const workCompetition = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/party/workCompetition' });
 };
+
+// ************************************************************************************************************
+
+// 党群建设情况
+export function getConstructionSit(data) {
+  return request({
+    url: '',
+    method: 'post',
+    data,
+  });
+}
+
+// 党员数量趋势
+export function getQuantityTrend(data) {
+  return request({
+    url: '',
+    method: 'post',
+    data,
+  });
+}
+
+// 摄像头点位
+export function getCameraPosition(data) {
+  return request({
+    url: '/shareData.json',
+    method: 'post',
+    data,
+  });
+}
+// 党员基本情况
+export function getPartyMemberBasicSit(data) {
+  return request({
+    url: '',
+    method: 'post',
+    data,
+  });
+}
+
+// 工会维权统计
+export function getLabourUnionDefenseSta(data) {
+  return request({
+    url: '',
+    method: 'post',
+    data,
+  });
+}
+
+// 群团宣传情况
+export function getGroupPromotion(data) {
+  return request({
+    url: '',
+    method: 'post',
+    data,
+  });
+}
+
+// 性别年龄结构
+export function getSexAndAgeStructure(data) {
+  return request({
+    url: '',
+    method: 'post',
+    data,
+  });
+}
+
+// 党群学历结构
+export function getPartyGroupEduStructure(data) {
+  return request({
+    url: '',
+    method: 'post',
+    data,
+  });
+}

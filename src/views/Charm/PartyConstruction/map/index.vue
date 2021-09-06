@@ -31,7 +31,7 @@
 
 <script>
 // import './mark.scss';
-import { partyConstruct } from '@/api/Charm/PartyConstruction';
+import { partyConstruct, getCameraPosition } from '@/api/Charm/PartyConstruction';
 import AMap from 'AMap';
 export default {
   name: 'CityEvolution',
@@ -62,6 +62,9 @@ export default {
   mounted() {
     this.initMap();
     this.renderMarker();
+    getCameraPosition().then((res) => {
+      console.log(res);
+    });
   },
   methods: {
     selectLegend(item) {
