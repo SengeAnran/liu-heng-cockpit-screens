@@ -18,7 +18,10 @@
 </template>
 <script>
 import Title from './components/Title';
-import { protectRights } from '@/api/Charm/PartyConstruction';
+import {
+  // protectRights,
+  getLabourUnionDefenseSta,
+} from '@/api/Charm/PartyConstruction';
 import { sumBy, groupBy } from 'lodash';
 import * as echarts from 'echarts/core';
 import {
@@ -161,9 +164,23 @@ export default {
       this.formatChartData();
     },
     async getData() {
-      const result = await protectRights().request();
-      console.log('Right Section3', result);
-      const tempGroupData = groupBy(result, 'qtlx');
+      const data = {
+        auth: {
+          serviceId: 'dc1a898c75c848b899af2d70e3d98531', // 数据开放服务Id
+          subServiceId: '6ad5d922ab76418599eceddfd459b31f', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: false,
+        params: [],
+      };
+      const res = await getLabourUnionDefenseSta(data);
+      // console.log(res);
+      // const result = await protectRights().request();
+      // console.log('Right Section3', result);
+      const tempGroupData = groupBy(res.list, 'qtlx');
       console.log('tempGroupData', tempGroupData);
       this.dataList = Object.keys(tempGroupData).map((key) => {
         return {

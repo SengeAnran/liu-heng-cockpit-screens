@@ -45,7 +45,7 @@ export const workCompetition = () => {
 // 党群建设情况
 export function getConstructionSit(data) {
   return request({
-    url: '',
+    url: '/shareData.json',
     method: 'post',
     data,
   });
@@ -54,7 +54,7 @@ export function getConstructionSit(data) {
 // 党员数量趋势
 export function getQuantityTrend(data) {
   return request({
-    url: '',
+    url: '/shareData.json',
     method: 'post',
     data,
   });
@@ -71,7 +71,7 @@ export function getCameraPosition(data) {
 // 党员基本情况
 export function getPartyMemberBasicSit(data) {
   return request({
-    url: '',
+    url: '/shareData.json',
     method: 'post',
     data,
   });
@@ -80,7 +80,7 @@ export function getPartyMemberBasicSit(data) {
 // 工会维权统计
 export function getLabourUnionDefenseSta(data) {
   return request({
-    url: '',
+    url: '/shareData.json',
     method: 'post',
     data,
   });
@@ -89,7 +89,7 @@ export function getLabourUnionDefenseSta(data) {
 // 群团宣传情况
 export function getGroupPromotion(data) {
   return request({
-    url: '',
+    url: '/shareData.json',
     method: 'post',
     data,
   });
@@ -98,7 +98,7 @@ export function getGroupPromotion(data) {
 // 性别年龄结构
 export function getSexAndAgeStructure(data) {
   return request({
-    url: '',
+    url: '/shareData.json',
     method: 'post',
     data,
   });
@@ -107,7 +107,7 @@ export function getSexAndAgeStructure(data) {
 // 党群学历结构
 export function getPartyGroupEduStructure(data) {
   return request({
-    url: '',
+    url: '/shareData.json',
     method: 'post',
     data,
   });

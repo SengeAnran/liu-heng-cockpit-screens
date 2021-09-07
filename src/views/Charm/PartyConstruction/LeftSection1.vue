@@ -43,7 +43,13 @@
 import Title from './components/Title';
 import PieChart from './components/PieChart';
 import * as echarts from 'echarts/core';
-import { peopleBasicInfo } from '@/api/Charm/PartyConstruction';
+import {
+  getPartyMemberBasicSit,
+  getQuantityTrend,
+  getSexAndAgeStructure,
+  getPartyGroupEduStructure,
+  peopleBasicInfo,
+} from '@/api/Charm/PartyConstruction';
 import {
   LineChart,
 } from 'echarts/charts';
@@ -58,7 +64,7 @@ import {
 import {
   CanvasRenderer,
 } from 'echarts/renderers';
-
+import { sort } from '@/utils/common';
 // 注册必须的组件
 echarts.use(
   [TitleComponent, LegendComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer],
@@ -188,16 +194,73 @@ export default {
       this.currentTab = val;
     },
     async getData() {
+      const data = {
+        auth: {
+          serviceId: '09a3fe0aa4634c608b9c103b053480d3', // 数据开放服务Id
+          subServiceId: '1f73865f63b84465934ee1c71fa83916', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: false,
+        params: [],
+      };
+      const data2 = {
+        auth: {
+          serviceId: '01f02290599d4d3b97bb76ae6a000f9e', // 数据开放服务Id
+          subServiceId: '43a43c2d3fbd45d1bf97016c7d43d776', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: false,
+        params: [],
+      };
+      const data3 = {
+        auth: {
+          serviceId: '3527aac315134f5c98b4224022e08d41', // 数据开放服务Id
+          subServiceId: 'c2efcab4c2af4b5097ec1d497cc18a5f', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: false,
+        params: [],
+      };
+      const data4 = {
+        auth: {
+          serviceId: 'b9d383418e0b4f71856311ef2914f45a', // 数据开放服务Id
+          subServiceId: 'b8b5f9ee37e847c3ae5d32f22fcf2433', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: false,
+        params: [],
+      };
+      const res = await getPartyMemberBasicSit(data);
+      const res2 = await getQuantityTrend(data2);
+      const res3 = await getSexAndAgeStructure(data3);
+      const res4 = await getPartyGroupEduStructure(data4);
+      console.log(res3, res4);
       const result = await peopleBasicInfo().request();
-      if (result) {
-        const { basicCnt, cntTrend, education, sexAndAge } = result;
-        this.indiData[0].value = basicCnt.zsdyrs;
-        this.indiData[1].value = basicCnt.ybdyrs;
-        this.indiData[2].value = basicCnt.fzdyrs;
 
-        this.renderChartData(cntTrend);
+      if (res) {
+        const { education, sexAndAge } = result;
+        this.indiData[0].value = res.list[0].zsdyrs;
+        this.indiData[1].value = res.list[0].ybdyrs;
+        this.indiData[2].value = res.list[0].fzdyrs;
+
         this.sexAgeData = sexAndAge;
         this.educationData = education;
+      }
+      if (res2) {
+        const renderList = sort(res2.list, 'nf');
+        this.renderChartData(renderList);
       }
     },
     renderChartData(data) {

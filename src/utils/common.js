@@ -37,3 +37,46 @@ export function delay(ms) {
     setTimeout(resolve, ms);
   });
 }
+
+// 排序
+// list：排序列表数据
+// keyName： 排序按照的关键字
+// reverseOrder： 是否降序排序，默认升序
+export function sort(list, keyName, reverseOrder) {
+  console.log(list, keyName);
+  const result = [];
+  if (!reverseOrder) {
+    for (let i = 0; i < list.length; i++) {
+      if (i === 0) {
+        result.push(list[i]);
+        continue;
+      }
+      for (let j = 0; j < result.length; j++) {
+        if (list[i][keyName] > result[j][keyName] && (j + 1 === result.length || list[i][keyName] < result[j + 1][keyName])) {
+          result.splice(j + 1, 0, list[i]);
+          break;
+        } else if (list[i][keyName] < result[0][keyName]) {
+          result.splice(0, 0, list[i]);
+          break;
+        }
+      }
+    }
+  } else {
+    for (let i = 0; i < list.length; i++) {
+      if (i === 0) {
+        result.push(list[i]);
+        continue;
+      }
+      for (let j = 0; j < result.length; j++) {
+        if (list[i][keyName] < result[j][keyName] && (j + 1 === result.length || list[i][keyName] > result[j + 1][keyName])) {
+          result.splice(j + 1, 0, list[i]);
+          break;
+        } else if (list[i][keyName] > result[0][keyName]) {
+          result.splice(0, 0, list[i]);
+          break;
+        }
+      }
+    }
+  }
+  return result;
+}

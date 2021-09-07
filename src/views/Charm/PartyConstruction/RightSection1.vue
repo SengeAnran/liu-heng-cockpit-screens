@@ -37,7 +37,7 @@
 </template>
 <script>
 import Title from './components/Title';
-import { publicitySituation } from '@/api/Charm/PartyConstruction';
+import { publicitySituation, getGroupPromotion } from '@/api/Charm/PartyConstruction';
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/css/swiper.css';
 import { Swiper as SwiperClass, Pagination, Autoplay } from 'swiper/js/swiper.esm';
@@ -89,6 +89,20 @@ export default {
       this.mySwiper.slideTo(index);
     },
     async getData() {
+      const data = {
+        auth: {
+          serviceId: 'b1e99b3cf90a45149af967febc414521', // 数据开放服务Id
+          subServiceId: '887e6d27a9d048a4bf4414fcc8eb0b27', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: false,
+        params: [],
+      };
+      const res = await getGroupPromotion(data);
+      console.log(res.list);
       const result = await publicitySituation().request();
       console.log('publicitySituation', result);
       this.tabList = result.map((i) => {

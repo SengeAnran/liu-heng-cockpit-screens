@@ -57,7 +57,7 @@ request.interceptors.request.use(
 // 回复拦截器
 request.interceptors.response.use(
   (response) => {
-    return response.data;
+    return response.data.data;
   }, err,
 );
 
