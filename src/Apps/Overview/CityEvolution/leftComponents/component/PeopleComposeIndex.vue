@@ -1,6 +1,6 @@
 <template>
   <div class="people_compose">
-    <BaseTitle title="人口组成情况-指标" :width='720' />
+    <BaseTitle title="人口组成情况" :width='720' />
     <div class="item_wrapper">
       <div class="item">
         <img class="img" src="../../images/people_num.png">

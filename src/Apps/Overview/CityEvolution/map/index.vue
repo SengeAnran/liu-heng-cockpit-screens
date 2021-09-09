@@ -116,6 +116,11 @@ export default {
         // 陆地面积
         this.rightMarkMessage[0].count = res.ldmj || '暂无数据';
         this.rightMarkMessage[1].count = res.gdp || '暂无数据';
+        if (!res.gdp) {
+          this.rightMarkMessage[1].unit = '';
+        } else {
+          this.rightMarkMessage[1].unit = '亿元';
+        }
         this.rightMarkMessage[2].count = res.czzsr || '暂无数据';
         this.markerDownList();
       });
