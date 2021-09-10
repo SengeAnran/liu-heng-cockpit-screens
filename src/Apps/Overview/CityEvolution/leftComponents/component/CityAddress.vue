@@ -10,7 +10,7 @@
           <CountUp  :num="sqmj.qzmj || 0" />
         </div>
         <div class="unit">
-          平方千米
+          平方公里
         </div>
       </div>
       <div class="item">
@@ -21,7 +21,7 @@
           <CountUp  :num="sqmj.xzsqmj || 0" />
         </div>
         <div class="unit administration_unit">
-          平方千米
+          平方公里
         </div>
       </div>
       <div class="item">
@@ -32,7 +32,7 @@
           <CountUp  :num="sqmj.rkmd || 0" />
         </div>
         <div class="unit seal_unit">
-          人/平方千米
+          人/平方公里
         </div>
       </div>
     </div>

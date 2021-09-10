@@ -13,23 +13,23 @@ export default {
     return {
       barData: [
         {
-          label: '黑龙江',
+          label: '行业1',
           value: 1.2,
         },
         {
-          label: '山西',
+          label: '行业2',
           value: 0.9,
         },
         {
-          label: '武汉',
+          label: '行业3',
           value: 0.8,
         },
         {
-          label: '银川',
+          label: '行业4',
           value: 0.7,
         },
         {
-          label: '西宁',
+          label: '行业5',
           value: 0.6,
         },
       ],
@@ -44,11 +44,13 @@ export default {
   methods: {
     loadData() {
       getIndustryRank().request().then((json) => {
-        this.barData = json.map((item) => {
-          item.label = item.hymc;
-          item.value = item.je;
-          return item;
-        });
+        if (json[0].je !== 999999999) {
+          this.barData = json.map((item) => {
+            item.label = item.hymc;
+            item.value = item.je;
+            return item;
+          });
+        }
         this.chart.setOption(this.optionData(this.barData));
         // console.log(json, '排名');
       });

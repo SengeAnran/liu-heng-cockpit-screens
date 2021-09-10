@@ -3,18 +3,20 @@
     <Title>事件趋势</Title>
     <Bar />
     <Title style="margin-top: 6.5rem">热词词云</Title>
-    <WordCloud />
+    <key-word />
   </div>
 </template>
 <script>
 import Title from '../Title';
 import Bar from './Bar';
-import WordCloud from './WordCloud';
+// import WordCloud from './WordCloud';
+import KeyWord from './KeyWord';
 export default {
   components: {
     Title,
     Bar,
-    WordCloud,
+    // WordCloud,
+    KeyWord,
   },
 };
 </script>
