@@ -26,12 +26,12 @@
           <LinePopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '桥梁'" key="bus-points" :source="points" :geoStyle="{ marker: markerStyle }">
+      <AGeoJSON v-if="activeItem === '桥梁'" key="bridge-points" :source="points" :geoStyle="{ marker: bridgeStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '公路隐患点'" key="bus-points" :source="points2" :geoStyle="{ marker: markerStyle }">
+      <AGeoJSON v-if="activeItem === '公路隐患点'" key="pitfalls-points" :source="points2" :geoStyle="{ marker: pitfallsStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
@@ -134,6 +134,12 @@ export default {
       markerStyle: Object.freeze({
         content: '<div style="width: 2rem; height: 2rem; border: 0.8rem solid #FDF17950; background: #FDF179; background-clip: content-box; border-radius: 50%;"></div>',
         offset: new AMap.Pixel(-18, -18),
+      }),
+      bridgeStyle: Object.freeze({
+        content: '<div style="width: 6rem; height: 6rem;" class="bridge-point-afhwa"></div>',
+      }),
+      pitfallsStyle: Object.freeze({
+        content: '<div style="width: 6rem; height: 6rem;" class="pitfalls-point-afhwa"></div>',
       }),
       line1: Object.freeze(line1),
       line2: Object.freeze(line2),
@@ -281,5 +287,20 @@ export default {
   //tr{
   //  height: 5rem;
   //}
+}
+
+</style>
+<style lang="scss">
+.bridge-point-afhwa {
+  background: url('./img/ql.svg') no-repeat;
+  background-size: 100% 100%;
+}
+.wharf-point-afhwa {
+  background: url('./img/mt.png') no-repeat;
+  background-size: 100% 100%;
+}
+.pitfalls-point-afhwa {
+  background: url('./img/yhd.png') no-repeat;
+  background-size: 100% 100%;
 }
 </style>

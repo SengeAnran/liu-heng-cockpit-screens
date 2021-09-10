@@ -176,7 +176,7 @@ export default {
 </style>
 <style lang="scss">
 .wharf-point-afhwa {
-  background: url('./img/wharf.png') no-repeat;
+  background: url('./img/mt.png') no-repeat;
   background-size: 100% 100%;
 }
 .bus-point-afhwa {
