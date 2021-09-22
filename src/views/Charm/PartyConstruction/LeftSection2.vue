@@ -33,7 +33,7 @@ export default {
   components: {
     Title,
   },
-  data() {
+  data () {
     return {
       chart: null,
       chartOpt: {
@@ -151,13 +151,13 @@ export default {
       },
     };
   },
-  mounted() {
+  mounted () {
     this.lineChart = echarts.init(this.$refs.lineChart);
     this.lineChart.setOption(this.chartOpt);
     this.getData();
   },
   methods: {
-    async getData() {
+    async getData () {
       const result = await partyFeeSituation().request();
       this.chartOpt.xAxis.data = result.map((i) => {
         return parseInt(i.yf.slice(-2)) + '月';

@@ -6,11 +6,12 @@
       <div class="top-box flex">
         <div class="item flex" v-for="(item, index) in list" :key="index">
           <div class="name">
-            <div>{{item.name}}</div>
+            <div>{{ item.name }}</div>
             <div class="sub-title">办理量</div>
           </div>
           <div>
-            <CountUp :num="item.number" />
+            <digital :loop="loop" :endNum="item.number || 0" :data="data" :config="config"></digital>
+            <!-- <CountUp :num="item.number" /> -->
             <div class="unit">件</div>
           </div>
         </div>
@@ -33,7 +34,11 @@
             <div class="sub-title">{{ item.subTitle }}</div>
           </div>
           <div>
-            <div class="number"><span class="sign" v-show="item.hasSign"><span v-if="item.number>0">+</span><span v-else>-</span></span><CountUp :num="item.number" /></div>
+            <div class="number">
+              <span class="sign" v-show="item.hasSign"><span v-if="item.number > 0">+</span><span v-else>-</span></span>
+              <digital :loop="loop" :endNum="item.number || 0" :data="data" :config="config"></digital>
+              <!-- <CountUp :num="item.number" /> -->
+            </div>
             <div class="unit">件</div>
           </div>
         </div>
@@ -55,7 +60,14 @@
 </template>
 
 <script>
-import { getRealtimeHandling, getEvaluationSituation, getTrendOfHandlingVolume, getEvaluationPercent, geTopFiveHotIssues, getTopFiveSatisfactionRank } from '@/api/Strength/GovernServe/api';
+import {
+  getRealtimeHandling,
+  getEvaluationSituation,
+  getTrendOfHandlingVolume,
+  getEvaluationPercent,
+  geTopFiveHotIssues,
+  getTopFiveSatisfactionRank,
+} from '@/api/Strength/GovernServe/api';
 import LineChart from '../../Overview/Medical/components/LineChart';
 import PieChart from '../../Overview/Medical/components/PieChart';
 import Bar from './component/Bar';
@@ -64,6 +76,36 @@ export default {
   components: { LineChart, PieChart, Bar },
   data() {
     return {
+      data: {
+        content: 1000,
+        // unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '5rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
       pieTypeData: [],
       lineData: {
         title: '办理量趋势',
@@ -120,38 +162,61 @@ export default {
       getRealtimeHandling()
         .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.list[0].number = json[0].jrbll || 0;
           this.list[1].number = json[0].bzbll || 0;
           this.list[2].number = json[0].ydbll || 0;
         });
-      getEvaluationSituation().request()
+      getEvaluationSituation()
+        .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.list1[0].number = json[0].pjzs || 0;
           this.list1[1].number = json[0].jzrpjzs || 0;
         });
-      getTrendOfHandlingVolume().request()
+      getTrendOfHandlingVolume()
+        .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.lineData.xData = json.today.map((item) => item.sj);
           this.lineData.data1 = json.today.map((item) => item.blajs);
           this.lineData.data2 = json.last.map((item) => item.blajs);
         });
-      getEvaluationPercent().request()
+      getEvaluationPercent()
+        .request()
         .then((json) => {
-          if (!json) { return; }
-          this.pieTypeData = json.map((item) => { return { name: item.pjzt, value: item.pjzs }; });
+          if (!json) {
+            return;
+          }
+          this.pieTypeData = json.map((item) => {
+            return { name: item.pjzt, value: item.pjzs };
+          });
         });
-      geTopFiveHotIssues().request()
+      geTopFiveHotIssues()
+        .request()
         .then((json) => {
-          if (!json) { return; }
-          this.barList = json.map((item) => { return { name: item.sj, percent: item.blajs }; });
+          if (!json) {
+            return;
+          }
+          this.barList = json.map((item) => {
+            return { name: item.sj, percent: item.blajs };
+          });
         });
-      getTopFiveSatisfactionRank().request()
+      getTopFiveSatisfactionRank()
+        .request()
         .then((json) => {
-          if (!json) { return; }
-          this.barList1 = json.map((item) => { return { name: item.sxfl, percent: item.pjzs }; });
+          if (!json) {
+            return;
+          }
+          this.barList1 = json.map((item) => {
+            return { name: item.sxfl, percent: item.pjzs };
+          });
         });
     },
   },
@@ -165,7 +230,7 @@ export default {
 }
 .right {
   position: absolute;
-  top: 263px;
+  top: 200px;
   right: 160px;
   width: 1650px;
   height: 1027px;
@@ -178,7 +243,7 @@ export default {
     width: 50%;
   }
   .title {
-    margin-top: 87px;
+    margin-top: 50px;
   }
   .top-box {
     margin-top: 20px;
@@ -241,10 +306,12 @@ export default {
     }
   }
   .chart-box {
+    margin-top: 50px;
     height: 350px;
     width: 100%;
   }
   .bar-box {
+    margin-top: 50px;
     width: 800px;
     .name {
       margin: 15px 0;

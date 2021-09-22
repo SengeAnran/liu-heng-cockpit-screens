@@ -3,11 +3,13 @@
     <div class="nav">
       <ul class="loop-tab">
         <li
-          :class="{'active': currentTab === item.name}"
+          :class="{ active: currentTab === item.name }"
           v-for="(item, index) in listData"
           :key="index"
           @click="selectTab(item.name, item.index)"
-        >{{item.name}}</li>
+        >
+          {{ item.name }}
+        </li>
       </ul>
     </div>
     <TrafficOverview v-if="tabIndex === 1"></TrafficOverview>
@@ -34,27 +36,12 @@ export default {
           index: 2,
           name: '公路桥隧',
         },
-        // {
-        //   index: 3,
-        //   name: '道路客运',
-        // },
-        // {
-        //   index: 4,
-        //   name: '水路客运',
-        // },
-        // {
-        //   index: 5,
-        //   name: '道路货运',
-        // },
-        // {
-        //   index: 6,
-        //   name: '交通运行分析',
-        // },
       ],
       currentTab: '交通概况',
       tabIndex: 1,
     };
   },
+
   methods: {
     selectTab(name, index) {
       this.currentTab = name;
@@ -81,7 +68,7 @@ export default {
       height: 3px;
       background: #233049;
     }
-    .loop-tab{
+    .loop-tab {
       display: flex;
       contain: content;
       //justify-content: space-between;
@@ -92,41 +79,38 @@ export default {
       overflow-x: auto;
       padding: 0;
       //margin: 1rem 3rem;
-      &::-webkit-scrollbar
-      {
-        width:16px;
-        height:16px;
-        background-color:#413f3f;
+      &::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+        background-color: #413f3f;
       }
       /*定义滚动条轨道
       内阴影+圆角*/
-      &::-webkit-scrollbar-track
-      {
-        -webkit-box-shadow:inset 0 0 6px rgba(20, 34, 49, 0.3);
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(20, 34, 49, 0.3);
         // border-radius:10px;
-        background-color:#0d1f38;
+        background-color: #0d1f38;
       }
       /*定义滑块
       内阴影+圆角*/
-      &::-webkit-scrollbar-thumb
-      {
+      &::-webkit-scrollbar-thumb {
         // border-radius:10px;
-        -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
-        background-color:rgb(70, 70, 70);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: rgb(70, 70, 70);
       }
-      li{
+      li {
         font-size: 28px;
-        color: #FFFFFF;
+        color: #ffffff;
         padding: 0 3rem;
         cursor: pointer;
         min-width: 14rem;
         height: 44px;
         text-align: center;
-        &.active{
+        &.active {
           font-size: 28px;
           font-family: Source Han Sans CN;
           font-weight: 500;
-          color: #95F5F7;
+          color: #95f5f7;
           //background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
           //background: url('./img/xz.png') no-repeat center;
           background: url('./img/xz.png') 100% 100%;

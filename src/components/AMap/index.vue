@@ -5,6 +5,12 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      // 记录点击的数组
+      ObjeClickArr: [],
+    };
+  },
   provide() {
     return {
       mapPromise: new Promise((resolve) => {
@@ -23,6 +29,7 @@ export default {
     this.resolveMap(this.map);
     window.amap = this.map;
   },
+
   beforeDestroy() {
     this.map.destroy();
   },
@@ -47,7 +54,7 @@ export default {
     background: url('./img/mask.png') no-repeat;
     background-size: 100% 100%;
   }
-  ::v-deep .amap-logo{
+  ::v-deep .amap-logo {
     display: none !important;
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="line-chart" :style="{width: `${width}px`, height: `${height}px`}"  ref="lineChart" />
+  <div class="line-chart" :style="{ width: `${width}px`, height: `${height}px` }" ref="lineChart" />
 </template>
 <script>
 import * as echarts from 'echarts';
@@ -52,7 +52,9 @@ export default {
         },
         legend: {
           data: data.title,
-          left: 'center',
+          // left: 'center',
+          right: 30,
+          top: 7,
           textStyle: {
             color: '#FFFFFF',
             fontSize: 24,
@@ -111,6 +113,7 @@ export default {
           type: 'value',
           name: '人数',
           min: data.min,
+          max: data.max,
           interval: data.interval,
           nameTextStyle: {
             align: 'center',

@@ -6,7 +6,7 @@
         <SwiperSlider v-for="(item, index) of list" class="bar-item" :key="`bar-chart${index}`">
           <span class="bar-name">{{ index + 1 }}. {{ item.sqmc }}</span>
           <span :class="['opacity-bar', `opacity-bar-${index}`]">
-            <div :style="{width: item.percent}">
+            <div :style="{ width: item.percent }">
               <span :class="['true-bar', { active: index === 0 || index === 1 }]"></span>
             </div>
           </span>
@@ -51,17 +51,22 @@ export default {
   },
   methods: {
     loadData() {
-      getPopuliationNumRank().request().then((json) => {
-        if (json) {
-          const curData = json.sort((a, b) => b.zrks - a.zrks);
-          this.resolveArr(curData);
-        }
-      });
+      getPopuliationNumRank()
+        .request()
+        .then((json) => {
+          if (json) {
+            const curData = json.sort((a, b) => b.zrks - a.zrks);
+            this.resolveArr(curData);
+          }
+        });
     },
     resolveArr(data) {
-      const maxVal = Math.max.apply(Math, data.map((item) => item.zrks));
+      const maxVal = Math.max.apply(
+        Math,
+        data.map((item) => item.zrks),
+      );
       this.list = data.map((item) => {
-        item.percent = `${parseInt(item.zrks / maxVal * 100)}%`;
+        item.percent = `${parseInt((item.zrks / maxVal) * 100)}%`;
         return item;
       });
     },
@@ -82,9 +87,9 @@ export default {
 .flow-rank {
   position: absolute;
   left: 1008px;
-  top: 262px;
+  top: 162px;
   width: 835px;
-  height: 1050px;
+  height: 1150px;
   .bar-chart {
     position: absolute;
     top: 100px;
@@ -92,12 +97,12 @@ export default {
     height: 980px;
     overflow: hidden;
     cursor: pointer;
-    >div {
+    > div {
       height: 100%;
       .bar-item {
         font-size: 28px;
         height: 98px;
-        >span {
+        > span {
           display: inline-block;
           &.bar-name {
             display: block;
@@ -109,7 +114,7 @@ export default {
             width: 600px;
             height: 24px;
             background-color: transparent;
-            >div {
+            > div {
               position: absolute;
               left: 0;
               max-width: 600px;

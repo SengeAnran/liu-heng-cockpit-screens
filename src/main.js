@@ -4,8 +4,12 @@ import router from './router';
 import store from './store';
 import BaseTitle from '@/components/BaseTitle';
 import CountUp from '@/components/CountUp';
+import Digital from '@/components/Digital';
 import ViewTemplate from '@/components/ViewTemplate';
 import * as echarts from 'echarts';
+
+// eslint-disable-next-line quotes
+import "./font.css";
 
 // import { getSignature } from '@/api/AuthController/api';
 
@@ -25,6 +29,7 @@ import * as echarts from 'echarts';
 // }
 // getData();
 
+Vue.component('Digital', Digital);
 Vue.component('CountUp', CountUp);
 Vue.component('BaseTitle', BaseTitle);
 Vue.component('view-template', ViewTemplate);

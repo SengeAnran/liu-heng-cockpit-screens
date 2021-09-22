@@ -120,77 +120,106 @@ export default {
           },
           icon: 'rect',
         },
-        series: [{
-          name: '班级数',
-          type: 'bar',
-          barWidth: 20,
-          barGap: 0.5,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: '#FFAE9A',
-                },
-                {
-                  offset: 1,
-                  color: '#BB6D3E',
-                },
-              ],
-              global: false,
+        series: [
+          {
+            name: '班级数',
+            type: 'bar',
+            barWidth: 20,
+            barGap: 0.5,
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#FFAE9A',
+                  },
+                  {
+                    offset: 1,
+                    color: '#BB6D3E',
+                  },
+                ],
+                global: false,
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 22,
+              },
+            },
+            data: this.dataMessage.classNum,
+          },
+          {
+            name: '总人数',
+            type: 'bar',
+            barWidth: 20,
+            barGap: 0.5,
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'rgba(89, 219, 230, 1)',
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(89, 219, 230, 0.5)',
+                  },
+                ],
+                global: false,
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 22,
+              },
+            },
+            data: this.dataMessage.allPeople,
+          },
+          {
+            name: '总人数',
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: ['100%', '50%'],
+            symbolSize: [20, 20],
+          },
+          {
+            name: '总人数',
+            data: this.dataMessage.allPeople,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['70%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: '#8bead4',
+                borderWidth: 2,
+                color: '#8bead4',
+              },
             },
           },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          data: this.dataMessage.classNum,
-        }, {
-          name: '总人数',
-          type: 'bar',
-          barWidth: 20,
-          barGap: 0.5,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: 'rgba(89, 219, 230, 1)',
-                },
-                {
-                  offset: 1,
-                  color: 'rgba(89, 219, 230, 0.5)',
-                },
-              ],
-              global: false,
-            },
-          },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          data: this.dataMessage.allPeople,
-        }],
+        ],
       };
       return option;
     },
@@ -203,7 +232,7 @@ export default {
   width: 855px;
   height: 400px;
   position: absolute;
-  top: 530px;
+  top: 655px;
   left: 10px;
   z-index: 101010;
   .line_chart {

@@ -1,5 +1,5 @@
 <template>
-  <div class="pie-chart" :style="{width: `${width}px`, height: `${height}px`}" ref="pieChart" />
+  <div class="pie-chart" :style="{ width: `${width}px`, height: `${height}px` }" ref="pieChart" />
 </template>
 <script>
 import * as echarts from 'echarts';
@@ -159,9 +159,11 @@ export default {
             label: {
               show: false,
             },
-            data: [{
-              value: 1,
-            }],
+            data: [
+              {
+                value: 1,
+              },
+            ],
             z: -1,
           },
         ],

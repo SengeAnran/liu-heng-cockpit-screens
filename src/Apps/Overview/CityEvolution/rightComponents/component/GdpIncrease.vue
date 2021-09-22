@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="GDP增速" :width='720' />
+    <BaseTitle title="GDP增速" :width="720" />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -42,8 +42,9 @@ export default {
           bottom: '15%',
         },
         legend: {
-          data: ['渔农村常住居民人均可支配收入', '增幅'],
-          bottom: 7,
+          // data: ['渔农村常住居民人均可支配收入', '增幅'],
+          right: 30,
+          top: 7,
           textStyle: {
             color: '#FFFFFF',
             fontSize: 20,
@@ -62,89 +63,99 @@ export default {
           borderColor: 'rgba(255, 255, 255, 0.4)',
           backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
-        xAxis: [{
-          data: this.xAxisData,
-          type: 'category',
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255,255,255,0.5)',
+        xAxis: [
+          {
+            data: this.xAxisData,
+            type: 'category',
+            axisLine: {
+              lineStyle: {
+                color: 'rgba(255,255,255,0.5)',
+              },
             },
-          },
-          axisTick: {
-            show: false,
-            alignWithLabel: true,
-          },
-          splitArea: {
-            color: '#f00',
-            lineStyle: {
+            axisTick: {
+              show: false,
+              alignWithLabel: true,
+            },
+            splitArea: {
               color: '#f00',
+              lineStyle: {
+                color: '#f00',
+              },
             },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            splitLine: {
+              show: false,
+            },
+            boundaryGap: true,
           },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+        ],
+        yAxis: [
+          {
+            name: '%',
+            type: 'value',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
-          },
-          splitLine: {
-            show: false,
-          },
-          boundaryGap: true,
-        }],
-        yAxis: [{
-          name: '%',
-          type: 'value',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 22,
+              },
+            },
+            axisTick: {
+              show: true,
             },
           },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
+        ],
+        series: [
+          {
+            type: 'line',
+            name: '增幅',
+            barWidth: 20,
+            itemStyle: {
+              color: '#59DBE6',
             },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
-              fontSize: 22,
+            areaStyle: {
+              color: 'rgba(5,140,255, 0.2)',
             },
-          },
-          axisTick: {
-            show: true,
-          },
-        }],
-        series: [{
-          type: 'line',
-          name: '增幅',
-          barWidth: 20,
-          itemStyle: {
-            color: 'rgba(255, 150, 151, 1)',
-          },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 20,
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 20,
+              },
             },
+            data: this.GdpData,
           },
-          data: this.GdpData,
-        }],
+        ],
       };
       return option;
     },
-    async loadData() { // 社区信息
+    async loadData() {
+      // 社区信息
       const res = await getGdpSpeed().request();
       const xAxisData = [];
       const GdpData = [];

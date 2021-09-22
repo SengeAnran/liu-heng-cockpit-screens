@@ -1,7 +1,7 @@
 <template>
   <div class="Education">
-    <LeftComponents />
-    <RightComponents />
+    <LeftComponents :style="{ left: Showleft + 'px' }" />
+    <RightComponents :style="{ right: Showleft + 'px' }" />
     <Map />
   </div>
 </template>
@@ -16,6 +16,22 @@ export default {
     LeftComponents,
     RightComponents,
     Map,
+  },
+  data() {
+    return {
+      show: true,
+      Showleft: -1900,
+      timer: null,
+    };
+  },
+  mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 140) {
+        this.Showleft = 140;
+        clearInterval(this.timer);
+      }
+    }, 150);
   },
 };
 </script>

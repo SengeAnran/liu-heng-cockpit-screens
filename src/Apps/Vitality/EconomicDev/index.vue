@@ -1,9 +1,9 @@
 <template>
   <div class="economic-dev">
     <Map />
-    <Left />
-    <Right />
-<!--    <Right2 />-->
+    <Left :style="{ left: Showleft + 'px' }" />
+    <Right :style="{ right: Showleft + 'px' }" />
+    <!--    <Right2 />-->
   </div>
 </template>
 <script>
@@ -18,6 +18,22 @@ export default {
     Left,
     Right,
     // Right2,
+  },
+  data() {
+    return {
+      Showleft: -1900,
+      timer: null,
+    };
+  },
+  computed: {},
+  mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 160) {
+        this.Showleft = 160;
+        clearInterval(this.timer);
+      }
+    }, 150);
   },
 };
 </script>

@@ -1,0 +1,12 @@
+@font-face {  
+    font-family: 'DINPro';  
+    src: url('./font/DinPro/DINPro-Medium_1.otf');   
+    font-weight: normal;  
+    font-style: normal;  
+  }
+  @font-face {  
+    font-family: 'BoldItalic';  
+    src: url('./font/Oswald/Oswald-Demi-BoldItalic-TTF.sfd.ttf');   
+    font-weight: normal;  
+    font-style: normal;  
+  }

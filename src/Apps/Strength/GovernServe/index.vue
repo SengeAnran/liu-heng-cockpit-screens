@@ -1,8 +1,8 @@
 <template>
   <div class="govern-serve">
-    <Left/>
-    <Map/>
-    <Right/>
+    <Left :style="{ left: Showleft + 'px' }" />
+    <Map />
+    <Right :style="{ right: Showleft + 'px' }" />
   </div>
 </template>
 
@@ -15,16 +15,27 @@ export default {
   name: 'GovernServe',
   components: { Left, Map, Right },
   data() {
-    return {};
+    return {
+      show: true,
+      Showleft: -1900,
+    };
   },
   computed: {},
-  mounted() {},
+  mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 180) {
+        this.Showleft = 180;
+        clearInterval(this.timer);
+      }
+    }, 150);
+  },
   methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
-.govern-serve{
+.govern-serve {
   width: 100%;
   height: 2070px;
   background-position: center;

@@ -1,10 +1,10 @@
 <template>
   <div class="right_componemt">
-    <BaseTitle title="学生情况" :width='720' class="title" />
-    <JuniorSchool :dataMessage='juniorSchool' />
-    <PrimarySchool :dataMessage='primarySchool' />
-    <HeightSchool :dataMessage='heightSchool' />
-    <Kindergarten :dataMessage='kindergarten' />
+    <BaseTitle title="学生情况" :width="720" class="title" />
+    <JuniorSchool :dataMessage="juniorSchool" />
+    <PrimarySchool :dataMessage="primarySchool" />
+    <HeightSchool :dataMessage="heightSchool" />
+    <Kindergarten :dataMessage="kindergarten" />
   </div>
 </template>
 
@@ -81,9 +81,9 @@ export default {
   position: absolute;
   width: 1710px;
   height: 1076px;
-  top: 250px;
+  top: 150px;
   right: 140px;
-  padding:0 35px;
+  padding: 0 35px;
   box-sizing: border-box;
   z-index: 10000;
   .title {

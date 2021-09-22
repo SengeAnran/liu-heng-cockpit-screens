@@ -32,9 +32,10 @@ module.exports = {
       ignoreReadBeforeAssign: false,
     }],
     'arrow-parens': ['error', 'always'],
+    "space-before-function-paren": 1,
     'space-before-function-paren': ['error', {
       anonymous: 'always',
-      named: 'never',
+      named: 'always',
       asyncArrow: 'always',
     }],
     'import/extensions': ['error', 'ignorePackages', {

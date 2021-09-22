@@ -3,7 +3,7 @@
     <BaseTitle title="自然增长情况" />
     <div class="show-box">
       <div v-for="(item, index) of list" :key="index">
-        <CountUp  :num="item.value" />
+        <CountUp :num="item.value" />
         <span class="unit">{{ index === 0 ? '人' : '‰' }}</span>
       </div>
     </div>
@@ -27,17 +27,18 @@ export default {
       ],
     };
   },
-  components: {
-  },
+  components: {},
   mounted() {
     this.loadData();
   },
   methods: {
     loadData() {
-      getNaturalGrowth().request().then((json) => {
-        this.list[0].value = json.zrzzrks || 0;
-        this.list[1].value = +(json.zrzzl * 100).toFixed(2) || 0;
-      });
+      getNaturalGrowth()
+        .request()
+        .then((json) => {
+          this.list[0].value = json.zrzzrks || 0;
+          this.list[1].value = +(json.zrzzl * 100).toFixed(2) || 0;
+        });
     },
   },
 };
@@ -46,16 +47,16 @@ export default {
 .single {
   position: absolute;
   right: 125px;
-  top: 262px;
+  top: 162px;
   width: 835px;
-  height: 535px;
+  height: 585px;
   .show-box {
     position: absolute;
     left: 0;
-    top: 85px;
+    top: 100px;
     width: 800px;
     height: 420px;
-    >div {
+    > div {
       width: 800px;
       height: 198px;
       color: #fff;

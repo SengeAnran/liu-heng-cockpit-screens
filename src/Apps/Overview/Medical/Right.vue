@@ -1,21 +1,17 @@
 <template>
   <view-template class="Medical-Right" :interval="300" @interval="getData">
     <div>
-      <BaseTitle title="隔离点人数趋势图"
-                 :width="780" />
+      <BaseTitle title="隔离点人数趋势图" :width="780" />
       <div class="chart-box">
         <LineChart :line-data="lineData" />
       </div>
-      <BaseTitle title="疫苗接种趋势"
-                 :width="780"
-                 :top="530" />
+      <BaseTitle title="疫苗接种趋势" :width="780" :top="630" />
       <div class="chart-box box1">
         <LineBarChart :data="lineBarData" />
       </div>
     </div>
     <div class="right-right">
-      <BaseTitle title="隔离点信息"
-                 :width="780" />
+      <BaseTitle title="隔离点信息" :width="780" />
       <div class="chart-box tables">
         <!-- <PieChart :data="pieTypeData" legendType="pec" title="患者挂号科室占比" /> -->
         <div class="flex">
@@ -23,17 +19,13 @@
           <div>隔离房数</div>
           <div>床位</div>
         </div>
-        <div v-for="(item,i) in isoList"
-             :key="`iso-place-${i}`"
-             class="flex">
-          <div>{{item.gldmx}}</div>
-          <div>{{item.glfs}}</div>
-          <div>{{item.cws}}</div>
+        <div v-for="(item, i) in isoList" :key="`iso-place-${i}`" class="flex">
+          <div>{{ item.gldmx }}</div>
+          <div>{{ item.glfs }}</div>
+          <div>{{ item.cws }}</div>
         </div>
       </div>
-      <BaseTitle title="疫苗接种点信息"
-                 :width="780"
-                 :top="530" />
+      <BaseTitle title="疫苗接种点信息" :width="780" :top="630" />
       <div class="chart-box box1 tables">
         <!-- <PieChart :data="pieAgeData"
                   legendType="pec"
@@ -42,11 +34,9 @@
           <div>疫苗接种点</div>
           <div>接种能力</div>
         </div>
-        <div v-for="(item,i) in ymPlaces"
-             :key="`ym-place-${i}`"
-             class="flex">
-          <div>{{item.jzdmc}}</div>
-          <div>{{item.jznl}}剂/日</div>
+        <div v-for="(item, i) in ymPlaces" :key="`ym-place-${i}`" class="flex">
+          <div>{{ item.jzdmc }}</div>
+          <div>{{ item.jznl }}剂/日</div>
         </div>
       </div>
     </div>
@@ -58,7 +48,12 @@ import BaseTitle from './components/BaseTitle';
 import LineChart from './components/LineChart';
 // import PieChart from './components/PieChart';
 import LineBarChart from './components/LineBarChart';
-import { getIsolatedPointNum, getIsolationPlaceInfo, getPlaceInfo, getVaccinateTrend } from '@/api/Overview/Medical/api';
+import {
+  getIsolatedPointNum,
+  getIsolationPlaceInfo,
+  getPlaceInfo,
+  getVaccinateTrend,
+} from '@/api/Overview/Medical/api';
 
 export default {
   name: 'MedicalRight',
@@ -124,12 +119,14 @@ export default {
         .request()
         .then((res) => {
           this.isoList = res;
-          res && res.length && res.map((item) => {
-            this.isoNames.push(item.gldmx);
-          });
+          res &&
+            res.length &&
+            res.map((item) => {
+              this.isoNames.push(item.gldmx);
+            });
           return this.isoNames;
         });
-        // // 隔离点人数趋势图
+      // // 隔离点人数趋势图
       for (let i = 0; i < 2; i++) {
         const place = res[i];
         getIsolatedPointNum({ place })
@@ -138,19 +135,23 @@ export default {
             const xData = [];
             const yData = [];
             if (i === 0) {
-              res && res.length && res.map((item) => {
-                this.lineData.name1 = item.gld;
-                xData.push(item.yf);
-                yData.push(item.glrs);
-              });
+              res &&
+                res.length &&
+                res.map((item) => {
+                  this.lineData.name1 = item.gld;
+                  xData.push(item.yf);
+                  yData.push(item.glrs);
+                });
               this.lineData.xData = xData;
               this.lineData.data1 = yData;
             } else {
               const data2 = [];
-              res && res.length && res.map((item) => {
-                this.lineData.name2 = item.gld;
-                data2.push(item.glrs);
-              });
+              res &&
+                res.length &&
+                res.map((item) => {
+                  this.lineData.name2 = item.gld;
+                  data2.push(item.glrs);
+                });
               this.lineData.data2 = data2;
             }
           });
@@ -170,14 +171,16 @@ export default {
           const xData = [];
           const data1 = [];
           const data2 = [];
-          res && res.length && res.map((item) => {
-            xData.push(item.yf);
-            data1.push(item.zzl * 100);
-            data2.push(item.jzrs);
-          });
-          this.lineBarData.xData = xData;
-          this.lineBarData.data1 = data1;
-          this.lineBarData.data2 = data2;
+          res &&
+            res.length &&
+            res.map((item) => {
+              xData.push(item.yf);
+              data1.push(item.zzl * 100);
+              data2.push(item.jzrs);
+            });
+          this.lineBarData.xData = xData.reverse();
+          this.lineBarData.data1 = data1.reverse();
+          this.lineBarData.data2 = data2.reverse();
         });
     },
   },
@@ -188,7 +191,7 @@ export default {
   width: 1650px;
   height: 977px;
   position: absolute;
-  top: 263px;
+  top: 150px;
   right: 159px;
   display: flex;
   z-index: 1000;
@@ -214,9 +217,8 @@ export default {
         }
         &:not(:first-child) {
           margin-top: 32px;
-
         }
-        >div{
+        > div {
           width: 30%;
         }
       }
@@ -226,14 +228,14 @@ export default {
     height: 415px;
     width: 50%;
     position: absolute;
-    top: 60px;
+    top: 100px;
     .pieChart {
       margin-top: 50px;
       height: 360px;
     }
   }
   .box1 {
-    top: 590px;
+    top: 690px;
   }
 }
 </style>

@@ -12,7 +12,13 @@
               <div class="sub-title">{{ item.subTitle }}</div>
             </div>
             <div>
-              <div class="number"><span class="sign" v-show="item.hasSign"><span v-if="item.number>0">+</span><span v-else>-</span></span> <CountUp :num="item.number" /></div>
+              <div class="number">
+                <span class="sign" v-show="item.hasSign"
+                  ><span v-if="item.number > 0">+</span><span v-else>-</span></span
+                >
+                <digital :loop="loop" :endNum="item.number || 0" :data="data" :config="config"></digital>
+                <!-- <CountUp :num="item.number" /> -->
+              </div>
               <div class="unit">件</div>
             </div>
           </div>
@@ -30,7 +36,7 @@
               <div class="sub-title">{{ item.subTitle }}</div>
             </div>
             <div class="number">
-              <CountUp :num="item.number" />
+              <digital :loop="loop" :endNum="item.number || 0" :data="data" :config="config"></digital>
               <div class="unit">件</div>
             </div>
           </div>
@@ -48,17 +54,23 @@
             class="picker-item"
             v-for="(item, index) in dateList"
             :key="index"
-            @click="onClick(item,index)"
+            @click="onClick(item, index)"
             :class="{ active: active === index }"
           >
             {{ item.name }}
           </div>
         </div>
         <div class="list">
-          <div class="item flex" v-for="(item,index) in tableList" :key="index">
-            <div class="name"><span>姓名：</span><span>{{item.xm}}</span></div>
-            <div class="time"><span>预约时间：</span><span>{{item.yysj}}</span></div>
-            <div class="desc"><span>预约事项：</span><span>{{item.yysx}}</span></div>
+          <div class="item flex" v-for="(item, index) in tableList" :key="index">
+            <div class="name">
+              <span>姓名：</span><span>{{ item.xm }}</span>
+            </div>
+            <div class="time">
+              <span>预约时间：</span><span>{{ item.yysj }}</span>
+            </div>
+            <div class="desc">
+              <span>预约事项：</span><span>{{ item.yysx }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -70,12 +82,47 @@
 import moment from 'moment';
 import PieChart from '../../Overview/Medical/components/PieChart';
 import LineChart from '../../Overview/Medical/components/LineChart';
-import { getRealtimeBooking, getAppointmentAnalysis, getBookingTrend, getRealtimeReservationDetails } from '@/api/Strength/GovernServe/api';
+import {
+  getRealtimeBooking,
+  getAppointmentAnalysis,
+  getBookingTrend,
+  getRealtimeReservationDetails,
+} from '@/api/Strength/GovernServe/api';
 export default {
   name: 'ProjectManageLeft',
   components: { PieChart, LineChart },
   data() {
     return {
+      data: {
+        content: 1000,
+        // unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '5rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
       list: [
         { name: '预约总数', number: 0 },
         { name: '预约总数', subTitle: '较上月', number: 0, hasSign: true },
@@ -90,7 +137,8 @@ export default {
         { name: '昨日', value: moment().subtract('days', 1).format('YYYY-MM-DD') },
         { name: '今天', value: moment().format('YYYY-MM-DD') },
         { name: '明天', value: moment().add(1, 'days').format('YYYY-MM-DD') },
-        { name: '后7天', value: moment().add(7, 'days').format('YYYY-MM-DD') }],
+        { name: '后7天', value: moment().add(7, 'days').format('YYYY-MM-DD') },
+      ],
       pieTypeData: [
         { name: '已受理', value: 0 },
         { name: '已取消', value: 0 },
@@ -124,7 +172,9 @@ export default {
       getRealtimeBooking()
         .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.list[0].number = json[0].yyzs || 0;
           this.list[1].number = json[0].jsyzs || 0;
           this.list1[0].number = json[0].yyjnsl || 0;
@@ -133,13 +183,19 @@ export default {
       getAppointmentAnalysis()
         .request()
         .then((json) => {
-          if (!json) { return; }
-          this.pieTypeData = json.map((item) => { return { name: item.yyzt, value: item.yyzs }; });
+          if (!json) {
+            return;
+          }
+          this.pieTypeData = json.map((item) => {
+            return { name: item.yyzt, value: item.yyzs };
+          });
         });
       getBookingTrend()
         .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.lineData.xData = json.map((item) => item.sj);
           this.lineData.data1 = json.map((item) => item.yys);
         });
@@ -149,12 +205,13 @@ export default {
       getRealtimeReservationDetails()
         .request({ yysj: this.time })
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.tableList = json;
         });
     },
   },
-
 };
 </script>
 
@@ -172,8 +229,8 @@ $main-font: 24px;
 }
 .left {
   position: absolute;
-  top: 263px;
-  left: 160px;
+  top: 200px;
+  left: 200px;
   width: 1650px;
   height: 1027px;
   font-size: 24px;
@@ -181,7 +238,7 @@ $main-font: 24px;
   z-index: 999;
   .to-left,
   .to-right {
-    margin-top: 90px;
+    margin-top: 50px;
     flex: 1;
     .top-box {
       width: 800px;
@@ -259,6 +316,7 @@ $main-font: 24px;
     }
   }
   .to-bottom {
+    margin-top: 100px;
     .title {
       margin-bottom: 30px;
     }
@@ -299,9 +357,9 @@ $main-font: 24px;
         font-size: 30px;
         padding: 0 55px;
         box-sizing: border-box;
-        .time{
-            font-family: "DIN Alternate";
-      }
+        .time {
+          font-family: 'DIN Alternate';
+        }
         div {
           > span:nth-child(1) {
             color: rgba(95, 221, 232, 1);

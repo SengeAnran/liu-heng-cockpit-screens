@@ -97,8 +97,7 @@ export default {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            lineStyle: {
-            },
+            lineStyle: {},
           },
         },
         xAxis: {
@@ -107,7 +106,7 @@ export default {
           axisLabel: {
             margin: 8,
             color: 'rgba(225,225,225,.7)',
-            fontSize: 21,
+            fontSize: 17,
             fontFamily: 'DINPro',
           },
           axisLine: {
@@ -125,72 +124,75 @@ export default {
             show: false,
           },
         },
-        yAxis: [{
-          type: 'value',
-          name: `${name1}/${name2}`,
-          nameTextStyle: {
-            color: 'rgba(225,225,225,.7)',
-            fontSize: 21,
-          },
-          max: 100,
-          splitNumber: 10,
-          splitLine: {
-            show: true,
-            interval: '0',
-            lineStyle: {
-              color: 'rgba(151, 151, 151, 1)',
-              opacity: 0.5,
+        yAxis: [
+          {
+            type: 'value',
+            name: `${name1}/${name2}`,
+            nameTextStyle: {
+              color: 'rgba(225,225,225,.7)',
+              fontSize: 21,
+            },
+            max: 100,
+            splitNumber: 10,
+            splitLine: {
+              show: true,
+              interval: '0',
+              lineStyle: {
+                color: 'rgba(151, 151, 151, 1)',
+                opacity: 0.5,
+              },
+            },
+            minInterval: 3,
+            axisLabel: {
+              show: true,
+              margin: 65,
+              color: 'rgba(225,225,225,.7)',
+              fontSize: 21,
+              fontFamily: 'DINPro',
+              formatter: function (value, index) {
+                return value + (index !== 0 ? '% ' : '');
+              },
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
             },
           },
-          minInterval: 3,
-          axisLabel: {
-            show: true,
-            margin: 65,
-            color: 'rgba(225,225,225,.7)',
-            fontSize: 21,
-            fontFamily: 'DINPro',
-            formatter: function (value, index) {
-              return value + (index !== 0 ? '% /' : '');
+          {
+            type: 'value',
+            name: '',
+            splitNumber: 10,
+            nameTextStyle: {
+              color: 'rgba(225,225,225,.7)',
+              fontSize: 21,
+            },
+            position: 'right',
+            splitLine: {
+              show: false,
+              interval: '0',
+              lineStyle: {
+                color: 'rgba(151, 151, 151, 1)',
+                opacity: 0.5,
+              },
+            },
+            minInterval: 1,
+            axisLabel: {
+              show: true,
+              margin: 8,
+              color: 'rgba(225,225,225,.7)',
+              fontSize: 21,
+              fontFamily: 'DINPro',
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
             },
           },
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-        }, {
-          type: 'value',
-          name: '',
-          splitNumber: 10,
-          nameTextStyle: {
-            color: 'rgba(225,225,225,.7)',
-            fontSize: 21,
-          },
-          position: 'left',
-          splitLine: {
-            show: false,
-            interval: '0',
-            lineStyle: {
-              color: 'rgba(151, 151, 151, 1)',
-              opacity: 0.5,
-            },
-          },
-          minInterval: 1,
-          axisLabel: {
-            show: true,
-            margin: 8,
-            color: 'rgba(225,225,225,.7)',
-            fontSize: 21,
-            fontFamily: 'DINPro',
-          },
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-        }],
+        ],
         series: [
           {
             name: name1,
@@ -212,7 +214,8 @@ export default {
               fontFamily: 'DINPro',
               color: '#fff',
             },
-          }, {
+          },
+          {
             name: name2,
             type: 'bar',
             yAxisIndex: 1,
@@ -245,6 +248,32 @@ export default {
               },
             },
           },
+          {
+            name: name2,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: ['100%', '50%'],
+            symbolSize: [20, 20],
+          },
+          {
+            name: name2,
+            data: data2,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['70%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: '#8EC984',
+                borderWidth: 2,
+                color: '#8EC984',
+              },
+            },
+          },
         ],
       };
       return option;
@@ -253,7 +282,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.lineBarChart{
+.lineBarChart {
   width: 100%;
   height: 100%;
 }

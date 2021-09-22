@@ -99,7 +99,6 @@ export default {
         },
         series: [
           {
-            name: '患者年龄占比',
             type: 'pie',
             clockwise: true,
             radius: [],
@@ -250,20 +249,12 @@ export default {
       const that = this;
       this.option.tooltip.formatter = function (params) {
         const html =
-          "<div style='font-size: 20px'>" +
-            params.marker +
-            params.name +
-            ':  ' +
-            params.value +
-            that.tooltip?.unit || '' + '</div>';
+          "<div style='font-size: 20px'>" + params.marker + params.name + ':  ' + params.value + that.tooltip?.unit ||
+          '' + '</div>';
         return html;
       };
-      this.option.graphic.elements[0].left = this.chartStyle.position
-        ? this.chartStyle.position[0]
-        : '6.2%';
-      this.option.graphic.elements[0].top = this.chartStyle.position
-        ? this.chartStyle.position[1]
-        : '5.88%';
+      this.option.graphic.elements[0].left = this.chartStyle.position ? this.chartStyle.position[0] : '6.2%';
+      this.option.graphic.elements[0].top = this.chartStyle.position ? this.chartStyle.position[1] : '5.88%';
       this.option.graphic.elements[0].scaleX = this.chartStyle.scale[0] || 2.3;
       this.option.graphic.elements[0].scaleY = this.chartStyle.scale[1] || 2.2;
 
@@ -271,6 +262,7 @@ export default {
         this.option.legend.top = this.chartStyle.legendStyle[0] || 0;
         this.option.legend.right = this.chartStyle.legendStyle[1] || 0;
         this.option.legend.bottom = this.chartStyle.legendStyle[2] || 0;
+
         this.option.legend.left = this.chartStyle.legendStyle[3] || 0;
       }
       this.option.legend.formatter = function (name) {
@@ -281,6 +273,7 @@ export default {
       };
       this.chart.clear();
       this.chart.setOption(this.option);
+      console.log(this.option.series[0].data);
     },
     legendSwitch(checkData, name) {
       let html = name;
@@ -289,32 +282,40 @@ export default {
           html = [
             '{a|' + name + '}',
             '{b|' + checkData[0].value + '}',
-            '{b|' +
-              Math.floor((checkData[0].value / this.total) * 10000) / 100 +
-              '%}',
+            '{b|' + Math.floor((checkData[0].value / this.total) * 10000) / 100 + '%}',
           ];
           break;
         case 'value':
           html = ['{a|' + name + '}', '{b|' + checkData[0].value + '}'];
           break;
         case 'pec':
-          html = [
-            '{a|' + name + '}' +
-            '{b|' +
-              Math.floor((checkData[0].value / this.total) * 10000) / 100 +
-              '%}',
-          ];
+          html = ['{a|' + name + '}' + '{b|' + Math.floor((checkData[0].value / this.total) * 10000) / 100 + '%}'];
           break;
         default:
           break;
       }
       return html;
     },
+    // setInterval1() {
+    //   let curIndex = 0;
+    //   setInterval(() => {
+    //     var dataLen = this.option.series[0].data.length;
+    //     console.log(curIndex);
+    //     this.chart.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: curIndex });
+    //     curIndex = (curIndex + 1) % dataLen;
+    //     this.chart.dispatchAction({
+    //       type: 'highlight',
+    //       seriesIndex: 0,
+    //       dataIndex: curIndex,
+    //     });
+    //   }, 2000);
+    // },
   },
 };
 </script>
 <style lang="scss" scoped>
 .pieChart {
+  margin-top: 0px;
   // width: 100%;
   height: 100%;
 }

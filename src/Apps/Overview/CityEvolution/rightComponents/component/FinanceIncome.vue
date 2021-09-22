@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="财政总收入和公共财政预算收入" :width='720' />
+    <BaseTitle title="财政总收入和公共财政预算收入" :width="720" />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -44,7 +44,10 @@ export default {
           bottom: '15%',
         },
         legend: {
+          show: false,
           data: ['财政总收入', '公共财政预算收入'],
+          right: 30,
+          top: 7,
           bottom: 7,
           textStyle: {
             color: '#FFFFFF',
@@ -93,89 +96,152 @@ export default {
           },
           boundaryGap: true,
         },
-        yAxis: [{
-          type: 'value',
-          name: '亿元',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+        yAxis: [
+          {
+            type: 'value',
+            name: '亿元',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
-          },
-          axisTick: {
-            show: true,
-          },
-        }],
-        series: [{
-          type: 'bar',
-          name: '财政总收入',
-          barWidth: 20,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: '#66CCFF',
-                },
-                {
-                  offset: 1,
-                  color: '#72DCEE',
-                },
-              ],
-              global: false,
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: true,
             },
           },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
+        ],
+        series: [
+          {
+            z: 1,
+            name: '财政总收入',
+            data: this.financeIncome,
+            type: 'bar',
+            barMaxWidth: 'auto',
+            barWidth: 20,
+            itemStyle: {
+              color: {
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                type: 'linear',
+                global: false,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#90E4FA',
+                  },
+                  {
+                    offset: 1,
+                    color: '#8CE1F9',
+                  },
+                ],
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#fff',
             },
           },
-          data: this.financeIncome,
-        }, {
-          type: 'bar',
-          name: '公共财政预算收入',
-          barWidth: 20,
-          itemStyle: {
-            color: '#31EABC',
+          {
+            name: '财政总收入',
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: ['-100%', '50%'],
+            symbolSize: [20, 20],
           },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
+          {
+            name: '财政总收入',
+            data: this.financeIncome,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['-60%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: '#8bead4',
+                borderWidth: 2,
+                color: '#8bead4',
+              },
             },
           },
-          data: this.publickPre,
-        }],
+
+          {
+            type: 'bar',
+            name: '公共财政预算收入',
+            barWidth: 20,
+            itemStyle: {
+              color: '#31EABC',
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 22,
+              },
+            },
+            data: this.publickPre,
+          },
+          {
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: [0, '50%'],
+            symbolSize: [20, 15],
+          },
+          {
+            data: this.publickPre,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['60%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: '#8bead4',
+                borderWidth: 2,
+                color: '#8bead4',
+              },
+            },
+          },
+          {
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: [0, '50%'],
+            symbolSize: [20, 15],
+            zlevel: -2,
+          },
+        ],
       };
       return option;
     },
@@ -184,11 +250,14 @@ export default {
       const xAxisData = [];
       const financeIncome = [];
       const publickPre = [];
-      res.reverse().forEach((item, index) => {
-        xAxisData.push(item.nf);
-        financeIncome.push(item.czsr);
-        publickPre.push(item.ggys);
-      });
+      res
+        .reverse()
+        .slice(res.length - 6)
+        .forEach((item, index) => {
+          xAxisData.push(item.nf);
+          financeIncome.push(item.czsr);
+          publickPre.push(item.ggys);
+        });
       this.xAxisData = xAxisData;
       this.financeIncome = financeIncome;
       this.publickPre = publickPre;

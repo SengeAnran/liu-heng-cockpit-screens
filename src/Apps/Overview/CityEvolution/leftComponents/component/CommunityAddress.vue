@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="渔农村常住居民人均可支配收入" :width='720' />
+    <BaseTitle title="渔农村常住居民人均可支配收入" :width="720" />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -35,16 +35,50 @@ export default {
       this.charts.setOption(this.getOptions());
     },
     getOptions() {
+      // var color = ['#CC1CAA', '#8D67FF', '#00FFFF', '#48DE13', '#FFC516', '#DC3E14', '#8E16F8'];
+      console.log(this.incomeData);
+      var dom = 800;
+      var barWidth = dom / 20;
+      var colors = [];
+      for (let i = 0; i < this.incomeData.length; i++) {
+        colors.push({
+          type: 'linear',
+          x: 0,
+          x2: 1,
+          y: 0,
+          y2: 0,
+          colorStops: [
+            {
+              offset: 0,
+              color: '#55D9BC', // 最左边
+            },
+            {
+              offset: 0.5,
+              color: '#38B88F', // 左边的右边 颜色
+            },
+            {
+              offset: 0.5,
+              color: '#38B88F', // 右边的左边 颜色
+            },
+            {
+              offset: 1,
+              color: '#39B78C',
+            },
+          ],
+        });
+      }
       const option = {
         grid: {
-          top: '15%',
           left: '10%',
           right: '10%',
-          bottom: '15%',
+          top: '20%',
+          bottom: '10%',
         },
         legend: {
           data: ['渔农村常住居民人均可支配收入', '增幅'],
-          bottom: 7,
+          right: 30,
+          top: 7,
+          orient: 'vertical',
           textStyle: {
             color: '#FFFFFF',
             fontSize: 20,
@@ -92,123 +126,179 @@ export default {
           },
           boundaryGap: true,
         },
-        yAxis: [{
-          type: 'value',
-          name: '收入（元）',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+        yAxis: [
+          {
+            type: 'value',
+            name: '收入（元）',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
-          },
-          axisTick: {
-            show: true,
-          },
-        }, {
-          name: '增长（%）',
-          type: 'value',
-          position: 'right',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: true,
             },
           },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+          {
+            name: '增长（%）',
+            type: 'value',
+            position: 'right',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: true,
+            },
           },
-          axisTick: {
-            show: true,
+        ],
+        series: [
+          {
+            type: 'bar',
+            barWidth: barWidth,
+            itemStyle: {
+              color: function (params) {
+                return new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: '#38B88F', // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(85, 217, 188, 0.32)', // 100% 处的颜色
+                    },
+                  ],
+                  false,
+                );
+              },
+            },
+            label: {
+              show: false,
+              position: [barWidth / 2, -(barWidth + 20)],
+              color: '#ffffff',
+              fontSize: 14,
+              fontStyle: 'bold',
+              align: 'center',
+            },
+            data: this.incomeData,
           },
-
-        }],
-        series: [{
-          type: 'bar',
-          name: '渔农村常住居民人均可支配收入',
-          barWidth: 20,
-          yAxisIndex: '0', // 第一个柱状图的数据
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: '#66CCFF',
+          {
+            z: 2,
+            type: 'pictorialBar',
+            data: this.incomeData,
+            symbol: 'diamond',
+            symbolOffset: ['-80%', '50%'],
+            symbolSize: [barWidth, barWidth * 0.5],
+            itemStyle: {
+              color: function (params) {
+                return new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: '#38B88F', // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(85, 217, 188, 0.32)', // 100% 处的颜色
+                    },
+                  ],
+                  false,
+                );
+              },
+            },
+          },
+          {
+            z: 3,
+            type: 'pictorialBar',
+            symbolPosition: 'end',
+            data: this.incomeData,
+            symbol: 'diamond',
+            symbolOffset: ['-80%', '-50%'],
+            symbolSize: [barWidth, barWidth * 0.5],
+            itemStyle: {
+              normal: {
+                color: function (params) {
+                  return colors[params.dataIndex % 7];
                 },
-                {
-                  offset: 1,
-                  color: '#72DCEE',
-                },
-              ],
-              global: false,
+              },
             },
           },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 20,
+          {
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: [0, '50%'],
+            symbolSize: [20, 15],
+            zlevel: -2,
+          },
+          {
+            type: 'line',
+            yAxisIndex: '1',
+            name: '增幅',
+            barWidth: 20,
+            itemStyle: {
+              color: '#31EABC',
             },
-          },
-          data: this.incomeData,
-        }, {
-          type: 'line',
-          yAxisIndex: '1', // 第一个柱状图的数据
-          name: '增幅',
-          barWidth: 20,
-          itemStyle: {
-            color: '#31EABC',
-          },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 20,
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 20,
+              },
             },
+            data: this.increaseRate,
           },
-          data: this.increaseRate,
-        }],
+        ],
       };
       return option;
     },

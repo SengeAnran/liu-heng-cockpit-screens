@@ -1,25 +1,22 @@
 <template>
-  <view-template class="ProjectManage-left flex"
-                 :interval="300"
-                 @interval="getData">
+  <view-template class="ProjectManage-left flex" :interval="300" @interval="getData">
     <div>
-      <BaseTitle title="项目投资信息"
-                 :width="750" />
+      <BaseTitle title="项目投资信息" :width="750" />
       <div class="desc">
         <p>实时情况</p>
         <div class="flex desc-item">
           <div class="flex">
             <div class="label">已实现 <br />融资项目</div>
             <div class="count">
-              <MyCountUp :endVal="onTimeData.ysxrzxms" /><span class="unit">个</span>
+              <digital :loop="loop" :endNum="onTimeData.ysxrzxms || 0" :data="data" :config="config"></digital>
+              <!-- <MyCountUp :endVal="onTimeData.ysxrzxms" />--><span class="unit">个</span>
             </div>
           </div>
           <div class="flex">
-            <div class="label">
-              已实现<br />融资总量
-            </div>
+            <div class="label">已实现<br />融资总量</div>
             <div class="count">
-              <MyCountUp :endVal="onTimeData.yssrzzl" /><span class="unit">万</span>
+              <digital :loop="loop" :endNum="onTimeData.yssrzzl || 0" :data="data" :config="config"></digital>
+              <span class="unit">万</span>
             </div>
           </div>
         </div>
@@ -32,22 +29,15 @@
       </div>
     </div>
     <div>
-      <BaseTitle title="项目列表"
-                 :width="750" />
-      <div class="lunbo"
-           @mouseenter="mouseEnter"
-           @mouseleave="mouseleave">
+      <BaseTitle title="项目列表" :width="750" />
+      <div class="lunbo" @mouseenter="mouseEnter" @mouseleave="mouseleave">
         <div class="titles">
           <div>
-            <span v-for="item in swiperTitle"
-                  :key="item">{{item}}</span>
+            <span v-for="item in swiperTitle" :key="item">{{ item }}</span>
           </div>
         </div>
-        <swiper ref="mySwiper"
-                :options="swiperOption"
-                v-if="list.length>9">
-          <swiper-slider v-for="(item, index) in list"
-                         :key="`lunbo-item-${index}`">
+        <swiper ref="mySwiper" :options="swiperOption" v-if="list.length > 9">
+          <swiper-slider v-for="(item, index) in list" :key="`lunbo-item-${index}`">
             <div>
               <div class="inner-div">
                 <span>{{ item.qymc }}</span>
@@ -59,11 +49,8 @@
             </div>
           </swiper-slider>
         </swiper>
-        <div v-else
-             class="outer-div">
-          <div class="inner-div"
-               v-for="(item, index) in list"
-               :key="`item-${index}`">
+        <div v-else class="outer-div">
+          <div class="inner-div" v-for="(item, index) in list" :key="`item-${index}`">
             <span>{{ item.qymc }}</span>
             <span>{{ item.qtdw }}</span>
             <span>{{ item.nkgsj }}</span>
@@ -93,6 +80,36 @@ export default {
   components: { BaseTitle, MyCountUp, YYLineBarChart, swiper, SwiperSlider },
   data() {
     return {
+      data: {
+        content: 1000,
+        // unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '5rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
       swiperTitle: ['项目名称', '牵头单位', '拟开工时间', '拟结束时间', '投资额'],
       list: [],
       onTimeData: {
@@ -248,8 +265,8 @@ export default {
 }
 .ProjectManage-left {
   position: absolute;
-  top: 263px;
-  left: 160px;
+  top: 200px;
+  left: 200px;
   width: 1650px;
   height: 1027px;
   font-size: 24px;

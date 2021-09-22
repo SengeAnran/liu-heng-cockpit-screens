@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="bgBox"></div>
-    <div class="left-wrapper">
+    <div class="left-wrapper" :style="{ left: Showleft + 'px' }">
       <SamllTitle :name="CommunityOverview" />
       <div class="hehua-box">
         <div class="hehua-box-left">
@@ -51,7 +51,7 @@
     <div class="center-wrapper">
       <Map />
     </div>
-    <div class="right-wrapper">
+    <div class="right-wrapper" :style="{ right: Showleft + 'px' }">
       <div>
         <SamllTitle name="居民情况" />
         <pie-charts style="height: 35rem; width: 100%" :pieData="residentInfo" />
@@ -62,9 +62,14 @@
       </div>
       <div>
         <SamllTitle name="乡村规划" />
-        <RadarCharts style="height: 45rem; width: 100%" :indicatorData="indicatorData" :dataList="indicatorDataList"/>
+        <RadarCharts style="height: 45rem; width: 100%" :indicatorData="indicatorData" :dataList="indicatorDataList" />
         <SamllTitle name="村民用水用电趋势" />
-        <LineCharts style="height: 52rem; width: 100%" :xData="waterXData" :yData1="waterYData1" :yData2="waterYData2" />
+        <LineCharts
+          style="height: 52rem; width: 100%"
+          :xData="waterXData"
+          :yData1="waterYData1"
+          :yData2="waterYData2"
+        />
       </div>
     </div>
   </div>
@@ -107,6 +112,8 @@ export default {
   },
   data() {
     return {
+      show: true,
+      Showleft: -1900,
       defaultName: '荷花小区',
       CommunityOverview: '社区概述',
       nationList: [], // 民族比例
@@ -282,7 +289,7 @@ export default {
         this.indicatorData[4].value = result.qtnydmj;
         this.indicatorData[4].max = result.qtnydmj + 1000;
         this.indicatorDataList = this.indicatorData.map((i) => i.value);
-      };
+      }
     },
     async getWaterElectTrendData() {
       const result = await getWaterElectTrend().request();
@@ -290,7 +297,7 @@ export default {
         this.waterXData = result.map((i) => i.yf);
         this.waterYData1 = result.map((i) => i.ydl);
         this.waterYData2 = result.map((i) => i.ysl);
-      };
+      }
     },
   },
   mounted() {
@@ -298,6 +305,13 @@ export default {
       name: this.defaultName,
     };
     this.initData(requestdata);
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 180) {
+        this.Showleft = 180;
+        clearInterval(this.timer);
+      }
+    }, 150);
   },
 };
 </script>

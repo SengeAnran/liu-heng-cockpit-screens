@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 .left-1 {
   position: absolute;
-  top: 26rem;
+  top: 20rem;
   left: 16rem;
   width: 80rem;
   z-index: 999;

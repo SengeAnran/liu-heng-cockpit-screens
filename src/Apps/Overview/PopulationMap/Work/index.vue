@@ -14,17 +14,18 @@ export default {
       personData: [],
     };
   },
-  components: {
-  },
+  components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.chart);
     this.loadData();
   },
   methods: {
     loadData() {
-      getFinancialSupportNum().request().then((json) => {
-        this.chart.setOption(this.getOptions(json));
-      });
+      getFinancialSupportNum()
+        .request()
+        .then((json) => {
+          this.chart.setOption(this.getOptions(json));
+        });
     },
     resolveData(data) {
       return data.map((item) => {
@@ -88,6 +89,9 @@ export default {
         yAxis: {
           name: '人数',
           type: 'value',
+          min: 100,
+          max: 350,
+          interval: 50,
           nameTextStyle: {
             align: 'center',
             color: '#fff',
@@ -133,9 +137,8 @@ export default {
             areaStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: 'rgba(117, 248, 195, 1)' },
-                  { offset: 1, color: 'rgba(117, 248, 195, 0.1)' },
-
+                  { offset: 0, color: 'rgba(18,34,61, 1)' },
+                  { offset: 1, color: 'rgba(18,34,61, 0.1)' },
                 ]),
               },
             },

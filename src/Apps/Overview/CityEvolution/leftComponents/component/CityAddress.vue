@@ -1,38 +1,26 @@
 <template>
   <div class="area_location">
-    <BaseTitle title="市域面积分布情况" :width='720' />
+    <BaseTitle title="市域面积分布情况" :width="720" />
     <div class="item_wrapper">
       <div class="item">
-        <div class="title">
-          全镇面积
-        </div>
-        <div class="count">
-          <CountUp  :num="sqmj.qzmj || 0" />
-        </div>
-        <div class="unit">
-          平方公里
+        <img class="img" src="../../images/city/city-quanzhen.png" />
+        <div class="title">全镇面积</div>
+        <div class="count_wrapper">
+          <digital :loop="loop" :endNum="sqmj.qzmj || 0" :data="data" :config="config"></digital>
         </div>
       </div>
       <div class="item">
-        <div class="title">
-          陆地面积
-        </div>
-        <div class="count administration_title">
-          <CountUp  :num="sqmj.xzsqmj || 0" />
-        </div>
-        <div class="unit administration_unit">
-          平方公里
+        <img class="img" src="../../images/city/city-ludi.png" />
+        <div class="title">陆地面积</div>
+        <div class="count_wrapper">
+          <digital :loop="loop" :endNum="sqmj.xzsqmj || 0" :data="data" :config="config1"></digital>
         </div>
       </div>
       <div class="item">
-        <div class="title">
-          人口密度
-        </div>
-        <div class="count seal_title">
-          <CountUp  :num="sqmj.rkmd || 0" />
-        </div>
-        <div class="unit seal_unit">
-          人/平方公里
+        <img class="img" src="../../images/city/city-renkou.png" />
+        <div class="title">人口密度</div>
+        <div class="count_wrapper">
+          <digital :loop="loop" :endNum="sqmj.xzsqmj || 0" :data="data1" :config="config2"></digital>
         </div>
       </div>
     </div>
@@ -42,6 +30,8 @@
 <script>
 import BaseTitle from '../../components/BaseTitle';
 import { getAreaDistribution } from '@/api/Overview/CityEvolution/api';
+
+// import Digital from '../../../../../components/digital/Digital.vue';
 export default {
   name: 'CityEvolution',
   components: {
@@ -50,6 +40,53 @@ export default {
   data() {
     return {
       sqmj: {},
+      data: {
+        content: 1000,
+        unit: 'k㎡',
+      },
+      data1: {
+        content: 1000,
+        unit: 'k㎡/人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 2,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: { fontSize: '2rem' },
+      },
+      config1: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#47D6AA',
+        },
+        unit: { fontSize: '2rem' },
+      },
+      config2: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#DF7B7A',
+        },
+        unit: { fontSize: '2rem' },
+      },
     };
   },
   mounted() {
@@ -57,9 +94,11 @@ export default {
   },
   methods: {
     getAreaInfo() {
-      getAreaDistribution().request().then((res) => {
-        this.sqmj = res;
-      });
+      getAreaDistribution()
+        .request()
+        .then((res) => {
+          this.sqmj = res;
+        });
     },
   },
 };
@@ -75,66 +114,63 @@ export default {
   padding-left: 20px;
   box-sizing: border-box;
   .item_wrapper {
-    height: 420px;
     margin-top: 90px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     .item {
-      height: 400px;
+      height: 413px;
       width: 250px;
-      background: url('../../images/address_bg.png') no-repeat;
+      background: url('../../images/item_bg.png') no-repeat;
       background-size: 100% 100%;
       position: relative;
+      .img {
+        position: absolute;
+        top: 75px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
       .title {
         position: absolute;
-        top: 50px;
+        top: 142px;
         left: 50%;
         transform: translate(-50%, 0);
-        height: 80px;
-        line-height: 80px;
+        width: 120px;
+        font-size: 30px;
         text-align: center;
-        width: 210px;
-        font-size: 35px;
         color: white;
-        background: url('../../images/address_title.png') no-repeat;
-        background-size: 100% 100%;
       }
-      .count {
+      .count_wrapper {
         position: absolute;
+        bottom: 40px;
         height: 60px;
         line-height: 60px;
-        text-align: center;
-        width: 210px;
-        top: 175px;
-        left: 50%;
         font-size: 60px;
-        transform: translate(-50%, 0);
-        color: #66CCFF;
-      }
-      .unit {
-        position: absolute;
-        height: 40px;
-        line-height: 40px;
+        font-weight: bolder;
         width: 250px;
+        color: #66ccff;
         text-align: center;
-        top: 290px;
-        left: 50%;
-        font-size: 30px;
-        transform: translate(-50%, 0);
-        color: #59DBE6;
+        padding-left: 5px;
+        font-family: DIN;
+        .unit {
+          font-size: 30px;
+          color: #59dbe6;
+          position: relative;
+          right: 0px;
+          top: -2px;
+        }
       }
-      .administration_title {
-        color: #31EABC;
+      .children {
+        color: #31eabc;
+        .unit {
+          color: #31eabc;
+        }
       }
-      .administration_unit {
-        color: #31EABC;
-      }
-      .seal_title {
-        color: #ED7F64;
-      }
-      .seal_unit {
-        color: #ED7F64;
+      .dead {
+        color: #ed7f64;
+        .unit {
+          color: #ed7f64;
+        }
       }
     }
   }

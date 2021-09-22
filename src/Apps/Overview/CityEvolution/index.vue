@@ -1,7 +1,8 @@
 <template>
   <div class="CityEvolution">
-    <LeftComponent />
-    <RightComponent />
+    <LeftComponent :style="{ left: Showleft + 'px' }" />
+
+    <RightComponent :style="{ right: Showleft + 'px' }" />
     <Map />
   </div>
 </template>
@@ -17,7 +18,21 @@ export default {
     RightComponent,
     Map,
   },
+  data() {
+    return {
+      show: true,
+      Showleft: -1900,
+      timer: null,
+    };
+  },
   mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 140) {
+        this.Showleft = 140;
+        clearInterval(this.timer);
+      }
+    }, 150);
   },
 };
 </script>

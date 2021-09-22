@@ -117,11 +117,11 @@ export default {
       });
       const yAxisData = this.chartData.yAxisData
         ? this.chartData.yAxisData.map((item) => {
-          return {
-            ...this.getStyle(item.unit),
-            ...item,
-          };
-        })
+            return {
+              ...this.getStyle(item.unit),
+              ...item,
+            };
+          })
         : this.getStyle();
       const options = {
         grid: {

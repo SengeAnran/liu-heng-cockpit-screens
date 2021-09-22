@@ -1,35 +1,34 @@
 <template>
   <div class="left-1">
     <Title>公路桥隧</Title>
-<!--    <BarPie />-->
+    <!--    <BarPie />-->
     <div class="top-block">
       <div class="item" v-for="(item, index) in highway" :key="index">
         <div class="item-top">
           <div class="item-top-img">
-            <img :src="item.src" alt="">
+            <img :src="item.src" alt="" />
           </div>
           <div
             class="item-top-name"
-            :class="{xdcolor: index === 0,cdcolor: index === 1,sdcolor: index === 2, qlcolor: index === 3,}">
+            :class="{ xdcolor: index === 0, cdcolor: index === 1, sdcolor: index === 2, qlcolor: index === 3 }"
+          >
             {{ item.name }}统计
           </div>
-          </div>
+        </div>
         <div class="item-bottom">
           <div class="item-span">
             <div class="item-span-number">
-              {{ item.number }}
+              <!-- {{ item.number }} -->
+              <digital :loop="loop" :endNum="item.number || 0" :data="data" :config="config"></digital>
             </div>
-            <div class="item-span-name">
-              {{item.name}}数量
-            </div>
+            <div class="item-span-name">{{ item.name }}数量</div>
           </div>
           <div class="item-span">
             <div class="item-span-number">
-              {{ item.length }}
+              <!-- {{ item.length }} -->
+              <digital :loop="loop" :endNum="item.length || 0" :data="data" :config="config"></digital>
             </div>
-            <div class="item-span-name">
-              总长({{item.unit}})
-            </div>
+            <div class="item-span-name">总长({{ item.unit }})</div>
           </div>
         </div>
       </div>
@@ -49,7 +48,7 @@
         <div class="second_item">{{ item.shiftLine }}</div>
       </div>
     </div>
-<!--    <Bar1 />-->
+    <!--    <Bar1 />-->
   </div>
 </template>
 <script>
@@ -121,6 +120,36 @@ export default {
           shiftLine: '-',
         },
       ],
+      data: {
+        content: 1000,
+        // unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '4rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
     };
   },
 };
@@ -135,13 +164,13 @@ export default {
   .top-block {
     display: flex;
     flex-flow: wrap;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     margin-top: 19.1px;
     .item {
       width: 387px;
       height: 197px;
       border: 1px solid;
-      background: url("./img/glqsitembg.png") 100% 100%;
+      background: url('./img/glqsitembg.png') 100% 100%;
       border-radius: 15px;
       margin-right: 10px;
       margin-bottom: 22px;
@@ -150,9 +179,8 @@ export default {
         .item-top-img {
           height: 30px;
           text-align: center;
-
         }
-        .item-top-name{
+        .item-top-name {
           text-align: center;
           height: 36px;
           font-size: 20px;
@@ -162,54 +190,54 @@ export default {
           line-height: 44px;
           //background: linear-gradient(180deg, rgba(247, 241, 150, 0) 0%);
         }
-        .xdcolor{
-          background-image:-webkit-linear-gradient(bottom,#F7F196,#FFFFFF);
+        .xdcolor {
+          background-image: -webkit-linear-gradient(bottom, #f7f196, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .cdcolor{
-          background-image:-webkit-linear-gradient(bottom,#F6B25A,#FFFFFF);
+        .cdcolor {
+          background-image: -webkit-linear-gradient(bottom, #f6b25a, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .sdcolor{
-          background-image:-webkit-linear-gradient(bottom,#6CD9E2,#FFFFFF);
+        .sdcolor {
+          background-image: -webkit-linear-gradient(bottom, #6cd9e2, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .qlcolor{
-          background-image:-webkit-linear-gradient(bottom,#78D2A7,#FFFFFF);
+        .qlcolor {
+          background-image: -webkit-linear-gradient(bottom, #78d2a7, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
       }
-      .item-bottom{
+      .item-bottom {
         display: flex;
         .item-span {
           width: 191px;
           height: 123px;
           border: 1px solid;
           border-radius: 15px;
-          .item-span-number{
+          .item-span-number {
             text-align: center;
             height: 44px;
             font-size: 40px;
             font-family: DINPro;
             font-weight: 500;
-            color: #FFFFFF;
+            color: #ffffff;
             line-height: 44px;
             text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.24);
-            background: linear-gradient(180deg, #FFFFFF 0%, #4ECDD8 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #4ecdd8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
           }
-          .item-span-name{
+          .item-span-name {
             text-align: center;
             height: 21px;
             font-size: 22px;
             font-family: Source Han Sans CN;
             font-weight: 400;
-            color: #FFFFFF;
+            color: #ffffff;
             line-height: 44px;
             opacity: 0.5;
           }
@@ -220,7 +248,7 @@ export default {
   .block {
     margin-top: 2rem;
     margin-bottom: 6rem;
-    .titles{
+    .titles {
       .second_item {
         font-size: 24px;
         font-family: Source Han Sans SC;
@@ -236,7 +264,7 @@ export default {
       background: url('./img/list-bg.png') no-repeat 100% 100%;
       font-family: Source Han Sans SC;
       font-weight: 500;
-      color: #AECACA;
+      color: #aecaca;
       display: flex;
       justify-content: space-around;
       .item {
@@ -248,15 +276,15 @@ export default {
         width: 17rem;
         padding: 0.9rem;
         text-align: right;
-        &:first-child{
+        &:first-child {
           width: 12rem;
           text-align: left;
           margin-left: 2rem;
         }
-        &:nth-child(2){
+        &:nth-child(2) {
           width: 15rem;
         }
-        &:last-child{
+        &:last-child {
           margin-right: 4rem;
         }
       }

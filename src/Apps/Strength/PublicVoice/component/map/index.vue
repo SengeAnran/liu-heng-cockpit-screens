@@ -18,7 +18,8 @@ export default {
       data: null,
       title: '最新评论',
       time: '2021-06-28 22:25',
-      content: '百年征程波澜壮阔， 百年初心历久弥坚。在中国共产党成立100周年之际，舟山市税务系统开展“最佳基层党组织”“最佳党支部书记”“最佳共产党员”等“五最佳”评选活动，深入探寻他们的故事，感悟共产党人的初...',
+      content:
+        '百年征程波澜壮阔， 百年初心历久弥坚。在中国共产党成立100周年之际，舟山市税务系统开展“最佳基层党组织”“最佳党支部书记”“最佳共产党员”等“五最佳”评选活动，深入探寻他们的故事，感悟共产党人的初...',
     };
   },
   watch: {
@@ -36,11 +37,11 @@ export default {
         resizeEnable: true,
         zoom: 13.4,
         zoomEnable: false,
-        center: [122.218762, 29.731102],
+        center: [122.138762, 29.731102],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
       const marker = new AMap.Marker({
-        position: [122.218762, 29.751102],
+        position: [122.180087, 29.702798],
         content: this.boxTemp(),
         offset: new AMap.Pixel(0, 0),
       });
@@ -68,7 +69,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
- //@import './item.scss';
+//@import './item.scss';
 .map_wrapper {
   position: absolute;
   left: 0;

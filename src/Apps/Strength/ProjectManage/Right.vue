@@ -1,92 +1,69 @@
 <template>
-  <view-template class="ProjectManage-right flex"
-                 :interval="300"
-                 @interval="getData">
+  <view-template class="ProjectManage-right flex" :interval="300" @interval="getData">
     <div>
-      <BaseTitle title="投资增速分析"
-                 :width="780" />
+      <BaseTitle title="投资增速分析" :width="780" />
       <div class="chart-box">
         <LineChart :line-data="lineData" />
       </div>
-      <BaseTitle title="项目许可情况"
-                 :width="780"
-                 :top="550" />
+      <BaseTitle title="项目许可情况" :width="780" :top="550" />
       <div class="chart-box box1">
-        <div class="box-left"
-             @mouseenter="mouseEnter"
-             @mouseleave="mouseleave">
+        <div class="box-left" @mouseenter="mouseEnter" @mouseleave="mouseleave">
           <div class="titles">
             <div>
-              <span v-for="item in swiperTitle"
-                    :key="item">{{item}}</span>
+              <span v-for="item in swiperTitle" :key="item">{{ item }}</span>
             </div>
           </div>
-          <swiper ref="manageSwiper"
-                  :options="swiperOption"
-                  v-if="list1.length>4">
-            <swiper-slider v-for="(item, index) in list"
-                           :key="`xuke-lunbo-item-${index}`">
+          <swiper ref="manageSwiper" :options="swiperOption" v-if="list1.length > 4">
+            <swiper-slider v-for="(item, index) in list" :key="`xuke-lunbo-item-${index}`">
               <div>
                 <div class="inner-div">
                   <span>{{ item.xmmc }}</span>
                   <span>{{ item.dq }}</span>
-                  <span><i :class="['suqare',`${item.ydghxk?'active':''}`]"></i></span>
-                  <span><i :class="['suqare',`${item.gcghxk?'active':''}`]"></i></span>
-                  <span> <i :class="['suqare',`${item.sgxk?'active':''}`]"></i></span>
+                  <span><i :class="['suqare', `${item.ydghxk ? 'active' : ''}`]"></i></span>
+                  <span><i :class="['suqare', `${item.gcghxk ? 'active' : ''}`]"></i></span>
+                  <span> <i :class="['suqare', `${item.sgxk ? 'active' : ''}`]"></i></span>
                 </div>
               </div>
             </swiper-slider>
           </swiper>
-          <div class="outter"
-               v-else>
-            <div class="inner-div"
-                 v-for="(item, index) in list"
-                 :key="`xuke-item-${index}`">
+          <div class="outter" v-else>
+            <div class="inner-div" v-for="(item, index) in list" :key="`xuke-item-${index}`">
               <span>{{ item.xmmc }}</span>
               <span>{{ item.dq }}</span>
-              <span><i :class="['suqare',`${item.ydghxk?'active':''}`]"></i></span>
-              <span><i :class="['suqare',`${item.gcghxk?'active':''}`]"></i></span>
-              <span> <i :class="['suqare',`${item.sgxk?'active':''}`]"></i></span>
+              <span><i :class="['suqare', `${item.ydghxk ? 'active' : ''}`]"></i></span>
+              <span><i :class="['suqare', `${item.gcghxk ? 'active' : ''}`]"></i></span>
+              <span> <i :class="['suqare', `${item.sgxk ? 'active' : ''}`]"></i></span>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="right-right">
-      <BaseTitle title="资金占比分析"
-                 :width="780" />
+      <BaseTitle title="资金占比分析" :width="780" />
       <div class="chart-box">
-        <PieChart :data="pieTypeData"
-                  legendType="pec"
-                  title="资金占比分析" />
+        <PieChart :data="pieTypeData" legendType="pec" title="资金占比分析" />
       </div>
-      <BaseTitle title="重大项目"
-                 :width="780"
-                 :top="550" />
+      <BaseTitle title="重大项目" :width="780" :top="550" />
       <div class="chart-box box1">
         <div class="flex">
           <div>
-            <div class="desc-item">项目总数（个）
-              <MyCountUp :endVal="mainPro.xmzs" />
+            <div class="desc-item">
+              项目总数（个）
+              <digital :loop="loop" :endNum="mainPro.xmzs || 0" :data="data" :config="config"></digital>
             </div>
-            <div class="desc-item">项目总量（万元）
-              <MyCountUp :endVal="mainPro.xmzl" />
+            <div class="desc-item">
+              项目总量（万元）
+              <digital :loop="loop" :endNum="mainPro.xmzl || 0" :data="data" :config="config"></digital>
             </div>
           </div>
-          <div class="lunbo-list"
-               @mouseenter="mouseEnterMain"
-               @mouseleave="mouseleaveMain">
+          <div class="lunbo-list" @mouseenter="mouseEnterMain" @mouseleave="mouseleaveMain">
             <div class="title-list">
               <div>
-                <span v-for="item in swiperTitle1"
-                      :key="item">{{item}}</span>
+                <span v-for="item in swiperTitle1" :key="item">{{ item }}</span>
               </div>
             </div>
-            <swiper ref="manageMainSwiper"
-                    :options="swiperOption"
-                    v-if="list1.length>4">
-              <swiper-slider v-for="(item, index) in list1"
-                             :key="`lunbo-main-item-${index}`">
+            <swiper ref="manageMainSwiper" :options="swiperOption" v-if="list1.length > 4">
+              <swiper-slider v-for="(item, index) in list1" :key="`lunbo-main-item-${index}`">
                 <div>
                   <div class="inner-div-main">
                     <span>{{ item.xmjhmc }}</span>
@@ -96,11 +73,8 @@
                 </div>
               </swiper-slider>
             </swiper>
-            <div v-else
-                 class="outter-main">
-              <div class="inner-div-main"
-                   v-for="(item, index) in list1"
-                   :key="`main-item-${index}`">
+            <div v-else class="outter-main">
+              <div class="inner-div-main" v-for="(item, index) in list1" :key="`main-item-${index}`">
                 <span>{{ item.xmjhmc }}</span>
                 <span>{{ item.xmzs }}</span>
                 <span>{{ item.ljwctze }}</span>
@@ -132,6 +106,36 @@ export default {
   components: { BaseTitle, LineChart, PieChart, MyCountUp, swiper, SwiperSlider },
   data() {
     return {
+      data: {
+        content: 1000,
+        // unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '5rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
       swiperTitle: ['项目名称', '地区', '用地规划许可', '工程规划许可', '施工许可'],
       list: [],
       swiperTitle1: ['项目计划 ', '项目总数', '累计完成投资额'],
@@ -282,6 +286,7 @@ export default {
         .then((res) => {
           if (res && res.length) {
             this.list1 = res;
+            // debugger;
           }
         });
     },
@@ -295,8 +300,8 @@ export default {
 }
 .ProjectManage-right {
   position: absolute;
-  top: 263px;
-  right: 160px;
+  top: 200px;
+  right: 200px;
   width: 1650px;
   height: 1027px;
   font-size: 24px;

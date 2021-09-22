@@ -1,19 +1,18 @@
 <template>
   <div class="ProjectManageMap">
     <div class="map-mask-persview"></div>
-    <MedicalMap/>
+    <MedicalMap />
   </div>
 </template>
 
 <script>
-import MedicalMap from '../../Overview/Medical/components/map';
+// import MedicalMap from '../../Overview/Medical/components/map';
 export default {
   name: 'ProjectManageMap',
   components: {
-    MedicalMap,
+    // MedicalMap,
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 

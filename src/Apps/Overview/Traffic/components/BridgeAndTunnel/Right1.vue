@@ -52,8 +52,7 @@ export default {
       ],
     };
   },
-  computed: {
-  },
+  computed: {},
   mounted() {
     this.getData();
   },

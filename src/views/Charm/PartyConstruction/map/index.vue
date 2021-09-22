@@ -37,6 +37,7 @@ export default {
   name: 'CityEvolution',
   components: {
   },
+  // eslint-disable-next-line space-before-function-paren
   data() {
     return {
       map: null,
@@ -59,12 +60,14 @@ export default {
       lastDetailMarker: null,
     };
   },
+  // eslint-disable-next-line space-before-function-paren
   mounted() {
     this.initMap();
     this.renderMarker();
     this.getPosition();
   },
   methods: {
+    // eslint-disable-next-line space-before-function-paren
     getPosition() {
       const data = {
         auth: {
@@ -82,9 +85,11 @@ export default {
         // console.log(res);
       });
     },
+    // eslint-disable-next-line space-before-function-paren
     selectLegend(item) {
       this.currentLegend = item.value;
     },
+    // eslint-disable-next-line space-before-function-paren
     initMap() {
       this.mapDom = this.$refs.map;
       this.map = new AMap.Map(this.mapDom, {
@@ -109,6 +114,7 @@ export default {
       // mapLayer.setMap(this.map);
       // this.mapLayer = mapLayer;
     },
+    // eslint-disable-next-line space-before-function-paren
     async renderMarker() {
       const result = await partyConstruct().request();
       console.log('map data:', result);
@@ -128,6 +134,7 @@ export default {
       marker.setMap(this.map);
       marker.on('click', this.handleMarkerClick);
     },
+    // eslint-disable-next-line space-before-function-paren
     handleMarkerClick(ev) {
       console.log(ev);
       this.clearLastMarkerDetail();
@@ -141,6 +148,7 @@ export default {
       this.lastDetailMarker = marker;
       this.lastDetailMarker.type = this.selected;
     },
+    // eslint-disable-next-line space-before-function-paren
     clearLastMarkerDetail() {
       if (!this.lastDetailMarker) {
         return;
@@ -151,6 +159,7 @@ export default {
       this.lastDetailMarker.setContent(content);
       this.lastDetailMarker = null;
     },
+    // eslint-disable-next-line space-before-function-paren
     detailTemplate() {
       return `
         <div class="marker-detail-content2">
@@ -176,6 +185,7 @@ export default {
         </div>
         `;
     },
+    // eslint-disable-next-line space-before-function-paren
     markerTemplate(data) {
       return `
         <div class="marker-content">

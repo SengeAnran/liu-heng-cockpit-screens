@@ -47,7 +47,8 @@ export default {
       this.barChart.setOption(this.option());
     },
     option() {
-      const { title, xData, name1, name2, areaColor11, areaColor12, areaColor21, areaColor22, data1, data2 } = this.barData;
+      const { title, xData, name1, name2, areaColor11, areaColor12, areaColor21, areaColor22, data1, data2 } =
+        this.barData;
       const option = {
         title: {
           text: title || '',
@@ -81,8 +82,7 @@ export default {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            lineStyle: {
-            },
+            lineStyle: {},
           },
         },
         xAxis: {
@@ -166,42 +166,96 @@ export default {
               },
             },
           },
+          {
+            name: name1,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: ['100%', '50%'],
+            symbolSize: [20, 20],
+          },
+          {
+            name: name1,
+            data: data1,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['-45%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: '#8bead4',
+                borderWidth: 2,
+                color: '#8bead4',
+              },
+            },
+          },
         ],
       };
       if (name2 && data2 && data2.length) {
         option.legend.data = [name1, name2];
-        option.series.push({
-          name: name2,
-          type: 'bar',
-          data: data2,
-          label: {
-            show: true,
-            position: 'outside',
-            color: '#fff',
-            fontSize: 20,
-            fontFamily: 'DINPro',
-          },
-          barWidth: 16,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: areaColor21,
-                },
-                {
-                  offset: 1,
-                  color: areaColor22,
-                },
-              ],
+        option.series.push(
+          {
+            name: name2,
+            type: 'bar',
+            data: data2,
+            label: {
+              show: true,
+              position: 'outside',
+              color: '#fff',
+              fontSize: 20,
+              fontFamily: 'DINPro',
+            },
+            barWidth: 16,
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: areaColor21,
+                  },
+                  {
+                    offset: 1,
+                    color: areaColor22,
+                  },
+                ],
+              },
             },
           },
-        });
+          {
+            name: name2,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: ['100%', '50%'],
+            symbolSize: [20, 20],
+          },
+          {
+            name: name2,
+            data: data2,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['45%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: areaColor22,
+                borderWidth: 2,
+                color: areaColor22,
+              },
+            },
+          },
+        );
       }
       return option;
     },
@@ -209,8 +263,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.Bar-Chart{
+.Bar-Chart {
   width: 100%;
-  height: 100%;
+  height: 450px;
 }
 </style>

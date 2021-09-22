@@ -1,12 +1,21 @@
 <template>
   <div id="app">
-<!--    <FitScreen displayType="centerFull" :pageSize="pageSize" />-->
-    <FitScreen displayType="equalRatioFull" :pageSize="pageSize" />
+    <FitScreen displayType="centerFull" :pageSize="pageSize" />
+    <!-- <FitScreen displayType="equalRatioFull" :pageSize="pageSize" /> -->
     <AppTitle />
-    <div class="content">
+    <!-- <div class="content">
       <router-view />
+    </div> -->
+
+    <div class="content">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
-    <Nav />
+
+    <div class="nav-bg">
+      <Nav />
+    </div>
   </div>
 </template>
 <script>
@@ -23,6 +32,7 @@ export default {
       pageSize: {
         width: 5760,
         height: 2070,
+        transitionName: '',
       },
     };
   },
@@ -31,6 +41,7 @@ export default {
     Nav,
     AppTitle,
   },
+
   mounted() {
     this.interval();
   },
@@ -60,18 +71,22 @@ body {
   height: 135rem;
 }
 ::-webkit-scrollbar {
-    width: 1rem;
-    height: 1rem;
-    background-color: #F5F5F533;
+  width: 1rem;
+  height: 1rem;
+  background-color: #f5f5f533;
 }
 ::-webkit-scrollbar-track {
-    border-radius:10px;
-    background-color: #F5F5F533;
+  border-radius: 10px;
+  background-color: #f5f5f533;
 }
 /*定义滑块
  内阴影+圆角*/
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: rgba(73, 215, 220, 0.3);
+  border-radius: 10px;
+  background-color: rgba(73, 215, 220, 0.3);
+}
+.nav-bg {
+  height: 72rem;
+  background-image: url('./title-bg.png');
 }
 </style>

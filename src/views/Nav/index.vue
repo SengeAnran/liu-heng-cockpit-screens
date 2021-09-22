@@ -1,3 +1,4 @@
+/* eslint-disable vue/no-side-effects-in-computed-properties */
 <template>
   <div class="nav">
     <div class="left-secondary-nav secondary-nav">
@@ -34,7 +35,17 @@
       </router-link>
       <div class="primal-nav-active-name">
         <div class="to-left" @click="toPrimalLeft" />
+        <div class="start-left"></div>
+        <div
+          class="tubiao"
+          :style="{
+            backgroundImage: 'url(' + imgUrl + ')',
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
+          }"
+        ></div>
         <span>{{ primalNavActiveName }}</span>
+        <div class="start-right"></div>
         <div class="to-right" @click="toPrimalRight" />
       </div>
     </div>
@@ -48,7 +59,6 @@
 import routes from '@/config/routes';
 import {
   getBottomInfo,
-  peopleBasicInfo,
   getVillagerInfo,
   getRealtimeHandling,
   realtimeInvestment,
@@ -57,12 +67,19 @@ import {
   getEconomicDevelopmentIndicator,
   getGkjjGoal,
 } from '@/api/IndexItem';
-
+import {
+  getPartyMemberBasicSit,
+  // getQuantityTrend,
+  // getSexAndAgeStructure,
+  // getPartyGroupEduStructure,
+  // peopleBasicInfo,
+} from '@/api/Charm/PartyConstruction';
 export default {
   data() {
     return {
       routes: [...routes],
       secondNavStart: 0,
+      imgUrl: require('./zonglan.png'),
     };
   },
   computed: {
@@ -73,11 +90,28 @@ export default {
     secondaryNav() {
       // console.log(this.routes);
       switch (this.primalNavActiveName) {
-        case '六横总览' : this.loadData(); break;
-        case '魅力六横' : this.charmLoadData(); break;
-        case '实力六横' : this.strengthLoadData(); break;
-        case '活力六横' : this.vitalityLoadData(); break;
-        default : break;
+        case '六横总览':
+          this.loadData();
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.imgUrl = require('./zonglan.png');
+          break;
+        case '魅力六横':
+          this.charmLoadData();
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.imgUrl = require('./meili.png');
+          break;
+        case '实力六横':
+          this.strengthLoadData();
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.imgUrl = require('./shili.png');
+          break;
+        case '活力六横':
+          this.vitalityLoadData();
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+          this.imgUrl = require('./huoli.png');
+          break;
+        default:
+          break;
       }
       // console.log(this.primalNavActiveName);
       const matched = this.routes.find((d) => d.name === this.primalNavActiveName);
@@ -117,14 +151,27 @@ export default {
     },
     // 魅力六横
     async charmLoadData() {
-      const res = await peopleBasicInfo().request();
+      // const res = await peopleBasicInfo().request();
+      const data = {
+        auth: {
+          serviceId: '09a3fe0aa4634c608b9c103b053480d3', // 数据开放服务Id
+          subServiceId: '1f73865f63b84465934ee1c71fa83916', // 数据开放订阅服务Id
+          // signature: localStorage.autograph, // 请求参数签名
+          signatureVersion: '2.0', // 当前使用的签名版本
+          timestamp: new Date().getTime(), // 请求的时间戳
+        }, // 认证参数
+        size: 100,
+        includeColumns: false,
+        params: [],
+      };
+      const res = await getPartyMemberBasicSit(data);
       const res2 = await getVillagerInfo().request();
-      // console.log(res);
+      console.log(res);
       // console.log(this.secondaryNav);
       // for (let i = 0; i < res.length; i++) {
-      this.secondaryNav[0].meta.indicator[0].value = res.basicCnt.zsdyrs;
-      this.secondaryNav[0].meta.indicator[1].value = res.basicCnt.ybdyrs;
-      this.secondaryNav[0].meta.indicator[2].value = res.basicCnt.fzdyrs;
+      this.secondaryNav[0].meta.indicator[0].value = res.list[0].zsdyrs;
+      this.secondaryNav[0].meta.indicator[1].value = res.list[0].ybdyrs;
+      this.secondaryNav[0].meta.indicator[2].value = res.list[0].fzdyrs;
       this.secondaryNav[1].meta.indicator[0].value = res2.sqrks;
       this.secondaryNav[1].meta.indicator[1].value = res2.sqldls;
       this.secondaryNav[1].meta.indicator[2].value = res2.rsqts;
@@ -209,6 +256,7 @@ export default {
   background-position: 0 0;
   z-index: 100000;
 }
+
 .move-nav {
   .to-left {
     position: absolute;
@@ -294,7 +342,7 @@ export default {
         }
         .value {
           font-size: 3.4rem;
-          font-family: 'Oswald';
+          font-family: 'BoldItalic';
           color: rgb(255, 255, 255);
           padding-left: 4rem;
         }
@@ -360,9 +408,9 @@ export default {
         }
         .value {
           font-size: 3.4rem;
-          font-family: 'Oswald';
           color: rgb(255, 255, 255);
           padding-left: 4rem;
+          font-family: 'BoldItalic';
         }
         .unit {
           font-size: 2.3rem;
@@ -428,7 +476,31 @@ export default {
   background-size: 100% 100%;
   background-position: center center;
   font-size: 5.6rem;
-  // outline: 1px solid red;
+  .tubiao {
+    position: absolute;
+    width: 12rem;
+    height: 13rem;
+    bottom: 9rem;
+    left: 74rem;
+  }
+  .start-left {
+    position: absolute;
+    width: 12rem;
+    height: 13rem;
+    bottom: 6rem;
+    left: 45rem;
+    background-image: url('./bandian-new.png');
+    background-repeat: no-repeat;
+  }
+  .start-right {
+    position: absolute;
+    width: 12rem;
+    height: 13rem;
+    bottom: 6rem;
+    left: 100rem;
+    background-image: url('./bandian-new.png');
+    background-repeat: no-repeat;
+  }
   .to-left {
     position: absolute;
     width: 12rem;

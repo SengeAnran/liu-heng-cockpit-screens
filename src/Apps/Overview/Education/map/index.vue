@@ -5,18 +5,18 @@
     <div class="toggle-layer" v-show="!threeDMap">
       <h3>学校图例</h3>
       <ul>
-        <li v-for="(item,i) in list" :key="`toggle-${i}`">
-          <span @click="selectMark(item,i)" :class="{'active':currentIndex===i}"></span>
-          <span>{{item.type}}</span>
+        <li v-for="(item, i) in list" :key="`toggle-${i}`">
+          <span @click="selectMark(item, i)" :class="{ active: currentIndex === i }"></span>
+          <span>{{ item.type }}</span>
         </li>
       </ul>
     </div>
     <div class="main-map" v-show="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/" width="100%" height="100%"></iframe>
+      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
     <div class="switch">
-      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
+      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
     </div>
   </div>
 </template>
@@ -35,12 +35,7 @@ export default {
       mapDom: null,
       currentIndex: '',
       markData: [],
-      list: [
-        { type: '幼儿园' },
-        { type: '小学' },
-        { type: '初中' },
-        { type: '高中' },
-      ],
+      list: [{ type: '幼儿园' }, { type: '小学' }, { type: '初中' }, { type: '高中' }],
       markers: [],
       infoWindow: {},
     };
@@ -58,10 +53,13 @@ export default {
       }
     },
     getData(category = '') {
-      getSchoolListByCategory().request({ category: category }).then((res) => {
-        this.markData = res;
-        this.markDown();
-      });
+      getSchoolListByCategory()
+        .request({ category: category })
+        .then((res) => {
+          // debugger;
+          this.markData = res;
+          this.markDown();
+        });
     },
     markDown() {
       this.markers.forEach((item) => {
@@ -177,7 +175,7 @@ export default {
     display: flex;
     justify-content: space-around;
     z-index: 1000;
-    .button{
+    .button {
       width: 114px;
       height: 44px;
       font-size: 24px;
@@ -185,10 +183,10 @@ export default {
       text-align: center;
       color: #82e2e4;
       cursor: pointer;
-      background: url("./img/mmexport.jpg") no-repeat;
+      background: url('./img/mmexport.jpg') no-repeat;
       &.active {
         color: white;
-        background: url("./img/mmexport1.jpg") no-repeat;
+        background: url('./img/mmexport1.jpg') no-repeat;
       }
     }
   }

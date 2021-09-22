@@ -1,7 +1,11 @@
 <template>
   <div class="teacher_increase">
-    <div class="name">升学情况</div>
-    <div class="bar_chart" ref="charts"></div>
+    <div>
+      <div class="bar-chart" ref="barChart" :style="{ width: '800px', height: '246px' }"></div>
+    </div>
+    <div>
+      <div class="bar-chart" ref="barChart1" :style="{ width: '800px', height: '226px' }"></div>
+    </div>
   </div>
 </template>
 
@@ -10,8 +14,7 @@ import * as echarts from 'echarts';
 import { getPromotionTrendNew } from '@/api/Overview/Education/api';
 export default {
   name: 'TeacherIncrease',
-  components: {
-  },
+  components: {},
   data() {
     return {
       charts: null,
@@ -21,229 +24,245 @@ export default {
     };
   },
   mounted() {
-    const charts = this.$refs.charts;
-    this.charts = echarts.init(charts);
     this.loadData();
   },
   methods: {
     loadData() {
-      getPromotionTrendNew().request().then((res) => {
-        const { csg, gksx } = res; // 初升高 高考升学
-        csg.forEach((itemC) => {
-          gksx.forEach((itemG) => {
-            if (itemC.nf === itemG.nf) {
-              this.xData.push(itemC.nf);
-              this.highSchool.push(itemC.sl);
-              this.university.push(itemG.sl);
-            };
+      getPromotionTrendNew()
+        .request()
+        .then((res) => {
+          const { csg, gksx } = res; // 初升高 高考升学
+          console.log(res);
+          csg.forEach((item) => {
+            item.name = item.sxlb;
+            item.value = item.sl;
+            item.label = item.nf;
           });
+          this.highSchool = csg;
+          gksx.forEach((item) => {
+            item.name = item.sxlb;
+            item.value = item.sl;
+            item.label = item.nf;
+          });
+          this.university = gksx;
+          this.initchuzhong();
+          this.initgaozhong();
         });
-        this.setData();
-      });
+      console.log(this.highSchool);
     },
-    setData() {
-      this.charts.clear();
-      this.charts.setOption(this.getOptions());
-    },
-    getOptions() {
+    initchuzhong() {
+      this.charts = echarts.init(this.$refs.barChart);
       const option = {
-        grid: {
-          top: '25%',
-          left: '10%',
-          right: '3%',
-          bottom: '15%',
-        },
-        legend: {
-          data: ['初升高', '高考升学'],
-          right: 10,
-          top: 7,
-          orient: 'vertical',
-          textStyle: {
-            color: '#FFFFFF',
-            fontSize: 20,
-            fontFamily: 'DIN Alternate',
-          },
-          icon: 'rect',
-        },
         title: {
-          text: '人数',
+          text: '初中升高中',
           textStyle: {
-            align: 'center',
-            color: '#fff',
+            fontSize: 25,
+            color: '#ffffff',
           },
-          top: '15%',
-          left: '5%',
+          padding: [5, 0, 0, 30],
         },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'line',
-            lineStyle: {
-              type: 'dashed',
-            },
-          },
-          textStyle: {
-            color: '#fff',
-            fontSize: 22,
-          },
-          borderColor: 'rgba(255, 255, 255, 0.4)',
-          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        grid: {
+          top: 55,
+          left: 10,
+          right: 10,
+          bottom: 0,
+          containLabel: true,
         },
         xAxis: {
-          type: 'category',
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255, 255, 255, 0.5)',
-            },
-          },
-          axisTick: {
-            show: false,
-            alignWithLabel: true,
-          },
-          splitArea: {
-            color: '#f00',
-            lineStyle: {
-              color: '#f00',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          splitLine: {
-            show: false,
-          },
-          boundaryGap: false,
-          data: this.xData,
+          type: 'value',
+          show: false,
         },
         yAxis: {
-          type: 'value',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
+          show: false,
+          inverse: true,
+          type: 'category',
           axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
-              fontSize: 22,
-            },
-          },
-          axisTick: {
             show: false,
           },
         },
         series: [
           {
-            name: '初升高',
-            type: 'line',
-            showAllSymbol: true,
-            symbolSize: 6,
-            itemStyle: {
-              color: '#59DBE6',
-              borderColor: '#fff',
-              borderWidth: 3,
-              shadowColor: 'rgba(0, 0, 0, .3)',
-              shadowBlur: 10,
-              shadowOffsetY: 10,
-              shadowOffsetX: 10,
-            },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: 'rgba(89, 219, 230, 1)' },
-                  { offset: 1, color: 'rgba(89, 219, 230, 0.1)' },
-                ]),
-              },
-            },
+            name: 'label',
+            type: 'bar',
+            barWidth: 24,
+            yAxisIndex: 0,
             label: {
               show: true,
-              position: 'top',
-              distance: 10,
-              color: '#FFFFFF',
-              textStyle: {
-                fontSize: 22,
-                fontFamily: 'DIN Alternate',
-              },
+              position: [10, -10],
+              color: '#fff',
+              fontSize: 22,
             },
-            tooltip: {
-              show: true,
-            },
-            markPoint: {
-              label: {
-                normal: {
-                  textStyle: {
-                    color: '#fff',
+            data: this.highSchool.map((item, index) => {
+              return {
+                value: 0,
+                label: {
+                  formatter() {
+                    return item.label;
                   },
                 },
-              },
-            },
-            data: this.highSchool,
+              };
+            }),
           },
           {
-            name: '高考升学',
-            type: 'line',
-            showAllSymbol: true,
-            symbolSize: 6,
-            itemStyle: {
-              color: 'rgba(200, 114, 242, 1)',
-              borderColor: '#fff',
-              borderWidth: 3,
-              shadowColor: 'rgba(0, 0, 0, .3)',
-              shadowBlur: 10,
-              shadowOffsetY: 10,
-              shadowOffsetX: 10,
-            },
-            areaStyle: {
-              normal: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  { offset: 0, color: 'rgba(200, 114, 242, 1)' },
-                  { offset: 1, color: 'rgba(200, 114, 242, 0)' },
-                ]),
-              },
-            },
+            name: 'value',
+            type: 'bar',
+            barWidth: 18,
+            barMinHeight: 20, // 最小高度
+            yAxisIndex: 0,
             label: {
               show: true,
-              position: 'top',
-              distance: 10,
-              color: '#FFFFFF',
-              textStyle: {
-                fontSize: 22,
-                fontFamily: 'DIN Alternate',
+              position: 'right',
+              color: '#fff',
+              offset: [10, 0],
+              formatter({ value }) {
+                return `{c|''}{a|${value}} {b|人}`;
               },
-            },
-            tooltip: {
-              show: true,
-            },
-            markPoint: {
-              label: {
-                normal: {
-                  textStyle: {
-                    color: '#fff',
-                  },
+              rich: {
+                a: {
+                  padding: [0, 0, 0, 30],
+                  fontSize: 26,
+                  fontFamily: 'DIN Alternate',
+                },
+                b: {
+                  fontSize: 24,
+                },
+                c: {
+                  padding: [0, 0, 0, -15],
+                  width: 0,
+                  height: 18,
+                  align: 'left',
+                  backgroundColor: '#ff6ed',
                 },
               },
             },
-            data: this.university,
+            data: this.highSchool.map(({ value }, index) => {
+              return {
+                value,
+                itemStyle: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                    {
+                      offset: 0,
+                      color: 'rgba(92, 111, 255, 0.1)',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(92, 111, 255, 1)',
+                    },
+                  ]),
+                },
+              };
+            }),
           },
         ],
       };
-      return option;
+      this.charts.setOption(option);
+    },
+    initgaozhong() {
+      this.charts = echarts.init(this.$refs.barChart1);
+      const option = {
+        title: {
+          text: '高中升大学',
+          textStyle: {
+            fontSize: 25,
+            color: '#ffffff',
+          },
+          padding: [5, 0, 0, 30],
+        },
+        grid: {
+          top: 35,
+          left: 10,
+          right: 80,
+          bottom: 10,
+          containLabel: true,
+        },
+        xAxis: {
+          type: 'value',
+          show: false,
+        },
+        yAxis: {
+          show: false,
+          inverse: true,
+          type: 'category',
+          axisLine: {
+            show: false,
+          },
+        },
+        series: [
+          {
+            name: 'label',
+            type: 'bar',
+            barWidth: 24,
+            yAxisIndex: 0,
+            label: {
+              show: true,
+              position: [10, -10],
+              color: '#fff',
+              fontSize: 22,
+            },
+            data: this.university.map((item, index) => {
+              return {
+                value: 0,
+                label: {
+                  formatter() {
+                    return item.label;
+                  },
+                },
+              };
+            }),
+          },
+          {
+            name: 'value',
+            type: 'bar',
+            barWidth: 18,
+            barMinHeight: 20, // 最小高度
+            yAxisIndex: 0,
+            label: {
+              show: true,
+              position: 'right',
+              color: '#fff',
+              offset: [10, 0],
+              formatter({ value }) {
+                return `{c|''}{a|${value}} {b|人}`;
+              },
+              rich: {
+                a: {
+                  padding: [0, 0, 0, 30],
+                  fontSize: 26,
+                  fontFamily: 'DIN Alternate',
+                },
+                b: {
+                  fontSize: 24,
+                },
+                c: {
+                  padding: [0, 0, 0, -15],
+                  width: 0,
+                  height: 18,
+                  align: 'left',
+                  backgroundColor: '#ff6ed',
+                },
+              },
+            },
+            data: this.university.map(({ value }, index) => {
+              return {
+                value,
+                itemStyle: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                    {
+                      offset: 0,
+                      color: 'rgba(77,198,180, 0.1)',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(77,198,180, 1)',
+                    },
+                  ]),
+                },
+              };
+            }),
+          },
+        ],
+      };
+      this.charts.setOption(option);
     },
   },
 };
@@ -252,15 +271,15 @@ export default {
 .teacher_increase {
   position: absolute;
   width: 855px;
-  height: 360px;
+  height: 520px;
   position: absolute;
-  top: 290px;
+  top: 310px;
   right: 0;
   z-index: 101010;
   // background: blue;
   // opacity: 0.8;
   .bar_chart {
-    height: 360px;
+    height: 490px;
     width: 100%;
     box-sizing: border-box;
   }

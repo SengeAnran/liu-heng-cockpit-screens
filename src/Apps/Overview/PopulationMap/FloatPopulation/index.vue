@@ -1,7 +1,7 @@
 <template>
   <div class="float-population">
     <BaseTitle title="户籍人口性别情况" />
-    <LineChart :lineData="{title: ['男', '女'], min: 30000, interval: 1000, chartData }" />
+    <LineChart :lineData="{ title: ['男', '女'], min: 28000, max: 35000, interval: 3000, chartData }" />
   </div>
 </template>
 
@@ -24,17 +24,19 @@ export default {
   },
   methods: {
     loadData() {
-      getPopuliationBySex().request().then((json) => {
-        if (json) {
-          this.chartData = json.map((item) => {
-            item.name = item.nf || '';
-            item.value1 = item.manrk || '';
-            item.value2 = item.felmanrk || '';
-            return item;
-          });
-        }
-        // this.chart.setOption(this.getOptions(json));
-      });
+      getPopuliationBySex()
+        .request()
+        .then((json) => {
+          if (json) {
+            this.chartData = json.map((item) => {
+              item.name = item.nf || '';
+              item.value1 = item.manrk || '';
+              item.value2 = item.felmanrk || '';
+              return item;
+            });
+          }
+          // this.chart.setOption(this.getOptions(json));
+        });
     },
   },
 };
@@ -43,7 +45,7 @@ export default {
 .float-population {
   position: absolute;
   left: 157px;
-  top: 805px;
+  top: 755px;
   width: 835px;
   height: 535px;
   .line-chart {

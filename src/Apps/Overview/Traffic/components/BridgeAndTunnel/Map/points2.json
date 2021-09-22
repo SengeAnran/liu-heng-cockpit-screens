@@ -4,130 +4,26 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "隐患点1"
+        "name": "隐患点1---山体滑坡"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.171537,
-          29.719041
+          122.07611111,
+          29.76472222
         ]
       }
     },
     {
       "type": "Feature",
       "properties": {
-        "name": "隐患点2"
+        "name": "隐患点2---易积水路段"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.183897,
-          29.692203
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点3"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.155745,
-          29.695781
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点3"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.131455,
-          29.707859
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点4"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.150811,
-          29.713316
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点5"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.143687,
-          29.725019
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点6"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.086916,
-          29.734559
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点7"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.138836,
-          29.730147
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点7"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.118416,
-          29.752668
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "name": "隐患点7"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          122.095113,
-          29.766751
+          122.07472222,
+          29.75916667
         ]
       }
     }

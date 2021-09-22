@@ -1,24 +1,21 @@
 <template>
   <div class="map_wrapper">
-    <div class="main-map"
-         ref="map" v-show="!threeDMap"></div>
+    <div class="main-map" ref="mapyiliao" v-show="!threeDMap"></div>
     <div class="toggle-layer" v-show="!threeDMap">
       <h3>医院图例</h3>
       <ul>
-        <li v-for="(item,i) in list"
-            :key="`toggle-${i}`">
-          <span @click="toggle(item,i)"
-                :class="{'active':currentIndex===i}"></span>
-          <span>{{item.type}}</span>
+        <li v-for="(item, i) in list" :key="`toggle-${i}`">
+          <span @click="toggle(item, i)" :class="{ active: currentIndex === i }"></span>
+          <span>{{ item.type }}</span>
         </li>
       </ul>
     </div>
     <div class="main-map" v-show="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/" width="100%" height="100%"></iframe>
+      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
     <div class="switch">
-      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
+      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
     </div>
   </div>
 </template>
@@ -43,25 +40,17 @@ export default {
         { type: '隔离点', key: 'getIsolationPlaceInfo' },
       ],
       isPop: false,
-      markerMsgList: [],
-      markerMsg: {
-        yljg: '六横镇医院',
-        lxdh: '0574-83307880',
-        doctor: 67,
-        nurse: 112,
-        dz: '浙江省舟山市普陀区六横镇XXXXXX号',
-      },
-      markerLan: [
-        [122.125225, 29.748662], // 镇医院
-        [122.12642, 29.74875], // 普陀人民医院六横分院-门诊
-        [122.20457, 29.702632], // 台门社区卫生服务站
-        [122.168829, 29.685418], // 六横镇苍洞社区卫生站
-        [122.122891, 29.747876], // 六横镇j头社区卫生服务室
-        [122.143261, 30.105335], // 干览镇卫生院
+      markerMsgList: [
+        {
+          lat: 29.77227,
+          lng: 122.100754,
+        },
       ],
       markerList: [],
-      markers: [],
       infoWindow: {},
+      markers1: [],
+      markers2: [],
+      markers3: [],
     };
   },
   mounted() {
@@ -77,101 +66,177 @@ export default {
       }
     },
     getData(category) {
-      this.markerMsgList = [];
-      const apis = { getHospitalListByCategory, getPlaceInfo, getIsolationPlaceInfo };
-      const apisArr = [
-        getHospitalListByCategory().request(),
-        getPlaceInfo().request(),
-        getIsolationPlaceInfo().request(),
+      this.markerMsgList = [
+        {
+          lng: 122.120087,
+          lat: 29.742798,
+          name: '普陀医院六横第二分院',
+          label: '医院',
+          type: 1,
+        },
+        {
+          lng: 122.193911,
+          lat: 29.696887,
+          name: '中心卫生院',
+          label: '医院',
+          type: 1,
+        },
+        {
+          lng: 122.200328,
+          lat: 29.701186,
+          name: '千荷大酒店',
+          label: '隔离点',
+          type: 2,
+        },
+        {
+          lng: 122.198933,
+          lat: 29.702235,
+          name: '东鸿大酒店',
+          label: '隔离点',
+          type: 2,
+        },
+        {
+          lng: 122.129986,
+          lat: 29.756298,
+          name: '暂无数据',
+          label: '接种点',
+          type: 3,
+        },
       ];
-      if (category === 'all') {
-        Promise.all(apisArr).then((res) => {
-          const data = [...res[0], ...res[1], ...res[2]];
-          data.map((item) => {
-            item.position = [item.lng, item.lat];
-          });
-          this.markerMsgList = data;
-          this.addMarkerOneByOne();
-        });
-      } else {
-        apis[category]()
-          .request()
-          .then((res) => {
-            if (res && res.length) {
-              res.map((item) => {
-                item.position = [item.lng, item.lat];
-              });
-              this.markerMsgList = res;
-              this.addMarkerOneByOne();
-            } else {
-              this.markerMsgList = [];
-            }
-          });
-      }
+      this.initMarkers();
     },
     initMap() {
-      this.mapDom = this.$refs.map;
+      this.mapDom = this.$refs.mapyiliao;
       this.map = new AMap.Map(this.mapDom, {
         resizeEnable: true,
         zoom: 13,
-        // zoomEnable: false,
         center: [122.200254, 29.707613],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
+      this.infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
       this.map.on('click', (e) => {
         if (this.infoWindow.close) {
           this.infoWindow.close();
         }
       });
     },
-    addInfoWindow(markerMsg, lnglat) {
-      const { lng, lat } = lnglat;
-      const html = `<div class='pop-up-box'>
-          <h3>${markerMsg.jzdmc || markerMsg.gldmx || markerMsg.yymc}</h3>
-          <div>
-            <label>联系电话：</label><br>
-            <span>${markerMsg.dh || '暂无'}<span>
-          </div>
-          <div class='flex'>
-            <div><label>医生人数：</label><br><span>${markerMsg.ysrs || 0}人</span></div>
-            <div><label>卫技人员：</label><br><span>${markerMsg.hsrs || 0}人</span></div>
-          </div>
-          <div><label>地址：</label><br><span>${markerMsg.dz}</span></div>
-        </div>`;
-
-      var infoWindow = new AMap.InfoWindow({
-        isCustom: true, // 使用自定义窗体
-        content: html, // 传入 dom 对象，或者 html 字符串
-        offset: new AMap.Pixel(760.7, -590),
-      });
-      this.infoWindow = infoWindow;
-      infoWindow.open(this.map, [lng, lat]);
+    markerClick(e) {
+      this.infoWindow.setContent(e.target.content);
+      this.infoWindow.open(this.map, e.target.getPosition());
     },
-    addMarkerOneByOne() {
-      this.markers.map((item) => {
-        this.map.remove(item);
+    // 加载医院
+    initMarkers() {
+      var yiyuanIcon = new AMap.Icon({
+        // 图标尺寸
+        size: new AMap.Size(70, 70),
+        // 图标的取图地址
+        image: require('../../images/hospital-icon.png'),
+        // 图标所用图片大小
+        imageSize: new AMap.Size(70, 70),
+        // 图标取图偏移量
+        imageOffset: new AMap.Pixel(-9, -3),
       });
-      this.markers = [];
       this.markerMsgList.forEach((item) => {
-        this.addMarker(item);
+        if (item.type === 1) {
+          const startMarker = new AMap.Marker({
+            position: new AMap.LngLat(item.lng, item.lat),
+            icon: yiyuanIcon,
+            offset: new AMap.Pixel(-13, -30),
+          });
+          this.markers1.push(startMarker);
+        }
       });
+      this.map.add([...this.markers1]);
     },
-    addMarker(item) {
-      const marker = new AMap.Marker({
-        position: item.position,
-        content: "<div class='custom-marker'></div>",
-        icon: hosIcon,
+    // 加载隔离点
+    initMarkers1() {
+      var geili = new AMap.Icon({
+        // 图标尺寸
+        size: new AMap.Size(70, 70),
+        // 图标的取图地址
+        image: require('../../images/geili.png'),
+        // 图标所用图片大小
+        imageSize: new AMap.Size(70, 70),
+        // 图标取图偏移量
+        imageOffset: new AMap.Pixel(-9, -3),
       });
-      this.map.add(marker);
-      marker.on('click', (e) => {
-        this.addInfoWindow(item, e.lnglat);
+      this.markerMsgList.forEach((item) => {
+        if (item.type === 2) {
+          const startMarker = new AMap.Marker({
+            position: new AMap.LngLat(item.lng, item.lat),
+            icon: geili,
+            offset: new AMap.Pixel(-13, -30),
+          });
+          this.markers2.push(startMarker);
+        }
       });
-      this.markers.push(marker);
+      this.map.add([...this.markers2]);
+    },
+    // 加载接种点
+    initMarkers2() {
+      var jiezhong = new AMap.Icon({
+        // 图标尺寸
+        size: new AMap.Size(70, 70),
+        // 图标的取图地址
+        image: require('../../images/jiezhong.png'),
+        // 图标所用图片大小
+        imageSize: new AMap.Size(70, 70),
+        // 图标取图偏移量
+        imageOffset: new AMap.Pixel(-9, -3),
+      });
+      this.markerMsgList.forEach((item) => {
+        if (item.type === 3) {
+          const startMarker = new AMap.Marker({
+            position: new AMap.LngLat(item.lng, item.lat),
+            icon: jiezhong,
+            offset: new AMap.Pixel(-13, -30),
+          });
+          this.markers3.push(startMarker);
+        }
+      });
+      this.map.add([...this.markers3]);
     },
     toggle(item, i) {
-      this.map.remove(this.infoWindow);
+      console.log(item, i);
       this.currentIndex = i;
-      this.getData(item.key);
+      if (item.type === '全选') {
+        this.map.remove(this.markers1);
+        this.map.remove(this.markers2);
+        this.map.remove(this.markers3);
+        this.markers1 = [];
+        this.markers2 = [];
+        this.markers3 = [];
+        this.initMarkers();
+        this.initMarkers1();
+        this.initMarkers2();
+      }
+      if (item.type === '医院') {
+        this.map.remove(this.markers1);
+        this.map.remove(this.markers2);
+        this.map.remove(this.markers3);
+        this.markers1 = [];
+        this.markers2 = [];
+        this.markers3 = [];
+        this.initMarkers();
+      }
+      if (item.type === '疫苗接种点') {
+        this.map.remove(this.markers1);
+        this.map.remove(this.markers2);
+        this.map.remove(this.markers3);
+        this.markers1 = [];
+        this.markers2 = [];
+        this.markers3 = [];
+        this.initMarkers2();
+      }
+      if (item.type === '隔离点') {
+        this.map.remove(this.markers1);
+        this.map.remove(this.markers2);
+        this.map.remove(this.markers3);
+        this.markers1 = [];
+        this.markers2 = [];
+        this.markers3 = [];
+        this.initMarkers1();
+      }
     },
   },
 };
@@ -196,7 +261,7 @@ export default {
     ::v-deep .custom-marker {
       width: 70px;
       height: 70px;
-      background: url('../../images/hospital-icon.png') no-repeat center center;
+      background: require('../../images/hospital-icon.png') no-repeat center center;
       background-size: 100% 100%;
       z-index: 111;
     }
@@ -210,7 +275,7 @@ export default {
     display: flex;
     justify-content: space-around;
     z-index: 1000;
-    .button{
+    .button {
       width: 114px;
       height: 44px;
       font-size: 24px;
@@ -218,10 +283,10 @@ export default {
       text-align: center;
       color: #82e2e4;
       cursor: pointer;
-      background: url("./img/mmexport.jpg") no-repeat;
+      background: url('./img/mmexport.jpg') no-repeat;
       &.active {
         color: white;
-        background: url("./img/mmexport1.jpg") no-repeat;
+        background: url('./img/mmexport1.jpg') no-repeat;
       }
     }
   }
@@ -310,5 +375,8 @@ export default {
       }
     }
   }
+}
+.fontName {
+  font-size: 50px;
 }
 </style>

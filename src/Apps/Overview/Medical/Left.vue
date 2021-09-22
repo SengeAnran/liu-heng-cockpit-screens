@@ -1,42 +1,47 @@
 <template>
-  <view-template class="Medical-Left"  :interval="300" @interval="getData">
+  <view-template class="Medical-Left" :interval="300" @interval="getData">
     <BaseTitle title="医疗资源情况" :width="1650" />
     <div class="flex">
       <div class="left-left">
         <div class="sub-title">医院数量</div>
         <div class="flex desc">
           <div class="flex" v-for="item in descList" :key="item.label">
-            <div class="label">{{item.label||'全区'}}</div>
+            <div class="label">{{ item.label || '全区' }}</div>
             <div class="desc-count">
-              <!-- <div> -->
-                <div class="count"><MyCountUp :endVal="item.count1"/></div>
-                <!-- <span>公办</span> -->
-              <!-- </div> -->
-              <!-- <div>
-                <div class="count"><MyCountUp :endVal="item.count2"/></div>
-                <span>民办</span>
-              </div> -->
+              <div class="count">
+                <digital :loop="loop" :endNum="item.count1 || 0" :data="data" :config="config"></digital>
+              </div>
             </div>
           </div>
         </div>
         <div class="chart">
           <BarChart :bar-data="barData" />
         </div>
-        <div class="chart">
+        <div class="chart1">
           <PieChart :data="pieAgeData" legendType="pec" title="医务人员职称结构" />
         </div>
       </div>
       <div class="left-right">
         <div class="sub-title">医师数量分析</div>
         <div class="flex desc-doc">
-          <div class="flex" v-for="(item,i) in docList" :key="`doc-type-${i}`">
-            <div class="label">{{item.type}}</div>
-            <div class="count"><MyCountUp :endVal="item.count"/></div>
+          <div class="flex" v-for="(item, i) in docList" :key="`doc-type-${i}`">
+            <div class="label">{{ item.type }}</div>
+            <div class="count">
+              <digital :loop="loop" :endNum="item.count || 0" :data="data1" :config="config1"></digital>
+              <!-- <MyCountUp :endVal="item.count" /> -->
+            </div>
           </div>
         </div>
-        <div class="chart"><LineChart :line-data="lineData"/></div>
         <div class="chart">
-          <PieChart :data="pieEducateData" legendType="pec" title="医务人员学历结构" :chartStyle="{scale:[2.3,2.2],position:['5.6%','5.98%']}"/>
+          <LineChart :line-data="lineData" />
+        </div>
+        <div class="chart1">
+          <PieChart
+            :data="pieEducateData"
+            legendType="pec"
+            title="医务人员学历结构"
+            :chartStyle="{ scale: [2.3, 2.2], position: ['5.6%', '5.98%'] }"
+          />
         </div>
       </div>
     </div>
@@ -48,13 +53,58 @@ import BaseTitle from './components/BaseTitle';
 import LineChart from './components/LineChart';
 import BarChart from './components/BarChart';
 import PieChart from './components/PieChart';
-import MyCountUp from './components/ICountUp';
-import { getHospitalAndDoctorInfo, getStaffNum, getCompetentTrend, getOutpatientService, getEducationTrend } from '@/api/Overview/Medical/api';
+// import MyCountUp from './components/ICountUp';
+import {
+  getHospitalAndDoctorInfo,
+  getStaffNum,
+  getCompetentTrend,
+  getOutpatientService,
+  getEducationTrend,
+} from '@/api/Overview/Medical/api';
 export default {
   name: 'MedicalLeft',
-  components: { BaseTitle, LineChart, BarChart, PieChart, MyCountUp },
+  components: { BaseTitle, LineChart, BarChart, PieChart },
   data() {
     return {
+      data: {
+        content: 1000,
+        unit: '个',
+      },
+      data1: {
+        content: 1000,
+        // unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: { fontSize: '2rem' },
+      },
+      config1: {
+        content: {
+          fontSize: '3rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: { fontSize: '1rem' },
+      },
       descList: [
         {
           label: '镇医院',
@@ -137,63 +187,79 @@ export default {
       this.getEducationTrend();
     },
     getHospitalAndDoctorInfo() {
-      getHospitalAndDoctorInfo().request().then((res) => {
-        this.docList.map((item) => {
-          item.count = res.ysslfx[item.key];
+      getHospitalAndDoctorInfo()
+        .request()
+        .then((res) => {
+          this.docList.map((item) => {
+            item.count = res.ysslfx[item.key];
+          });
+          this.descList.map((item) => {
+            item.count = res.yysl[item.key];
+          });
         });
-        this.descList.map((item) => {
-          item.count = res.yysl[item.key];
-        });
-      });
     },
     getStaffNum() {
-      getStaffNum().request().then((res) => {
-        if (res.ywryfb_female && res.ywryfb_female.length) {
-          const xData = [];
-          const data1 = [];
-          const data2 = [];
-          res.ywryfb_female.map((item) => {
-            xData.push(item.ywfg);
-            data2.push(item.rs);
-          });
-          res.ywryfb_male.map((item) => {
-            data1.push(item.rs);
-          });
-          this.barData.data1 = data1;
-          this.barData.data2 = data2;
-          this.barData.xData = xData;
-        }
-      });
+      getStaffNum()
+        .request()
+        .then((res) => {
+          if (res.ywryfb_female && res.ywryfb_female.length) {
+            const xData = [];
+            const data1 = [];
+            const data2 = [];
+            res.ywryfb_female.map((item) => {
+              xData.push(item.ywfg);
+              data2.push(item.rs);
+            });
+            res.ywryfb_male.map((item) => {
+              data1.push(item.rs);
+            });
+            this.barData.data1 = data1;
+            this.barData.data2 = data2;
+            this.barData.xData = xData;
+          }
+        });
     },
     getCompetentTrend() {
-      getCompetentTrend().request().then((res) => {
-        res && res.length && res.map((item) => {
-          item.name = item.zc;
-          item.value = item.rs;
+      getCompetentTrend()
+        .request()
+        .then((res) => {
+          res &&
+            res.length &&
+            res.map((item) => {
+              item.name = item.zc;
+              item.value = item.rs;
+            });
+          this.pieAgeData = res;
         });
-        this.pieAgeData = res;
-      });
     },
     getOutpatientService() {
-      getOutpatientService().request().then((res) => {
-        const xData = [];
-        const yData = [];
-        res && res.length && res.map((item) => {
-          xData.push(item.nf);
-          yData.push(item.mzrs);
+      getOutpatientService()
+        .request()
+        .then((res) => {
+          const xData = [];
+          const yData = [];
+          res &&
+            res.length &&
+            res.map((item) => {
+              xData.push(item.nf);
+              yData.push(item.mzrs);
+            });
+          this.lineData.xData = xData.reverse();
+          this.lineData.data1 = yData;
         });
-        this.lineData.xData = xData;
-        this.lineData.data1 = yData;
-      });
     },
     getEducationTrend() {
-      getEducationTrend().request().then((res) => {
-        res && res.length && res.map((item) => {
-          item.name = item.xl;
-          item.value = item.rs;
+      getEducationTrend()
+        .request()
+        .then((res) => {
+          res &&
+            res.length &&
+            res.map((item) => {
+              item.name = item.xl;
+              item.value = item.rs;
+            });
+          this.pieEducateData = res;
         });
-        this.pieEducateData = res;
-      });
     },
   },
 };
@@ -206,17 +272,23 @@ export default {
   width: 1650px;
   height: 977px;
   position: absolute;
-  top: 263px;
+  top: 150px;
   left: 160px;
-  z-index:1000;
+  z-index: 1000;
   .left-left,
   .left-right {
     width: 50%;
-    margin-top: 63px;
+    margin-top: 93px;
     margin-right: 22px;
-    .chart{
+    .chart {
       width: 100%;
       height: 360px;
+      margin-top: 0px;
+    }
+    .chart1 {
+      width: 100%;
+      height: 360px;
+      margin-top: 100px;
     }
   }
   .sub-title {
@@ -288,8 +360,8 @@ export default {
           width: 104px;
           line-height: 123px;
           font-size: 24px;
-          .iCountUp{
-          font-size: 30px;
+          .iCountUp {
+            font-size: 30px;
           }
         }
       }

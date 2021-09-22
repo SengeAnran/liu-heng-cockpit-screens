@@ -1,15 +1,15 @@
 <template>
   <div class="party-construction">
-    <div class="left-part">
+    <div class="left-part" :style="{ left: Showleft + 'px' }">
       <LeftSection1 class="section-item" />
       <!-- <LeftSection2 class="section-item" /> -->
     </div>
 
-    <div class="right-part">
-      <RightSection1 class="section-item"/>
-      <RightSection2 class="section-item"/>
-      <RightSection3 class="section-item"/>
-      <RightSection4 class="section-item"/>
+    <div class="right-part" :style="{ right: Showleft + 'px' }">
+      <RightSection1 class="section-item" />
+      <RightSection2 class="section-item" />
+      <RightSection3 class="section-item" />
+      <RightSection4 class="section-item" />
     </div>
 
     <Map />
@@ -33,26 +33,41 @@ export default {
     RightSection4,
     Map,
   },
+  data() {
+    return {
+      show: true,
+      Showleft: -1900,
+    };
+  },
+  mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 150) {
+        this.Showleft = 150;
+        clearInterval(this.timer);
+      }
+    }, 150);
+  },
 };
 </script>
 <style lang="scss" scoped>
-.party-construction{
-  p{
+.party-construction {
+  p {
     margin: 0;
   }
-  .left-part{
+  .left-part {
     position: absolute;
     width: 170rem;
-    top: 26.3rem;
+    top: 20.3rem;
     left: 16rem;
     z-index: 10;
   }
-  .right-part{
+  .right-part {
     position: absolute;
     z-index: 10;
     width: 170rem;
     right: 16rem;
-    top: 26.3rem;
+    top: 20.3rem;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 50rem 42rem;

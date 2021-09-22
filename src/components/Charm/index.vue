@@ -22,7 +22,7 @@
       <div class="third-wrapper">
         <div class="third-wrapper-base">
           <SamllTitle :name="ageName" />
-          <BarCharts style="height:30rem;width: 100%" :xAxisData="ageData.xData" :yAxisData="ageData.yData" />
+          <BarCharts style="height: 30rem; width: 100%" :xAxisData="ageData.xData" :yAxisData="ageData.yData" />
         </div>
         <div class="third-wrapper-base">
           <SamllTitle :name="educationName" />
@@ -120,7 +120,6 @@ export default {
         bgColor: '',
       },
       educationName: '学历分布',
-
     };
   },
 };
@@ -199,7 +198,7 @@ export default {
     top: 13rem;
     display: flex;
     justify-content: space-between;
-    &>div {
+    & > div {
       width: 79.97rem;
     }
   }

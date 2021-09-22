@@ -6,52 +6,44 @@
       <div class="block-top">
         <div class="top-left item">
           <div class="top-left-img">
-            <img src="./img/sdtj.png">
+            <img src="./img/sdtj.png" />
           </div>
           <div class="top-left-name sdcolor">隧道统计</div>
         </div>
         <div class="top-cancer item">
           <div class="item-span-number sdcolor">
-            9
+            <digital :loop="loop" :endNum="9 || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">
-            隧道数量
-          </div>
+          <div class="item-span-name">隧道数量</div>
         </div>
         <div class="top-right item">
           <div class="item-span-number sdcolor">
-            4217
+            <digital :loop="loop" :endNum="4217 || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">
-            总长(米)
-          </div>
+          <div class="item-span-name">总长(米)</div>
         </div>
       </div>
-      <div
-        @mouseenter="mouseEnter(highway)"
-        @mouseleave="mouseleave(highway)">
+      <div @mouseenter="mouseEnter(highway)" @mouseleave="mouseleave(highway)">
         <div class="line titles">
           <div class="second_item">隧道名称</div>
           <div class="second_item">路线名称</div>
           <div class="second_item">长度(米)</div>
           <div class="second_item">分类</div>
         </div>
-        <swiper ref="mySwiper"
-                :options="swiperOption"
-                v-if="highway.length > 3">
+        <swiper ref="mySwiper" :options="swiperOption" v-if="highway.length > 3">
           <swiper-slider v-for="(item, index) in highway" :key="index">
             <div class="line">
               <div class="second_item">{{ item.name }}</div>
               <div class="second_item">{{ item.startName }}</div>
-              <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+              <div class="second_item" style="color: #63ceb3">{{ item.length }}</div>
               <div class="second_item">{{ item.endName }}</div>
             </div>
           </swiper-slider>
         </swiper>
-        <div v-else class="line" v-for="(item, index) in highway" :key="index" >
+        <div v-else class="line" v-for="(item, index) in highway" :key="index">
           <div class="second_item">{{ item.name }}</div>
           <div class="second_item">{{ item.startName }}</div>
-          <div class="second_item" style="color: #63CEB3">{{ item.length }}</div>
+          <div class="second_item" style="color: #63ceb3">{{ item.length }}</div>
           <div class="second_item">{{ item.endName }}</div>
         </div>
       </div>
@@ -61,62 +53,54 @@
       <div class="block-top">
         <div class="top-left item">
           <div class="top-left-img">
-            <img src="./img/qltj.png">
+            <img src="./img/qltj.png" />
           </div>
           <div class="top-left-name qlcolor">桥梁统计</div>
         </div>
         <div class="top-cancer item">
           <div class="item-span-number qlcolor">
-            27
+            <digital :loop="loop" :endNum="27 || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">
-            桥梁数量
-          </div>
+          <div class="item-span-name">桥梁数量</div>
         </div>
         <div class="top-right item">
           <div class="item-span-number qlcolor">
-            637.2
+            <!-- 637.2 -->
+            <digital :loop="loop" :endNum="637.2 || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">
-            总长(米)
-          </div>
+          <div class="item-span-name">总长(米)</div>
         </div>
       </div>
-      <div
-        @mouseenter="mouseEnter(passenger)"
-        @mouseleave="mouseleave(passenger)"
-      >
+      <div @mouseenter="mouseEnter(passenger)" @mouseleave="mouseleave(passenger)">
         <div class="line titles">
           <div class="second_item">隧道名称</div>
-          <div class="second_item"  style="text-align: center">全长</div>
+          <div class="second_item" style="text-align: center">全长</div>
           <div class="second_item">跨径总长</div>
           <div class="second_item">跨径分类</div>
         </div>
-        <swiper ref="mySwiper"
-                :options="swiperOption"
-                v-if="passenger.length > 3">
+        <swiper ref="mySwiper" :options="swiperOption" v-if="passenger.length > 3">
           <swiper-slider v-for="(item, index) in passenger" :key="index">
             <div class="line">
               <div class="second_item">{{ item.name }}</div>
-              <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>
-              <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>
+              <div class="second_item" style="text-align: center; color: #63ceb3">{{ item.startName }}</div>
+              <div class="second_item" style="color: #63ceb3">{{ item.endName }}</div>
               <div class="second_item">{{ item.length }}</div>
             </div>
           </swiper-slider>
         </swiper>
-        <div v-else class="line" v-for="(item, index) in passenger" :key="index" >
+        <div v-else class="line" v-for="(item, index) in passenger" :key="index">
           <div class="second_item">{{ item.name }}</div>
-          <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>
-          <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>
+          <div class="second_item" style="text-align: center; color: #63ceb3">{{ item.startName }}</div>
+          <div class="second_item" style="color: #63ceb3">{{ item.endName }}</div>
           <div class="second_item">{{ item.length }}</div>
         </div>
       </div>
-<!--      <div class="line" v-for="(item, index) in passenger" :key="index">-->
-<!--        <div class="second_item">{{ item.name }}</div>-->
-<!--        <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>-->
-<!--        <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>-->
-<!--        <div class="second_item">{{ item.length }}</div>-->
-<!--      </div>-->
+      <!--      <div class="line" v-for="(item, index) in passenger" :key="index">-->
+      <!--        <div class="second_item">{{ item.name }}</div>-->
+      <!--        <div class="second_item" style="text-align: center; color: #63CEB3;">{{ item.startName }}</div>-->
+      <!--        <div class="second_item" style="color:#63CEB3">{{ item.endName }}</div>-->
+      <!--        <div class="second_item">{{ item.length }}</div>-->
+      <!--      </div>-->
     </div>
     <!--    <Bar1 />-->
   </div>
@@ -138,6 +122,36 @@ export default {
   },
   data() {
     return {
+      data: {
+        content: 1000,
+        // unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 2,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '4rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
       highway: [
         {
           name: '龙山隧道右',
@@ -296,62 +310,62 @@ export default {
   .block {
     margin-top: 2rem;
     margin-bottom: 6rem;
-    .block-top{
-      background: url("./img/sjbj.png") 100% 100%;
+    .block-top {
+      background: url('./img/sjbj.png') 100% 100%;
       height: 106px;
       display: flex;
       .item {
         text-align: center;
         height: 106px;
-        .xdcolor{
-          background: linear-gradient(180deg, #FFFFFF 0%, #4ECDD8 100%);
+        .xdcolor {
+          background: linear-gradient(180deg, #ffffff 0%, #4ecdd8 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .cdcolor{
-          background-image:-webkit-linear-gradient(bottom,#53E9A1,#FFFFFF);
+        .cdcolor {
+          background-image: -webkit-linear-gradient(bottom, #53e9a1, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .sdcolor{
-          background-image:-webkit-linear-gradient(bottom,#E1D35E,#FFFFFF);
+        .sdcolor {
+          background-image: -webkit-linear-gradient(bottom, #e1d35e, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .qlcolor{
-          background-image:-webkit-linear-gradient(bottom,#CE954C,#FFFFFF);
+        .qlcolor {
+          background-image: -webkit-linear-gradient(bottom, #ce954c, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .item-span-number{
+        .item-span-number {
           margin-top: 20px;
           text-align: center;
           height: 44px;
           font-size: 40px;
           font-family: DINPro;
           font-weight: 500;
-          color: #FFFFFF;
+          color: #ffffff;
           line-height: 44px;
           text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.24);
         }
-        .item-span-name{
+        .item-span-name {
           text-align: center;
           height: 21px;
           font-size: 22px;
           font-family: Source Han Sans CN;
           font-weight: 400;
-          color: #FFFFFF;
+          color: #ffffff;
           line-height: 44px;
           opacity: 0.5;
         }
       }
-      .top-left{
+      .top-left {
         width: 191px;
         font-size: 22px;
         font-family: Source Han Sans CN;
         font-weight: 500;
         line-height: 44px;
-        .top-left-img{
+        .top-left-img {
           margin-top: 22px;
           height: 40px;
         }
@@ -364,36 +378,35 @@ export default {
           //color: #FFFFFF;
           line-height: 44px;
         }
-        .xdcolor{
-          background-image:-webkit-linear-gradient(bottom,#F7F196,#FFFFFF);
+        .xdcolor {
+          background-image: -webkit-linear-gradient(bottom, #f7f196, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .cdcolor{
-          background-image:-webkit-linear-gradient(bottom,#F6B25A,#FFFFFF);
+        .cdcolor {
+          background-image: -webkit-linear-gradient(bottom, #f6b25a, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .sdcolor{
-          background-image:-webkit-linear-gradient(bottom,#6CD9E2,#FFFFFF);
+        .sdcolor {
+          background-image: -webkit-linear-gradient(bottom, #6cd9e2, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .qlcolor{
-          background-image:-webkit-linear-gradient(bottom,#78D2A7,#FFFFFF);
+        .qlcolor {
+          background-image: -webkit-linear-gradient(bottom, #78d2a7, #ffffff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
       }
-      .top-cancer{
+      .top-cancer {
         width: 260px;
-
       }
-      .top-right{
+      .top-right {
         width: 330px;
       }
     }
-    .titles{
+    .titles {
       .second_item {
         font-size: 29px;
         font-family: Source Han Sans SC;
@@ -409,7 +422,7 @@ export default {
       background: url('./img/list-bg.png') no-repeat 100% 100%;
       font-family: Source Han Sans SC;
       font-weight: 500;
-      color: #AECACA;
+      color: #aecaca;
       display: flex;
       justify-content: space-around;
       .item {
@@ -421,18 +434,22 @@ export default {
         width: 17rem;
         padding: 0.9rem;
         text-align: left;
-        &:first-child{
+
+        &:first-child {
           width: 13rem;
           margin-left: 2rem;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
-        &:nth-child(2){
+        &:nth-child(2) {
           width: 11rem;
         }
-        &:nth-child(3){
+        &:nth-child(3) {
           width: 20rem;
           text-align: center;
         }
-        &:last-child{
+        &:last-child {
           //margin-right: 4rem;
         }
       }

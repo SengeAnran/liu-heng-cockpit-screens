@@ -64,7 +64,23 @@ export default {
       this.lineChart.setOption(this.option());
     },
     option() {
-      const { title, xData, showArea, name1, name2, yname1, lineColor11, areaColor11, areaColor12, lineColor21, legendOrient, areaColor21, areaColor22, data1, data2 } = this.lineData;
+      const {
+        title,
+        xData,
+        showArea,
+        name1,
+        name2,
+        yname1,
+        lineColor11,
+        areaColor11,
+        areaColor12,
+        lineColor21,
+        legendOrient,
+        areaColor21,
+        areaColor22,
+        data1,
+        data2,
+      } = this.lineData;
       const option = {
         colors: [lineColor11, lineColor21],
         title: {
@@ -262,8 +278,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.Line-Chart{
+.Line-Chart {
   width: 100%;
-  height: 100%;
+  height: 450px;
 }
 </style>

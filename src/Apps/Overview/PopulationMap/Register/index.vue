@@ -2,11 +2,9 @@
   <div class="register">
     <BaseTitle title="户籍人口" />
     <div class="top-box">
-      <div class="total">
-        总人数: <CountUp :num="total.hjzrs" />人
-      </div>
+      <div class="total">总人数: <CountUp :num="total.hjzrs" />人</div>
       <div class="rate">
-        <span class="last-year">比上年 {{ (total.rkzzl * 100).toFixed(2)}}%</span>
+        <span class="last-year">比上年 {{ (total.rkzzl * 100).toFixed(2) }}%</span>
         <CountUp :num="total.hjxzrs" />人
       </div>
     </div>
@@ -29,20 +27,21 @@ export default {
       },
     };
   },
-  computed: {
-  },
+  computed: {},
   mounted() {
     this.chart = echarts.init(this.$refs.chart);
     this.loadData();
   },
   methods: {
     loadData() {
-      getNewPopulationTrend().request().then((json) => {
-        this.total.hjzrs = json.hjrks.hjzrs || 0;
-        this.total.hjxzrs = json.hjrks.hjxzrs || 0;
-        this.total.rkzzl = json.hjrks.rkzzl || 0;
-        this.chart.setOption(this.getOptions(json.hjrkqs));
-      });
+      getNewPopulationTrend()
+        .request()
+        .then((json) => {
+          this.total.hjzrs = json.hjrks.hjzrs || 0;
+          this.total.hjxzrs = json.hjrks.hjxzrs || 0;
+          this.total.rkzzl = json.hjrks.rkzzl || 0;
+          this.chart.setOption(this.getOptions(json.hjrkqs));
+        });
     },
     getOptions(data) {
       const option = {
@@ -99,8 +98,9 @@ export default {
         yAxis: {
           name: '人数',
           type: 'value',
-          min: 60000,
-          interval: 500,
+          min: 50000,
+          max: 70000,
+          interval: 4000,
           nameTextStyle: {
             align: 'center',
             color: '#fff',
@@ -186,18 +186,18 @@ export default {
 .register {
   position: absolute;
   left: 157px;
-  top: 262px;
+  top: 162px;
   width: 835px;
-  height: 535px;
+  height: 655px;
   .top-box {
     position: absolute;
-    top: 70px;
+    top: 90px;
     right: 0;
     font-size: 22px;
     color: #fff;
     width: 70%;
     display: flex;
-    >div {
+    > div {
       flex-grow: 1;
       text-align: center;
       &.total {
@@ -207,7 +207,7 @@ export default {
           font-family: 'DIN Alternate';
         }
       }
-       &.rate {
+      &.rate {
         .last-year {
           display: inline-block;
           margin-right: 20px;
@@ -224,7 +224,7 @@ export default {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 460px;
+    height: 550px;
   }
 }
 </style>

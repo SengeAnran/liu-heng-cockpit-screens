@@ -20,6 +20,10 @@ export default {
     CityAddress,
     MainComponeny,
   },
+  data() {
+    return {};
+  },
+  mounted() {},
 };
 </script>
 <style lang="scss" scoped>
@@ -27,8 +31,9 @@ export default {
   position: absolute;
   width: 1710px;
   height: 1076px;
-  top: 240px;
-  left: 140px;
+  top: 150px;
+  left: -2000px;
+  // left: 140px;
   z-index: 100;
 }
 </style>

@@ -32,7 +32,7 @@ export default {
   position: absolute;
   width: 1700px;
   height: 1100px;
-  top: 240px;
+  top: 150px;
   right: 140px;
   z-index: 100;
 }

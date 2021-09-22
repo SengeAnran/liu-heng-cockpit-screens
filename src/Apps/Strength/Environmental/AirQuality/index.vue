@@ -3,7 +3,12 @@
     <BaseTitle title="全县空气质量状况" />
     <div class="nav">
       <div class="nav-item" v-for="(item, index) in list" :key="index">
-        <div class="name">{{ item.name }}</div>
+        <div class="name">
+          <div>
+            <img :src="item.url" />
+          </div>
+          <div>{{ item.name }}</div>
+        </div>
         <div class="value" v-if="item.unit">
           <CountUp :num="item.value" /><span class="unit">{{ item.unit }}</span>
         </div>
@@ -58,20 +63,24 @@ export default {
         {
           name: '空气质量',
           value: '',
+          url: require('./img/kongqi.png'),
         },
         {
           name: 'AQI',
           value: 0,
-          unit: '%',
+          unit: '',
+          url: require('./img/aqi-wx.png'),
         },
         {
           name: 'PM2.5',
           value: 0,
           unit: 'ug/m3',
+          url: require('./img/PM2.5.png'),
         },
         {
           name: '空气等级',
           value: '',
+          url: require('./img/dengji.png'),
         },
       ],
     };
@@ -81,23 +90,31 @@ export default {
   },
   methods: {
     loadData() {
-      getCountyAirQualityStatus().request().then((json) => {
-        if (!json) { return; }
-        this.list[0].value = json[0].kqzl || '';
-        this.list[1].value = json[0].aqi || '';
-        this.list[2].value = json[0].pm25 || '';
-        this.list[3].value = json[0].kqdj || '';
-        // console.log(json);
-      });
-      getAirQualityTrends().request().then((json) => {
-        if (!json) { return; }
-        const data = [];
-        this.lineData.xAxisData = json.yll.map((item) => item.value);
-        Object.keys(this.keyValues).forEach((item) => {
-          data.push({ name: this.keyValues[item], data: json[item].map((item) => item.label) });
+      getCountyAirQualityStatus()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          this.list[0].value = json[0].kqzl || '';
+          this.list[1].value = json[0].aqi || '';
+          this.list[2].value = json[0].pm25 || '';
+          this.list[3].value = json[0].kqdj || '';
+          // console.log(json);
         });
-        this.lineData.data = data;
-      });
+      getAirQualityTrends()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          const data = [];
+          this.lineData.xAxisData = json.yll.map((item) => item.value);
+          Object.keys(this.keyValues).forEach((item) => {
+            data.push({ name: this.keyValues[item], data: json[item].map((item) => item.label) });
+          });
+          this.lineData.data = data;
+        });
     },
   },
 };
@@ -106,7 +123,7 @@ export default {
 $font-family: ' Source Han Sans CN';
 .air-quality {
   position: absolute;
-  top: 263px;
+  top: 200px;
   left: 160px;
   width: 825px;
   height: 1027px;

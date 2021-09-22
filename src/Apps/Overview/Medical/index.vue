@@ -1,8 +1,8 @@
 <template>
   <div class="Medical">
-    <MedicalLeft/>
-    <MedicalMap/>
-    <MedicalRight/>
+    <MedicalLeft :style="{ left: Showleft + 'px' }" />
+    <MedicalMap />
+    <MedicalRight :style="{ right: Showleft + 'px' }" />
   </div>
 </template>
 
@@ -13,6 +13,22 @@ import MedicalMap from './Map';
 export default {
   name: 'Medical',
   components: { MedicalLeft, MedicalRight, MedicalMap },
+  data() {
+    return {
+      show: true,
+      Showleft: -1900,
+      timer: null,
+    };
+  },
+  mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 140) {
+        this.Showleft = 140;
+        clearInterval(this.timer);
+      }
+    }, 150);
+  },
 };
 </script>
 <style lang="scss" scoped>

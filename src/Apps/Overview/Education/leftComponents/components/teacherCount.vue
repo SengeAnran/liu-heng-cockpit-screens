@@ -24,8 +24,7 @@
 <script>
 export default {
   name: 'LeftComponents',
-  components: {
-  },
+  components: {},
   data() {
     return {
       count: {
@@ -43,7 +42,7 @@ export default {
   width: 855px;
   height: 190px;
   position: absolute;
-  top: 100px;
+  top: 180px;
   right: 0;
   .name {
     padding-left: 30px;
@@ -61,7 +60,7 @@ export default {
       width: 240px;
       background: url('../../images/teacher.png') no-repeat;
       background-size: 100% 100%;
-      position: relative;;
+      position: relative;
       .count {
         width: 120px;
         font-size: 40px;

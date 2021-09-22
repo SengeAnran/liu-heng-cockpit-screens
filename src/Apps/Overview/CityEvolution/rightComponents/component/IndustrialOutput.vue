@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="工业生产总值" :width='720' />
+    <BaseTitle title="工业生产总值" :width="720" />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -82,141 +82,225 @@ export default {
           },
           boundaryGap: true,
         },
-        yAxis: [{
-          type: 'value',
-          name: '（亿元）',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+        yAxis: [
+          {
+            type: 'value',
+            name: '（亿元）',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
-          },
-          axisTick: {
-            show: true,
-          },
-        }, {
-          name: '(%)',
-          type: 'value',
-          position: 'right',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: true,
             },
           },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+          {
+            name: '(%)',
+            type: 'value',
+            position: 'right',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: true,
+            },
           },
-          axisTick: {
-            show: true,
-          },
-        }],
+        ],
         legend: {
           data: ['工业产值', '增速'],
-          bottom: 7,
+          right: 30,
+          top: 7,
           textStyle: {
             color: '#FFFFFF',
             fontSize: 20,
             fontFamily: 'DIN Alternate',
           },
         },
-        series: [{
-          type: 'bar',
-          name: '工业产值',
-          barWidth: 20,
-          yAxisIndex: '0', // 第一个柱状图的数据
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: '#66CCFF',
-                },
-                {
-                  offset: 1,
-                  color: '#72DCEE',
-                },
-              ],
-              global: false,
+        series: [
+          {
+            name: '工业产值',
+            data: this.industrialIncome,
+            type: 'bar',
+            barMaxWidth: 'auto',
+            barWidth: 20,
+            itemStyle: {
+              color: {
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                type: 'linear',
+                global: false,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#FFAE9A',
+                  },
+                  {
+                    offset: 1,
+                    color: ' #BB6D3E',
+                  },
+                ],
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#fff',
             },
           },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 20,
+          {
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: [0, '50%'],
+            symbolSize: [20, 15],
+            itemStyle: {
+              color: {
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                type: 'linear',
+                global: false,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#FFAE9A',
+                  },
+                  {
+                    offset: 1,
+                    color: ' #BB6D3E',
+                  },
+                ],
+              },
             },
           },
-          data: this.industrialIncome,
-        }, {
-          type: 'line',
-          yAxisIndex: '1', // 第一个柱状图的数据
-          name: '增速',
-          barWidth: 20,
-          itemStyle: {
-            color: '#31EABC',
-          },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 20,
+          {
+            data: this.industrialIncome,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: [0, '-50%'],
+            symbolSize: [20, 12],
+            zlevel: 2,
+            itemStyle: {
+              color: {
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                type: 'linear',
+                global: false,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#FFAE9A',
+                  },
+                  {
+                    offset: 1,
+                    color: ' #BB6D3E',
+                  },
+                ],
+              },
             },
           },
-          data: this.increaseRate,
-        }],
+          {
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: [0, '50%'],
+            symbolSize: [20, 15],
+            zlevel: -2,
+          },
+          {
+            type: 'line',
+            yAxisIndex: '1', // 第一个柱状图的数据
+            name: '增速',
+            barWidth: 20,
+            itemStyle: {
+              color: '#31EABC',
+            },
+            // itemStyle: {
+            //   color: '#058cff',
+            // },
+            lineStyle: {
+              color: '#058cff',
+            },
+            areaStyle: {
+              color: 'rgba(57,86,119, 0.2)',
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 20,
+              },
+              areaStyle: {
+                color: 'rgba(5,140,255, 0.2)',
+              },
+            },
+            data: this.increaseRate,
+          },
+        ],
       };
       return option;
     },
     async loadData() {
       const res = await getIndustryValueTrend().request();
-      res.reverse().forEach((item, index) => {
-        this.xAxisData.push(item.nf);
-        this.industrialIncome.push(item.gycz);
-        this.increaseRate.push(item.gyczzs);
-      });
+      res
+        .reverse()
+        .slice(res.length - 6)
+        .forEach((item, index) => {
+          this.xAxisData.push(item.nf);
+          this.industrialIncome.push(item.gycz);
+          this.increaseRate.push(item.gyczzs);
+        });
       this.setData();
     },
   },

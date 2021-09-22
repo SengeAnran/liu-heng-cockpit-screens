@@ -17,17 +17,40 @@ export default {
   },
   data() {
     return {
-      list: [],
+      list: [
+        {
+          cflx: '项目审批',
+          cs: 0,
+          unit: '',
+        },
+        {
+          cflx: '信访管理',
+          cs: 0,
+          unit: '',
+        },
+        {
+          cflx: '移动执法',
+          cs: 5,
+          unit: '',
+        },
+        {
+          cflx: '行政处罚',
+          cs: 4.76,
+          unit: '万元',
+        },
+      ],
     };
   },
   mounted() {
-    this.loadData();
+    // this.loadData();
   },
   methods: {
     loadData() {
-      getPenaltyForPollution().request().then((json) => {
-        this.list = json || [];
-      });
+      getPenaltyForPollution()
+        .request()
+        .then((json) => {
+          this.list = json || [];
+        });
     },
   },
 };

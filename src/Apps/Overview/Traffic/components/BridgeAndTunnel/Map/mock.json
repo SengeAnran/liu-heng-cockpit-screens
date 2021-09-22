@@ -9,8 +9,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.10479736328125,
-          29.754541914052
+          122.19141753,
+          29.69957262
         ]
       }
     },
@@ -22,8 +22,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.1075439453125,
-          29.73248312878873
+          122.18566666,
+          29.70058686
         ]
       }
     },
@@ -35,8 +35,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.14324951171874,
-          29.73009810461113
+          122.16906583,
+          29.70968995
         ]
       }
     },
@@ -48,8 +48,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.16590881347656,
-          29.70296446463708
+          122.16906583,
+          29.72937234
         ]
       }
     },
@@ -61,8 +61,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.13226318359375,
-          29.710419491983224
+          122.12375676,
+          122.12375676
         ]
       }
     },
@@ -74,8 +74,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.12368011474611,
-          29.745003575393607
+          122.12155982,
+          29.75111638
         ]
       }
     },
@@ -87,8 +87,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.08248138427734,
-          29.735762444449076
+          122.11866233,
+          29.75111638
         ]
       }
     },
@@ -100,8 +100,268 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          122.16110229492186,
-          29.687157976593504
+          122.16706,
+          122.16706
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "浦西桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.105745,
+          29.76524833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "龙浦桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.10159667,
+          29.77246333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "小通桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.10041667,
+          29.774515
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "青头桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.0890465,
+          29.73177348
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "山西桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.06171447,
+          29.74569372
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "竹山通道桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.06596833,
+          29.75255333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "小湖1号桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.13372,
+          29.68966833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "小湖2号桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.13621167,
+          29.68520667
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "苍洞桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.15361167,
+          29.67862167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "中央岙桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.182585,
+          29.69673167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "下宅山桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.16706,
+          29.70203
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "西厂桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.16513788,
+          29.70206097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "礁潭桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.14471333,
+          29.69532333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "贺家桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.14391236,
+          29.69483225
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "红旗桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.14201686,
+          29.69410343
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "横安桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.1379657,
+          29.69459558
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "大岙桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.12358167,
+          29.76420333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "邵家桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.12161667,
+          29.761995
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "黄沙桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.22507833,
+          29.69777167
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "孙家桥"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.14370667,
+          29.72761667
         ]
       }
     }

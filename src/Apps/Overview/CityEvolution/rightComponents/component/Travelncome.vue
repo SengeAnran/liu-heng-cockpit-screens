@@ -1,6 +1,6 @@
 <template>
   <div class="community_address">
-    <BaseTitle title="旅游接待人数和旅游收入" :width='720' />
+    <BaseTitle title="旅游接待人数和旅游收入" :width="720" />
     <div class="item_wrapper">
       <div class="line_charts" ref="charts"></div>
     </div>
@@ -37,7 +37,7 @@ export default {
     getOptions() {
       const option = {
         grid: {
-          top: '15%',
+          top: '20%',
           left: '10%',
           right: '17%',
           bottom: '15%',
@@ -83,70 +83,75 @@ export default {
           },
           boundaryGap: true,
         },
-        yAxis: [{
-          type: 'value',
-          name: '（万人次）',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
-            },
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+        yAxis: [
+          {
+            type: 'value',
+            name: '（万人次）',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
-          },
-          axisTick: {
-            show: true,
-          },
-        }, {
-          name: '（亿元）',
-          type: 'value',
-          position: 'right',
-          nameTextStyle: {
-            align: 'center',
-            color: '#fff',
-            fontSize: 20,
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: 'rgba(255,255,255,0.2)',
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: true,
             },
           },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: '#979797',
-            },
-          },
-          axisLabel: {
-            color: '#FFFFFF',
-            margin: 10,
-            textStyle: {
+          {
+            name: '（亿元）',
+            type: 'value',
+            position: 'right',
+            nameTextStyle: {
+              align: 'center',
+              color: '#fff',
               fontSize: 20,
             },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: 'rgba(255,255,255,0.2)',
+              },
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: '#979797',
+              },
+            },
+            axisLabel: {
+              color: '#FFFFFF',
+              margin: 10,
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            axisTick: {
+              show: true,
+            },
           },
-          axisTick: {
-            show: true,
-          },
-        }],
+        ],
         legend: {
           data: ['接待人数', '旅游收入'],
+          right: 30,
+          top: 7,
           bottom: 7,
           textStyle: {
             color: '#FFFFFF',
@@ -154,70 +159,96 @@ export default {
             fontFamily: 'DIN Alternate',
           },
         },
-        series: [{
-          type: 'bar',
-          name: '接待人数',
-          barWidth: 20,
-          yAxisIndex: '0', // 第一个柱状图的数据
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: '#66CCFF',
-                },
-                {
-                  offset: 1,
-                  color: '#72DCEE',
-                },
-              ],
-              global: false,
+        series: [
+          {
+            type: 'bar',
+            name: '接待人数',
+            barWidth: 20,
+            yAxisIndex: '0', // 第一个柱状图的数据
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#66CCFF',
+                  },
+                  {
+                    offset: 1,
+                    color: '#72DCEE',
+                  },
+                ],
+                global: false,
+              },
             },
-          },
-          label: {
-            show: true,
-            position: 'inside',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 20,
+            label: {
+              show: true,
+              position: 'inside',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 20,
+              },
             },
+            data: this.travellerData,
           },
-          data: this.travellerData,
-        }, {
-          type: 'line',
-          yAxisIndex: '1', // 第一个柱状图的数据
-          name: '旅游收入',
-          barWidth: 20,
-          itemStyle: {
-            color: '#31EABC',
+          {
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: [0, '50%'],
+            symbolSize: [20, 15],
           },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 20,
+          {
+            data: this.travellerData,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: [0, '-50%'],
+            symbolSize: [20, 12],
+            zlevel: 2,
+          },
+          {
+            type: 'line',
+            yAxisIndex: '1', // 第一个柱状图的数据
+            name: '旅游收入',
+            barWidth: 20,
+            itemStyle: {
+              color: '#31EABC',
             },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 20,
+              },
+            },
+            areaStyle: {
+              color: 'rgba(5,140,255, 0.2)',
+            },
+            data: this.incomeData,
           },
-          data: this.incomeData,
-        }],
+        ],
       };
       return option;
     },
     async loadData() {
       const res = await getTourNumAndIncomeTrend().request();
-      res.reverse().forEach((item, index) => {
-        this.xAxisData.push(item.nf);
-        this.travellerData.push(item.jdrs);
-        this.incomeData.push(item.ggys);
-      });
+      res
+        .reverse()
+        .slice(res.length - 6)
+        .forEach((item, index) => {
+          this.xAxisData.push(item.nf);
+          this.travellerData.push(item.jdrs);
+          this.incomeData.push(item.ggys);
+        });
       this.setData();
     },
   },

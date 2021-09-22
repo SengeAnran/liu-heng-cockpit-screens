@@ -4,45 +4,37 @@
     <div class="section-content">
       <ul class="loop-tab">
         <li
-          :class="{'active': currentTab === item.type}"
+          :class="{ active: currentTab === item.type }"
           v-for="(item, index) in dataList"
           :key="index"
-          @click="selectTab(item.type, index)">{{item.type}}</li>
+          @click="selectTab(item.type, index)"
+        >
+          {{ item.type }}
+        </li>
       </ul>
       <div class="total-legend">
-        维权总数 <span class="value">{{totalNum}}</span> 件
+        维权总数 <span class="value">{{ totalNum }}</span> 件
       </div>
-      <div ref="lineChart" style="height: 30rem; width: 100%"></div>
+      <div ref="lineChart" style="height: 40rem; width: 100%"></div>
     </div>
   </div>
 </template>
 <script>
 import Title from './components/Title';
 import {
-  // protectRights,
-  getLabourUnionDefenseSta,
+  protectRights,
+  // getLabourUnionDefenseSta,
 } from '@/api/Charm/PartyConstruction';
 import { sumBy, groupBy } from 'lodash';
 import * as echarts from 'echarts/core';
-import {
-  BarChart,
-} from 'echarts/charts';
+import { BarChart } from 'echarts/charts';
 // 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  GridComponent,
-} from 'echarts/components';
+import { TitleComponent, TooltipComponent, LegendComponent, GridComponent } from 'echarts/components';
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import {
-  CanvasRenderer,
-} from 'echarts/renderers';
+import { CanvasRenderer } from 'echarts/renderers';
 
 // 注册必须的组件
-echarts.use(
-  [TitleComponent, LegendComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer],
-);
+echarts.use([TitleComponent, LegendComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer]);
 export default {
   components: {
     Title,
@@ -136,13 +128,20 @@ export default {
                 y: 0,
                 x2: 0,
                 y2: 1,
-                colorStops: [{
-                  offset: 0, color: 'rgba(67, 111, 246, 1)', // 0% 处的颜色
-                }, {
-                  offset: 0.95, color: 'rgba(59, 93, 246, 0.51)', // 100% 处的颜色
-                }, {
-                  offset: 1, color: 'rgba(125, 249, 253, 1)', // 100% 处的颜色
-                }],
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'rgba(67, 111, 246, 1)', // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.95,
+                    color: 'rgba(59, 93, 246, 0.51)', // 100% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(125, 249, 253, 1)', // 100% 处的颜色
+                  },
+                ],
                 global: false, // 缺省为 false
               },
             },
@@ -164,23 +163,8 @@ export default {
       this.formatChartData();
     },
     async getData() {
-      const data = {
-        auth: {
-          serviceId: 'dc1a898c75c848b899af2d70e3d98531', // 数据开放服务Id
-          subServiceId: '6ad5d922ab76418599eceddfd459b31f', // 数据开放订阅服务Id
-          // signature: localStorage.autograph, // 请求参数签名
-          signatureVersion: '2.0', // 当前使用的签名版本
-          timestamp: new Date().getTime(), // 请求的时间戳
-        }, // 认证参数
-        size: 100,
-        includeColumns: false,
-        params: [],
-      };
-      const res = await getLabourUnionDefenseSta(data);
-      // console.log(res);
-      // const result = await protectRights().request();
-      // console.log('Right Section3', result);
-      const tempGroupData = groupBy(res.list, 'qtlx');
+      const res = await protectRights().request();
+      const tempGroupData = groupBy(res, 'qtlx');
       console.log('tempGroupData', tempGroupData);
       this.dataList = Object.keys(tempGroupData).map((key) => {
         return {
@@ -202,10 +186,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.right-section3{
-  .section-content{
+.right-section3 {
+  .section-content {
     position: relative;
-    .loop-tab{
+    .loop-tab {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -215,54 +199,50 @@ export default {
       overflow-x: auto;
       padding: 0;
       margin: 1rem 0rem -2rem 0;
-      &::-webkit-scrollbar
-      {
-          width:16px;
-          height:16px;
-          background-color:#413f3f;
+      &::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+        background-color: #413f3f;
       }
       /*定义滚动条轨道
       内阴影+圆角*/
-      &::-webkit-scrollbar-track
-      {
-          -webkit-box-shadow:inset 0 0 6px rgba(20, 34, 49, 0.3);
-          // border-radius:10px;
-          background-color:#0d1f38;
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(20, 34, 49, 0.3);
+        // border-radius:10px;
+        background-color: #0d1f38;
       }
       /*定义滑块
       内阴影+圆角*/
-      &::-webkit-scrollbar-thumb
-      {
-          // border-radius:10px;
-          -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
-          background-color:rgb(70, 70, 70);
+      &::-webkit-scrollbar-thumb {
+        // border-radius:10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: rgb(70, 70, 70);
       }
-      li{
+      li {
         font-size: 3.4rem;
-        color: rgba(255, 255, 255, .3);
+        color: rgba(255, 255, 255, 0.3);
         padding: 0 3rem;
         cursor: pointer;
-        width: 14rem;;
+        width: 14rem;
         text-align: center;
-        &.active{
+        &.active {
           color: white;
           background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
           background-size: 160%;
         }
       }
     }
-    .total-legend{
+    .total-legend {
       position: absolute;
       // top: 0;
       right: 1rem;
       font-size: 2.1rem;
-      color: rgba(255,255 ,255, .7);
-      .value{
+      color: rgba(255, 255, 255, 0.7);
+      .value {
         color: rgba(112, 146, 244, 1);
         font-size: 4.8rem;
       }
     }
   }
 }
-
 </style>

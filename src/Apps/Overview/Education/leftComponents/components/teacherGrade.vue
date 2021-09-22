@@ -14,9 +14,7 @@ export default {
   },
   data() {
     return {
-      personData: [
-        { value: 484, name: ' ' },
-      ],
+      personData: [{ value: 484, name: ' ' }],
       color: [
         {
           type: 'linear',
@@ -24,11 +22,16 @@ export default {
           y: 0,
           x2: 0,
           y2: 1,
-          colorStops: [{
-            offset: 0, color: 'rgba(97, 130, 174, 0.6)', // 0% 处的颜色
-          }, {
-            offset: 1, color: 'rgba(97, 130, 174, 0.6)', // 100% 处的颜色
-          }],
+          colorStops: [
+            {
+              offset: 0,
+              color: 'rgba(97, 130, 174, 0.6)', // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: 'rgba(97, 130, 174, 0.6)', // 100% 处的颜色
+            },
+          ],
           global: false, // 缺省为 false
         },
         {
@@ -37,11 +40,16 @@ export default {
           y: 0,
           x2: 0,
           y2: 1,
-          colorStops: [{
-            offset: 0, color: 'rgba(200, 114, 242, 1)', // 0% 处的颜色
-          }, {
-            offset: 1, color: 'rgba(247, 114, 209, 1)', // 100% 处的颜色
-          }],
+          colorStops: [
+            {
+              offset: 0,
+              color: 'rgba(200, 114, 242, 1)', // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: 'rgba(247, 114, 209, 1)', // 100% 处的颜色
+            },
+          ],
           global: false, // 缺省为 false
         },
         {
@@ -50,11 +58,16 @@ export default {
           y: 0,
           x2: 0,
           y2: 1,
-          colorStops: [{
-            offset: 0, color: 'rgba(132, 245, 222, 1)', // 0% 处的颜色
-          }, {
-            offset: 1, color: 'rgba(76, 197, 248, 1)', // 100% 处的颜色
-          }],
+          colorStops: [
+            {
+              offset: 0,
+              color: 'rgba(132, 245, 222, 1)', // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: 'rgba(76, 197, 248, 1)', // 100% 处的颜色
+            },
+          ],
           global: false, // 缺省为 false
         },
       ],
@@ -65,13 +78,15 @@ export default {
   },
   methods: {
     loadData() {
-      getTeacherGradeTrend().request().then((res) => {
-        res.forEach((item) => {
-          item.name = item.jsdj;
-          item.value = item.rs;
+      getTeacherGradeTrend()
+        .request()
+        .then((res) => {
+          res.forEach((item) => {
+            item.name = item.jsdj;
+            item.value = item.rs;
+          });
+          this.personData = res;
         });
-        this.personData = res;
-      });
     },
   },
 };
@@ -82,7 +97,7 @@ export default {
   width: 855px;
   height: 370px;
   position: absolute;
-  top: 640px;
+  top: 710px;
   left: 0;
   // opacity: 0.6;
   // background: pink;

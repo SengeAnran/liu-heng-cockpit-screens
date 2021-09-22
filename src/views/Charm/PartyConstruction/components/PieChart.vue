@@ -2,29 +2,25 @@
   <div class="pie-chart-wrapper">
     <div class="pie-chart" ref="pieChart"></div>
 
-    <div class="legend-wrap" v-if="type === 'sexAge' ">
+    <div class="legend-wrap" v-if="type === 'sexAge'">
       <div class="top-legend legend-block">
-        <div class="legend-label">
-          男性数量
-        </div>
+        <div class="legend-label">男性数量</div>
         <div class="legend-list">
           <p v-for="(item, index) in legendMale" :key="index">
-            <span class="color-block" :style="{'background': sexAgeColor[item.index]}"></span>
-            <span class="legend-text">{{item.label}}数量</span>
-            <span class="legend-percent">{{item.percent}}</span>
+            <span class="color-block" :style="{ background: sexAgeColor[item.index] }"></span>
+            <span class="legend-text">{{ item.label }}数量</span>
+            <span class="legend-percent">{{ item.percent }}</span>
           </p>
         </div>
       </div>
 
       <div class="bottom-legend legend-block">
-        <div class="legend-label">
-          女性数量
-        </div>
+        <div class="legend-label">女性数量</div>
         <div class="legend-list">
           <p v-for="(item, index) in legendFemale" :key="index">
-            <span class="color-block" :style="{'background': sexAgeColor[item.index]}"></span>
-            <span class="legend-text">{{item.label}}数量</span>
-            <span class="legend-percent">{{item.percent}}</span>
+            <span class="color-block" :style="{ background: sexAgeColor[item.index] }"></span>
+            <span class="legend-text">{{ item.label }}数量</span>
+            <span class="legend-percent">{{ item.percent }}</span>
           </p>
         </div>
       </div>
@@ -33,42 +29,44 @@
     <div class="legend-wrap" v-else>
       <div class="legend-list-education">
         <div v-for="(item, index) in formatEducation" :key="index" class="list-item">
-          <span class="color-block" :style="{'background': educationColor[index]}"></span>
-          <span class="legend-text">{{item.label}}数量</span>
-          <span class="legend-percent">{{item.percent}}</span>
+          <span class="color-block" :style="{ background: educationColor[index] }"></span>
+          <span class="legend-text">{{ item.label }}数量</span>
+          <span class="legend-percent">{{ item.percent }}</span>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
 import * as echarts from 'echarts/core';
-import {
-  PieChart,
-} from 'echarts/charts';
+import { PieChart } from 'echarts/charts';
 // 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from 'echarts/components';
+import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import {
-  CanvasRenderer,
-} from 'echarts/renderers';
+import { CanvasRenderer } from 'echarts/renderers';
 
 import { sumBy, round } from 'lodash';
 
 // 注册必须的组件
-echarts.use(
-  [TitleComponent, TooltipComponent, GridComponent, PieChart, CanvasRenderer],
-);
+echarts.use([TitleComponent, TooltipComponent, GridComponent, PieChart, CanvasRenderer]);
 export default {
   data() {
     return {
       chart: null,
-      sexAgeColor: ['#fffbe6', '#fff1b8', '#ffe58f', '#ffd666', '#ffc53d', '#faad14', '#e6fffb', '#b5f5ec', '#87e8de', '#5cdbd3', '#36cfc9', '#13c2c2'],
+      sexAgeColor: [
+        '#fffbe6',
+        '#fff1b8',
+        '#ffe58f',
+        '#ffd666',
+        '#ffc53d',
+        '#faad14',
+        '#e6fffb',
+        '#b5f5ec',
+        '#87e8de',
+        '#5cdbd3',
+        '#36cfc9',
+        '#13c2c2',
+      ],
       educationColor: ['#77ff5c', '#8680ef', '#357cff', '#4fb7f3', '#77ffff', '#ffe477', '#f1b348', '#f29477'],
       chartOpt: {
         tooltip: {
@@ -78,7 +76,20 @@ export default {
           left: '16%',
           top: '2%',
         },
-        color: ['#fffbe6', '#fff1b8', '#ffe58f', '#ffd666', '#ffc53d', '#faad14', '#e6fffb', '#b5f5ec', '#87e8de', '#5cdbd3', '#36cfc9', '#13c2c2'],
+        color: [
+          '#fffbe6',
+          '#fff1b8',
+          '#ffe58f',
+          '#ffd666',
+          '#ffc53d',
+          '#faad14',
+          '#e6fffb',
+          '#b5f5ec',
+          '#87e8de',
+          '#5cdbd3',
+          '#36cfc9',
+          '#13c2c2',
+        ],
         series: [
           {
             name: 'series1',
@@ -89,9 +100,7 @@ export default {
               color: '#fff',
               fontSize: 24,
             },
-            data: [
-              { value: 1000, name: '性别年龄结构', itemStyle: { color: 'transparent' } },
-            ],
+            data: [{ value: 1000, name: '性别年龄结构', itemStyle: { color: 'transparent' } }],
             silent: true,
           },
           {
@@ -205,7 +214,7 @@ export default {
           this.formatEducation = tempSumData.map((i) => {
             return {
               ...i,
-              percent: round(i.sum / total * 100, 2) + '%',
+              percent: round((i.sum / total) * 100, 2) + '%',
             };
           });
         }
@@ -232,14 +241,14 @@ export default {
       this.legendMale = this.formatSexAge[0].data.map((i, index) => {
         return {
           ...i,
-          percent: round(i.sum / total * 100, 2) + '%',
+          percent: round((i.sum / total) * 100, 2) + '%',
           index: index,
         };
       });
       this.legendFemale = this.formatSexAge[1].data.map((i, index) => {
         return {
           ...i,
-          percent: round(i.sum / total * 100, 2) + '%',
+          percent: round((i.sum / total) * 100, 2) + '%',
           index: index + this.legendMale.length,
         };
       });
@@ -248,66 +257,66 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.pie-chart-wrapper{
+.pie-chart-wrapper {
   display: flex;
   align-items: center;
   height: 70rem;
-  p{
+  p {
     margin: 0;
   }
-  .pie-chart{
+  .pie-chart {
     margin-left: 6rem;
     width: 33rem;
     height: 33rem;
   }
-  .legend-wrap{
+  .legend-wrap {
     padding-left: 3rem;
-    .legend-block{
+    .legend-block {
       display: flex;
-      .legend-label{
+      .legend-label {
         line-height: 1.6;
         width: 3rem;
         font-size: 2.8rem;
-        color: #FFFEFE;
+        color: #fffefe;
       }
-      .legend-list{
+      .legend-list {
         margin-left: 3rem;
-        color: #FFFEFE;
+        color: #fffefe;
         font-size: 2.4rem;
-        p{
+        p {
           line-height: 2;
         }
-        .color-block{
+        .color-block {
           display: inline-block;
           width: 2.2rem;
           height: 2.2rem;
           border-radius: 50%;
         }
-        .legend-text{
+        .legend-text {
           margin: 0 3rem;
         }
       }
     }
-    .top-legend{
+    .top-legend {
       margin-bottom: 2rem;
     }
-    .legend-list-education{
+    .legend-list-education {
       display: flex;
       flex-direction: column;
-      color: #FFFEFE;
+      color: #fffefe;
       font-size: 2.8rem;
       margin-top: 1.2rem;
-      .list-item{
-        p{
+      .list-item {
+        p {
           line-height: 1.7;
         }
-        .color-block{
+        .color-block {
           display: inline-block;
           width: 2.2rem;
           height: 2.2rem;
           border-radius: 50%;
         }
-        .legend-text{
+        .legend-text {
           margin: 0 3rem;
         }
       }

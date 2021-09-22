@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="main-map" v-show="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/" width="100%" height="100%"></iframe>
+      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
     <div class="switch">
       <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>

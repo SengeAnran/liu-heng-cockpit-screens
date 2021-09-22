@@ -6,6 +6,26 @@
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
+      <AGeoJSON
+        v-if="activeItem === '危险品运输企业'"
+        key="bus-points"
+        :source="weixian"
+        :geoStyle="{ marker: weixianStyle }"
+      >
+        <template v-slot:popup="feature">
+          <PointPopup :feature="feature" />
+        </template>
+      </AGeoJSON>
+      <AGeoJSON
+        v-if="activeItem === '二类维修厂'"
+        key="bus-points"
+        :source="qixiuchang"
+        :geoStyle="{ marker: qixiuStyle }"
+      >
+        <template v-slot:popup="feature">
+          <PointPopup :feature="feature" />
+        </template>
+      </AGeoJSON>
       <AGeoJSON v-if="activeItem === '码头'" key="wharf-points" :source="wharf" :geoStyle="{ marker: wharfStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
@@ -16,7 +36,12 @@
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '隧道'" key="island-points" :source="tunnel" :geoStyle="{ polyline: { strokeColor: 'rgb(0, 255, 124)' } }">
+      <AGeoJSON
+        v-if="activeItem === '隧道'"
+        key="island-points"
+        :source="tunnel"
+        :geoStyle="{ polyline: { strokeColor: 'rgb(0, 255, 124)' } }"
+      >
         <template v-slot:popup="feature">
           <LinePopup :feature="feature" />
         </template>
@@ -47,12 +72,7 @@
     <div class="map-legend">
       <h3>交通运营图例</h3>
       <ul>
-        <li
-          v-for="(item) in list"
-          :key="item"
-          @click="change(item)"
-          :class="{ active: activeItem === item }"
-        >
+        <li v-for="item in list" :key="item" @click="change(item)" :class="{ active: activeItem === item }">
           {{ item }}
         </li>
       </ul>
@@ -69,7 +89,7 @@ import line2 from './line2.json';
 import line3 from './line3.json';
 import line4 from './line4.json';
 import tunnel from './tunnel.json';
-import { wharf, busStation, island } from './data';
+import { wharf, busStation, island, weixian, qixiuchang } from './data';
 
 export default {
   data() {
@@ -91,6 +111,8 @@ export default {
       wharf: Object.freeze(wharf),
       busStation: Object.freeze(busStation),
       island: Object.freeze(island),
+      weixian: Object.freeze(weixian),
+      qixiuchang: Object.freeze(qixiuchang),
       line1: Object.freeze(line1),
       line2: Object.freeze(line2),
       line3: Object.freeze(line3),
@@ -101,6 +123,12 @@ export default {
       }),
       busStyle: Object.freeze({
         content: '<div style="width: 6rem; height: 6rem;" class="bus-point-afhwa"></div>',
+      }),
+      weixianStyle: Object.freeze({
+        content: '<div style="width: 6rem; height: 6rem;" class="weixian"></div>',
+      }),
+      qixiuStyle: Object.freeze({
+        content: '<div style="width: 6rem; height: 6rem;" class="qixiu"></div>',
       }),
       islandStyle: Object.freeze({
         content: '<div style="width: 6rem; height: 6rem;" class="island-point-afhwa"></div>',
@@ -151,11 +179,11 @@ export default {
     font-size: 2.6rem;
     font-family: Source Han Sans CN;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     cursor: pointer;
     &.active {
       &::before {
-        background: #FDEF8E;
+        background: #fdef8e;
         background-clip: content-box;
       }
     }
@@ -168,7 +196,7 @@ export default {
       height: 2.7rem;
       padding: 0.3rem;
       border-radius: 0.4rem;
-      border: 0.3rem solid #9BFCFD;
+      border: 0.3rem solid #9bfcfd;
       background: rgba(155, 252, 253, 0.3);
     }
   }
@@ -181,6 +209,14 @@ export default {
 }
 .bus-point-afhwa {
   background: url('./img/bus.png') no-repeat;
+  background-size: 100% 100%;
+}
+.weixian {
+  background: url('./img/weixian.png') no-repeat;
+  background-size: 100% 100%;
+}
+.qixiu {
+  background: url('./img/qixiu.png') no-repeat;
   background-size: 100% 100%;
 }
 .island-point-afhwa {

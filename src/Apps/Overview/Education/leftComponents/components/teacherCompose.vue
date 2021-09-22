@@ -10,8 +10,7 @@ import * as echarts from 'echarts';
 import { getTeacherTrend } from '@/api/Overview/Education/api';
 export default {
   name: 'LeftComponents',
-  components: {
-  },
+  components: {},
   data() {
     return {
       charts: null,
@@ -27,19 +26,21 @@ export default {
   },
   methods: {
     loadData() {
-      getTeacherTrend().request().then((res) => {
-        const { fb, zb } = res;
-        fb.forEach((itemFb) => {
-          zb.forEach((itemZb) => {
-            if (itemFb.xj === itemZb.xj) {
-              this.xData.push(itemZb.xj);
-              this.notOrganization.push(itemFb.sl);
-              this.organization.push(itemZb.sl);
-            };
+      getTeacherTrend()
+        .request()
+        .then((res) => {
+          const { fb, zb } = res;
+          fb.forEach((itemFb) => {
+            zb.forEach((itemZb) => {
+              if (itemFb.xj === itemZb.xj) {
+                this.xData.push(itemZb.xj);
+                this.notOrganization.push(itemFb.sl);
+                this.organization.push(itemZb.sl);
+              }
+            });
           });
+          this.setData();
         });
-        this.setData();
-      });
     },
     setData() {
       this.charts.clear();
@@ -141,80 +142,135 @@ export default {
             show: false,
           },
         },
-        series: [{
-          name: '在编教师',
-          type: 'bar',
-          barWidth: 20,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: 'rgba(133, 234, 255, 1)',
-                },
-                {
-                  offset: 1,
-                  color: 'rgba(133, 234, 255, 0.3)',
-                },
-              ],
-              global: false,
+        series: [
+          {
+            name: '在编教师',
+            type: 'bar',
+            barWidth: 20,
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'rgba(133, 234, 255, 1)',
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(133, 234, 255, 0.3)',
+                  },
+                ],
+                global: false,
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 22,
+                fontFamily: 'DIN Alternate',
+              },
+            },
+            barGap: '40%',
+            data: this.organization,
+          },
+          {
+            name: '在编教师',
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: ['-100%', '50%'],
+            symbolSize: [20, 20],
+          },
+          {
+            name: '在编教师',
+            data: this.organization,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['-70%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: '#8bead4',
+                borderWidth: 2,
+                color: '#8bead4',
+              },
             },
           },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-              fontFamily: 'DIN Alternate',
+
+          {
+            name: '非在编教师',
+            type: 'bar',
+            barWidth: 20,
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: 'rgba(255, 151, 152, 1)',
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(255, 151, 152, 0.3)',
+                  },
+                ],
+                global: false,
+              },
+            },
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 22,
+                fontFamily: 'DIN Alternate',
+              },
+            },
+            barGap: '40%',
+            data: this.notOrganization,
+          },
+          {
+            name: '非在编教师',
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbol: 'diamond',
+            symbolOffset: ['-100%', '50%'],
+            symbolSize: [20, 20],
+          },
+          {
+            name: '非在编教师',
+            data: this.notOrganization,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['70%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: 'rgba(255, 151, 152, 1)',
+                borderWidth: 2,
+                color: 'rgba(255, 151, 152, 1)',
+              },
             },
           },
-          barGap: '40%',
-          data: this.organization,
-        },
-        {
-          name: '非在编教师',
-          type: 'bar',
-          barWidth: 20,
-          itemStyle: {
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: 'rgba(255, 151, 152, 1)',
-                },
-                {
-                  offset: 1,
-                  color: 'rgba(255, 151, 152, 0.3)',
-                },
-              ],
-              global: false,
-            },
-          },
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-              fontFamily: 'DIN Alternate',
-            },
-          },
-          barGap: '40%',
-          data: this.notOrganization,
-        }],
+        ],
       };
       return option;
     },
@@ -225,15 +281,15 @@ export default {
 .teacher_compose {
   position: absolute;
   width: 855px;
-  height: 360px;
+  height: 520px;
   position: absolute;
-  top: 290px;
+  top: 300px;
   left: 0;
   z-index: 101010;
   // background: blue;
   // opacity: 0.8;
   .bar_chart {
-    height: 360px;
+    height: 490px;
     width: 100%;
     box-sizing: border-box;
   }

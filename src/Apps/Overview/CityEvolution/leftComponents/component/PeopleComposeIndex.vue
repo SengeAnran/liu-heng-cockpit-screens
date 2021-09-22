@@ -1,35 +1,30 @@
 <template>
   <div class="people_compose">
-    <BaseTitle title="人口组成情况" :width='720' />
+    <BaseTitle title="人口组成情况" :width="720" />
     <div class="item_wrapper">
       <div class="item">
-        <img class="img" src="../../images/people_num.png">
-        <div class="title">
-          户籍人口数量
-        </div>
+        <img class="img" src="../../images/people_num.png" />
+        <div class="title">户籍人口数量</div>
         <div class="count_wrapper">
-          <CountUp  :num="item.hjrksl" />
-          <span class="unit">人</span>
+          <digital :loop="loop" :endNum="item.hjrksl || 0" :data="data" :config="config"></digital>
         </div>
       </div>
       <div class="item">
-        <img class="img" src="../../images/children_num.png">
-        <div class="title">
-          新生儿出生数量
-        </div>
+        <img class="img" src="../../images/children_num.png" />
+        <div class="title">新生儿出生数量</div>
         <div class="count_wrapper children">
-          <CountUp  :num="item.xscssl" />
-          <span class="unit">人</span>
+          <digital :loop="loop" :endNum="item.xscssl || 0" :data="data" :config="config1"></digital>
+          <!-- <CountUp :num="item.xscssl" />
+          <span class="unit">人</span> -->
         </div>
       </div>
       <div class="item">
-        <img class="img" src="../../images/dead_num.png">
-        <div class="title">
-          人口死亡数量
-        </div>
+        <img class="img" src="../../images/dead_num.png" />
+        <div class="title">人口死亡数量</div>
         <div class="count_wrapper dead">
-          <CountUp  :num="item.rkswsl" />
-          <span class="unit">人</span>
+          <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+          <!-- <CountUp :num="item.rkswsl" />
+          <span class="unit">人</span> -->
         </div>
       </div>
     </div>
@@ -51,6 +46,58 @@ export default {
         xscssl: 34,
         rkswsl: 12,
       },
+      data: {
+        content: 1000,
+        unit: '人',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
+      config1: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#47D6AA',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#47D6AA',
+        },
+      },
+      config2: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#DF7B7A',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#DF7B7A',
+        },
+      },
     };
   },
   mounted() {
@@ -58,9 +105,11 @@ export default {
   },
   methods: {
     getPopulationTarget() {
-      getPoputionForm().request().then((res) => {
-        this.item = res;
-      });
+      getPoputionForm()
+        .request()
+        .then((res) => {
+          this.item = res;
+        });
     },
   },
 };
@@ -110,28 +159,28 @@ export default {
         font-size: 60px;
         font-weight: bolder;
         width: 250px;
-        color: #66CCFF;
+        color: #66ccff;
         text-align: center;
         padding-left: 5px;
         font-family: DIN;
         .unit {
           font-size: 30px;
-          color: #59DBE6;
+          color: #59dbe6;
           position: relative;
           right: 0px;
           top: -2px;
         }
       }
       .children {
-        color: #31EABC;
+        color: #31eabc;
         .unit {
-          color: #31EABC;
+          color: #31eabc;
         }
       }
       .dead {
-        color: #ED7F64;
+        color: #ed7f64;
         .unit {
-          color: #ED7F64;
+          color: #ed7f64;
         }
       }
     }

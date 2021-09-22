@@ -58,7 +58,7 @@ export default {
 <style lang="scss" scoped>
 .right-1 {
   position: absolute;
-  top: 26.4rem;
+  top: 20.4rem;
   right: 100rem;
   width: 80rem;
   // outline: 1px solid red;

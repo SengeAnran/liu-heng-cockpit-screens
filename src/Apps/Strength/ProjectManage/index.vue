@@ -1,8 +1,8 @@
 <template>
   <div class="ProjectManage">
-    <ProjectManageLeft/>
-    <ProjectManageMap/>
-    <ProjectManageRight/>
+    <ProjectManageLeft :style="{ left: Showleft + 'px' }" />
+    <ProjectManageMap />
+    <ProjectManageRight :style="{ right: Showleft + 'px' }" />
   </div>
 </template>
 
@@ -15,16 +15,24 @@ export default {
   name: 'ProjectManage',
   components: { ProjectManageLeft, ProjectManageMap, ProjectManageRight },
   data() {
-    return {};
+    return { Showleft: -1900, timer: null };
   },
   computed: {},
-  mounted() {},
+  mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 180) {
+        this.Showleft = 180;
+        clearInterval(this.timer);
+      }
+    }, 150);
+  },
   methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
-.ProjectManage{
+.ProjectManage {
   width: 100%;
   height: 2070px;
   background-position: center;

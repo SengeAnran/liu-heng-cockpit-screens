@@ -1,17 +1,19 @@
 <template>
   <div class="bar">
     <div class="content" :style="{ width: num + '%' }">
-        <div class="text">
-      <div>{{ item.cflx }}</div>
-      <div><CountUp :num="item.cs" /></div>
-    </div>
+      <div class="text">
+        <div>{{ item.cflx }}</div>
+        <div>
+          <CountUp :num="item.cs" /><span> {{ item.unit }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  components: { },
+  components: {},
   name: 'Bar',
   props: {
     item: {
@@ -63,7 +65,7 @@ export default {
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    position:absolute;
+    position: absolute;
     top: 0;
     left: 0;
     > div {

@@ -1,39 +1,27 @@
 <template>
   <div class="area_location">
-    <BaseTitle title="市域面积分布情况" :width='720' />
+    <BaseTitle title="市域面积分布情况" :width="720" />
     <div class="item_wrapper">
       <div class="item">
-        <div class="title">
-          全镇面积
-        </div>
+        <div class="title">全镇面积</div>
         <div class="count">
-          <CountUp  :num="sqmj.qzmj || 0" />
+          <CountUp :num="sqmj.qzmj || 0" />
         </div>
-        <div class="unit">
-          平方千米
-        </div>
+        <div class="unit">平方千米</div>
       </div>
       <div class="item">
-        <div class="title">
-          行政辖区面积
-        </div>
+        <div class="title">行政辖区面积</div>
         <div class="count administration_title">
-          <CountUp  :num="sqmj.xqmj || 0" />
+          <CountUp :num="sqmj.xqmj || 0" />
         </div>
-        <div class="unit administration_unit">
-          平方千米
-        </div>
+        <div class="unit administration_unit">平方千米</div>
       </div>
       <div class="item">
-        <div class="title">
-          海域面积
-        </div>
+        <div class="title">海域面积</div>
         <div class="count seal_title">
-          <CountUp  :num="sqmj.hymj || 0" />
+          <CountUp :num="sqmj.hymj || 0" />
         </div>
-        <div class="unit seal_unit">
-          平方千米
-        </div>
+        <div class="unit seal_unit">平方千米</div>
       </div>
     </div>
   </div>
@@ -99,7 +87,7 @@ export default {
         left: 50%;
         font-size: 60px;
         transform: translate(-50%, 0);
-        color: #66CCFF;
+        color: #66ccff;
       }
       .unit {
         position: absolute;
@@ -111,19 +99,19 @@ export default {
         left: 50%;
         font-size: 30px;
         transform: translate(-50%, 0);
-        color: #59DBE6;
+        color: #59dbe6;
       }
       .administration_title {
-        color: #31EABC;
+        color: #31eabc;
       }
       .administration_unit {
-        color: #31EABC;
+        color: #31eabc;
       }
       .seal_title {
-        color: #ED7F64;
+        color: #ed7f64;
       }
       .seal_unit {
-        color: #ED7F64;
+        color: #ed7f64;
       }
     }
   }

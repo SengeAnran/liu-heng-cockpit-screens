@@ -1,7 +1,7 @@
 <template>
   <div class="left-2">
     <Title>水路客运</Title>
-<!--    <Indicator />-->
+    <!--    <Indicator />-->
     <div class="block">
       <div class="line titles">
         <div class="second_item">类型</div>
@@ -12,18 +12,27 @@
       <div class="line" v-for="(item, index) in passenger" :key="index">
         <div class="second_item">{{ item.name }}</div>
         <div class="second_item">{{ item.number }}</div>
-        <div class="second_item" >{{ item.seat }}</div>
-        <div class="second_item" >{{ item.shiftLine }}</div>
+        <div class="second_item">{{ item.seat }}</div>
+        <div class="second_item">{{ item.shiftLine }}</div>
       </div>
     </div>
     <Title>道路货运及维修</Title>
     <div class="second_block">
       <div class="item" v-for="(item, index) in dataList" :key="index">
-        <div class="first_item"><span style="font-size: 48px">{{ item.number }}</span> {{ item.unit }}</div>
+        <div class="first_item">
+          <div style="font-size: 48px">
+            <!-- {{ item.number }} -->
+            <digital :loop="loop" :endNum="item.number || 0" :data="data" :config="config"></digital>
+          </div>
+          <div style="margin-top: 20px; margin-left: 30px">
+            {{ item.unit }}
+          </div>
+          <!-- {{ item.unit }} -->
+        </div>
         <div class="second_item">{{ item.name }}</div>
       </div>
     </div>
-<!--    <LineChart />-->
+    <!--    <LineChart />-->
   </div>
 </template>
 <script>
@@ -39,6 +48,35 @@ export default {
   },
   data() {
     return {
+      data: {
+        content: 1000,
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 0,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '4rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: {
+          fontSize: '2rem',
+          color: '#6AD1F7',
+        },
+      },
       passenger: [
         {
           name: '滚动船',
@@ -110,7 +148,7 @@ export default {
   .block {
     margin-top: 27px;
     margin-bottom: 70px;
-    .titles{
+    .titles {
       .second_item {
         font-size: 24px;
         font-family: Source Han Sans SC;
@@ -126,7 +164,7 @@ export default {
       background: url('./img/list-bg.png') no-repeat 100% 100%;
       font-family: Source Han Sans SC;
       font-weight: 500;
-      color: #AECACA;
+      color: #aecaca;
       display: flex;
       justify-content: space-around;
       &:first-child {
@@ -142,15 +180,15 @@ export default {
         width: 17rem;
         padding: 0.9rem;
         text-align: right;
-        &:first-child{
+        &:first-child {
           width: 12rem;
           text-align: left;
           margin-left: 2rem;
         }
-        &:nth-child(2){
+        &:nth-child(2) {
           width: 11rem;
         }
-        &:last-child{
+        &:last-child {
           margin-right: 4rem;
         }
       }
@@ -161,19 +199,22 @@ export default {
     display: flex;
     flex-wrap: wrap;
     margin-top: 15.1px;
-    .item{
+    .item {
       width: 265px;
       height: 175px;
-      background: url("./img/dlhyjwx.png") 100% 100%;
+      background: url('./img/dlhyjwx.png') 100% 100%;
       margin-bottom: 18px;
       //margin: 2rem;
       .first_item {
+        align-items: center;
+        display: flex;
+        justify-content: center;
         font-family: DINPro;
         font-weight: 500;
         text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.24);
         margin-top: 40px;
         text-align: center;
-        background: linear-gradient(180deg, #FFFFFF 0%, #4ECDD8 100%);
+        background: linear-gradient(180deg, #ffffff 0%, #4ecdd8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
@@ -182,10 +223,10 @@ export default {
         text-align: center;
         font-family: DINPro;
         font-weight: 500;
-        color: #FFFFFF;
+        color: #ffffff;
         line-height: 44px;
         text-shadow: 0px 0px 30px rgba(0, 0, 0, 0.24);
-        background: linear-gradient(180deg, #FFFFFF 0%, #4ECDD8 100%);
+        background: linear-gradient(180deg, #ffffff 0%, #4ecdd8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }

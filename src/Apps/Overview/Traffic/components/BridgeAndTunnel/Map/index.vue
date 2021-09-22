@@ -1,27 +1,52 @@
 <template>
   <div>
-    <Map>
-      <AGeoJSON v-if="activeItem === '台台线'" key="line4" :source="line4" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
+    <Map ref="trafficMap">
+      <AGeoJSON
+        v-if="activeItem === '台台线'"
+        key="line4"
+        :source="line4"
+        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
+      >
         <template v-slot:popup="feature">
           <LinePopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '外涨线'" key="line1" :source="line1" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
+      <AGeoJSON
+        v-if="activeItem === '外涨线'"
+        key="line1"
+        :source="line1"
+        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
+      >
         <template v-slot:popup="feature">
           <LinePopup :feature="feature" />
         </template>
       </AGeoJSON>
-        <AGeoJSON v-if="activeItem === '大梅线'" key="line2" :source="line2" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
+      <AGeoJSON
+        v-if="activeItem === '大梅线'"
+        key="line2"
+        :source="line2"
+        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
+      >
         <template v-slot:popup="feature">
           <LinePopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '孙干线'" key="line3" :source="line3" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
+      <AGeoJSON
+        v-if="activeItem === '孙干线'"
+        key="line3"
+        :source="line3"
+        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
+      >
         <template v-slot:popup="feature">
           <LinePopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '隧道'" key="tunnel" :source="tunnel" :geoStyle="{ polyline: { strokeColor: 'rgb(0, 255, 124)' } }">
+      <AGeoJSON
+        v-if="activeItem === '隧道'"
+        key="tunnel"
+        :source="tunnel"
+        :geoStyle="{ polyline: { strokeColor: 'rgb(0, 255, 124)' } }"
+      >
         <template v-slot:popup="feature">
           <LinePopup :feature="feature" />
         </template>
@@ -31,7 +56,12 @@
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '公路隐患点'" key="pitfalls-points" :source="points2" :geoStyle="{ marker: pitfallsStyle }">
+      <AGeoJSON
+        v-if="activeItem === '公路隐患点'"
+        key="pitfalls-points"
+        :source="points2"
+        :geoStyle="{ marker: pitfallsStyle }"
+      >
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
@@ -40,25 +70,22 @@
     <div class="map-legend">
       <h3>交通运营图例</h3>
       <ul>
-        <li
-          v-for="(item) in list"
-          :key="item"
-          @click="change(item)"
-          :class="{ active: activeItem === item }"
-        >
+        <li v-for="item in list" :key="item" @click="change(item)" :class="{ active: activeItem === item }">
           {{ item }}
         </li>
       </ul>
     </div>
     <div class="map-Statistics">
       <div class="item" v-for="(item, index) in statisticsList" :key="index">
-        <div class="item-top">{{item.name}}</div>
-        <div class="item-bottom" :style="{color: item.color }">
+        <div class="item-top">{{ item.name }}</div>
+        <div class="item-bottom" :style="{ color: item.color }">
           <div class="item-bottom-left bottom-item">
-            <span>{{item.number}}</span>{{item.unit}}
+            <span>{{ item.number }}</span
+            >{{ item.unit }}
           </div>
           <div class="item-bottom-right bottom-item">
-            <span>{{item.length}}</span>{{item.lengthUnit}}
+            <span>{{ item.length }}</span
+            >{{ item.lengthUnit }}
           </div>
         </div>
       </div>
@@ -71,9 +98,8 @@ import AGeoJSON from '@/components/AMap/AGeoJSON';
 import PointPopup from './PointPopup';
 import points from './mock.json';
 import points2 from './points2.json';
-
-// import LinePopup from '../../TrafficOverview/Map/LinePopup';
-import LinePopup from './LinePopup';
+import LinePopup from '../../TrafficOverview/Map/LinePopup';
+// import LinePopup from './LinePopup';
 import line1 from './line1.json';
 import line2 from './line2.json';
 import line3 from './line3.json';
@@ -82,15 +108,7 @@ import tunnel from './tunnel.json';
 
 export default {
   data() {
-    const list = [
-      '台台线',
-      '外涨线',
-      '大梅线',
-      '孙干线',
-      '隧道',
-      '桥梁',
-      '公路隐患点',
-    ];
+    const list = ['台台线', '外涨线', '大梅线', '孙干线', '隧道', '桥梁', '公路隐患点'];
     const statisticsList = [
       {
         name: '县道',
@@ -128,11 +146,12 @@ export default {
     return {
       list,
       statisticsList,
-      activeItem: list[0],
+      activeItem: '',
       points: Object.freeze(points),
       points2: Object.freeze(points2),
       markerStyle: Object.freeze({
-        content: '<div style="width: 2rem; height: 2rem; border: 0.8rem solid #FDF17950; background: #FDF179; background-clip: content-box; border-radius: 50%;"></div>',
+        content:
+          '<div style="width: 2rem; height: 2rem; border: 0.8rem solid #FDF17950; background: #FDF179; background-clip: content-box; border-radius: 50%;"></div>',
         offset: new AMap.Pixel(-18, -18),
       }),
       bridgeStyle: Object.freeze({
@@ -152,6 +171,7 @@ export default {
     change(item) {
       this.activeItem = item;
     },
+    // 交通畅行---公交桥隧---地图线路方法
   },
   components: {
     Map,
@@ -191,11 +211,11 @@ export default {
     font-size: 2.6rem;
     font-family: Source Han Sans CN;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     cursor: pointer;
     &.active {
       &::before {
-        background: #FDEF8E;
+        background: #fdef8e;
         background-clip: content-box;
       }
     }
@@ -208,12 +228,12 @@ export default {
       height: 2.7rem;
       padding: 0.3rem;
       border-radius: 0.4rem;
-      border: 0.3rem solid #9BFCFD;
+      border: 0.3rem solid #9bfcfd;
       background: rgba(155, 252, 253, 0.3);
     }
   }
 }
-.map-Statistics{
+.map-Statistics {
   width: 705px;
   height: 299px;
   position: absolute;
@@ -232,21 +252,21 @@ export default {
     width: 45%;
 
     padding-left: 30px;
-    .item-top{
+    .item-top {
       font-size: 32px;
       font-family: Source Han Sans CN;
       font-weight: 500;
-      color: #FFFFFF;
+      color: #ffffff;
       position: relative;
       &::before {
         position: absolute;
-        content: " ";
+        content: ' ';
         top: 50%;
         left: -30px;
         transform: translateY(-50%);
         width: 22px;
         height: 17px;
-        background: url("./img/sjtb.png");
+        background: url('./img/sjtb.png');
         background-size: 100% 100%;
       }
       &::after {
@@ -256,7 +276,7 @@ export default {
         display: block;
         width: 257px;
         height: 1px;
-        background: #82E2E4;
+        background: #82e2e4;
         opacity: 0.3;
       }
     }
@@ -266,9 +286,9 @@ export default {
       height: 46px;
       line-height: 87px;
       justify-content: space-between;
-      .bottom-item{
+      .bottom-item {
         //width: 50%;
-        span{
+        span {
           font-size: 32px;
           font-family: Oswald;
           display: inline-block;
@@ -276,11 +296,10 @@ export default {
           font-weight: 500;
         }
       }
-      .item-bottom-left{
+      .item-bottom-left {
         width: 28%;
       }
-      .item-bottom-right{
-
+      .item-bottom-right {
       }
     }
   }
@@ -288,7 +307,6 @@ export default {
   //  height: 5rem;
   //}
 }
-
 </style>
 <style lang="scss">
 .bridge-point-afhwa {

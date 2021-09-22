@@ -34,7 +34,11 @@
 </template>
 <script>
 import * as echarts from 'echarts';
-import { gasPollutionSourceDetection, getGasrelatedSources, getGasPollutionSources } from '@/api/Strength/Environmental/api';
+import {
+  gasPollutionSourceDetection,
+  getGasrelatedSources,
+  getGasPollutionSources,
+} from '@/api/Strength/Environmental/api';
 export default {
   name: 'Pollution',
   data() {
@@ -66,38 +70,43 @@ export default {
       ],
     };
   },
-  components: {
-  },
+  components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
     this.loadData();
   },
   methods: {
     loadData() {
-      gasPollutionSourceDetection().request().then((json) => {
-        this.topList[0].value = json[0].qqsqwryjs || 0;
-        this.topList[1].year = json[0].qnyjzcxcs || 0;
-        this.topList[1].today = json[0].jryjzcxcs || 0;
-      });
-
-      getGasrelatedSources().request().then((json) => {
-        this.list = json.map((item) => {
-          item.name = item.wrwlx;
-          item.value = item.pfl || 0;
-          return item;
+      gasPollutionSourceDetection()
+        .request()
+        .then((json) => {
+          this.topList[0].value = json[0].qqsqwryjs || 0;
+          this.topList[1].year = json[0].qnyjzcxcs || 0;
+          this.topList[1].today = json[0].jryjzcxcs || 0;
         });
-        this.chart.setOption(this.optionData(this.list));
-      });
 
-      getGasPollutionSources().request().then((json) => {
-        this.bottomList.forEach((item) => {
-          json.forEach((item1) => {
-            if (item.name.includes(item1.wrwlx)) {
-              item.value = +((item1.jpwcl / item1.jpmbl) * 100).toFixed(0) || 0;
-            }
+      getGasrelatedSources()
+        .request()
+        .then((json) => {
+          this.list = json.map((item) => {
+            item.name = item.wrwlx;
+            item.value = item.pfl || 0;
+            return item;
+          });
+          this.chart.setOption(this.optionData(this.list));
+        });
+
+      getGasPollutionSources()
+        .request()
+        .then((json) => {
+          this.bottomList.forEach((item) => {
+            json.forEach((item1) => {
+              if (item.name.includes(item1.wrwlx)) {
+                item.value = +((item1.jpwcl / item1.jpmbl) * 100).toFixed(0) || 0;
+              }
+            });
           });
         });
-      });
     },
     optionData(data) {
       const total = data.reduce((prev, next) => prev + next.value, 0);
@@ -185,9 +194,11 @@ export default {
             label: {
               show: false,
             },
-            data: [{
-              value: 1,
-            }],
+            data: [
+              {
+                value: 1,
+              },
+            ],
             z: -1,
           },
         ],
@@ -200,7 +211,7 @@ export default {
 .pollution {
   position: absolute;
   left: 1008px;
-  top: 262px;
+  top: 200px;
   width: 835px;
   height: 1060px;
   // background: rgba(0, 255, 255, 0.2);
@@ -222,12 +233,12 @@ export default {
     width: 100%;
     height: 123px;
     display: flex;
-    >div {
+    > div {
       width: 50%;
       color: #fff;
       &:first-child {
         background: url('./img/item-1.png') no-repeat;
-        >div {
+        > div {
           margin-left: 150px;
           width: 230px;
           height: 100%;
@@ -238,7 +249,7 @@ export default {
             margin-top: 16px;
             font-size: 48px;
           }
-          >div {
+          > div {
             font-size: 20px;
             color: rgba(255, 255, 255, 0.7);
           }
@@ -247,7 +258,7 @@ export default {
       &:last-child {
         background: url('./img/item-2.png') no-repeat;
         display: flex;
-        >div {
+        > div {
           width: 108px;
           height: 100%;
           text-align: center;
@@ -256,7 +267,7 @@ export default {
             margin-top: 16px;
             font-size: 48px;
           }
-          >div {
+          > div {
             font-size: 20px;
             color: rgba(255, 255, 255, 0.7);
           }
@@ -279,7 +290,7 @@ export default {
     width: 800px;
     height: 370px;
     background: url('./img/ball-bg.png');
-    >div {
+    > div {
       position: absolute;
       top: 62px;
       width: 240px;
@@ -306,28 +317,28 @@ export default {
         left: 110px;
         color: #a0fcbf;
         .count-up {
-          background-image:-webkit-linear-gradient(bottom, #a0fcbf, #d8feef);
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;
+          background-image: -webkit-linear-gradient(bottom, #a0fcbf, #d8feef);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
         .percent {
-          background-image:-webkit-linear-gradient(bottom,#a0fcbf, #d8feef);
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;
+          background-image: -webkit-linear-gradient(bottom, #a0fcbf, #d8feef);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       }
       &:last-child {
         left: 420px;
         color: #b3fdf1;
         .count-up {
-          background-image:-webkit-linear-gradient(bottom, #b3fdf1, #e0fbfe);
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;
+          background-image: -webkit-linear-gradient(bottom, #b3fdf1, #e0fbfe);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
         .percent {
-          background-image:-webkit-linear-gradient(bottom,#b3fdf1, #e0fbfe);
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;
+          background-image: -webkit-linear-gradient(bottom, #b3fdf1, #e0fbfe);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       }
     }

@@ -13,29 +13,32 @@ export default {
   data() {
     return {
       list: [
-        { value: 0, name: '产废量' },
-        { value: 0, name: '转移量' },
-        { value: 0, name: '贮存量' },
-        { value: 0, name: '实际接受量' },
+        { value: 3.3, name: '产生量' },
+        { value: 0.66, name: '处置量' },
+        { value: 4.43, name: '库存量' },
+        // { value: 0, name: '实际接受量' },
       ],
       title: '危险废物监管',
     };
   },
-  components: {
-  },
+  components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
-    this.loadData();
+    this.chart.setOption(this.optionData(this.list));
+    // this.loadData();
   },
   methods: {
     loadData() {
-      getWasteControl().request().then((json) => {
-        this.list[0].value = json[0].cfl || 0;
-        this.list[1].value = json[0].zyl || 0;
-        this.list[2].value = json[0].ccl || 0;
-        this.list[3].value = json[0].sjssl || 0;
-        this.chart.setOption(this.optionData(this.list));
-      });
+      this.chart.setOption(this.optionData(this.list));
+      // getWasteControl()
+      //   .request()
+      //   .then((json) => {
+      //     this.list[0].value = json[0].cfl || 0;
+      //     this.list[1].value = json[0].zyl || 0;
+      //     this.list[2].value = json[0].ccl || 0;
+      //     // this.list[3].value = json[0].sjssl || 0;
+
+      //   });
     },
     optionData(data) {
       const total = data.reduce((prev, next) => prev + next.value, 0);
@@ -123,9 +126,11 @@ export default {
             label: {
               show: false,
             },
-            data: [{
-              value: 1,
-            }],
+            data: [
+              {
+                value: 1,
+              },
+            ],
             z: -1,
           },
         ],
@@ -138,7 +143,7 @@ export default {
 .danger-waste {
   position: absolute;
   right: 125px;
-  top: 262px;
+  top: 200px;
   width: 835px;
   height: 535px;
   .pie-chart {

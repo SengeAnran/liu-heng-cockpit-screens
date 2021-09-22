@@ -3,7 +3,14 @@
     <BaseTitle title="饮用水源地水质状况" />
     <div class="nav">
       <div class="nav-item" v-for="(item, index) in list" :key="index">
-        <div class="name">{{ item.name }}</div>
+        <div class="name">
+          <div>
+            <img :src="item.url" />
+          </div>
+          <div>
+            {{ item.name }}
+          </div>
+        </div>
         <div class="value" v-if="index === 2 || index === 3">
           <CountUp :num="item.value" />
         </div>
@@ -30,14 +37,18 @@
         </div>
       </div>
       <div class="chart-box">
-        <LineChart title="污水排放" height="300" :chartData="lineData" :colors="['#31EABC', '#59DBE6', '#ED7F64']" />
+        <LineChart title="排放量" height="300" :chartData="lineData" :colors="['#31EABC', '#59DBE6']" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getDrinkingWaterSources, getWaterPollutionSourceDetection, getMonthlySewage } from '@/api/Strength/Environmental/api';
+import {
+  getDrinkingWaterSources,
+  getWaterPollutionSourceDetection,
+  getMonthlySewage,
+} from '@/api/Strength/Environmental/api';
 import LineChart from '../components/lineChart';
 export default {
   name: 'WaterQuality',
@@ -47,24 +58,19 @@ export default {
   data() {
     return {
       keyValues: {
-        wfpfl: '污水排放',
         codpfl: 'COD排放',
         adpfl: '氨氮排放',
       },
       lineData: {
-        xAxisData: ['1', '1', '2', '2', '3', '3', '3'],
+        // xAxisData: ['1', '1', '2', '2', '3', '3', '3'],
         data: [
           {
-            name: '污水排放',
-            data: [12, 22, 33, 55, 34, 66],
-          },
-          {
             name: 'COD排放',
-            data: [12, 32, 33, 4, 9, 88],
+            data: [3.3, 3.1, 1.8, 4.4, 2.7],
           },
           {
             name: '氨氮排放',
-            data: [12, 32, 33, 4, 49, 88],
+            data: [0.06, 0.08, 0.18, 0.03, 0.03],
           },
         ],
       },
@@ -72,18 +78,22 @@ export default {
         {
           name: '水质质量',
           value: '达标',
+          url: require('./img/shuizhi.png'),
         },
         {
-          name: '水质情况',
-          value: '达标',
+          name: '水质等级',
+          value: 'I级',
+          url: require('./img/shuizhidengji.png'),
         },
         {
           name: '酸碱度',
           value: 0,
+          url: require('./img/suanjiandu.png'),
         },
         {
           name: '溶解氧',
           value: 0,
+          url: require('./img/yangqi.png'),
         },
       ],
       list1: [
@@ -100,7 +110,10 @@ export default {
       getDrinkingWaterSources()
         .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
+
           this.list[0].value = json[0].szzk || '';
           this.list[1].value = json[0].szzk || '';
           this.list[2].value = json[0].sjd || 0;
@@ -109,20 +122,26 @@ export default {
       getWaterPollutionSourceDetection()
         .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.list1[0].number = json[0].qqsswryjs || 0;
           this.list1[1].number = json[0].qnyjzcxcs || 0;
           this.list1[1].number1 = json[0].jryjzcxcs || 0;
         });
-      getMonthlySewage().request().then((json) => {
-        if (!json) { return; }
-        const data = [];
-        this.lineData.xAxisData = json.map((item) => item.yf);
-        Object.keys(this.keyValues).forEach((key) => {
-          data.push({ name: this.keyValues[key], data: json.map((item) => item[key]) });
-        });
-        this.lineData.data = data;
-      });
+      // getMonthlySewage()
+      //   .request()
+      //   .then((json) => {
+      //     if (!json) {
+      //       return;
+      //     }
+      //     const data = [];
+      //     // this.lineData.xAxisData = json.map((item) => item.yf);
+      //     Object.keys(this.keyValues).forEach((key) => {
+      //       data.push({ name: this.keyValues[key], data: json.map((item) => item[key]) });
+      //     });
+      //     this.lineData.data = data;
+      //   });
     },
   },
 };
@@ -131,8 +150,8 @@ export default {
 $font-family: ' Source Han Sans CN';
 .water-quality {
   position: absolute;
-  top: 263px;
-  left: 3950px;
+  top: 200px;
+  // left: 3950px;
   width: 825px;
   height: 1027px;
   .flex {
@@ -178,7 +197,7 @@ $font-family: ' Source Han Sans CN';
     }
   }
   .chart {
-    margin-top: 65px;
+    margin-top: 127px;
     .font-color {
       text-decoration: none;
       background-image: linear-gradient(to bottom, #fff 0%, #26c4bf 100%);

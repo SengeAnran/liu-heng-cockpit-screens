@@ -1,8 +1,8 @@
 <template>
   <div class="Innovation">
-    <Left />
+    <Left :style="{ left: Showleft + 'px' }" />
     <Center />
-    <Right />
+    <Right :style="{ right: Showleft + 'px' }" />
   </div>
 </template>
 
@@ -16,6 +16,22 @@ export default {
     Left,
     Center,
     Right,
+  },
+  data() {
+    return {
+      Showleft: -1900,
+      timer: null,
+    };
+  },
+  computed: {},
+  mounted() {
+    this.timer = setInterval(() => {
+      this.Showleft += 150;
+      if (this.Showleft >= 10) {
+        this.Showleft = 10;
+        clearInterval(this.timer);
+      }
+    }, 150);
   },
 };
 </script>

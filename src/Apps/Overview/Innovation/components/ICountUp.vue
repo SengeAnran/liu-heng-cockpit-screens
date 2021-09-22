@@ -1,11 +1,6 @@
 <template>
   <div class="iCountUp">
-    <ICountUp
-      :delay="delay"
-      :endVal="endVal"
-      :options="options"
-      @ready="onReady"
-    />
+    <ICountUp :delay="delay" :endVal="endVal" :options="options" @ready="onReady" />
   </div>
 </template>
 

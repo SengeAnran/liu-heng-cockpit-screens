@@ -1,6 +1,6 @@
 <template>
   <div class="left_componemt">
-    <BaseTitle title="教育资源情况" :width='720' class="title" />
+    <BaseTitle title="教育资源情况" :width="720" class="title" />
     <SchoolCount />
     <TeacherCompose />
     <TeacherIncrease />
@@ -31,7 +31,7 @@ export default {
   position: absolute;
   width: 1710px;
   height: 1076px;
-  top: 250px;
+  top: 150px;
   left: 140px;
   z-index: 10000;
   .title {

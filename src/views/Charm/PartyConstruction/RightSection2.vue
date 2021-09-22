@@ -105,6 +105,7 @@ export default {
     async getData() {
       const result = await workCompetition().request();
       console.log('workCompetition', result);
+
       this.dataList = result.map((i) => {
         return {
           ...i,
