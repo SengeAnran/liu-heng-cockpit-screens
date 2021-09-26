@@ -1,11 +1,11 @@
 <template>
   <div class="environmental">
-    <AirQuality :style="{ left: Showleft + 'px' }" />
-    <Pollution :style="{ left: Showleft1 + 'px' }" />
+    <transition name="slide" appear> <AirQuality :key="AirQuality" /></transition>
+    <transition name="slide" appear> <Pollution :key="Pollution" /></transition>
     <Map />
-    <DangerWaste :style="{ right: Showleft + 'px' }" />
-    <Punishment :style="{ right: Showleft + 'px' }" />
-    <WaterQuality :style="{ right: Showleft1 + 'px' }" />
+    <transition name="slide1" appear> <DangerWaste :key="DangerWaste" /></transition>
+    <transition name="slide1" appear> <Punishment :key="Punishment" /></transition>
+    <transition name="slide1" appear> <WaterQuality :key="WaterQuality" /></transition>
   </div>
 </template>
 
@@ -26,34 +26,10 @@ export default {
     Punishment,
     WaterQuality,
   },
-  data() {
-    return {
-      Showleft: -1900,
-      timer: null,
-      Showleft1: -1000,
-      timer1: null,
-    };
-  },
-  computed: {},
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 160) {
-        this.Showleft = 160;
-        clearInterval(this.timer);
-      }
-    }, 150);
-    this.timer1 = setInterval(() => {
-      this.Showleft1 += 150;
-      if (this.Showleft1 >= 1020) {
-        this.Showleft1 = 1020;
-        clearInterval(this.timer1);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .environmental {
   position: relative;
   width: 100%;

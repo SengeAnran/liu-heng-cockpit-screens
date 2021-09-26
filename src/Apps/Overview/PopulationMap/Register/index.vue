@@ -25,12 +25,25 @@ export default {
         hjxzrs: 0,
         rkzzl: 0,
       },
+      timmerOneAnim: null,
     };
   },
   computed: {},
   mounted() {
     this.chart = echarts.init(this.$refs.chart);
     this.loadData();
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % 3,
+      });
+      count++;
+    }, 4000);
   },
   methods: {
     loadData() {

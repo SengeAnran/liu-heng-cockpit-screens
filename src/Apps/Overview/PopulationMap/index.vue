@@ -1,16 +1,13 @@
 <template>
   <div class="population-map">
-    <!-- <div :style="{ right: Showleft + 'px' }"></div> -->
-    <Register :style="{ left: Showleft + 'px' }" />
-    <FloatPopulation :style="{ left: Showleft1 + 'px' }" />
-    <FlowRank :style="{ left: Showleft2 + 'px' }" />
-
+    <transition name="slide" appear> <Register :key="Register" /></transition>
+    <transition name="slide" appear> <FloatPopulation :key="Register" /></transition>
+    <transition name="slide" appear> <FlowRank :key="Register" /></transition>
     <Map />
-
-    <AgeDistribution :style="{ right: Showleft2 + 'px' }" />
-    <Degree :style="{ right: Showleft2 + 'px' }" />
-    <Single :style="{ right: Showleft + 'px' }" />
-    <Work :style="{ right: Showleft1 + 'px' }" />
+    <transition name="slide1" appear> <AgeDistribution :key="AgeDistribution" /></transition>
+    <transition name="slide1" appear> <Degree :key="Degree" /></transition>
+    <transition name="slide1" appear> <Single :key="Single" /></transition>
+    <transition name="slide1" appear> <Work :key="Work" /></transition>
   </div>
 </template>
 
@@ -35,52 +32,10 @@ export default {
     Single,
     Work,
   },
-  data() {
-    return {
-      show: true,
-      Showleft: -1900,
-      timer: null,
-      Showleft1: -1900,
-      timer1: null,
-      Showleft2: -1000,
-      timer2: null,
-      Showleft3: -1900,
-      timer3: null,
-    };
-  },
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 150) {
-        this.Showleft = 150;
-        clearInterval(this.timer);
-      }
-    }, 150);
-    this.timer1 = setInterval(() => {
-      this.Showleft1 += 150;
-      if (this.Showleft1 >= 150) {
-        this.Showleft1 = 150;
-        clearInterval(this.timer1);
-      }
-    }, 150);
-    this.timer2 = setInterval(() => {
-      this.Showleft2 += 150;
-      if (this.Showleft2 >= 990) {
-        this.Showleft2 = 990;
-        clearInterval(this.timer2);
-      }
-    }, 150);
-    this.timer3 = setInterval(() => {
-      this.Showleft3 += 150;
-      if (this.Showleft3 >= 990) {
-        this.Showleft3 = 990;
-        clearInterval(this.timer3);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .population-map {
   position: relative;
   width: 100%;

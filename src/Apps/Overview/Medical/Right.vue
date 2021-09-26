@@ -13,30 +13,27 @@
     <div class="right-right">
       <BaseTitle title="隔离点信息" :width="780" />
       <div class="chart-box tables">
-        <!-- <PieChart :data="pieTypeData" legendType="pec" title="患者挂号科室占比" /> -->
-        <div class="flex">
-          <div>隔离点名称</div>
-          <div>隔离房数</div>
-          <div>床位</div>
-        </div>
-        <div v-for="(item, i) in isoList" :key="`iso-place-${i}`" class="flex">
-          <div>{{ item.gldmx }}</div>
-          <div>{{ item.glfs }}</div>
-          <div>{{ item.cws }}</div>
-        </div>
+        <shuangxiang-echarts :line-data="isoList"></shuangxiang-echarts>
       </div>
       <BaseTitle title="疫苗接种点信息" :width="780" :top="630" />
-      <div class="chart-box box1 tables">
-        <!-- <PieChart :data="pieAgeData"
-                  legendType="pec"
-                  title="患者年龄占比" /> -->
-        <div class="flex">
-          <div>疫苗接种点</div>
-          <div>接种能力</div>
-        </div>
-        <div v-for="(item, i) in ymPlaces" :key="`ym-place-${i}`" class="flex">
-          <div>{{ item.jzdmc }}</div>
-          <div>{{ item.jznl }}剂/日</div>
+      <div class="chart-box1">
+        <div class="chartBg">
+          <div class="jiezhongxinxi">
+            <div>
+              <div class="xinxi">
+                <span class="number">400</span>
+                <span class="unit">剂/日</span>
+                <div class="content">蛟头中科睿启科园区</div>
+              </div>
+            </div>
+            <div>
+              <div class="xinxi1">
+                <span class="number1">1200</span>
+                <span class="unit1">剂/日</span>
+                <div class="content1">台门中心卫生院</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -48,6 +45,7 @@ import BaseTitle from './components/BaseTitle';
 import LineChart from './components/LineChart';
 // import PieChart from './components/PieChart';
 import LineBarChart from './components/LineBarChart';
+import shuangxiangEcharts from './components/shuangxiangEcharts';
 import {
   getIsolatedPointNum,
   getIsolationPlaceInfo,
@@ -57,7 +55,7 @@ import {
 
 export default {
   name: 'MedicalRight',
-  components: { BaseTitle, LineChart, LineBarChart },
+  components: { BaseTitle, LineChart, LineBarChart, shuangxiangEcharts },
   data() {
     return {
       isoList: [],
@@ -168,6 +166,7 @@ export default {
       getVaccinateTrend()
         .request()
         .then((res) => {
+          // debugger;
           const xData = [];
           const data1 = [];
           const data2 = [];
@@ -236,6 +235,84 @@ export default {
   }
   .box1 {
     top: 690px;
+  }
+
+  .chart-box1 {
+    height: 415px;
+    width: 50%;
+    position: absolute;
+    top: 730px;
+    .chartBg {
+      height: 415px;
+      width: 100%;
+      // border: 1px solid;
+      background-image: url('./images/jiezhongxinxi.png');
+      background-repeat: no-repeat;
+    }
+    .jiezhongxinxi {
+      display: flex;
+      justify-content: space-between;
+      height: 415px;
+      width: 100%;
+      // border: 1px solid;
+      align-items: center;
+      div {
+        height: 200px;
+        // border: 1px solid;
+      }
+      .xinxi {
+        padding-top: 40px;
+        .number {
+          margin-left: 80px;
+          font-size: 40px;
+          font-family: 'DINPro';
+          font-weight: 500;
+          color: #f5a564;
+        }
+        .unit {
+          margin-left: 20px;
+          font-size: 24px;
+          font-family: Source Han Sans CN;
+          font-weight: 500;
+          color: #ffffff;
+        }
+        .content {
+          font-size: 24px;
+          font-family: Source Han Sans CN;
+          font-weight: 500;
+          color: #ffffff;
+          opacity: 0.5;
+          margin-left: 20px;
+          margin-top: 30px;
+        }
+      }
+      .xinxi1 {
+        padding-top: 40px;
+        .number1 {
+          margin-right: 20px;
+          font-size: 40px;
+          font-family: 'DINPro';
+          font-weight: 500;
+          color: #f5a564;
+        }
+        .unit1 {
+          margin-right: 80px;
+          font-size: 24px;
+          font-family: Source Han Sans CN;
+          font-weight: 500;
+          color: #ffffff;
+        }
+        .content1 {
+          font-size: 24px;
+          font-family: Source Han Sans CN;
+          font-weight: 500;
+          color: #ffffff;
+          opacity: 0.5;
+          margin-right: 50px;
+          margin-top: 30px;
+        }
+      }
+    }
   }
 }
 </style>

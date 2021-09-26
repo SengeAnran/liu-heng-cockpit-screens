@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       chart: null,
+      timmerOneAnim: null,
     };
   },
   props: {
@@ -64,6 +65,18 @@ export default {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % 4,
+      });
+      count++;
+    }, 4500);
   },
   methods: {
     initChart(val) {
@@ -89,7 +102,9 @@ export default {
           },
         },
         tooltip: {
-          show: false,
+          show: true,
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         legend: {
           icon: 'circle',

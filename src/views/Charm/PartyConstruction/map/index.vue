@@ -1,5 +1,5 @@
 <template>
-  <div class="map_wrapper" >
+  <div class="map_wrapper">
     <div class="mask"></div>
     <div class="main-map" ref="map"></div>
     <div class="map-legend">
@@ -10,7 +10,7 @@
             <span class="select-rect">
               <span class="selected-inner" v-show="currentLegend === item.value"></span>
             </span>
-            {{item.label}}
+            {{ item.label }}
           </div>
           <ul v-if="item.children" class="legend-children-list">
             <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">
@@ -18,9 +18,8 @@
                 <span class="select-rect">
                   <span class="selected-inner" v-show="currentLegend === item.value"></span>
                 </span>
-                {{item2.label}}
+                {{ item2.label }}
               </div>
-
             </li>
           </ul>
         </li>
@@ -35,8 +34,7 @@ import { partyConstruct, getCameraPosition } from '@/api/Charm/PartyConstruction
 import AMap from 'AMap';
 export default {
   name: 'CityEvolution',
-  components: {
-  },
+  components: {},
   // eslint-disable-next-line space-before-function-paren
   data() {
     return {
@@ -44,7 +42,7 @@ export default {
       mapLayer: null,
       markerLayer: null,
       mapDom: null,
-      currentLegend: 0,
+      currentLegend: 1,
       legendList: [
         { value: 1, label: '党组织' },
         { value: 2, label: '群团阵地' },
@@ -55,6 +53,107 @@ export default {
             { value: 4, label: '文化礼堂' },
             { value: 5, label: '综合文化站' },
           ],
+        },
+      ],
+      dataList: [
+        {
+          name: '舟山市普陀区六横镇委员会',
+          type: '党委',
+          address: '舟山市普陀区六横镇三八路1号',
+          lat: 29.745315,
+          lng: 122.122129,
+        },
+        {
+          name: '舟山市普陀区六横镇峧头新村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇峧头新村坦岙中央路2号',
+          lat: 29.738513,
+          lng: 122.119297,
+        },
+        {
+          name: '中共舟山市普陀区六横镇洋山新村邵家水潭跟路53号',
+          type: '党总支',
+          address: '中共舟山市普陀区六横镇洋山新村邵家水潭跟路53号',
+          lat: 29.745253,
+          lng: 122.122191,
+        },
+        {
+          name: '舟山市普陀区六横镇龙山新村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇龙山小沙浦唐家路2号',
+          lat: 29.771938,
+          lng: 122.100936,
+        },
+
+        {
+          name: '舟山市普陀区六横镇嵩山村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇嵩山村半塘路73号',
+          lat: 29.736793,
+          lng: 122.097961,
+        },
+        {
+          name: '舟山市普陀区六横镇和润村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇和润村原百蕾厂房',
+          lat: 29.739475,
+          lng: 122.085191,
+        },
+        {
+          name: '舟山市普陀区六横镇小郭巨村党总支',
+          type: '党总支',
+          address: '舟山市普陀区六横镇小郭巨村',
+          lat: 29.729691,
+          lng: 122.07055,
+        },
+        {
+          name: '舟山市普陀区六横镇双屿港村党总支',
+          type: '党总支',
+          address: '舟山市普陀区六横镇双屿港村涨起港路6号',
+          lat: 29.745132,
+          lng: 122.071268,
+        },
+        {
+          name: '舟山市普陀区六横镇龙山新村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇张家塘街道上张家塘7号',
+          lat: 29.721536,
+          lng: 122.144487,
+        },
+        {
+          name: '舟山市普陀区六横镇双塘新村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇张家塘新村',
+          lat: 29.724202,
+          lng: 122.14559,
+        },
+        {
+          name: '舟山市普陀区六横镇张家塘新村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇青联村王家庙跟岙25号',
+          lat: 29.720383,
+          lng: 122.139215,
+        },
+        {
+          name: '舟山市普陀区六横镇青联村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇青沙村仰天外山咀12号',
+          lat: 29.703315,
+          lng: 122.127145,
+        },
+        {
+          name: '舟山市普陀区六横镇青山村党总支',
+          type: '党总支',
+          address: '舟山市普陀区六横镇岑夏村庙前102号',
+          lat: 29.729014,
+          lng: 122.127736,
+        },
+        {
+          name: '舟山市普陀区六横镇岑夏村总支部委员会',
+          type: '党委',
+          address: '六横镇平峧支出村外平峧55号',
+          lat: 29.719541,
+          lng: 122.1681,
         },
       ],
       lastDetailMarker: null,
@@ -116,33 +215,38 @@ export default {
     },
     // eslint-disable-next-line space-before-function-paren
     async renderMarker() {
-      const result = await partyConstruct().request();
-      console.log('map data:', result);
-      const type = '文化礼堂';
-      const name = '六横党支部';
-      const content = `
-        <div class="marker-content ${type}">
+      // const result = await partyConstruct().request();
+      // console.log('map data:', result);
+      for (let index = 0; index < this.dataList.length; index++) {
+        const element = this.dataList[index];
+        // const type = '文化礼堂';
+        // const name = '六横党支部';
+        const content = `
+        <div class="marker-content ${element.type}">
           <div class="catalog-content">
-            <h3 class="title">${name}</h3>
+            <h3 class="title">${element.name}</h3>
           </div>
-        </div>`
-      ;
-      const marker = new AMap.Marker({
-        position: [122.187672, 29.69669],
-        content: content,
-      });
-      marker.setMap(this.map);
-      marker.on('click', this.handleMarkerClick);
+        </div>`;
+        const marker = new AMap.Marker({
+          position: [element.lng, element.lat],
+          content: content,
+        });
+        marker.setMap(this.map);
+        // marker.on('click', this.handleMarkerClick);
+        marker.on('click', (e) => {
+          this.handleMarkerClick(e, element);
+        });
+      }
     },
-    // eslint-disable-next-line space-before-function-paren
-    handleMarkerClick(ev) {
-      console.log(ev);
+
+    handleMarkerClick(ev, element) {
+      console.log(ev, element);
+      // const item = new AMap.LngLat(ev.lng, ev.lat);
       this.clearLastMarkerDetail();
       const marker = ev.target;
-
       const feature = marker.getExtData();
       // console.log(marker, feature.properties);
-      const content = this.detailTemplate(feature.properties);
+      const content = this.detailTemplate(feature.properties, element);
       marker.setzIndex(1000);
       marker.setContent(content);
       this.lastDetailMarker = marker;
@@ -160,25 +264,15 @@ export default {
       this.lastDetailMarker = null;
     },
     // eslint-disable-next-line space-before-function-paren
-    detailTemplate() {
+    detailTemplate(e, item) {
       return `
         <div class="marker-detail-content2">
           <div class="detail-content">
-            <h3 class="title">六横党支部</h3>
-            <div class="people-row">
-              <div class="left-part">
-                <p class="sub-title">正式党员：</p>
-                <p class="value">102</p>
-              </div>
-              <div class="right-part">
-                <p class="sub-title">预备党员：</p>
-                <p class="value">56</p>
-              </div>
-            </div>
+            <h3 class="title">${item.name}</h3>
             <div class="desc-row">
-              <p class="sub-title">支部介绍：</p>
+              <p class="sub-title">支部地址：</p>
               <div class="desc-content">
-                支部始终注重加强自身建设，近年来通过开展党的群众路线教育实践活动、“三严三实”专题教育及“两学一做”学习教育等，支部的战斗堡垒左右及党员的先锋模范作用得到有效发挥
+               ${item.address}
               </div>
             </div>
           </div>
@@ -199,10 +293,9 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "./mark.scss";
+@import './mark.scss';
 </style>
 <style lang="scss" scoped>
-
 .map_wrapper {
   position: absolute;
   left: 0;
@@ -228,7 +321,7 @@ export default {
     width: 100%;
     height: 135rem;
   }
-  .map-legend{
+  .map-legend {
     position: absolute;
     z-index: 10;
     top: 90.6rem;
@@ -241,43 +334,43 @@ export default {
     background-size: 100% 100%;
     color: #fff;
     padding: 3rem;
-    .legend-title{
+    .legend-title {
       margin: 0;
       font-size: 3.1rem;
     }
-    .legend-list{
+    .legend-list {
       list-style: none;
       padding: 0;
       margin: 0;
       font-size: 2.6rem;
       line-height: 2.2;
-      li{
-        .main-label-wrap{
+      li {
+        .main-label-wrap {
           display: flex;
           align-items: center;
           cursor: pointer;
         }
       }
-      .legend-children-list{
+      .legend-children-list {
         list-style: none;
         padding-left: 2rem;
       }
-      .select-rect{
+      .select-rect {
         display: inline-block;
         width: 3rem;
         height: 3rem;
         box-sizing: border-box;
         margin-right: 1.2rem;
-        border: .3rem solid #9BFCFD;
-        border-radius: .4rem;
-        padding: .2rem;
+        border: 0.3rem solid #9bfcfd;
+        border-radius: 0.4rem;
+        padding: 0.2rem;
         line-height: 0;
-        .selected-inner{
+        .selected-inner {
           display: inline-block;
           width: 100%;
           height: 100%;
-          background: #FDEF8E;
-          border-radius: .4rem;
+          background: #fdef8e;
+          border-radius: 0.4rem;
         }
       }
     }

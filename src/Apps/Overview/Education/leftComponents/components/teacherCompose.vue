@@ -17,12 +17,25 @@ export default {
       notOrganization: [],
       organization: [],
       xData: [],
+      timmerOneAnim: null,
     };
   },
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
     this.loadData();
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.charts.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % 4,
+      });
+      count++;
+    }, 4500);
   },
   methods: {
     loadData() {

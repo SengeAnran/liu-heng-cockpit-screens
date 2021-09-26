@@ -151,7 +151,7 @@ $font-family: ' Source Han Sans CN';
 .water-quality {
   position: absolute;
   top: 200px;
-  // left: 3950px;
+  left: 3950px;
   width: 825px;
   height: 1027px;
   .flex {

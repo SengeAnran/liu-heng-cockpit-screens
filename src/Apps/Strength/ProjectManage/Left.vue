@@ -29,35 +29,13 @@
       </div>
     </div>
     <div>
-      <BaseTitle title="项目列表" :width="750" />
-      <div class="lunbo" @mouseenter="mouseEnter" @mouseleave="mouseleave">
-        <div class="titles">
-          <div>
-            <span v-for="item in swiperTitle" :key="item">{{ item }}</span>
-          </div>
-        </div>
-        <swiper ref="mySwiper" :options="swiperOption" v-if="list.length > 9">
-          <swiper-slider v-for="(item, index) in list" :key="`lunbo-item-${index}`">
-            <div>
-              <div class="inner-div">
-                <span>{{ item.qymc }}</span>
-                <span>{{ item.qtdw }}</span>
-                <span>{{ item.nkgsj }}</span>
-                <span>{{ item.nkgjssj }}</span>
-                <span>{{ item.tze }}</span>
-              </div>
-            </div>
-          </swiper-slider>
-        </swiper>
-        <div v-else class="outer-div">
-          <div class="inner-div" v-for="(item, index) in list" :key="`item-${index}`">
-            <span>{{ item.qymc }}</span>
-            <span>{{ item.qtdw }}</span>
-            <span>{{ item.nkgsj }}</span>
-            <span>{{ item.nkgjssj }}</span>
-            <span>{{ item.tze }}</span>
-          </div>
-        </div>
+      <BaseTitle title="投资增速分析" :width="780" />
+      <div class="chart-box lunbo">
+        <LineChart :line-data="lineData" />
+      </div>
+      <BaseTitle title="重大项目" :width="780" :top="600" />
+      <div style="margin-top: 700px">
+        <Xtable></Xtable>
       </div>
     </div>
   </view-template>
@@ -65,21 +43,30 @@
 
 <script>
 import BaseTitle from '../../Overview/Medical/components/BaseTitle';
-import MyCountUp from '../../Overview/Medical/components/ICountUp';
 import YYLineBarChart from '../../Overview/Medical/components/YYLineBarChart';
-import swiper from '../../Overview/Medical/components/Swiper';
-import SwiperSlider from '../../Overview/Medical/components/SwiperSlider';
+import LineChart from '../../Overview/Medical/components/LineChart';
+import Xtable from './table/table';
 import {
   realtimeInvestment,
   projectIndustryDistribution,
   projectCommencement,
   itemsList,
+  analysisOfInvestmentGrowth,
 } from '@/api/Strength/ProjectManage/api';
 export default {
   name: 'ProjectManageLeft',
-  components: { BaseTitle, MyCountUp, YYLineBarChart, swiper, SwiperSlider },
+  components: { BaseTitle, YYLineBarChart, LineChart, Xtable },
   data() {
     return {
+      mainPro: {},
+      lineData: {
+        title: '增速分析',
+        yname1: '百分比%',
+        lineColor11: 'rgba(111, 216, 238, 1)',
+        showArea: false,
+        xData: [2015, 2016, 2017, 2018, 2019, 2020, 2021],
+        data1: [1, 3, 5, 6, 8, 9, 12],
+      },
       data: {
         content: 1000,
         // unit: '人',
@@ -167,8 +154,26 @@ export default {
   },
   mounted() {
     this.getData();
+    this.analysisOfInvestmentGrowth();
   },
   methods: {
+    // 增速分析
+    analysisOfInvestmentGrowth() {
+      analysisOfInvestmentGrowth()
+        .request()
+        .then((res) => {
+          if (res && res.length) {
+            const xData = [];
+            const data1 = [];
+            res.map((item) => {
+              xData.push(item.sj);
+              data1.push(item.zs * 100);
+            });
+            this.lineData.xData = xData;
+            this.lineData.data1 = data1;
+          }
+        });
+    },
     getData() {
       this.realtimeInvestment();
       this.projectIndustryDistribution();
@@ -259,6 +264,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tableXm {
+  display: flex;
+  // position: absolute;
+  top: 1600px;
+  .digital {
+    width: 200px;
+    height: 190px;
+    background: linear-gradient(180deg, rgba(22, 40, 47, 0.8), rgba(16, 31, 37, 0.8));
+    border: 1px solid rgba(168, 247, 237, 0.2);
+    opacity: 0.65;
+    border-radius: 10px;
+  }
+}
+
 .flex {
   display: flex;
   justify-content: space-between;
@@ -335,8 +354,7 @@ export default {
       position: absolute;
       top: 83px;
       width: 50%;
-      height: calc(100% - 83px);
-
+      height: 500px;
       .titles {
         width: 793px;
         height: 75px;

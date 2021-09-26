@@ -12,12 +12,25 @@ export default {
   data() {
     return {
       personData: [],
+      timmerOneAnim: null,
     };
   },
   components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.chart);
     this.loadData();
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % 3,
+      });
+      count++;
+    }, 3500);
   },
   methods: {
     loadData() {

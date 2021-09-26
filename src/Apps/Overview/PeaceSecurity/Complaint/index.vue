@@ -1,6 +1,6 @@
 <template>
   <div class="complaint">
-    <BaseTitle title="信访投诉方式占比" />
+    <BaseTitle title="部门事件占比" />
     <div class="box">
       <div class="pie-chart" ref="pieChart" />
       <div class="legend">

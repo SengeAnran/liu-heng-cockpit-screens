@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       chart: null,
+      timmerOneAnim: null,
     };
   },
   props: {
@@ -40,6 +41,18 @@ export default {
   },
   mounted() {
     this.chart = echarts.init(this.$refs.lineChart);
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % 4,
+      });
+      count++;
+    }, 4500);
   },
   methods: {
     optionData(data) {

@@ -20,6 +20,7 @@ export default {
       financeIncome: [],
       publickPre: [],
       data: [],
+      timmerOneAnim: null,
     };
   },
   components: {
@@ -29,6 +30,18 @@ export default {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
     this.loadData();
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.charts.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % this.financeIncome.length,
+      });
+      count++;
+    }, 4500);
   },
   methods: {
     setData() {

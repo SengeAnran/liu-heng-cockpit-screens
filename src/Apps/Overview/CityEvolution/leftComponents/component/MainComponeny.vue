@@ -19,6 +19,7 @@ export default {
       data: [],
       dataList: [],
       option: {},
+      timmerOneAnim: null,
     };
   },
   components: {
@@ -26,6 +27,7 @@ export default {
   },
   mounted() {
     this.loadData();
+    this.myChart = echarts.init(this.$refs.charts);
   },
   methods: {
     // 获取数据
@@ -40,7 +42,6 @@ export default {
     },
     // 整理数据
     dealDataList() {
-      const myChart = echarts.init(this.$refs.charts);
       var angle = 0; //角度，用来做简单的动画效果的
       var value = 55.33;
       const bgColor = [
@@ -347,24 +348,8 @@ export default {
           },
         ],
       };
-      // myChart.setOption(option, true);
-      angle = angle + 3;
-      myChart.setOption(option, true);
-      let curIndex = 0;
-      setInterval(function () {
-        var dataLen = option.series[0].data.length;
-        myChart.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: curIndex });
-        curIndex = (curIndex + 1) % dataLen;
-        myChart.dispatchAction({
-          type: 'highlight',
-          seriesIndex: 0,
-          dataIndex: curIndex,
-        });
-      }, 2000);
-      // setInterval(function () {
-      //   myChart.setOption(option, true);
-      //   angle = angle + 3;
-      // }, 100);
+
+      this.myChart.setOption(option, true);
     },
   },
 };

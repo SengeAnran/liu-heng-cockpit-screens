@@ -85,7 +85,7 @@ export default {
           fontFamily: 'DINPro',
           color: '#DF7B7A',
         },
-        unit: { fontSize: '2rem' },
+        unit: { fontSize: '2rem', color: '#DF7B7A' },
       },
     };
   },

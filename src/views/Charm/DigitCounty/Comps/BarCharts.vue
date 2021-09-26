@@ -84,6 +84,13 @@ export default {
         seriesData.push(0);
       });
       return {
+        grid: {
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: 40,
+          containLabel: true,
+        },
         xAxis: opts.xAxis,
         yAxis: {
           type: 'category',
@@ -103,11 +110,11 @@ export default {
           {
             data: xData,
             type: 'bar',
-            barWidth: 20,
+            barWidth: 25,
             label: {
               show: true,
               position: 'right',
-              fontSize: 20,
+              fontSize: 25,
               color: '#fff',
               formatter: function (params) {
                 return params.value + _this.unit;

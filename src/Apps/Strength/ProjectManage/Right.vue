@@ -91,7 +91,7 @@
 import BaseTitle from '../../Overview/Medical/components/BaseTitle';
 import LineChart from '../../Overview/Medical/components/LineChart';
 import PieChart from '../../Overview/Medical/components/PieChart';
-import MyCountUp from '../../Overview/Medical/components/ICountUp';
+// import MyCountUp from '../../Overview/Medical/components/ICountUp';
 import swiper from '../../Overview/Medical/components/Swiper';
 import SwiperSlider from '../../Overview/Medical/components/SwiperSlider';
 import {
@@ -103,7 +103,7 @@ import {
 } from '@/api/Strength/ProjectManage/api';
 export default {
   name: 'ProjectManageRight',
-  components: { BaseTitle, LineChart, PieChart, MyCountUp, swiper, SwiperSlider },
+  components: { BaseTitle, LineChart, PieChart, swiper, SwiperSlider },
   data() {
     return {
       data: {

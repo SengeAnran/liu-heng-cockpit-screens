@@ -35,7 +35,7 @@
       </router-link>
       <div class="primal-nav-active-name">
         <div class="to-left" @click="toPrimalLeft" />
-        <div class="start-left"></div>
+
         <div
           class="tubiao"
           :style="{
@@ -44,8 +44,7 @@
             backgroundRepeat: 'no-repeat',
           }"
         ></div>
-        <span>{{ primalNavActiveName }}</span>
-        <div class="start-right"></div>
+        <div class="fontTilte">{{ primalNavActiveName }}</div>
         <div class="to-right" @click="toPrimalRight" />
       </div>
     </div>
@@ -171,7 +170,7 @@ export default {
       // for (let i = 0; i < res.length; i++) {
       this.secondaryNav[0].meta.indicator[0].value = res.list[0].zsdyrs;
       this.secondaryNav[0].meta.indicator[1].value = res.list[0].ybdyrs;
-      this.secondaryNav[0].meta.indicator[2].value = res.list[0].fzdyrs;
+      // this.secondaryNav[0].meta.indicator[2].value = res.list[0].fzdyrs;
       this.secondaryNav[1].meta.indicator[0].value = res2.sqrks;
       this.secondaryNav[1].meta.indicator[1].value = res2.sqldls;
       this.secondaryNav[1].meta.indicator[2].value = res2.rsqts;
@@ -431,16 +430,16 @@ export default {
   transform: translate(-50%, -50%);
   overflow: hidden;
   user-select: none;
-  &::after {
-    position: absolute;
-    content: ' ';
-    width: 36.6rem;
-    height: 6.5rem;
-    top: 55rem;
-    left: 72rem;
-    background: url('./primal-tip.png') no-repeat;
-    background-size: 100% 100%;
-  }
+  // &::after {
+  //   position: absolute;
+  //   content: ' ';
+  //   width: 36.6rem;
+  //   height: 6.5rem;
+  //   top: 55rem;
+  //   left: 72rem;
+  //   background: url('./primal-tip.png') no-repeat;
+  //   background-size: 100% 100%;
+  // }
   .nav-item {
     position: absolute;
     width: 29.5rem;
@@ -462,6 +461,11 @@ export default {
       text-shadow: 0 0 2px;
     }
   }
+  .nav-item:hover {
+    background-image: url('./primal-hover.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
 }
 .primal-nav-active-name {
   position: absolute;
@@ -478,28 +482,10 @@ export default {
   font-size: 5.6rem;
   .tubiao {
     position: absolute;
-    width: 12rem;
-    height: 13rem;
-    bottom: 9rem;
+    width: 9rem;
+    height: 8rem;
+    bottom: 15rem;
     left: 74rem;
-  }
-  .start-left {
-    position: absolute;
-    width: 12rem;
-    height: 13rem;
-    bottom: 6rem;
-    left: 45rem;
-    background-image: url('./bandian-new.png');
-    background-repeat: no-repeat;
-  }
-  .start-right {
-    position: absolute;
-    width: 12rem;
-    height: 13rem;
-    bottom: 6rem;
-    left: 100rem;
-    background-image: url('./bandian-new.png');
-    background-repeat: no-repeat;
   }
   .to-left {
     position: absolute;
@@ -517,7 +503,10 @@ export default {
     right: 13rem;
     cursor: pointer;
   }
-  span {
+  .fontTilte {
+    position: absolute;
+    bottom: -15rem;
+    left: 67rem;
     background-image: linear-gradient(160deg, #fff 0%, #26c4bf 100%);
     background-clip: text;
     -webkit-text-fill-color: transparent;

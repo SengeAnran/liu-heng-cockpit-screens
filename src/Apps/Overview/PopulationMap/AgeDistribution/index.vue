@@ -14,6 +14,7 @@ export default {
     return {
       chart: null,
       chartData: [],
+      timmerOneAnim: null,
     };
   },
 
@@ -54,6 +55,21 @@ export default {
         grid: {
           top: '25%',
           bottom: '15%',
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'line',
+            lineStyle: {
+              type: 'dashed',
+            },
+          },
+          textStyle: {
+            color: '#fff',
+            fontSize: 22,
+          },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         legend: {
           show: false,
@@ -336,6 +352,18 @@ export default {
         ],
       };
       myChart.setOption(option, true);
+      var count = 0;
+      if (this.timmerOneAnim) {
+        clearInterval(this.timmerOneAnim);
+      }
+      this.timmerOneAnim = setInterval(() => {
+        myChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: 0,
+          dataIndex: count % 3,
+        });
+        count++;
+      }, 4000);
     },
   },
 };

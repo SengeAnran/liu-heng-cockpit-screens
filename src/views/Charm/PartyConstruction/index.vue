@@ -1,17 +1,18 @@
 <template>
   <div class="party-construction">
-    <div class="left-part" :style="{ left: Showleft + 'px' }">
-      <LeftSection1 class="section-item" />
-      <!-- <LeftSection2 class="section-item" /> -->
-    </div>
-
-    <div class="right-part" :style="{ right: Showleft + 'px' }">
-      <RightSection1 class="section-item" />
-      <RightSection2 class="section-item" />
-      <RightSection3 class="section-item" />
-      <RightSection4 class="section-item" />
-    </div>
-
+    <transition name="slide" appear>
+      <div class="left-part">
+        <LeftSection1 class="section-item" />
+      </div>
+    </transition>
+    <transition name="slide1" appear>
+      <div class="right-part">
+        <RightSection1 class="section-item" />
+        <RightSection2 class="section-item" />
+        <RightSection3 class="section-item" />
+        <RightSection4 class="section-item" />
+      </div>
+    </transition>
     <Map />
   </div>
 </template>
@@ -33,24 +34,10 @@ export default {
     RightSection4,
     Map,
   },
-  data() {
-    return {
-      show: true,
-      Showleft: -1900,
-    };
-  },
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 150) {
-        this.Showleft = 150;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .party-construction {
   p {
     margin: 0;

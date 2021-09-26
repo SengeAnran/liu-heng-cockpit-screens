@@ -19,6 +19,7 @@ export default {
       xAxisData: [],
       incomeData: [],
       increaseRate: [],
+      timmerOneAnim: null,
     };
   },
   components: {
@@ -28,6 +29,20 @@ export default {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
     this.loadData();
+
+    // tooltip定时移动 vue项目中  myChart换成自己初始化的名称(我的是areaChart)
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.charts.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % this.incomeData.length,
+      });
+      count++;
+    }, 5000);
   },
   methods: {
     setData() {

@@ -141,7 +141,7 @@ export default {
       ],
       lineData: {
         title: '年门诊趋势图',
-        name1: '医务人员数量分布',
+        name1: '年门诊趋势图',
         lineColor11: 'rgba(123, 162, 252, 1)',
         areaColor11: 'rgba(123, 162, 252, .6)',
         areaColor12: 'rgba(123, 162, 252, .1)',
@@ -245,6 +245,7 @@ export default {
               yData.push(item.mzrs);
             });
           this.lineData.xData = xData.reverse();
+          // debugger;
           this.lineData.data1 = yData;
         });
     },

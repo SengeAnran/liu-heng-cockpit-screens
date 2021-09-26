@@ -1,8 +1,12 @@
 <template>
   <div class="left-2">
-    <Title>水路客运</Title>
-    <!--    <Indicator />-->
-    <div class="block">
+    <Title>水路信息</Title>
+    <div class="flex">
+      <div class="content-xinxi" :class="clickIndex === 1 ? 'active' : ''" @click="clickIndex = 1">水路客运</div>
+      <div class="content-xinxi" :class="clickIndex === 2 ? 'active' : ''" @click="clickIndex = 2">航线信息</div>
+    </div>
+
+    <div class="block" v-if="clickIndex == 1">
       <div class="line titles">
         <div class="second_item">类型</div>
         <div class="second_item">数量</div>
@@ -14,6 +18,27 @@
         <div class="second_item">{{ item.number }}</div>
         <div class="second_item">{{ item.seat }}</div>
         <div class="second_item">{{ item.shiftLine }}</div>
+      </div>
+    </div>
+    <div class="block1" v-if="clickIndex == 2">
+      <div class="hangxianxxinxi" v-for="(item, index) in dataHangxian" :key="index">
+        <div class="title">
+          <div>{{ item.name }}</div>
+          <div>-----</div>
+          <div>{{ item.name1 }}</div>
+        </div>
+        <div class="body">
+          <div class="title">
+            <div>客船类型</div>
+            <div>时刻表</div>
+          </div>
+          <div class="body-content" :class="index == 1 ? 'font1' : ''" v-for="(it, index) in item.time" :key="index">
+            <div style="width: 300px; margin-left: 20px">{{ it.name }}</div>
+            <div class="time">
+              <div v-for="(time, index) in it.time" :key="index">{{ time }}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <Title>道路货运及维修</Title>
@@ -48,6 +73,8 @@ export default {
   },
   data() {
     return {
+      // 记录点击的位置
+      clickIndex: 2,
       data: {
         content: 1000,
       },
@@ -135,11 +162,182 @@ export default {
           unit: '辆',
         },
       ],
+      dataHangxian: [
+        {
+          name: '大岙',
+          name1: '沈家门',
+          time: [
+            {
+              name: '普通客船（对开）',
+              time: ['07:30', '12:30', '15:40'],
+            },
+            {
+              name: '高速客船（对开）',
+              time: ['08:20 ', '09:30 ', '10:30 ', ' 14:00', ' 16:20'],
+            },
+          ],
+        },
+        {
+          name: '大岙',
+          name1: '定海（高速船）',
+          time: [
+            {
+              name: '大岙开',
+              time: ['07:20', '10:00', '13:00', '14:20', '16:10'],
+            },
+            {
+              name: '定海开',
+              time: ['07:30', '10:00', '13:00', '14:30', '16:10'],
+            },
+          ],
+        },
+        {
+          name: '大岙',
+          name1: '长峙',
+          time: [
+            {
+              name: '客滚船 （对开）',
+              time: ['07:30', '09:20', '11:00', '13:00', '15:00', '17:00', '19:00'],
+            },
+            {
+              name: '高速客船 长峙开',
+              time: ['07:15', '14:00'],
+            },
+            {
+              name: '大岙开',
+              time: ['10:20', '16:30'],
+            },
+          ],
+        },
+        {
+          name: '台门',
+          name1: '沈家门（普通客船）',
+          time: [
+            {
+              name: '台门开',
+              time: ['07:30 ', '12:30', '15:30'],
+            },
+            {
+              name: '沈家门开',
+              time: ['07:30 ', '12:30', '15:30'],
+            },
+          ],
+        },
+        {
+          name: '沙岙',
+          name1: '郭巨（客滚船）',
+          time: [
+            {
+              name: '沙岙开',
+              time: ['17:30', '18:30 ', '19:30', ' 20:30', '22:10'],
+            },
+            {
+              name: '郭巨开',
+              time: ['17:30 ', '18:30', '19:30', '20:30', '21:20', '23:00'],
+            },
+          ],
+        },
+        {
+          name: '佛渡',
+          name1: '沙岙（客滚船）',
+          time: [
+            {
+              name: '佛渡开',
+              time: ['06:40', '08:50', '10:20', '11:30 ', '14:00', '14:50', '17:00'],
+            },
+            {
+              name: '沙岙开',
+              time: ['07:10', '09:20', '10:50 ', '12:00', '14:30', '15:20', ' 17:30'],
+            },
+          ],
+        },
+        {
+          name: '台门',
+          name1: '悬山各小岛（渡船）',
+          time: [
+            {
+              name: '台门开',
+              time: ['06:40(停靠黄沙)', ' 08:00', ' 09:20(停靠黄沙)', '10:20 ', ' 13:00 ', '14:10', '16:00'],
+            },
+          ],
+        },
+      ],
     };
   },
 };
 </script>
 <style lang="scss" scoped>
+.hangxianxxinxi {
+  margin-top: 20px;
+  width: 800px;
+  height: 261px;
+  border: 1px solid;
+  border-image: linear-gradient(0deg, #ffffff) 10 10;
+  background: url('./img/biaodan-bg.png') no-repeat 100% 100%;
+  opacity: 0.8;
+  border-radius: 14px;
+  .title {
+    // width: 250px;
+    line-height: 70px;
+    display: flex;
+    font-size: 30px;
+    font-family: Source Han Sans CN;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    div {
+      width: auto;
+      padding: 0px 0px 0px 20px;
+    }
+  }
+  .body {
+    margin: 20px;
+    height: 170px;
+    border: 1px solid;
+    overflow: auto;
+    .title {
+      display: flex;
+      line-height: normal;
+      div {
+        width: 300px;
+      }
+    }
+    .body-content {
+      font-size: 28px;
+      font-family: Source Han Sans SC;
+      font-weight: 500;
+      color: #77ffff;
+      display: flex;
+      .time {
+        overflow: auto;
+        height: 60px;
+        width: 500px;
+        div {
+          float: left;
+          width: 100px;
+          margin-left: 20px;
+        }
+      }
+    }
+    .font1 {
+      color: #edbf83;
+    }
+  }
+}
+
+.content-xinxi {
+  font-size: 28px;
+  font-family: Source Han Sans CN;
+  font-weight: 400;
+  color: #ffffff;
+  opacity: 0.2;
+  padding: 20px 30px 0px 0px;
+}
+.active {
+  opacity: 1;
+}
+.flex {
+  display: flex;
+}
 .left-2 {
   position: absolute;
   top: 26.4rem;
@@ -147,7 +345,7 @@ export default {
   width: 80rem;
   .block {
     margin-top: 27px;
-    margin-bottom: 70px;
+    margin-bottom: 15px;
     .titles {
       .second_item {
         font-size: 24px;
@@ -193,6 +391,12 @@ export default {
         }
       }
     }
+  }
+  .block1 {
+    width: 850px;
+    height: 400px;
+    // margin-top: 27px;
+    overflow: auto;
   }
   .second_block {
     font-size: 22px;

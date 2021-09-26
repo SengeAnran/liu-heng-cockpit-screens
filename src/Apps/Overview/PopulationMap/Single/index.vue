@@ -2,9 +2,13 @@
   <div class="single">
     <BaseTitle title="自然增长情况" />
     <div class="show-box">
-      <div v-for="(item, index) of list" :key="index">
-        <CountUp :num="item.value" />
-        <span class="unit">{{ index === 0 ? '人' : '‰' }}</span>
+      <div v-for="(item, index) of list" :key="index" class="digital">
+        <digital
+          :loop="loop"
+          :endNum="item.value || 0"
+          :data="index === 0 ? data : data1"
+          :config="index === 0 ? config : config"
+        ></digital>
       </div>
     </div>
   </div>
@@ -25,6 +29,37 @@ export default {
           value: 0,
         },
       ],
+      data: {
+        content: 1000,
+        unit: '人',
+      },
+      data1: {
+        content: 1000,
+        unit: '%',
+      },
+      loop: {
+        // 是否开启数值循环
+        loop1: true,
+        // 多久循环一次
+        time: 10000,
+        // 循环几次
+        count: 99999,
+        // 精确的小数位数
+        decimals: 2,
+        // 是否开启四舍五入 类型(0是不做什么取值操作,1去掉小数部分,2.向上取整,3.下取整,4.四舍五入)
+        round: 1,
+        decimal: '.',
+        // 整数 分割器
+        separator: ',',
+      },
+      config: {
+        content: {
+          fontSize: '6rem',
+          fontFamily: 'DINPro',
+          color: '#6AD1F7',
+        },
+        unit: { fontSize: '2rem' },
+      },
     };
   },
   components: {},
@@ -60,16 +95,7 @@ export default {
       width: 800px;
       height: 198px;
       color: #fff;
-      .count-up {
-        margin-left: 415px;
-        top: 50px;
-        font-size: 75px;
-      }
-      .unit {
-        position: relative;
-        top: 50px;
-        font-size: 35px;
-      }
+
       &:first-child {
         background: url('./img/male.png');
       }
@@ -77,6 +103,11 @@ export default {
         margin-top: 17px;
         background: url('./img/female.png');
       }
+    }
+    .digital {
+      border: 1px saddlebrown solid;
+      text-align: center;
+      line-height: 180px;
     }
   }
 }

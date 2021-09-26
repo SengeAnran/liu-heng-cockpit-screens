@@ -62,8 +62,8 @@ export default {
         // 图标尺寸
         size: new AMap.Size(70, 70),
         // 图标的取图地址
-        // image: require('../../images/jiezhong.png'),
-        image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
+        image: require('./img/sheshui.png'),
+        // image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
         // 图标所用图片大小
         imageSize: new AMap.Size(70, 70),
         // 图标取图偏移量

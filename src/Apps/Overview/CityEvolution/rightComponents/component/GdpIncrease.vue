@@ -18,6 +18,7 @@ export default {
       charts: null,
       xAxisData: [],
       GdpData: [],
+      timmerOneAnim: null,
     };
   },
   components: {
@@ -27,6 +28,18 @@ export default {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
     this.loadData();
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.charts.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % this.GdpData.length,
+      });
+      count++;
+    }, 5000);
   },
   methods: {
     setData() {

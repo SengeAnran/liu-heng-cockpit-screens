@@ -23,7 +23,6 @@ export default {
       type: Array,
       default: () => [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2],
     },
-
   },
   data() {
     return {
@@ -82,7 +81,7 @@ export default {
               fontSize: 20,
             },
             min: 0,
-            max: 250,
+            max: 450,
             position: 'right',
             splitLine: {
               show: true,

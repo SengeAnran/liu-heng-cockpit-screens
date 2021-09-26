@@ -13,7 +13,9 @@ export default {
     dataMessage: {
       type: Object,
       default: () => {
-        return {};
+        return {
+          timmerOneAnim: null,
+        };
       },
     },
   },
@@ -28,6 +30,18 @@ export default {
   mounted() {
     const charts = this.$refs.charts;
     this.charts = echarts.init(charts);
+    var count = 0;
+    if (this.timmerOneAnim) {
+      clearInterval(this.timmerOneAnim);
+    }
+    this.timmerOneAnim = setInterval(() => {
+      this.charts.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: count % 4,
+      });
+      count++;
+    }, 4500);
   },
   methods: {
     setData() {

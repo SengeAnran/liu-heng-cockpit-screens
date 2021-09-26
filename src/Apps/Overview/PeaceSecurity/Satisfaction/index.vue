@@ -1,6 +1,6 @@
 <template>
   <div class="satisfaction">
-    <BaseTitle title="社会满意度" />
+    <BaseTitle title="平安建设" />
     <div class="bar-chart" ref="barChart"></div>
   </div>
 </template>

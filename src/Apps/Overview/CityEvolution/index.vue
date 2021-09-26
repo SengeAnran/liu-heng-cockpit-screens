@@ -1,8 +1,9 @@
 <template>
   <div class="CityEvolution">
-    <LeftComponent :style="{ left: Showleft + 'px' }" />
-
-    <RightComponent :style="{ right: Showleft + 'px' }" />
+    <transition name="slide" appear> <LeftComponent :key="LeftComponent" /></transition>
+    <transition name="slide1" appear>
+       <RightComponent :key="RightComponent" />
+       </transition>
     <Map />
   </div>
 </template>
@@ -19,25 +20,34 @@ export default {
     Map,
   },
   data() {
-    return {
-      show: true,
-      Showleft: -1900,
-      timer: null,
-    };
+    return {};
   },
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 140) {
-        this.Showleft = 140;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
+  mounted() {},
 };
 </script>
 <style lang="scss" scoped>
-.CityEvolution {
+// 添加入场和离场动画
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s;
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translate3d(-100%, 0, 0);
+}
+// 添加入场和离场动画
+.slide1-enter-active,
+.slide1-leave-active {
+  transition: all 0.5s;
+}
+
+.slide1-enter,
+.slide1-leave-to {
+  transform: translate3d(100%, 0, 0);
+}
+
+c .CityEvolution {
   position: relative;
   width: 100%;
   height: 2070px;

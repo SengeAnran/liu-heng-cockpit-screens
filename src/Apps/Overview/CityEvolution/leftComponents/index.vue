@@ -32,7 +32,7 @@ export default {
   width: 1710px;
   height: 1076px;
   top: 150px;
-  left: -2000px;
+  left: 150px;
   // left: 140px;
   z-index: 100;
 }

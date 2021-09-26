@@ -1,13 +1,13 @@
 <template>
-  <div class="map-container" >
+  <div class="map-container">
     <div class="mask"></div>
     <div class="main-map" ref="map" v-show="!threeDMap"></div>
     <div class="main-map" v-show="threeDMap">
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
     <div class="switch">
-      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
+      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
     </div>
   </div>
 </template>
@@ -18,8 +18,7 @@ import './map.scss';
 import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Map',
-  components: {
-  },
+  components: {},
   data() {
     return {
       map: null,
@@ -30,11 +29,6 @@ export default {
   mounted() {
     this.initMap();
     this.loadData();
-    // const marker = new AMap.Marker({
-    //   position: [122.200254, 29.767613],
-    //   content: "<div style='display: inline-block; width: 20px; height: 20px;'>13444</div>",
-    // });
-    // marker.setMap(this.map);
   },
   methods: {
     changeMap(type) {
@@ -45,12 +39,13 @@ export default {
       }
     },
     loadData() {
-      getPopuliationNumRank().request().then((json) => {
-        if (json) {
-          // console.log(json);
-          this.addMarker(json);
-        }
-      });
+      getPopuliationNumRank()
+        .request()
+        .then((json) => {
+          if (json) {
+            this.addMarker(json);
+          }
+        });
     },
     initMap() {
       this.map = new AMap.Map(this.$refs.map, {
@@ -81,7 +76,7 @@ export default {
       data.forEach((item) => {
         const marker = new AMap.Marker({
           position: [item.lng, item.lat],
-          content: '<div class="custom-marker">13444</div>',
+          content: '<div class="custom-marker"></div>',
         });
         marker.setMap(this.map);
         marker.on('click', (e) => {
@@ -131,38 +126,6 @@ export default {
       height: 49.7px;
       background: url('./img/icon.png');
       background-size: contain;
-      &:before {
-        display: block;
-        content: '';
-        //width: 49px;
-        //height: 35px;
-        width: 69px;
-        height: 55px;
-        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 90%);
-        border: 1px solid #ffea78;
-        box-shadow: 0 0 1px #ffea78;
-        border-radius: 50% / 50%;
-        position: absolute;
-        left: -10px;
-        top: -5px;
-        animation: circleChange 3s 1s linear infinite;
-      }
-      &:after {
-        display: block;
-        content: '';
-        width: 69px;
-        height: 55px;
-        //width: 49px;
-        //height: 35px;
-        background: radial-gradient(transparent 0%,transparent 50%, #ffea78 90%);
-        border: 1px solid #ffea78;
-        box-shadow: 0 0 1px #ffea78;
-        border-radius: 50% / 50%;
-        position: absolute;
-        left: -10px;
-        top: -5px;
-        animation: circleChange 3s 2s linear infinite;
-      }
     }
     ::v-deep .info {
       position: relative;
@@ -173,7 +136,7 @@ export default {
       background: url('./img/info.png');
       box-sizing: border-box;
       color: #fff;
-      >div {
+      > div {
         font-size: 26px;
         font-family: 'Source Han Sans SC';
         margin-top: 15px;
@@ -194,7 +157,7 @@ export default {
     display: flex;
     justify-content: space-around;
     z-index: 1000;
-    .button{
+    .button {
       width: 114px;
       height: 44px;
       font-size: 24px;
@@ -202,34 +165,34 @@ export default {
       text-align: center;
       color: #82e2e4;
       cursor: pointer;
-      background: url("./img/mmexport.jpg") no-repeat;
+      background: url('./img/mmexport.jpg') no-repeat;
       &.active {
         color: white;
-        background: url("./img/mmexport1.jpg") no-repeat;
+        background: url('./img/mmexport1.jpg') no-repeat;
       }
     }
   }
 }
-@keyframes circleChange{
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  25% {
-    transform: scale(1.2);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.4);
-    opacity: 0.35;
-  }
-  75% {
-    transform: scale(1.6);
-    opacity: 0.15;
-  }
-  100% {
-    transform: scale(1.8);
-    opacity: 0.01;
-  }
-}
+// @keyframes circleChange {
+//   0% {
+//     transform: scale(1);
+//     opacity: 0.6;
+//   }
+//   25% {
+//     transform: scale(1.2);
+//     opacity: 0.5;
+//   }
+//   50% {
+//     transform: scale(1.4);
+//     opacity: 0.35;
+//   }
+//   75% {
+//     transform: scale(1.6);
+//     opacity: 0.15;
+//   }
+//   100% {
+//     transform: scale(1.8);
+//     opacity: 0.01;
+//   }
+// }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="Education">
-    <LeftComponents :style="{ left: Showleft + 'px' }" />
-    <RightComponents :style="{ right: Showleft + 'px' }" />
+    <transition name="slide" appear> <LeftComponents :key="LeftComponents" /></transition>
+    <transition name="slide1" appear> <RightComponents :key="RightComponents" /></transition>
     <Map />
   </div>
 </template>
@@ -17,25 +17,10 @@ export default {
     RightComponents,
     Map,
   },
-  data() {
-    return {
-      show: true,
-      Showleft: -1900,
-      timer: null,
-    };
-  },
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 140) {
-        this.Showleft = 140;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .Education {
   position: relative;
   width: 100%;

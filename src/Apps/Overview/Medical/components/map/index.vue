@@ -72,6 +72,10 @@ export default {
           lat: 29.742798,
           name: '普陀医院六横第二分院',
           label: '医院',
+          xiangmu: '综合医院',
+          address: '浙江省舟山市普陀区六横镇六横路227号',
+          jieshao:
+            '我们的服务宗旨是诚信为本，为医疗事业作出应有贡献。我们日常开展综合医院等相关业务。欢迎广大病人群众前来舟山市普陀人民医院六横分院。',
           type: 1,
         },
         {
@@ -79,6 +83,10 @@ export default {
           lat: 29.696887,
           name: '中心卫生院',
           label: '医院',
+          xiangmu: '综合医院',
+          address: '浙江省舟山市普陀区台兴路156号',
+          jieshao:
+            '以人的健康为中心、家庭为单位、社区为范围、需求为导向，融预防、医疗、保健、康复、健康教育、计划生育技术服务功能等为一体，有效、经济、方便、综合、连续的基层卫生服务',
           type: 1,
         },
         {
@@ -120,9 +128,44 @@ export default {
         }
       });
     },
-    markerClick(e) {
-      this.infoWindow.setContent(e.target.content);
-      this.infoWindow.open(this.map, e.target.getPosition());
+    addInfoWindow(markerMsg, lnglat) {
+      const { lng, lat } = lnglat;
+      const html = `<div class='pop-up-box'>
+          <h3>${markerMsg.name}</h3>
+          <div>
+          <div class="name">主营项目：</div>
+          <div class="content">${markerMsg.xiangmu}</div>
+          </div>
+          <div>
+          <div class="name">地址：</div>
+          <div class="content">${markerMsg.address}</div>
+          </div>
+          <div>
+          <div class="name">简介：</div>
+          <div class="content1">${markerMsg.jieshao}</div>
+          </div>
+        </div>`;
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗体
+        content: html, // 传入 dom 对象，或者 html 字符串
+        offset: new AMap.Pixel(760.7, -590),
+      });
+      this.infoWindow = infoWindow;
+      infoWindow.open(this.map, [lng, lat]);
+    },
+    addInfoWindow1(markerMsg, lnglat) {
+      const { lng, lat } = lnglat;
+      const html = `<div class='pop-up-box'>
+          <h3>${markerMsg.name}</h3>
+         
+        </div>`;
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗体
+        content: html, // 传入 dom 对象，或者 html 字符串
+        offset: new AMap.Pixel(760.7, -590),
+      });
+      this.infoWindow = infoWindow;
+      infoWindow.open(this.map, [lng, lat]);
     },
     // 加载医院
     initMarkers() {
@@ -142,6 +185,9 @@ export default {
             position: new AMap.LngLat(item.lng, item.lat),
             icon: yiyuanIcon,
             offset: new AMap.Pixel(-13, -30),
+          });
+          startMarker.on('click', (e) => {
+            this.addInfoWindow(item, e.lnglat);
           });
           this.markers1.push(startMarker);
         }
@@ -167,6 +213,9 @@ export default {
             icon: geili,
             offset: new AMap.Pixel(-13, -30),
           });
+          startMarker.on('click', (e) => {
+            this.addInfoWindow1(item, e.lnglat);
+          });
           this.markers2.push(startMarker);
         }
       });
@@ -190,6 +239,9 @@ export default {
             position: new AMap.LngLat(item.lng, item.lat),
             icon: jiezhong,
             offset: new AMap.Pixel(-13, -30),
+          });
+          startMarker.on('click', (e) => {
+            this.addInfoWindow1(item, e.lnglat);
           });
           this.markers3.push(startMarker);
         }
@@ -355,11 +407,35 @@ export default {
       font-weight: bold;
       color: #77ffff;
     }
+    .name {
+      font-size: 30px;
+      font-family: Source Han Sans CN;
+      font-weight: 500;
+      color: #ffffff;
+      height: 50px;
+    }
+    .content {
+      height: 40px;
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #ffffff;
+      overflow: auto;
+    }
+    .content1 {
+      height: 150px;
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #ffffff;
+      overflow: auto;
+      margin-bottom: 20px;
+    }
     > div {
       width: 100%;
-      margin-bottom: 46px;
+      // margin-bottom: 46px;
       > div {
-        width: 45%;
+        width: 100%;
       }
       label {
         font-size: 30px;

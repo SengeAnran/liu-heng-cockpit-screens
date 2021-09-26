@@ -18,7 +18,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          title: '医务人员数量分布',
+          title: '年门诊趋势图',
           name1: '累计死亡',
           showArea: true,
           lineColor11: '#f8218b',
@@ -41,6 +41,7 @@ export default {
   data() {
     return {
       lineChart: null,
+      timmerOneAnim: null,
     };
   },
   computed: {},
@@ -62,6 +63,18 @@ export default {
     initChart() {
       this.lineChart = echarts.init(this.$refs.lineChart);
       this.lineChart.setOption(this.option());
+      var count = 0;
+      if (this.timmerOneAnim) {
+        clearInterval(this.timmerOneAnim);
+      }
+      this.timmerOneAnim = setInterval(() => {
+        this.lineChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: 0,
+          dataIndex: count % 4,
+        });
+        count++;
+      }, 4500);
     },
     option() {
       const {
@@ -119,10 +132,12 @@ export default {
         tooltip: {
           show: true,
           trigger: 'axis',
-          // axisPointer: {
-          //   lineStyle: {
-          //   },
-          // },
+          textStyle: {
+            color: '#fff',
+            fontSize: 22,
+          },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         xAxis: {
           type: 'category',

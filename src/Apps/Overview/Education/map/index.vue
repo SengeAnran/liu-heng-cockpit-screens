@@ -240,7 +240,7 @@ export default {
     // height: 462px;
     position: absolute;
     left: 2126px;
-    top: 503px;
+    top: 533px;
     background: url('../images/pop-up-bg.png') no-repeat;
     background-size: 100% 100%;
     padding-left: 53px;

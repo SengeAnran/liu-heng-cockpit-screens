@@ -131,7 +131,7 @@ export default {
         },
         {
           label: '发展党员',
-          value: 275,
+          value: 0,
           unit: '人',
         },
       ],
@@ -218,7 +218,7 @@ export default {
       if (res) {
         this.indiData[0].value = res.list[0].zsdyrs;
         this.indiData[1].value = res.list[0].ybdyrs;
-        this.indiData[2].value = res.list[0].fzdyrs;
+        // this.indiData[2].value = res.list[0].fzdyrs;
         this.sexAgeData = ageSexData;
         console.log(res4.list.sort(this.SortBai));
         this.educationData = res4.list;

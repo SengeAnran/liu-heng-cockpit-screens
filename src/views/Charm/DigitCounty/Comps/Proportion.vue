@@ -1,35 +1,48 @@
 <template>
-  <div class="wrapper" :style="'width:'+ width + 'rem'">
+  <div class="wrapper" :style="'width:' + width + 'rem'">
     <div class="name-style">
-      {{name}}
+      {{ name }}
     </div>
     <div class="contain-box">
-      <div v-for="(item, index) in dataList"
-      class="flex-item"
-      :key="index">
+      <div v-for="(item, index) in dataList" class="flex-item" :key="index">
         <div class="num-style" :class="'font' + index">
-          {{item.cnt}}
+          {{ item.cnt }}
           <!-- <CountUp :num="item.num" /> -->
         </div>
       </div>
     </div>
 
     <div class="contain-box2" :style="'width: 100%' + '%;height:' + barStyle.height">
-      <div v-for="(item, index) in dataList"
-      class="flex-item"
-      :style="'width:' + (item.cnt/sum * (width - 2)) + 'rem;'+ colorList[index].radius + ';background:' + colorList[index].shaow"
-      :key="index">
-        <div class="zhu"
-        :style="'width:' + (item.cnt/sum * (width - 3)) + 'rem;' + colorList[index].radius + ';background:' + colorList[index].bgColor"
-         ></div>
+      <div
+        v-for="(item, index) in dataList"
+        class="flex-item"
+        :style="
+          'width:' +
+          (item.cnt / sum) * (width - 2) +
+          'rem;' +
+          colorList[index].radius +
+          ';background:' +
+          colorList[index].shaow
+        "
+        :key="index"
+      >
+        <div
+          class="zhu"
+          :style="
+            'width:' +
+            (item.cnt / sum) * (width - 3) +
+            'rem;' +
+            colorList[index].radius +
+            ';background:' +
+            colorList[index].bgColor
+          "
+        ></div>
       </div>
     </div>
     <div class="contain-box">
-      <div v-for="(item, index) in dataList"
-      class="flex-item"
-      :key="index">
+      <div v-for="(item, index) in dataList" class="flex-item" :key="index">
         <div class="name-style" :style="'color: ' + colorList[index].fontColor">
-          {{item.nation ? item.nation : item.sex}}
+          {{ item.nation ? item.nation : item.sex }}
         </div>
       </div>
     </div>
@@ -62,14 +75,30 @@ export default {
   data() {
     return {
       colorList: [
-        { fontColor: 'rgba(174, 250, 254, 1)', bgColor: 'linear-gradient(90deg, rgba(180, 250, 254, 0.02) 0%, rgba(180, 250, 254, 1) 100%)', radius: 'border-radius: 0 2rem 2rem 0;', shaow: 'linear-gradient(90deg, rgba(180, 250, 254, 0.02) 0%, rgba(180, 250, 254, .2) 100%)' },
-        { fontColor: 'rgba(255, 167, 162, 1)', bgColor: 'linear-gradient(90deg, rgba(255, 167, 162, 1) 0%, rgba(255, 167, 162, .02) 100%);', radius: 'border-radius: 2rem 0 0 2rem ;', shaow: 'linear-gradient(90deg, rgba(255, 167, 162, .2) 0%, rgba(255, 167, 162, .02) 100%)' },
+        {
+          fontColor: 'rgba(174, 250, 254, 1)',
+          bgColor: 'linear-gradient(90deg, rgba(180, 250, 254, 0.02) 0%, rgba(180, 250, 254, 1) 100%)',
+          radius: 'border-radius: 0 2rem 2rem 0;',
+          shaow: 'linear-gradient(90deg, rgba(180, 250, 254, 0.02) 0%, rgba(180, 250, 254, .2) 100%)',
+        },
+        {
+          fontColor: 'rgba(255, 167, 162, 1)',
+          bgColor: 'linear-gradient(90deg, rgba(255, 167, 162, 1) 0%, rgba(255, 167, 162, .02) 100%);',
+          radius: 'border-radius: 2rem 0 0 2rem ;',
+          shaow: 'linear-gradient(90deg, rgba(255, 167, 162, .2) 0%, rgba(255, 167, 162, .02) 100%)',
+        },
       ],
     };
   },
   computed: {
     sum() {
-      return this.dataList && this.dataList.length > 0 ? this.dataList.map((i) => i.cnt).reduce((temp, i) => { return temp + i; }) : 0;
+      return this.dataList && this.dataList.length > 0
+        ? this.dataList
+            .map((i) => i.cnt)
+            .reduce((temp, i) => {
+              return temp + i;
+            })
+        : 0;
     },
   },
 };
@@ -79,9 +108,10 @@ export default {
   width: 100%;
   padding: 3.4rem 0;
   margin: 3.8rem 0;
-  background: linear-gradient(90deg, rgba(17, 36, 37, 0) 0%, rgba(17, 36, 37, .5) 50%, rgba(17, 36, 37, 0) 100%,);
+  background-image: url('./Map/img/bg.png');
+  // background: linear-gradient(90deg, rgba(17, 36, 37, 0) 0%, rgba(17, 36, 37, .5) 50%, rgba(17, 36, 37, 0) 100%,);
   .name-style {
-    color: rgba(255, 255, 255, .8);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 3.52rem;
     text-align: center;
   }
@@ -96,7 +126,7 @@ export default {
         font-weight: 600;
       }
       .font0 {
-        background-image: -webkit-linear-gradient(bottom, #4ECDD8, white);
+        background-image: -webkit-linear-gradient(bottom, #4ecdd8, white);
         -webkit-text-fill-color: transparent;
         -webkit-background-clip: text;
       }
@@ -110,9 +140,7 @@ export default {
         font-weight: 600;
         color: white;
       }
-
     }
-
   }
   .contain-box2 {
     display: flex;
@@ -130,5 +158,4 @@ export default {
     }
   }
 }
-
 </style>

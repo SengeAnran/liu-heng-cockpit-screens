@@ -20,22 +20,35 @@ export default {
       title: '部门办理类型占比',
     };
   },
-  components: {
-  },
+  components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
     this.loadData();
+    let curIndex = 0;
+    setInterval(() => {
+      console.log(this.list.length);
+      var dataLen = this.list.length;
+      this.chart.dispatchAction({ type: 'downplay', seriesIndex: 0, dataIndex: curIndex });
+      curIndex = (curIndex + 1) % dataLen;
+      this.chart.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: curIndex,
+      });
+    }, 2000);
   },
   methods: {
     loadData() {
-      getDeptType().request().then((json) => {
-        this.list = json.map((item) => {
-          item.name = item.bmbl;
-          item.value = item.blcs || 0;
-          return item;
+      getDeptType()
+        .request()
+        .then((json) => {
+          this.list = json.map((item) => {
+            item.name = item.bmbl;
+            item.value = item.blcs || 0;
+            return item;
+          });
+          this.chart.setOption(this.optionData(this.list));
         });
-        this.chart.setOption(this.optionData(this.list));
-      });
     },
     optionData(data) {
       const total = data.reduce((prev, next) => prev + next.value, 0);
@@ -56,7 +69,7 @@ export default {
           },
         },
         tooltip: {
-          show: false,
+          show: true,
         },
         legend: {
           icon: 'circle',
@@ -123,9 +136,11 @@ export default {
             label: {
               show: false,
             },
-            data: [{
-              value: 1,
-            }],
+            data: [
+              {
+                value: 1,
+              },
+            ],
             z: -1,
           },
         ],

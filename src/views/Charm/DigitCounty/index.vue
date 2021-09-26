@@ -1,77 +1,85 @@
 <template>
   <div class="wrapper">
     <div class="bgBox"></div>
-    <div class="left-wrapper" :style="{ left: Showleft + 'px' }">
-      <SamllTitle :name="CommunityOverview" />
-      <div class="hehua-box">
-        <div class="hehua-box-left">
-          <div class="img-item">
-            <img :src="contain1.img" alt="" />
+    <transition name="slide" appear>
+      <div class="left-wrapper">
+        <SamllTitle :name="CommunityOverview" />
+        <div class="hehua-box">
+          <div class="hehua-box-left">
+            <div class="img-item">
+              <img :src="contain1.img" alt="" />
+            </div>
+            <div class="hehua-text">
+              <h4>{{ contain1.title }}</h4>
+              <p>{{ contain1.content }}</p>
+            </div>
           </div>
-          <div class="hehua-text">
-            <h4>{{ contain1.title }}</h4>
-            <p>{{ contain1.content }}</p>
+          <div class="hehua-box-right">
+            <showList :dataList="contain3 && contain3.length > 0 ? contain3 : []" />
+            <showList :dataList="contain2 && contain2.length > 0 ? contain2 : []" />
           </div>
         </div>
-        <div class="hehua-box-right">
-          <showList :dataList="contain3 && contain3.length > 0 ? contain3 : []" />
-          <showList :dataList="contain2 && contain2.length > 0 ? contain2 : []" />
+        <div class="proportion-wrapper">
+          <div>
+            <Proportion name="男女性别比" :dataList="manAwomenList" />
+          </div>
+          <div>
+            <Proportion name="民族比例" :dataList="nationList" />
+          </div>
+        </div>
+        <!-- 年龄分布 + 学历分布 -->
+        <div class="third-wrapper">
+          <div class="third-wrapper-base">
+            <SamllTitle :name="ageName" />
+            <BarCharts
+              style="height: 35rem; width: 100%"
+              :xAxisData="ageData.xData"
+              :yAxisData="ageData.yData"
+              :bgColor="ageData.bgColor"
+            />
+          </div>
+          <div class="third-wrapper-base">
+            <SamllTitle :name="educationName" />
+            <BarCharts
+              style="height: 35rem; width: 100%"
+              :xAxisData="educationData.xData"
+              :yAxisData="educationData.yData"
+              :bgColor="educationData.bgColor"
+            />
+          </div>
         </div>
       </div>
-      <div class="proportion-wrapper">
-        <div>
-          <Proportion name="男女性别比" :dataList="manAwomenList" />
-        </div>
-        <div>
-          <Proportion name="民族比例" :dataList="nationList" />
-        </div>
-      </div>
-      <!-- 年龄分布 + 学历分布 -->
-      <div class="third-wrapper">
-        <div class="third-wrapper-base">
-          <SamllTitle :name="ageName" />
-          <BarCharts
-            style="height: 38rem; width: 100%"
-            :xAxisData="ageData.xData"
-            :yAxisData="ageData.yData"
-            :bgColor="ageData.bgColor"
-          />
-        </div>
-        <div class="third-wrapper-base">
-          <SamllTitle :name="educationName" />
-          <BarCharts
-            style="height: 38rem; width: 100%"
-            :xAxisData="educationData.xData"
-            :yAxisData="educationData.yData"
-            :bgColor="educationData.bgColor"
-          />
-        </div>
-      </div>
-    </div>
+    </transition>
     <div class="center-wrapper">
       <Map />
     </div>
-    <div class="right-wrapper" :style="{ right: Showleft + 'px' }">
-      <div>
-        <SamllTitle name="居民情况" />
-        <pie-charts style="height: 35rem; width: 100%" :pieData="residentInfo" />
-        <SamllTitle name="五类老人" />
-        <TableList style="width: 100%; height: 19.7rem" :datalist="oldManInfo" />
-        <SamllTitle name="村民信息" />
-        <TableList style="width: 100%; height: 19.7rem" :datalist="villagerInfo" fontColor="rgba(219, 248, 119, 1)" />
+    <transition name="slide1" appear>
+      <div class="right-wrapper">
+        <div>
+          <SamllTitle name="居民情况" />
+          <pie-charts style="height: 35rem; width: 100%" :pieData="residentInfo" />
+          <SamllTitle name="五类老人" />
+          <TableList style="width: 100%; height: 19.7rem" :datalist="oldManInfo" />
+          <SamllTitle name="村民信息" />
+          <TableList style="width: 100%; height: 19.7rem" :datalist="villagerInfo" fontColor="rgba(219, 248, 119, 1)" />
+        </div>
+        <div>
+          <SamllTitle name="乡村规划" />
+          <RadarCharts
+            style="height: 45rem; width: 100%"
+            :indicatorData="indicatorData"
+            :dataList="indicatorDataList"
+          />
+          <SamllTitle name="村民用水用电趋势" />
+          <LineCharts
+            style="height: 52rem; width: 100%"
+            :xData="waterXData"
+            :yData1="waterYData1"
+            :yData2="waterYData2"
+          />
+        </div>
       </div>
-      <div>
-        <SamllTitle name="乡村规划" />
-        <RadarCharts style="height: 45rem; width: 100%" :indicatorData="indicatorData" :dataList="indicatorDataList" />
-        <SamllTitle name="村民用水用电趋势" />
-        <LineCharts
-          style="height: 52rem; width: 100%"
-          :xData="waterXData"
-          :yData1="waterYData1"
-          :yData2="waterYData2"
-        />
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 <script>
@@ -112,8 +120,6 @@ export default {
   },
   data() {
     return {
-      show: true,
-      Showleft: -1900,
       defaultName: '荷花小区',
       CommunityOverview: '社区概述',
       nationList: [], // 民族比例
@@ -305,17 +311,11 @@ export default {
       name: this.defaultName,
     };
     this.initData(requestdata);
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 180) {
-        this.Showleft = 180;
-        clearInterval(this.timer);
-      }
-    }, 150);
   },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 * {
   padding: 0;
   margin: 0;
@@ -396,6 +396,7 @@ export default {
       justify-content: space-between;
       & .third-wrapper-base {
         width: 80.3rem;
+        height: 250px;
       }
     }
   }

@@ -1,8 +1,13 @@
 <template>
   <div class="Medical">
-    <MedicalLeft :style="{ left: Showleft + 'px' }" />
+    <transition name="slide" appear>
+      <MedicalLeft :key="MedicalLeft" />
+    </transition>
     <MedicalMap />
-    <MedicalRight :style="{ right: Showleft + 'px' }" />
+
+    <transition name="slide1" appear>
+      <MedicalRight :key="MedicalRight" />
+    </transition>
   </div>
 </template>
 
@@ -13,25 +18,10 @@ import MedicalMap from './Map';
 export default {
   name: 'Medical',
   components: { MedicalLeft, MedicalRight, MedicalMap },
-  data() {
-    return {
-      show: true,
-      Showleft: -1900,
-      timer: null,
-    };
-  },
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 140) {
-        this.Showleft = 140;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .Medical {
   position: relative;
   color: #fff;

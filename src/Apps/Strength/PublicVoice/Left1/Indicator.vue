@@ -1,29 +1,37 @@
 <template>
   <div class="indicator">
     <div class="item">
-      <span class="name">本月事件</span>
+      <div class="name">
+        <div>
+          <img src="../img/shili/shijian.png" />
+        </div>
+        <div>本月事件</div>
+      </div>
       <span class="value">
         {{ week }}
         <span class="unit">件</span>
       </span>
     </div>
     <div class="item-right">
-<!--      <span class="name">本周事件</span>-->
-<!--      <span class="value">-->
-<!--        {{ week }}-->
-<!--        <span class="unit">件</span>-->
-<!--      </span>-->
+      <!--      <span class="name">本周事件</span>-->
+      <!--      <span class="value">-->
+      <!--        {{ week }}-->
+      <!--        <span class="unit">件</span>-->
+      <!--      </span>-->
       <div class="little-item">
+        <img src="../img/shili/zhengmian.png" />
         <span class="item-title">正面</span>
-        <span class="item-number" style="color: rgb(0,254,95)">{{ positive }}</span>
+        <span class="item-number" style="color: rgb(0, 254, 95)">{{ positive }}</span>
       </div>
       <div class="little-item">
+        <img src="../img/shili/fumian.png" />
         <span class="item-title">负面</span>
-        <span class="item-number" style="color: rgb(247,0,50)">{{ negative }}</span>
+        <span class="item-number" style="color: rgb(247, 0, 50)">{{ negative }}</span>
       </div>
       <div class="little-item">
+        <img src="../img/shili/zhongxing.png" />
         <span class="item-title">中性</span>
-        <span class="item-number" style="color: rgb(94,127,129)">{{ neutral }}</span>
+        <span class="item-number" style="color: rgb(94, 127, 129)">{{ neutral }}</span>
       </div>
     </div>
   </div>
@@ -73,14 +81,14 @@ export default {
     box-sizing: border-box;
     text-align: center;
     &:nth-child(1) {
-      color: #31EABC;
+      color: #31eabc;
     }
     //&:nth-child(2) {
     //  color: white;
     //}
     .name {
       height: 15.5rem;
-      display: flex;
+      // display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(22, 40, 47, 0.2);
@@ -89,7 +97,7 @@ export default {
       font-size: 3.6rem;
       font-family: Source Han Sans CN;
       font-weight: 500;
-      color: #99FFFF;
+      color: #99ffff;
     }
     .value {
       font-size: 54px;
@@ -103,7 +111,7 @@ export default {
       }
     }
   }
-  .item-right{
+  .item-right {
     width: 39rem;
     height: 39rem;
     padding: 1.6rem;
@@ -116,19 +124,17 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    .little-item{
+    .little-item {
       display: flex;
       justify-content: space-around;
-      .item-title{
+      .item-title {
         font-size: 3.6rem;
       }
-      .item-number{
+      .item-number {
         font-size: 4rem;
         font-weight: 1000;
       }
-
     }
-
   }
 }
 </style>

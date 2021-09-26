@@ -1,8 +1,9 @@
 <template>
   <div class="Innovation">
-    <Left :style="{ left: Showleft + 'px' }" />
+    <transition name="slide" appear> <Left :key="Left" /></transition>
+
     <Center />
-    <Right :style="{ right: Showleft + 'px' }" />
+    <transition name="slide1" appear> <Right :key="Right" /></transition>
   </div>
 </template>
 
@@ -17,25 +18,10 @@ export default {
     Center,
     Right,
   },
-  data() {
-    return {
-      Showleft: -1900,
-      timer: null,
-    };
-  },
-  computed: {},
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 10) {
-        this.Showleft = 10;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .Innovation {
   box-sizing: border-box;
   position: relative;

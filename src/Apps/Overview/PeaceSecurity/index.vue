@@ -1,12 +1,15 @@
 <template>
   <div class="peace-security">
-    <Supervision :style="{ left: Showleft + 'px' }" />
-    <EventRank :style="{ left: Showleft1 + 'px' }" />
-    <Department :style="{ left: Showleft2 + 'px' }" />
-    <Complaint :style="{ left: Showleft2 + 'px' }" />
+    <transition name="slide" appear> <Supervision :key="Supervision" /></transition>
+    <transition name="slide" appear> <EventRank :key="EventRank" /></transition>
+    <transition name="slide" appear> <Department :key="Department" /></transition>
+    <transition name="slide" appear> <Complaint :key="Complaint" /></transition>
+
     <Map />
-    <Satisfaction :style="{ right: Showleft + 'px' }" />
-    <Keywords :style="{ right: Showleft + 'px' }" />
+    <transition name="slide1" appear> <Satisfaction :key="Satisfaction" /></transition>
+    <transition name="slide1" appear> <Keywords :key="Keywords" /></transition>
+    <!-- <Satisfaction />
+    <Keywords /> -->
   </div>
 </template>
 
@@ -29,52 +32,10 @@ export default {
     Satisfaction,
     Keywords,
   },
-  data() {
-    return {
-      show: true,
-      Showleft: -1900,
-      timer: null,
-      Showleft1: -1900,
-      timer1: null,
-      Showleft2: -1000,
-      timer2: null,
-      Showleft3: -1900,
-      timer3: null,
-    };
-  },
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 150) {
-        this.Showleft = 150;
-        clearInterval(this.timer);
-      }
-    }, 150);
-    this.timer1 = setInterval(() => {
-      this.Showleft1 += 150;
-      if (this.Showleft1 >= 150) {
-        this.Showleft1 = 150;
-        clearInterval(this.timer1);
-      }
-    }, 150);
-    this.timer2 = setInterval(() => {
-      this.Showleft2 += 150;
-      if (this.Showleft2 >= 990) {
-        this.Showleft2 = 990;
-        clearInterval(this.timer2);
-      }
-    }, 150);
-    this.timer3 = setInterval(() => {
-      this.Showleft3 += 150;
-      if (this.Showleft3 >= 990) {
-        this.Showleft3 = 990;
-        clearInterval(this.timer3);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .peace-security {
   position: relative;
   width: 100%;

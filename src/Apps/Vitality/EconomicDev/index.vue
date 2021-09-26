@@ -1,9 +1,8 @@
 <template>
   <div class="economic-dev">
     <Map />
-    <Left :style="{ left: Showleft + 'px' }" />
-    <Right :style="{ right: Showleft + 'px' }" />
-    <!--    <Right2 />-->
+    <transition name="slide" appear> <Left :key="Left" /></transition>
+    <transition name="slide1" appear> <Right :key="Right" /></transition>
   </div>
 </template>
 <script>
@@ -19,25 +18,10 @@ export default {
     Right,
     // Right2,
   },
-  data() {
-    return {
-      Showleft: -1900,
-      timer: null,
-    };
-  },
-  computed: {},
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 160) {
-        this.Showleft = 160;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .economic-dev {
   position: fixed;
   top: 0;

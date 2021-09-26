@@ -1,40 +1,30 @@
 <template>
   <div class="govern-serve">
-    <Left :style="{ left: Showleft + 'px' }" />
+    <transition name="slide" appear> <Left :key="Left" /></transition>
     <Map />
-    <Right :style="{ right: Showleft + 'px' }" />
+    <transition name="slide1" appear> <Right :key="Right" /></transition>
   </div>
 </template>
 
 <script>
-import Left from './Left';
+import Left from './LeftNew';
 import Map from './Map';
-import Right from './Right';
+import Right from './RightNew';
 
 export default {
   name: 'GovernServe',
   components: { Left, Map, Right },
   data() {
-    return {
-      show: true,
-      Showleft: -1900,
-    };
+    return {};
   },
   computed: {},
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 180) {
-        this.Showleft = 180;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
+  mounted() {},
   methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .govern-serve {
   width: 100%;
   height: 2070px;

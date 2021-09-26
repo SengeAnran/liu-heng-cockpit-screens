@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       chartData: [],
+      timmerOneAnim: null,
     };
   },
 
@@ -304,6 +305,18 @@ export default {
         ],
       };
       myChart.setOption(option, true);
+      var count = 0;
+      if (this.timmerOneAnim) {
+        clearInterval(this.timmerOneAnim);
+      }
+      this.timmerOneAnim = setInterval(() => {
+        myChart.dispatchAction({
+          type: 'showTip',
+          seriesIndex: 0,
+          dataIndex: count % 3,
+        });
+        count++;
+      }, 4500);
     },
   },
 };

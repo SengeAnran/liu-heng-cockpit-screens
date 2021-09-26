@@ -1,45 +1,32 @@
 <template>
   <div class="ProjectManage">
-    <ProjectManageLeft :style="{ left: Showleft + 'px' }" />
+    <transition name="slide" appear> <ProjectManageLeft :key="ProjectManageLeft" /></transition>
+    <transition name="slide1" appear> <ProjectManageRight :key="ProjectManageRight" /></transition>
+
     <ProjectManageMap />
-    <ProjectManageRight :style="{ right: Showleft + 'px' }" />
   </div>
 </template>
 
 <script>
 import ProjectManageLeft from './Left';
 import ProjectManageMap from './Map';
-import ProjectManageRight from './Right';
+import ProjectManageRight from './RightNew';
 
 export default {
   name: 'ProjectManage',
   components: { ProjectManageLeft, ProjectManageMap, ProjectManageRight },
-  data() {
-    return { Showleft: -1900, timer: null };
-  },
-  computed: {},
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 180) {
-        this.Showleft = 180;
-        clearInterval(this.timer);
-      }
-    }, 150);
-  },
+
   methods: {},
 };
 </script>
 
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .ProjectManage {
+  position: relative;
+  color: #fff;
   width: 100%;
   height: 2070px;
-  background-position: center;
-  // background: url('./images/bg.png') no-repeat 100% 100%;
-  // background: url('./images/pm-map-bg.png') no-repeat 100% 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  background-size: 100% 100%;
 }
 </style>

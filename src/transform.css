@@ -1,0 +1,20 @@
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s;
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.slide1-enter-active,
+.slide1-leave-active {
+  transition: all 0.5s;
+}
+
+.slide1-enter,
+.slide1-leave-to {
+  transform: translate3d(100%, 0, 0);
+}

@@ -1,34 +1,38 @@
 <template>
   <div class="Innovation">
-    <div class="left-webview">
-      <!-- 六横镇科技情况 -->
-      <secondary-title name="六横镇科技情况" isLarge />
-      <div class="left-container">
-        <div>
-          <!-- 专利数量 -->
-          <patent-number />
-          <!-- 变化趋势 -->
-          <changes-trends />
-          <!-- 申报产业领域 Top -->
-          <industry-field />
-        </div>
-        <div>
-          <!-- 专利权重分析 -->
-          <patent-weight />
-          <!-- 人才类型分布 -->
-          <talent-type />
+    <transition name="slide" appear>
+      <div class="left-webview">
+        <!-- 六横镇科技情况 -->
+        <secondary-title name="六横镇科技情况" isLarge />
+        <div class="left-container">
+          <div>
+            <!-- 专利数量 -->
+            <patent-number />
+            <!-- 变化趋势 -->
+            <changes-trends />
+            <!-- 申报产业领域 Top -->
+            <industry-field />
+          </div>
+          <div>
+            <!-- 专利权重分析 -->
+            <patent-weight />
+            <!-- 人才类型分布 -->
+            <talent-type />
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
     <div class="center-webview">
       <amap-map />
     </div>
-    <div class="right-webview">
-      <!-- 发明专利列表 -->
-      <patent-list />
-      <!-- 六横镇人才专利发明证书 -->
-      <patent-certificate />
-    </div>
+    <transition name="slide1" appear>
+      <div class="right-webview">
+        <!-- 发明专利列表 -->
+        <patent-list />
+        <!-- 六横镇人才专利发明证书 -->
+        <patent-certificate />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -57,6 +61,9 @@ export default {
   },
 };
 </script>
+<style>
+@import url('../../../transform.css');
+</style>
 <style lang="scss" scoped>
 .Innovation {
   box-sizing: border-box;

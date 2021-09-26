@@ -1,8 +1,9 @@
 <template>
   <div class="public-voice">
-    <Left1 :style="{ left: Showleft + 'px' }" />
-    <Left2 :style="{ left: Showleft1 + 'px' }" />
-    <Right :style="{ right: Showleft + 'px' }" />
+    <transition name="slide" appear> <Left1 :key="Left1" /></transition>
+    <transition name="slide" appear> <Left2 :key="Left2" /></transition>
+    <!-- <Right /> -->
+    <transition name="slide1" appear> <Right :key="Right" /></transition>
     <Map />
   </div>
 </template>
@@ -19,34 +20,10 @@ export default {
     Right,
     Map,
   },
-  data() {
-    return {
-      Showleft: -1900,
-      timer: null,
-      Showleft1: -1000,
-      timer1: null,
-    };
-  },
-  computed: {},
-  mounted() {
-    this.timer = setInterval(() => {
-      this.Showleft += 150;
-      if (this.Showleft >= 160) {
-        this.Showleft = 160;
-        clearInterval(this.timer);
-      }
-    }, 150);
-    this.timer1 = setInterval(() => {
-      this.Showleft1 += 150;
-      if (this.Showleft1 >= 1020) {
-        this.Showleft1 = 1020;
-        clearInterval(this.timer1);
-      }
-    }, 150);
-  },
 };
 </script>
 <style lang="scss" scoped>
+@import url('../../../transform.css');
 .public-voice {
   position: fixed;
   top: 0;

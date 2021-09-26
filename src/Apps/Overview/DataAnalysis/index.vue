@@ -1,43 +1,27 @@
 <template>
   <div class="DataAnalysis">
-    <div class="left-webview">
-      <!-- 宜居之岛 -->
-      <livable-island />
-      <!-- 产业之岛 -->
-      <industry-island />
-    </div>
-    <div class="center-webview">
-      <!-- 奋斗之岛 -->
-      <struggle-island />
-      <!-- 平安之岛 -->
-      <safe-island />
-    </div>
-    <div class="right-webview">
-      <!-- 中枢之岛 -->
-      <hub-island />
-      <!-- 制造之岛 -->
-      <create-island />
-    </div>
+    <iframe
+      name="iframeMap"
+      id="iframeMapViewComponent"
+      v-bind:src="getPageUrl"
+      width="100%"
+      height="1100px"
+      frameborder="0"
+      scrolling="no"
+      ref="iframeDom"
+    ></iframe>
   </div>
 </template>
 
 <script>
-import LivableIsland from './modules/LivableIsland';
-import IndustryIsland from './modules/IndustryIsland';
-import StruggleIsland from './modules/StruggleIsland';
-import SafeIsland from './modules/SafeIsland';
-import HubIsland from './modules/HubIsland';
-import CreateIsland from './modules/CreateIsland';
-
 export default {
   name: 'DataAnalysis',
-  components: {
-    LivableIsland,
-    IndustryIsland,
-    StruggleIsland,
-    SafeIsland,
-    HubIsland,
-    CreateIsland,
+  components: {},
+  data() {
+    return {
+      getPageUrl:
+        'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html?ticket=ST-2347-VXABoKcLo7DVsuC166nR-cdsf-bigdata',
+    };
   },
 };
 </script>

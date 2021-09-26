@@ -119,7 +119,7 @@ export default [
     name: '三防应急',
     component: ThirdPage,
     props: {
-      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/sanfang.html',
+      url: 'http://10.80.17.147:9091/h5app_liuheng/views/liuheng/views/sanfang.html',
       width: 5760,
       height: 1350,
     },
@@ -129,7 +129,7 @@ export default [
     name: '城市管理',
     component: ThirdPage,
     props: {
-      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/cityManage.html',
+      url: 'http://10.80.17.147:9091/h5app_liuheng/views/liuheng/views/cityManage.html',
       width: 5760,
       height: 1350,
     },
@@ -139,7 +139,7 @@ export default [
     name: '平安六横',
     component: ThirdPage,
     props: {
-      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/safeLiuheng.html',
+      url: 'http://10.80.17.147:9091/h5app_liuheng/views/liuheng/views/safeLiuheng.html',
       width: 5760,
       height: 1350,
     },
@@ -149,7 +149,7 @@ export default [
     name: '安全生产',
     component: ThirdPage,
     props: {
-      url: 'http://60.163.192.206:8000/h5app_liuheng/views/liuheng/views/safeProduction.html',
+      url: 'http://10.80.17.147:9091/h5app_liuheng/views/liuheng/views/safeProduction.html',
       width: 5760,
       height: 1350,
     },
@@ -262,7 +262,7 @@ export default [
           indicator: [
             { name: '正式党员数量', value: 275, unit: '人' },
             { name: '预备党员', value: 27, unit: '人' },
-            { name: '发展党员', value: 23, unit: '人' },
+            { name: '发展党员', value: 0, unit: '人' },
           ],
         },
       },
