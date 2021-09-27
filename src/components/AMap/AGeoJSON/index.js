@@ -52,8 +52,11 @@ export default {
           });
         },
         getMarker(feature, position) {
+          const content = typeof markerStyle.content === 'function' ? markerStyle.content(feature) : markerStyle.content;
           return new AMap.Marker({
+            // content: '',
             ...markerStyle,
+            content,
             position: position,
             extData: feature,
           });
