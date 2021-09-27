@@ -20,7 +20,7 @@
         <img class="img" src="../../images/city/city-renkou.png" />
         <div class="title">人口密度</div>
         <div class="count_wrapper">
-          <digital :loop="loop" :endNum="sqmj.xzsqmj || 0" :data="data1" :config="config2"></digital>
+          <digital :loop="loop" :endNum="sqmj.rkmd || 0" :data="data1" :config="config2"></digital>
         </div>
       </div>
     </div>

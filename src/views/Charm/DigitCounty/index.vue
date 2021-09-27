@@ -120,7 +120,7 @@ export default {
   },
   data() {
     return {
-      defaultName: '荷花小区',
+      defaultName: '五星村',
       CommunityOverview: '社区概述',
       nationList: [], // 民族比例
       manAwomenList: [], // 男女性别比
@@ -230,6 +230,7 @@ export default {
         // 男女比例 + 民族比例
         this.manAwomenList = result.sex;
         this.nationList = result.nation;
+
         this.contain1.title = result.sqmc;
         this.contain1.content = result.sqjs;
         this.contain2[0].count = result.zzzqs; // 镇宅住区数
@@ -310,6 +311,7 @@ export default {
     const requestdata = {
       name: this.defaultName,
     };
+
     this.initData(requestdata);
   },
 };

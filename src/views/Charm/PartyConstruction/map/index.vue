@@ -71,7 +71,7 @@ export default {
           lng: 122.119297,
         },
         {
-          name: '中共舟山市普陀区六横镇洋山新村邵家水潭跟路53号',
+          name: '舟山市普陀区六横镇洋山新村总支部委员会',
           type: '党总支',
           address: '中共舟山市普陀区六横镇洋山新村邵家水潭跟路53号',
           lat: 29.745253,
@@ -114,46 +114,137 @@ export default {
           lng: 122.071268,
         },
         {
-          name: '舟山市普陀区六横镇龙山新村总支部委员会',
+          name: '舟山市普陀区六横镇双塘新村总支部委员会',
           type: '党总支',
           address: '舟山市普陀区六横镇张家塘街道上张家塘7号',
           lat: 29.721536,
           lng: 122.144487,
         },
         {
-          name: '舟山市普陀区六横镇双塘新村总支部委员会',
+          name: '舟山市普陀区六横镇张家塘新村总支部委员会',
           type: '党总支',
           address: '舟山市普陀区六横镇张家塘新村',
           lat: 29.724202,
           lng: 122.14559,
         },
         {
-          name: '舟山市普陀区六横镇张家塘新村总支部委员会',
+          name: '舟山市普陀区六横镇青联村总支部委员会',
           type: '党总支',
           address: '舟山市普陀区六横镇青联村王家庙跟岙25号',
           lat: 29.720383,
           lng: 122.139215,
         },
         {
-          name: '舟山市普陀区六横镇青联村总支部委员会',
+          name: '舟山市普陀区六横镇青山村党总支',
           type: '党总支',
           address: '舟山市普陀区六横镇青沙村仰天外山咀12号',
           lat: 29.703315,
           lng: 122.127145,
         },
         {
-          name: '舟山市普陀区六横镇青山村党总支',
+          name: '舟山市普陀区六横镇岑夏村总支部委员会',
           type: '党总支',
           address: '舟山市普陀区六横镇岑夏村庙前102号',
           lat: 29.729014,
           lng: 122.127736,
         },
         {
-          name: '舟山市普陀区六横镇岑夏村总支部委员会',
-          type: '党委',
+          name: '舟山市普陀区六横镇平峧村总支部委员会',
+          type: '党总支',
           address: '六横镇平峧支出村外平峧55号',
           lat: 29.719541,
           lng: 122.1681,
+        },
+        {
+          name: '舟山市普陀区六横镇杜庄村党总支',
+          type: '党总支',
+          address: '舟山市普陀区六横镇杜庄村仁房4号',
+          lat: 29.696382,
+          lng: 122.140591,
+        },
+        {
+          name: '舟山市普陀区六横镇小湖村党总支',
+          type: '党总支',
+          address: '舟山市普陀区六横镇小湖村西边57号',
+          lat: 29.675471,
+          lng: 122.14265,
+        },
+        {
+          name: '舟山市普陀区六横镇苍洞村党总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇苍洞村',
+          lat: 29.680297,
+          lng: 122.164266,
+        },
+        {
+          name: '舟山市普陀区六横镇礁潭新村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇礁潭新村西厂51号',
+          lat: 29.701243,
+          lng: 122.163758,
+        },
+        {
+          name: '舟山市普陀区六横镇台门总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇台门镇府南路11号',
+          lat: 29.696972,
+          lng: 122.197714,
+        },
+        {
+          name: '舟山市普陀区六横镇田岙村总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇田岙村里胡家67号',
+          lat: 29.681351,
+          lng: 122.17951,
+        },
+        {
+          name: '舟山市普陀区六横镇悬山村党总支',
+          type: '党总支',
+          address: '舟山市普陀区六横镇悬山村村民委员会',
+          lat: 29.696683,
+          lng: 122.197694,
+        },
+        {
+          name: '舟山市普陀区六横镇佛渡村党总支',
+          type: '党总支',
+          address: '佛渡村道头咀双屿路1号',
+          lat: 29.742948,
+          lng: 122.034904,
+        },
+        {
+          name: '舟山市普陀区六横镇蟑螂山社区总支部委员会',
+          type: '党总支',
+          address: '六横镇蟑螂山荷花小区30幢1号',
+          lat: 29.749973,
+          lng: 122.116741,
+        },
+        {
+          name: '舟山市普陀区六横镇新民社区总支部委员会',
+          type: '党总支',
+          address: '舟山市普陀区六横镇台门台兴路109号',
+          lat: 29.697554,
+          lng: 122.194207,
+        },
+        {
+          name: '舟山群岛新区六横管理委员会城市管理局党总支',
+          type: '党总支',
+          address: '舟山市普陀区六横镇六横城管局',
+          lat: 29.742272,
+          lng: 122.130001,
+        },
+        {
+          name: '舟山市龙山船厂有限公司党委',
+          type: '党委',
+          address: '浙江省舟山市普陀区六横镇沙岙',
+          lat: 29.772583,
+          lng: 122.078943,
+        },
+        {
+          name: '鑫亚船舶修造有限公司党委',
+          type: '党委',
+          address: '浙江省舟山市普陀区六横镇东浪咀',
+          lat: 29.790001,
+          lng: 122.12013,
         },
       ],
       lastDetailMarker: null,
@@ -215,8 +306,6 @@ export default {
     },
     // eslint-disable-next-line space-before-function-paren
     async renderMarker() {
-      // const result = await partyConstruct().request();
-      // console.log('map data:', result);
       for (let index = 0; index < this.dataList.length; index++) {
         const element = this.dataList[index];
         // const type = '文化礼堂';
@@ -241,18 +330,15 @@ export default {
 
     handleMarkerClick(ev, element) {
       console.log(ev, element);
-      // const item = new AMap.LngLat(ev.lng, ev.lat);
       this.clearLastMarkerDetail();
       const marker = ev.target;
       const feature = marker.getExtData();
-      // console.log(marker, feature.properties);
       const content = this.detailTemplate(feature.properties, element);
       marker.setzIndex(1000);
       marker.setContent(content);
       this.lastDetailMarker = marker;
       this.lastDetailMarker.type = this.selected;
     },
-    // eslint-disable-next-line space-before-function-paren
     clearLastMarkerDetail() {
       if (!this.lastDetailMarker) {
         return;

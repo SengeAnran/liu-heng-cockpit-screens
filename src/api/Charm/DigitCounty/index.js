@@ -7,6 +7,9 @@ export const getCommunityInfo = (data) => {
     url: '/community/communityInfo',
     method: 'get',
     data,
+    header: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
   });
 };
 

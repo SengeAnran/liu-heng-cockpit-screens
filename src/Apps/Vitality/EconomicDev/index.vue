@@ -1,8 +1,9 @@
 <template>
   <div class="economic-dev">
     <Map />
-    <transition name="slide" appear> <Left :key="Left" /></transition>
-    <transition name="slide1" appear> <Right :key="Right" /></transition>
+    <Left />
+    <Right />
+<!--    <Right2 />-->
   </div>
 </template>
 <script>
@@ -21,7 +22,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import url('../../../transform.css');
 .economic-dev {
   position: fixed;
   top: 0;

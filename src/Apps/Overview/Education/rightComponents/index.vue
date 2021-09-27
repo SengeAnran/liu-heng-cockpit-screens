@@ -63,6 +63,7 @@ export default {
       this.kindergarten = this.resolveData(kindergarten);
       this.primarySchool = this.resolveData(primarySchool);
       this.juniorSchool = this.resolveData(juniorSchool);
+      console.log(this.juniorSchool);
       this.heightSchool = this.resolveData(heightSchool);
     },
     resolveData(data, obj = { xAxis: [], classNum: [], allPeople: [] }) {

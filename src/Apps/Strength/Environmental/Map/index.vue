@@ -15,6 +15,7 @@ export default {
       map: null,
       mapDom: null,
       markers: [],
+      infoWindow: null,
       makerList: [
         {
           lng: 122.153611,
@@ -40,53 +41,29 @@ export default {
     };
   },
   mounted() {
-    this.mapDom = this.$refs.map;
-    this.map = new AMap.Map(this.mapDom, {
-      resizeEnable: true,
-      zoom: 13.4,
-      zooms: [3, 16],
-      center: [122.120087, 29.742798],
-      mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
-    });
-    this.map.on('click', (e) => {
-      if (this.infoWindow.close) {
-        this.infoWindow.close();
-      }
-    });
-    this.initSadian();
+    this.initMap();
   },
   methods: {
-    // 加载撒点
-    initSadian() {
-      var jiezhong = new AMap.Icon({
-        // 图标尺寸
-        size: new AMap.Size(70, 70),
-        // 图标的取图地址
-        image: require('./img/sheshui.png'),
-        // image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-via-marker.png',
-        // 图标所用图片大小
-        imageSize: new AMap.Size(70, 70),
-        // 图标取图偏移量
-        imageOffset: new AMap.Pixel(-9, -3),
+    initMap() {
+      this.mapDom = this.$refs.map;
+      this.map = new AMap.Map(this.mapDom, {
+        resizeEnable: true,
+        zoom: 13,
+        center: [122.200254, 29.707613],
+        mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
-      this.makerList.forEach((item) => {
-        const startMarker = new AMap.Marker({
-          position: new AMap.LngLat(item.lng, item.lat),
-          icon: jiezhong,
-          offset: new AMap.Pixel(-13, -30),
-        });
-        startMarker.on('click', (e) => {
-          this.addInfoWindow(item, item.lng, item.lat);
-        });
-        this.markers.push(startMarker);
+      this.infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -30) });
+      this.map.on('click', (e) => {
+        if (this.infoWindow.close) {
+          this.infoWindow.close();
+        }
       });
-      this.map.add([...this.markers]);
+      this.initMarkers();
     },
-
-    addInfoWindow(markerMsg, lng, lat) {
-      // const { lng, lat } = lnglat;
+    addInfoWindow(markerMsg, lnglat) {
+      const { lng, lat } = lnglat;
       const html = `<div class='pop-up-box'>
-         2131231231
+          <h3>${markerMsg.address}</h3>
         </div>`;
       const infoWindow = new AMap.InfoWindow({
         isCustom: true, // 使用自定义窗体
@@ -95,6 +72,31 @@ export default {
       });
       this.infoWindow = infoWindow;
       infoWindow.open(this.map, [lng, lat]);
+    },
+    // 加载医院
+    initMarkers() {
+      var yiyuanIcon = new AMap.Icon({
+        // 图标尺寸
+        size: new AMap.Size(70, 70),
+        // 图标的取图地址
+        image: require('./img/sheshui.png'),
+        // 图标所用图片大小
+        imageSize: new AMap.Size(70, 70),
+        // 图标取图偏移量
+        imageOffset: new AMap.Pixel(-9, -3),
+      });
+      this.makerList.forEach((item) => {
+        const startMarker = new AMap.Marker({
+          position: new AMap.LngLat(item.lng, item.lat),
+          icon: yiyuanIcon,
+          offset: new AMap.Pixel(-13, -30),
+        });
+        startMarker.on('click', (e) => {
+          this.addInfoWindow(item, e.lnglat);
+        });
+        this.markers.push(startMarker);
+      });
+      this.map.add([...this.markers]);
     },
   },
 };
@@ -123,6 +125,70 @@ export default {
     right: 0;
     width: 100%;
     height: 1350px;
+  }
+  ::v-deep .pop-up-box {
+    width: 550px;
+    // height: 462px;
+    position: absolute;
+    left: 2126px;
+    top: 503px;
+    background: url('./img/pop-up-bg.png') no-repeat;
+    background-size: 100% 100%;
+    padding-left: 53px;
+    padding-right: 53px;
+    z-index: 10;
+    .flex {
+      display: flex;
+    }
+    h3 {
+      font-size: 34px;
+      font-family: 'Source Han Sans SC';
+      font-weight: bold;
+      color: #77ffff;
+    }
+    .name {
+      font-size: 30px;
+      font-family: Source Han Sans CN;
+      font-weight: 500;
+      color: #ffffff;
+      height: 50px;
+    }
+    .content {
+      height: 40px;
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #ffffff;
+      overflow: auto;
+    }
+    .content1 {
+      height: 150px;
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #ffffff;
+      overflow: auto;
+      margin-bottom: 20px;
+    }
+    > div {
+      width: 100%;
+      // margin-bottom: 46px;
+      > div {
+        width: 100%;
+      }
+      label {
+        font-size: 30px;
+        font-family: 'Source Han Sans CN';
+        font-weight: 500;
+        color: #ffffff;
+      }
+      span {
+        font-size: 30px;
+        font-family: 'DIN';
+        font-weight: bold;
+        color: #ffffff;
+      }
+    }
   }
 }
 </style>

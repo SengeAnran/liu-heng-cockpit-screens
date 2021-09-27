@@ -71,7 +71,7 @@ import {
   // getQuantityTrend,
   // getSexAndAgeStructure,
   // getPartyGroupEduStructure,
-  // peopleBasicInfo,
+  peopleBasicInfo,
 } from '@/api/Charm/PartyConstruction';
 export default {
   data() {
@@ -150,7 +150,7 @@ export default {
     },
     // 魅力六横
     async charmLoadData() {
-      // const res = await peopleBasicInfo().request();
+      const res = await peopleBasicInfo().request();
       const data = {
         auth: {
           serviceId: '09a3fe0aa4634c608b9c103b053480d3', // 数据开放服务Id
@@ -163,9 +163,9 @@ export default {
         includeColumns: false,
         params: [],
       };
-      const res = await getPartyMemberBasicSit(data);
+      // const res = await getPartyMemberBasicSit(data);
       const res2 = await getVillagerInfo().request();
-      console.log(res);
+      // console.log(res, '131231231');
       // console.log(this.secondaryNav);
       // for (let i = 0; i < res.length; i++) {
       this.secondaryNav[0].meta.indicator[0].value = res.list[0].zsdyrs;

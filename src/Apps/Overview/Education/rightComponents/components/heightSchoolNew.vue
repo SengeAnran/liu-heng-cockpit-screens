@@ -8,14 +8,13 @@
 <script>
 import * as echarts from 'echarts';
 export default {
+  name: 'TeacherIncrease',
   components: {},
   props: {
     dataMessage: {
       type: Object,
       default: () => {
-        return {
-          timmerOneAnim: null,
-        };
+        return {};
       },
     },
   },
@@ -25,7 +24,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      timmerOneAnim: null,
+    };
   },
   mounted() {
     const charts = this.$refs.charts;
@@ -215,24 +216,24 @@ export default {
             symbolOffset: ['100%', '50%'],
             symbolSize: [20, 20],
           },
-          // {
-          //   name: '总人数',
-          //   data: this.dataMessage.allPeople,
-          //   type: 'pictorialBar',
-          //   barMaxWidth: '20',
-          //   symbolPosition: 'end',
-          //   symbol: 'diamond',
-          //   symbolOffset: ['70%', '-50%'],
-          //   symbolSize: [20, 15],
-          //   zlevel: 2,
-          //   itemStyle: {
-          //     normal: {
-          //       borderColor: '#8bead4',
-          //       borderWidth: 2,
-          //       color: '#8bead4',
-          //     },
-          //   },
-          // },
+          {
+            name: '总人数',
+            data: this.dataMessage.allPeople,
+            type: 'pictorialBar',
+            barMaxWidth: '20',
+            symbolPosition: 'end',
+            symbol: 'diamond',
+            symbolOffset: ['70%', '-50%'],
+            symbolSize: [20, 15],
+            zlevel: 2,
+            itemStyle: {
+              normal: {
+                borderColor: '#8bead4',
+                borderWidth: 2,
+                color: '#8bead4',
+              },
+            },
+          },
         ],
       };
       return option;
@@ -246,8 +247,8 @@ export default {
   width: 855px;
   height: 400px;
   position: absolute;
-  top: 655px;
-  left: 10px;
+  top: 650px;
+  right: 10px;
   z-index: 101010;
   .line_chart {
     height: 400px;
@@ -256,7 +257,7 @@ export default {
   }
   .name {
     position: absolute;
-    top: 5px;
+    top: 0px;
     left: 30px;
     font-size: 24px;
     color: white;

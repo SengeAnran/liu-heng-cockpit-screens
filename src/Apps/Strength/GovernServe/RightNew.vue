@@ -1,8 +1,19 @@
 <template>
   <div class="right">
-    <BaseTitle title="监控视频" :width="800" />
-    <Jiankong></Jiankong>
-    <Banlixinxi></Banlixinxi>
+    <div>
+      <div>
+        <BaseTitle title="监控视频" :width="800" />
+        <Jiankong></Jiankong>
+      </div>
+      <div class="yuedu">
+        <BaseTitle title="月度明星" :width="800" />
+        <Yuedumingxing></Yuedumingxing>
+      </div>
+    </div>
+    <div>
+      <BaseTitle title="本月事件办理量排行" :width="800" />
+      <Banlixinxi></Banlixinxi>
+    </div>
   </div>
 </template>
 
@@ -10,8 +21,10 @@
 import Banlixinxi from './RightItem/banlixinxi';
 import Jiankong from './RightItem/jiankong';
 
+import Yuedumingxing from './RightItem/yuedumingxing';
+
 export default {
-  components: { Jiankong, Banlixinxi },
+  components: { Jiankong, Banlixinxi, Yuedumingxing },
 };
 </script>
 
@@ -27,5 +40,9 @@ export default {
   display: flex;
   color: #fff;
   z-index: 999;
+}
+.yuedu {
+  position: absolute;
+  top: 500px;
 }
 </style>

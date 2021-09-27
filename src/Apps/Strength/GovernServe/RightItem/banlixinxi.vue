@@ -6,7 +6,7 @@
           <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>
         </div>
         <div class="table-body">
-          <div class="table-body-item" v-for="(item, index) in 11" :key="item">
+          <div class="table-body-item" v-for="(item, index) in 9" :key="item">
             <div>{{ index + 1 }}</div>
             <div>综合受理</div>
             <div>203</div>
@@ -57,6 +57,7 @@ export default {
   }
 }
 .table-title {
+  margin-top: 30px;
   width: 799px;
   height: 75px;
   border-image: linear-gradient(0deg, #ffffff) 10 10;

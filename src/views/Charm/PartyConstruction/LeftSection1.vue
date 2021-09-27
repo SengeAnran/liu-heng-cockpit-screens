@@ -57,7 +57,7 @@ import {
   getQuantityTrend,
   getSexAndAgeStructure,
   getPartyGroupEduStructure,
-  // peopleBasicInfo,
+  peopleBasicInfo,
 } from '@/api/Charm/PartyConstruction';
 
 // 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
@@ -121,12 +121,12 @@ export default {
       indiData: [
         {
           label: '正式党员',
-          value: 275,
+          value: 0,
           unit: '人',
         },
         {
           label: '预备党员',
-          value: 275,
+          value: 0,
           unit: '人',
         },
         {
@@ -207,22 +207,22 @@ export default {
         includeColumns: false,
         params: [],
       };
-      const res = await getPartyMemberBasicSit(data);
+      // const res = await getPartyMemberBasicSit(data);
+      const res = await peopleBasicInfo().request();
       const res2 = await getQuantityTrend(data2);
-      const res3 = await getSexAndAgeStructure(data3);
+      // const res3 = await getSexAndAgeStructure(data3);
       const res4 = await getPartyGroupEduStructure(data4);
-      console.log(res3.list, res4, res, res2, 'json');
+      console.log(res4, res, res2, 'json');
       const ageSexData = [];
-      ageSexData.push(this.SexAge(res3.list, '男'));
-      ageSexData.push(this.SexAge(res3.list, '女'));
-      if (res) {
-        this.indiData[0].value = res.list[0].zsdyrs;
-        this.indiData[1].value = res.list[0].ybdyrs;
-        // this.indiData[2].value = res.list[0].fzdyrs;
-        this.sexAgeData = ageSexData;
-        console.log(res4.list.sort(this.SortBai));
-        this.educationData = res4.list;
-      }
+      // ageSexData.push(this.SexAge(res3.list, '男'));
+      // ageSexData.push(this.SexAge(res3.list, '女'));
+
+      this.indiData[0].value = res.list[0].zsdyrs;
+      this.indiData[1].value = res.list[0].ybdyrs;
+      // this.indiData[2].value = res.list[0].fzdyrs;
+      this.sexAgeData = ageSexData;
+      console.log(res4.list.sort(this.SortBai));
+      this.educationData = res4.list;
     },
     SortBai(a, b) {
       return a.zsdyrs - b.zsdyrs;

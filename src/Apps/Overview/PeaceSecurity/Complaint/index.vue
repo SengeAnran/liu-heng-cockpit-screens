@@ -23,10 +23,10 @@ export default {
   data() {
     return {
       list: [
-        { value: 1048, name: '电话信访' },
-        { value: 735, name: '来信信访' },
-        { value: 580, name: '网络举报' },
-        { value: 580, name: '其他方式' },
+        { value: 1048, name: '渔政' },
+        { value: 735, name: '城管' },
+        { value: 580, name: '海事' },
+        { value: 580, name: '边检' },
       ],
       colors: ['#357CFF', '#77FF5C', '#FFAC5B', '#77FFFF'],
     };
@@ -45,14 +45,16 @@ export default {
   },
   methods: {
     loadData() {
-      getComplainTrend().request().then((json) => {
-        this.list = json.map((item) => {
-          item.name = item.xfts;
-          item.value = item.cs || 0;
-          return item;
+      getComplainTrend()
+        .request()
+        .then((json) => {
+          this.list = json.map((item) => {
+            item.name = item.xfts;
+            item.value = item.cs || 0;
+            return item;
+          });
+          this.chart.setOption(this.optionData(this.list));
         });
-        this.chart.setOption(this.optionData(this.list));
-      });
     },
     optionData(data) {
       return {

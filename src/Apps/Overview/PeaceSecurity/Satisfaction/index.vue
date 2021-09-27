@@ -15,65 +15,51 @@ export default {
       chart: null,
       list: [
         {
-          name: '幸福小区',
-          value: 24,
+          name: '非现场违法处理',
+          value: 60,
         },
         {
-          name: '蓝色小区',
+          name: '综合受理',
           value: 40,
         },
         {
-          name: '西湖小区',
+          name: '公安综合',
           value: 54,
         },
         {
-          name: '绿洲小区',
+          name: '水务综合',
           value: 72,
         },
         {
-          name: '新华小区',
+          name: '电力综合',
           value: 64,
         },
         {
-          name: '凤凰小区',
+          name: '其他',
           value: 58,
-        },
-        {
-          name: '东隅小区',
-          value: 68,
-        },
-        {
-          name: '金陵小区',
-          value: 84,
-        },
-        {
-          name: '白树小区',
-          value: 29,
-        },
-        {
-          name: '晨曦小区',
-          value: 43,
         },
       ],
     };
   },
-  components: {
-  },
+  components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.barChart);
-    // this.chart.setOption(this.optionData(this.list));
-    this.loadData();
+    this.chart.setOption(this.optionData(this.list));
+    // this.loadData();
   },
   methods: {
     loadData() {
-      getSatisfactionTrend().request().then((json) => {
-        this.list = json.map((item) => {
-          item.name = item.sqmc;
-          item.value = item.mydzs * 100 || 0;
-          return item;
+      getSatisfactionTrend()
+        .request()
+        .then((json) => {
+          debugger;
+          this.list = json.map((item) => {
+            item.name = item.sqmc;
+            item.value = item.mydzs * 100 || 0;
+            return item;
+          });
+          this.chart.setOption(this.optionData(this.list));
         });
-        this.chart.setOption(this.optionData(this.list));
-      });
     },
     optionData(data) {
       return {
@@ -148,49 +134,50 @@ export default {
             show: false,
           },
         },
-        series: [{
-          data: data.map((item) => {
-            return item.value;
-          }),
-          type: 'bar',
-          barWidth: 18,
-          label: {
-            show: true,
-            position: 'top',
-            distance: 10,
-            color: '#FFFFFF',
-            textStyle: {
-              fontSize: 22,
-              fontFamily: 'DIN Alternate',
+        series: [
+          {
+            data: data.map((item) => {
+              return item.value;
+            }),
+            type: 'bar',
+            barWidth: 28,
+            label: {
+              show: true,
+              position: 'top',
+              distance: 10,
+              color: '#FFFFFF',
+              textStyle: {
+                fontSize: 22,
+                fontFamily: 'DIN Alternate',
+              },
             },
-          },
-          itemStyle: {
-            borderColor: new echarts.graphic.LinearGradient(
-              0, 0, 0, 1,
-              [{
-                offset: 0,
-                color: 'rgba(0, 234, 235, 0.4)',
-              },
-              {
-                offset: 1,
-                color: '#00eaeb',
-              },
+            itemStyle: {
+              borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: 'rgba(0, 234, 235, 0.4)',
+                },
+                {
+                  offset: 1,
+                  color: '#00eaeb',
+                },
               ]),
-            shadowColor: 'blue',
-            shadowBlur: 12,
-            shadowOffsetX: 0,
-            shadowOffsetY: 0,
-            borderWidth: 2,
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 1,
-              y2: 0,
-              colorStops: this.resolveOpacity('0, 255, 255'),
+              shadowColor: 'blue',
+              shadowBlur: 12,
+              shadowOffsetX: 0,
+              shadowOffsetY: 0,
+              borderWidth: 2,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 1,
+                y2: 0,
+                colorStops: this.resolveOpacity('0, 255, 255'),
+              },
             },
           },
-        }],
+        ],
       };
     },
     resolveOpacity(rc) {
