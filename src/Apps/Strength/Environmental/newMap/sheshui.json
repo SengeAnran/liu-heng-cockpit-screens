@@ -1,0 +1,28 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "涉水污染企业",
+                "name": "舟山中电建水务有限公司",
+                "address": "舟山市普陀区六横镇梅峙村",
+                "jibei": "非重点源",
+                "ph": "6.88",
+                "hy": "6.5mg/L",
+                "NHN": "0.07mg/L",
+                "allP": "0.097mg/L",
+                "allN": "8.3mg/L",
+                "paifangbianhao": "DW001",
+                "feishui": "61.68m/s"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.153611,
+                    29.721389
+                ]
+            }
+        }
+    ]
+}

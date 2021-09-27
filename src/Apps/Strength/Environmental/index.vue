@@ -1,8 +1,9 @@
 <template>
   <div class="environmental">
+    <Map />
     <transition name="slide" appear> <AirQuality :key="AirQuality" /></transition>
     <transition name="slide" appear> <Pollution :key="Pollution" /></transition>
-    <Map />
+
     <transition name="slide1" appear> <DangerWaste :key="DangerWaste" /></transition>
     <transition name="slide1" appear> <Punishment :key="Punishment" /></transition>
     <transition name="slide1" appear> <WaterQuality :key="WaterQuality" /></transition>
@@ -12,7 +13,8 @@
 <script>
 import AirQuality from './AirQuality';
 import Pollution from './Pollution';
-import Map from './Map';
+// import Map from './Map';
+import Map from './newMap';
 import DangerWaste from './DangerWaste';
 import Punishment from './Punishment';
 import WaterQuality from './WaterQuality';

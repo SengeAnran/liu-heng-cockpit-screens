@@ -1,10 +1,6 @@
 <template>
   <Map>
-    <AGeoJSON
-      key="lhArea"
-      :source="points"
-      :geoStyle="{ marker: markerStyle }"
-    >
+    <AGeoJSON key="lhArea" :source="points" :geoStyle="{ marker: markerStyle }">
       <template v-slot:popup="feature">
         <MarkerPopup :feature="feature" />
       </template>
@@ -40,5 +36,5 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "./mark.scss";
+@import './mark.scss';
 </style>

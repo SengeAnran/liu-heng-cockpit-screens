@@ -207,8 +207,9 @@ export default {
         includeColumns: false,
         params: [],
       };
-      // const res = await getPartyMemberBasicSit(data);
-      const res = await peopleBasicInfo().request();
+      const res = await getPartyMemberBasicSit(data);
+      // debugger;
+      // const res = await peopleBasicInfo().request();
       const res2 = await getQuantityTrend(data2);
       // const res3 = await getSexAndAgeStructure(data3);
       const res4 = await getPartyGroupEduStructure(data4);

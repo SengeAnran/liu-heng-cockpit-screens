@@ -58,7 +58,7 @@ export default {
       dataList: [
         {
           name: '舟山市普陀区六横镇委员会',
-          type: '党委',
+          type: '礼堂',
           address: '舟山市普陀区六横镇三八路1号',
           lat: 29.745315,
           lng: 122.122129,
@@ -247,7 +247,45 @@ export default {
           lng: 122.12013,
         },
       ],
+      wenhualitang: [
+        {
+          name: '大沙岙文化礼堂',
+          type: '礼堂',
+          address: '六横镇佛渡村大沙岙',
+          lat: 29.738199,
+          lng: 122.030864,
+        },
+        {
+          name: '佛东文化礼堂',
+          type: '礼堂',
+          address: '六横镇佛渡村佛东文化礼堂',
+          lat: 29.752646,
+          lng: 122.042047,
+        },
+        {
+          name: '杜庄文化礼堂',
+          type: '礼堂',
+          address: '六横镇杜庄村仁房4号',
+          lat: 29.696382,
+          lng: 122.140591,
+        },
+        {
+          name: '梅峙文化礼堂',
+          type: '礼堂',
+          address: '六横镇梅峙村梅峙东139号',
+          lat: 29.718975,
+          lng: 122.164489,
+        },
+        {
+          name: '清港文化礼堂',
+          type: '礼堂',
+          address: '六横镇青联村清港新农村123号',
+          lat: 29.717001,
+          lng: 122.138697,
+        },
+      ],
       lastDetailMarker: null,
+      shujudataList: [],
     };
   },
   // eslint-disable-next-line space-before-function-paren
@@ -255,6 +293,23 @@ export default {
     this.initMap();
     this.renderMarker();
     this.getPosition();
+
+    this.wenhualitang.forEach((item) => {
+      const obj = {
+        type: 'Feature',
+        properties: {
+          name: item.name,
+          type: item.type,
+          address: item.address,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [item.lng, item.lat],
+        },
+      };
+      this.shujudataList.push(obj);
+    });
+    console.log(this.shujudataList, '12312312');
   },
   methods: {
     // eslint-disable-next-line space-before-function-paren
@@ -289,27 +344,10 @@ export default {
         center: [122.187672, 29.69669],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
-      // const mapLayer = new AMap.GeoJSON({
-      //   geoJSON: null,
-      //   getMarker(feature, position) {
-      //     console.log('test1121', feature);
-      //     return new AMap.Marker({
-      //       position,
-      //       content: this.markerTemplate(feature.properties),
-      //       offset: new AMap.Pixel(0, 0),
-      //       extData: feature,
-      //     });
-      //   },
-      // });
-      // mapLayer.setMap(this.map);
-      // this.mapLayer = mapLayer;
     },
-    // eslint-disable-next-line space-before-function-paren
     async renderMarker() {
       for (let index = 0; index < this.dataList.length; index++) {
         const element = this.dataList[index];
-        // const type = '文化礼堂';
-        // const name = '六横党支部';
         const content = `
         <div class="marker-content ${element.type}">
           <div class="catalog-content">
@@ -321,7 +359,6 @@ export default {
           content: content,
         });
         marker.setMap(this.map);
-        // marker.on('click', this.handleMarkerClick);
         marker.on('click', (e) => {
           this.handleMarkerClick(e, element);
         });

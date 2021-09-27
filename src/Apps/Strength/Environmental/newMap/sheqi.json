@@ -1,0 +1,23 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "浙江浙能中煤舟山煤电有限责任公司",
+                "address": "舟山市普陀区六横乡舟电大道1号",
+                "jibei": "重点源",
+                "yangcheng": "2.15",
+                "so2": "26.606",
+                "NHN": "43.099"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.127706,
+                    29.75812
+                ]
+            }
+        }
+    ]
+}

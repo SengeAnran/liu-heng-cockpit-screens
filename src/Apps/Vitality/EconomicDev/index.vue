@@ -3,14 +3,14 @@
     <Map />
     <Left />
     <Right />
-<!--    <Right2 />-->
+    <!--    <Right2 />-->
   </div>
 </template>
 <script>
 import Left from './Left';
 import Right from './Right';
 // import Right2 from './Right2';
-import Map from './newMap';
+import Map from './newMap/index';
 
 export default {
   components: {

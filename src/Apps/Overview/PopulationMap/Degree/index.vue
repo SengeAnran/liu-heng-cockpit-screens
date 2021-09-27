@@ -63,15 +63,34 @@ export default {
         //     fontSize: 30,
         //   },
         // },
+        // tooltip: {
+
+        //   formatter: '女:{c} : 男:{c}',
+
+        //   axisPointer: {
+        //     // 坐标轴指示器，坐标轴触发有效
+        //     type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
+        //   },
+        //   textStyle: {
+        //     fontSize: 30,
+        //   },
+        // },
         tooltip: {
           trigger: 'axis',
-          formatter: '女:{b} : 男:{c}',
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
-          },
-          textStyle: {
-            fontSize: 30,
+          confine: true,
+          axisPointer: { type: 'none' },
+          textStyle: { fontSize: 12, fontWeight: 500 },
+          formatter(params) {
+            // 只展示柱子对应的内容，把顶部底部的 tooltip 过滤掉
+            return params.reduce((pre, i) => {
+              if (i.componentSubType === 'bar') {
+                i.marker = i.marker.replace(/\[object Object\]/, i.color.colorStops[1].color);
+                i.value = `<span style="flex: 1; text-align: right; margin-left: 16px;">${i.value}</span>`;
+                const current = `<div style="display: flex; align-items: center; height: 26px;">${i.marker}${i.seriesName} ${i.value}</div>`;
+                return `${pre}${current}`;
+              }
+              return pre;
+            }, '');
           },
         },
         grid: {

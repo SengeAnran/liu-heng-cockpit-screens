@@ -1,0 +1,410 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇委员会",
+                "type": "党委",
+                "address": "舟山市普陀区六横镇三八路1号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.122129,
+                    29.745315
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇峧头新村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇峧头新村坦岙中央路2号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.119297,
+                    29.738513
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇洋山新村总支部委员会",
+                "type": "党总支",
+                "address": "中共舟山市普陀区六横镇洋山新村邵家水潭跟路53号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.122191,
+                    29.745253
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇龙山新村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇龙山小沙浦唐家路2号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.100936,
+                    29.771938
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇嵩山村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇嵩山村半塘路73号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.097961,
+                    29.736793
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇和润村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇和润村原百蕾厂房"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.085191,
+                    29.739475
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇小郭巨村党总支",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇小郭巨村"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.07055,
+                    29.729691
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇双屿港村党总支",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇双屿港村涨起港路6号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.071268,
+                    29.745132
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇双塘新村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇张家塘街道上张家塘7号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.144487,
+                    29.721536
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇张家塘新村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇张家塘新村"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.14559,
+                    29.724202
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇青联村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇青联村王家庙跟岙25号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.139215,
+                    29.720383
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇青山村党总支",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇青沙村仰天外山咀12号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.127145,
+                    29.703315
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇岑夏村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇岑夏村庙前102号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.127736,
+                    29.729014
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇平峧村总支部委员会",
+                "type": "党总支",
+                "address": "六横镇平峧支出村外平峧55号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.1681,
+                    29.719541
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇杜庄村党总支",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇杜庄村仁房4号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.140591,
+                    29.696382
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇小湖村党总支",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇小湖村西边57号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.14265,
+                    29.675471
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇苍洞村党总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇苍洞村"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.164266,
+                    29.680297
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇礁潭新村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇礁潭新村西厂51号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.163758,
+                    29.701243
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇台门总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇台门镇府南路11号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.197714,
+                    29.696972
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇田岙村总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇田岙村里胡家67号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.17951,
+                    29.681351
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇悬山村党总支",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇悬山村村民委员会"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.197694,
+                    29.696683
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇佛渡村党总支",
+                "type": "党总支",
+                "address": "佛渡村道头咀双屿路1号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.034904,
+                    29.742948
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇蟑螂山社区总支部委员会",
+                "type": "党总支",
+                "address": "六横镇蟑螂山荷花小区30幢1号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.116741,
+                    29.749973
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市普陀区六横镇新民社区总支部委员会",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇台门台兴路109号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.194207,
+                    29.697554
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山群岛新区六横管理委员会城市管理局党总支",
+                "type": "党总支",
+                "address": "舟山市普陀区六横镇六横城管局"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.130001,
+                    29.742272
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "舟山市龙山船厂有限公司党委",
+                "type": "党委",
+                "address": "浙江省舟山市普陀区六横镇沙岙"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.078943,
+                    29.772583
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "鑫亚船舶修造有限公司党委",
+                "type": "党委",
+                "address": "浙江省舟山市普陀区六横镇东浪咀"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.12013,
+                    29.790001
+                ]
+            }
+        }
+    ]
+}
