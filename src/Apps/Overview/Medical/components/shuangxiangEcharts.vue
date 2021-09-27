@@ -24,6 +24,11 @@ export default {
       XData: [],
     };
   },
+  watch: {
+    lineData() {
+      this.initDraw();
+    },
+  },
   mounted() {
     this.initDraw();
   },
@@ -37,32 +42,12 @@ export default {
         this.yData1.push(item.glfs);
       });
       console.log(this.lineData, '1111111');
-      let newData = [
-        {
-          name: '第一产业',
-          sub: 10000,
-          fund: 8000,
-          revenue: 8000,
-        },
-        {
-          name: '第二产业',
-          sub: 20000,
-          fund: 16000,
-          revenue: 16000,
-        },
-        {
-          name: '第三产业',
-          sub: 30000,
-          fund: 30000,
-          revenue: 30000,
-        },
-      ];
       const option = {
         grid: {
           top: '100',
           right: '70',
           left: '100',
-          bottom: '40', //图表尺寸大小
+          bottom: '40', // 图表尺寸大小
         },
         legend: {
           textStyle: {
@@ -154,14 +139,16 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: 'rgba(35,195,255,1)',
+                    color: 'rgba(59, 93, 246, 0.51)',
                   },
                   {
                     offset: 1,
-                    color: 'rgba(35,195,255,0)',
+                    color: '#436FF6',
                   },
                 ]),
-                barBorderRadius: [30, 30, 0, 0], //圆角大小
+                borderRadius: [4, 4, 4, 4],
+                shadowColor: 'blue',
+                // barBorderRadius: [30, 30, 0, 0], // 圆角大小
               },
             },
             label: {
@@ -184,14 +171,15 @@ export default {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                   {
                     offset: 0,
-                    color: 'rgba(254,215,46,1)',
+                    color: '#51F9FF',
                   },
                   {
                     offset: 1,
-                    color: 'rgba(254,215,46,0)',
+                    color: '#51F9FF',
                   },
                 ]),
-                barBorderRadius: [30, 30, 0, 0], //圆角大小
+                borderRadius: [4, 4, 4, 4],
+                // barBorderRadius: [30, 30, 0, 0], // 圆角大小
               },
             },
             label: {
