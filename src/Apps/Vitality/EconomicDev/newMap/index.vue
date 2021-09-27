@@ -32,7 +32,10 @@ export default {
       threeDMap: false,
     };
   },
-
+  // mounted() {
+  //   this.initMap();
+  //   this.renderMarker();
+  // },
   methods: {
     changeMap(type) {
       if (type === 3) {
