@@ -3,7 +3,7 @@
     <secondary-title name="六横镇人才专利发明证书" />
     <div class="container">
       <div class="item" :key="index" v-for="(item,index) in imageList">
-        <img :src="item.tpdz" />
+        <img :src="'data:image/jpeg;base64,'+item.tpdz" />
       </div>
     </div>
   </div>
@@ -49,9 +49,14 @@ export default {
   .item {
     width: 380px;
     height: 214px;
+    overflow: hidden;
     &:nth-child(2n + 1) {
       margin-right: 40px;
       margin-bottom: 26px;
+    }
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 }
