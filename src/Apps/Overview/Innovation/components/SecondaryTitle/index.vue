@@ -21,8 +21,8 @@ export default {
 <style lang="scss" scoped>
 .secondary-title {
   width: 100%;
-  height: 64px;
-  min-height: 64px;
+  height: 6.4rem;
+  min-height: 6.4rem;
   background: url(./images/title_bg.png) no-repeat left center;
   background-size: auto 64px;
   padding-left: 70px;

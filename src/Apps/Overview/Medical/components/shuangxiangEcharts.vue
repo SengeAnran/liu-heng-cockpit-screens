@@ -44,7 +44,7 @@ export default {
         this.yData.push(item.cws);
         this.yData1.push(item.glfs);
       });
-      console.log(this.lineData, '1111111');
+      // console.log(this.lineData, '1111111');
       const option = {
         grid: {
           top: '100',

@@ -102,7 +102,7 @@ export default {
       const res2 = await getPlaceInfo().request(); // 接种点
       res2.forEach((item) => {
         if (item.lng && item.lat) {
-          console.log(item);
+          // console.log(item);
           this.markerMsgList.push({
             ...item,
             type: 3,
@@ -213,7 +213,7 @@ export default {
       });
       this.markerMsgList.forEach((item) => {
         if (item.type === 1) {
-          console.log(item, new AMap.LngLat(item.lng, item.lat));
+          // console.log(item, new AMap.LngLat(item.lng, item.lat));
           const startMarker = new AMap.Marker({
             position: new AMap.LngLat(item.lng, item.lat),
             icon: yiyuanIcon,
@@ -241,13 +241,13 @@ export default {
       });
       this.markerMsgList.forEach((item) => {
         if (item.type === 2) {
-          console.log(item);
+          // console.log(item);
           const startMarker = new AMap.Marker({
             position: new AMap.LngLat(item.lng, item.lat),
             icon: geili,
             offset: new AMap.Pixel(-13, -30),
           });
-          console.log(startMarker);
+          // console.log(startMarker);
           startMarker.on('click', (e) => {
             this.addInfoWindow1(item, e.lnglat);
           });
@@ -270,7 +270,7 @@ export default {
       });
       this.markerMsgList.forEach((item) => {
         if (item.type === 3) {
-          console.log(item);
+          // console.log(item);
           const startMarker = new AMap.Marker({
             position: new AMap.LngLat(item.lng, item.lat),
             icon: jiezhong,
@@ -285,7 +285,7 @@ export default {
       this.map.add([...this.markers3]);
     },
     toggle(item, i) {
-      console.log(item, i);
+      // console.log(item, i);
       this.currentIndex = i;
       if (item.type === '全选') {
         this.map.remove(this.markers1);
