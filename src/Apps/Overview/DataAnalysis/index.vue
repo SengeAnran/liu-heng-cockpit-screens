@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       getPageUrl:
-        'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html?ticket=ST-2347-VXABoKcLo7DVsuC166nR-cdsf-bigdata',
+        'http://10.25.17.237:18155/cas/autologin?service=http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html&username=lh_zhzx1&prd=c930f523978124163fb8da3ed8cbfc2a&credentials=1594368613286&token=1594368613286',
     };
   },
 };

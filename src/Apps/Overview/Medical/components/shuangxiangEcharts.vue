@@ -36,6 +36,9 @@ export default {
     initDraw() {
       const myChart = echarts.init(this.$refs.echarts);
       // 整理x轴y轴的数据
+      this.XData = [];
+      this.yData = [];
+      this.yData1 = [];
       this.lineData.forEach((item) => {
         this.XData.push(item.gldmx);
         this.yData.push(item.cws);
@@ -134,6 +137,7 @@ export default {
             name: '隔离房数',
             data: this.yData1,
             barWidth: '16',
+            barGap: '100%',
             itemStyle: {
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -153,10 +157,10 @@ export default {
             },
             label: {
               normal: {
-                show: false,
+                show: true,
                 fontSize: 16,
                 fontWeight: 'bold',
-                color: '#333',
+                color: '#FFFFFF',
                 position: 'top',
               },
             },
@@ -184,17 +188,17 @@ export default {
             },
             label: {
               normal: {
-                show: false,
+                show: true,
                 fontSize: 16,
                 fontWeight: 'bold',
-                color: '#333',
+                color: '#ffffff',
                 position: 'top',
               },
             },
           },
         ],
       };
-      myChart.setOption(option);
+      myChart.setOption(option, true);
     },
   },
 };

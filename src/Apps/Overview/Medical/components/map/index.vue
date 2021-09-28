@@ -65,7 +65,7 @@ export default {
         this.threeDMap = false;
       }
     },
-    getData(category) {
+    async getData(category) {
       this.markerMsgList = [
         {
           lng: 122.120087,
@@ -89,28 +89,26 @@ export default {
             '以人的健康为中心、家庭为单位、社区为范围、需求为导向，融预防、医疗、保健、康复、健康教育、计划生育技术服务功能等为一体，有效、经济、方便、综合、连续的基层卫生服务',
           type: 1,
         },
-        {
-          lng: 122.200328,
-          lat: 29.701186,
-          name: '千荷大酒店',
-          label: '隔离点',
-          type: 2,
-        },
-        {
-          lng: 122.198933,
-          lat: 29.702235,
-          name: '东鸿大酒店',
-          label: '隔离点',
-          type: 2,
-        },
-        {
-          lng: 122.129986,
-          lat: 29.756298,
-          name: '暂无数据',
-          label: '接种点',
-          type: 3,
-        },
       ];
+      const res = await getIsolationPlaceInfo().request(); // 隔离点
+      res.forEach((item) => {
+        if (item.lng && item.lat) {
+          this.markerMsgList.push({
+            ...item,
+            type: 2,
+          });
+        }
+      });
+      const res2 = await getPlaceInfo().request(); // 接种点
+      res2.forEach((item) => {
+        if (item.lng && item.lat) {
+          console.log(item);
+          this.markerMsgList.push({
+            ...item,
+            type: 3,
+          });
+        }
+      });
       this.initMarkers();
     },
     initMap() {
@@ -153,11 +151,45 @@ export default {
       this.infoWindow = infoWindow;
       infoWindow.open(this.map, [lng, lat]);
     },
+    // 隔离点弹框
     addInfoWindow1(markerMsg, lnglat) {
       const { lng, lat } = lnglat;
       const html = `<div class='pop-up-box'>
-          <h3>${markerMsg.name}</h3>
-         
+          <h3>${markerMsg.gldmx}</h3>
+          <div>
+          <div class="name">地址：</div>
+          <div class="content">${markerMsg.dz}</div>
+          </div>
+          <div>
+          <div class="name">床位数：</div>
+          <div class="content">${markerMsg.cws}</div>
+          </div>
+          <div>
+          <div class="name">隔离房数：</div>
+          <div class="content1">${markerMsg.glfs}</div>
+          </div>
+        </div>`;
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗体
+        content: html, // 传入 dom 对象，或者 html 字符串
+        offset: new AMap.Pixel(760.7, -590),
+      });
+      this.infoWindow = infoWindow;
+      infoWindow.open(this.map, [lng, lat]);
+    },
+    // 接种点弹框
+    addInfoWindow2(markerMsg, lnglat) {
+      const { lng, lat } = lnglat;
+      const html = `<div class='pop-up-box'>
+          <h3>${markerMsg.jzdmc}</h3>
+          <div>
+          <div class="name">地址：</div>
+          <div class="content">${markerMsg.dz}</div>
+          </div>
+          <div>
+          <div class="name">接种能力：</div>
+          <div class="content">${markerMsg.jznl}</div>
+          </div>
         </div>`;
       const infoWindow = new AMap.InfoWindow({
         isCustom: true, // 使用自定义窗体
@@ -181,6 +213,7 @@ export default {
       });
       this.markerMsgList.forEach((item) => {
         if (item.type === 1) {
+          console.log(item, new AMap.LngLat(item.lng, item.lat));
           const startMarker = new AMap.Marker({
             position: new AMap.LngLat(item.lng, item.lat),
             icon: yiyuanIcon,
@@ -208,11 +241,13 @@ export default {
       });
       this.markerMsgList.forEach((item) => {
         if (item.type === 2) {
+          console.log(item);
           const startMarker = new AMap.Marker({
             position: new AMap.LngLat(item.lng, item.lat),
             icon: geili,
             offset: new AMap.Pixel(-13, -30),
           });
+          console.log(startMarker);
           startMarker.on('click', (e) => {
             this.addInfoWindow1(item, e.lnglat);
           });
@@ -235,13 +270,14 @@ export default {
       });
       this.markerMsgList.forEach((item) => {
         if (item.type === 3) {
+          console.log(item);
           const startMarker = new AMap.Marker({
             position: new AMap.LngLat(item.lng, item.lat),
             icon: jiezhong,
             offset: new AMap.Pixel(-13, -30),
           });
           startMarker.on('click', (e) => {
-            this.addInfoWindow1(item, e.lnglat);
+            this.addInfoWindow2(item, e.lnglat);
           });
           this.markers3.push(startMarker);
         }
