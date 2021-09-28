@@ -257,7 +257,7 @@ export default [
       {
         path: 'party-construction',
         name: '党群建设',
-        component: () => import(/* webpackChunkName: "charm" */ '@/views/Charm/PartyConstruction'),
+        component: () => import('@/views/Charm/PartyConstruction'),
         meta: {
           indicator: [
             { name: '正式党员数量', value: 275, unit: '人' },
@@ -276,9 +276,9 @@ export default [
         },
         meta: {
           indicator: [
-            { name: '社区人口', value: 62824, unit: '人' },
-            { name: '社区劳动力资源', value: 40991, unit: '人' },
-            { name: '弱势群体人数', value: 449, unit: '人' },
+            { name: '社区人口', value: 0, unit: '人' },
+            { name: '社区劳动力资源', value: 0, unit: '人' },
+            { name: '弱势群体人数', value: 0, unit: '人' },
           ],
         },
       },

@@ -1,11 +1,11 @@
 <template>
   <Map>
-    <AGeoJSON key="lhArea" v-if="currentLegend == 1" :source="points" :geoStyle="{ marker: markerStyle }">
+    <AGeoJSON key="sheshui" v-if="currentLegend == 1" :source="points" :geoStyle="{ marker: markerStyle }">
       <template v-slot:popup="feature">
         <MarkerPopup :feature="feature" />
       </template>
     </AGeoJSON>
-    <AGeoJSON key="lhArea" v-if="currentLegend == 2" :source="sheqi" :geoStyle="{ marker: markerStyle1 }">
+    <AGeoJSON key="sheqi" v-if="currentLegend == 2" :source="sheqi" :geoStyle="{ marker: markerStyle1 }">
       <template v-slot:popup="feature">
         <MarkerPopupSheqi :feature="feature" />
       </template>

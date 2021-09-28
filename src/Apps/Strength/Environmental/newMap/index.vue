@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <Map2d :currentLegend="currentLegend" />
     <div class="map-legend">
-      <p class="legend-title">党群建设图例</p>
+      <p class="legend-title">污染图例</p>
       <ul class="legend-list">
         <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
           <div class="main-label-wrap">

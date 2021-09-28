@@ -18,6 +18,14 @@ export const getVillagerInfo = () => {
     method: 'get',
   });
 };
+
+export const getLocation = () => {
+  return new MetroApi({
+    myType: 0,
+    url: '/community/location',
+    method: 'get',
+  });
+};
 // *******************实力六横
 // 实时办理情况
 export const getRealtimeHandling = () => {

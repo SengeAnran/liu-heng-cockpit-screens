@@ -3,7 +3,7 @@
     <iframe
       name="iframeMap"
       id="iframeMapViewComponent"
-      v-bind:src="getPageUrl"
+      :src="getPageUrl"
       width="100%"
       height="1100px"
       frameborder="0"
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       getPageUrl:
-        'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html?ticket=ST-2347-VXABoKcLo7DVsuC166nR-cdsf-bigdata',
+        'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html?ticket=ST-2509-NR7gygMaTGXxDjb0slSc-cdsf-bigdata',
     };
   },
 };
