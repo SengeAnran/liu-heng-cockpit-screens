@@ -94,7 +94,7 @@ import PieCharts from './Comps/PieCharts';
 import TableList from './Comps/TableList';
 import RadarCharts from './Comps/RadarCharts';
 import LineCharts from './Comps/LineCharts';
-import Map from './Comps/Map/index';
+import Map from './Comps/newMap/index';
 import {
   getCommunityInfo,
   getAgeDistribution,
@@ -224,6 +224,7 @@ export default {
       this.getPlanningData();
       this.getWaterElectTrendData();
     },
+
     async getCommunityInfoData(data) {
       const result = await getCommunityInfo(data).request();
       if (result) {

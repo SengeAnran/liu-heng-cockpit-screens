@@ -13,6 +13,19 @@ export const getCommunityInfo = (data) => {
   });
 };
 
+// 社区概述
+export const getLocation = (data) => {
+  return new MetroApi({
+    myType: 0,
+    url: '/community/location',
+    method: 'get',
+    data,
+    header: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
+  });
+};
+
 // 年龄分布
 export const getAgeDistribution = (data) => {
   return new MetroApi({

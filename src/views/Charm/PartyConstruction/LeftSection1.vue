@@ -29,10 +29,10 @@
           <div class="zhanbi">
             <div>
               男性占比
-              <span class="nanxing">66%</span>
+              <span class="nanxing">70.5%</span>
             </div>
             <div style="margin-right: 100px">
-              <span class="nvxing">34%</span>
+              <span class="nvxing">29.5%</span>
               女性占比
             </div>
           </div>

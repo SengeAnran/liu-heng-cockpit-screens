@@ -1,0 +1,80 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "大沙岙文化礼堂",
+                "type": "礼堂",
+                "address": "六横镇佛渡村大沙岙"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.030864,
+                    29.738199
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "佛东文化礼堂",
+                "type": "礼堂",
+                "address": "六横镇佛渡村佛东文化礼堂"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.042047,
+                    29.752646
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "杜庄文化礼堂",
+                "type": "礼堂",
+                "address": "六横镇杜庄村仁房4号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.140591,
+                    29.696382
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "梅峙文化礼堂",
+                "type": "礼堂",
+                "address": "六横镇梅峙村梅峙东139号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.164489,
+                    29.718975
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "清港文化礼堂",
+                "type": "礼堂",
+                "address": "六横镇青联村清港新农村123号"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.138697,
+                    29.717001
+                ]
+            }
+        }
+    ]
+}
