@@ -26,7 +26,7 @@ export default {
 <style lang="scss" scoped>
 .base-title {
   width: 782px;
-  height: 64px;
+  height: 63px;
   line-height: 63px;
   background: url('../assets/images/title.png') no-repeat;
   font-size: 32px;

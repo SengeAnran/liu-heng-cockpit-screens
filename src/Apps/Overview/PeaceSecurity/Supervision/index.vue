@@ -73,7 +73,7 @@ export default {
 .supervision {
   position: absolute;
   left: 157px;
-  top: 262px;
+  top: 162px;
   width: 835px;
   height: 535px;
   .show-box {

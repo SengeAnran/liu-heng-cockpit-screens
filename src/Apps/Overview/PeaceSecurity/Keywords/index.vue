@@ -41,7 +41,7 @@ export default {
 .key-words {
   position: absolute;
   right: 160px;
-  top: 805px;
+  top: 705px;
   width: 1650px;
   height: 535px;
   .show-box {

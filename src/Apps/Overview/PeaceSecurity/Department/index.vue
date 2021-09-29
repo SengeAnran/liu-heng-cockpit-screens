@@ -1,6 +1,6 @@
 <template>
   <div class="department">
-    <BaseTitle title="部门办理" />
+    <BaseTitle title="执法部门事件数量" />
     <div class="pie-chart" ref="pieChart" />
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
         { value: 735, name: '投诉占比' },
         { value: 580, name: '咨询占比' },
       ],
-      title: `50次 \n 截止2021年5月`,
+      title: `50次 \n 截止2021-05`,
     };
   },
   components: {},
@@ -153,7 +153,7 @@ export default {
 .department {
   position: absolute;
   left: 1008px;
-  top: 262px;
+  top: 162px;
   width: 835px;
   height: 535px;
   .pie-chart {

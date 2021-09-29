@@ -197,7 +197,7 @@ export default {
 .satisfaction {
   position: absolute;
   right: 160px;
-  top: 262px;
+  top: 162px;
   width: 1650px;
   height: 535px;
   .bar-chart {

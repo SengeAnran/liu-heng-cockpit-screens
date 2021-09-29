@@ -1,6 +1,6 @@
 <template>
   <div class="event-rank">
-    <BaseTitle title="事件涉及行业排名" />
+    <BaseTitle title="执法部门处置事件排名" />
     <div class="bar-chart" ref="barChart"></div>
   </div>
 </template>
@@ -159,7 +159,7 @@ export default {
 .event-rank {
   position: absolute;
   left: 157px;
-  top: 805px;
+  top: 705px;
   width: 835px;
   height: 535px;
   .bar-chart {

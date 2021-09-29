@@ -1,6 +1,6 @@
 <template>
   <div class="complaint">
-    <BaseTitle title="部门事件占比" />
+    <BaseTitle title="执法事件类型占比" />
     <div class="box">
       <div class="pie-chart" ref="pieChart" />
       <div class="legend">
@@ -59,7 +59,7 @@ export default {
     optionData(data) {
       return {
         title: {
-          text: `执法事件\n类型占比`,
+          text: `执法部门\n事件占比`,
           top: '35%',
           textAlign: 'center',
           left: '18.5%',
@@ -126,7 +126,7 @@ export default {
 .complaint {
   position: absolute;
   left: 1008px;
-  top: 805px;
+  top: 705px;
   width: 835px;
   height: 535px;
   .box {

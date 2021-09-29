@@ -56,7 +56,7 @@ export default {
     // 地图或多边形
     initDrwnduo() {
       const item = {
-        name: '小郭一期',
+        name: '小郭巨一期',
       };
       var polygonArr = [
         [122.114742, 29.702105],
