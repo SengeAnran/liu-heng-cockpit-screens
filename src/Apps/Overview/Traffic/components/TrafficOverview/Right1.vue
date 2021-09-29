@@ -81,12 +81,6 @@ export default {
       ],
       videoList2: [
         {
-          name: '世大梅线与六横路叉口监控位',
-          date: new Date(),
-          id: 1,
-          url: '33090305741324711954',
-        },
-        {
           name: '养殖场2',
           date: new Date(),
           id: 3,

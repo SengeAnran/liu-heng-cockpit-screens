@@ -18,11 +18,10 @@ export default {
       data: null,
       title: '六横政务大厅',
       list: [
-        { name: '当前叫号等待人数：', unit: '人', key: 'ddrs' },
-        { name: '今日办件数量：', unit: '件', key: 'bjnsl' },
-        { name: '今日办结数量：', unit: '件', key: 'bjsl' },
-        { name: '今日办理中数量：', unit: '件', key: 'blzsl' },
-        { name: '办事人员：', unit: '人', key: 'bsrys' },
+        { name: '当前叫号等待人数：', unit: '人', key: 'ddrs', number: 11 },
+        { name: '今日办理数量：', unit: '件', key: 'bjnsl', number: 51 },
+        { name: '本周办理数量：', unit: '件', key: 'blzsl', number: 409 },
+        { name: '本月办理数量', unit: '人', key: 'bsrys', number: 2653 },
       ],
     };
   },
@@ -58,7 +57,7 @@ export default {
           `<div class="item">
             <div class="name">${item.name} </div>
             <div class="number">
-              <div>${this.data[0][item.key]}</div>
+              <div>${item.number}</div>
               <div class="unit">${item.unit}</div>
             </div>
           </div>`;
@@ -75,7 +74,9 @@ export default {
       getInfoGovernment()
         .request()
         .then((json) => {
-          if (!json) { return; }
+          if (!json) {
+            return;
+          }
           this.data = json;
         });
     },

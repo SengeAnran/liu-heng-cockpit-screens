@@ -94,9 +94,9 @@ export default [
         component: () => import('@/Apps/Overview/Innovation'),
         meta: {
           indicator: [
-            { name: '发明专利数量', value: 28, unit: '项' },
-            { name: '外观设计专利', value: 58, unit: '项' },
-            { name: '实用新型 ', value: 58, unit: '项' },
+            { name: '发明专利数量', value: 5, unit: '项' },
+            { name: '外观设计专利', value: 3, unit: '项' },
+            { name: '实用新型 ', value: 35, unit: '项' },
           ],
         },
       },
@@ -107,7 +107,7 @@ export default [
         meta: {
           indicator: [
             { name: '三产结构比例', value: '7.4:56.8:35.8', unit: '' },
-            { name: '人均GDP', value: 18.11, unit: '万元' },
+            { name: '人均GDP', value: 18.1111, unit: '万元' },
             { name: '年全镇财政收入', value: 12.93, unit: '亿元' },
           ],
         },
@@ -266,6 +266,7 @@ export default [
           ],
         },
       },
+  
       {
         path: 'digit-county',
         name: '数字乡社',
@@ -276,8 +277,8 @@ export default [
         },
         meta: {
           indicator: [
-            { name: '社区人口', value: 0, unit: '人' },
-            { name: '社区劳动力资源', value: 0, unit: '人' },
+            { name: '社区人口', value: 1274, unit: '人' },
+            { name: '社区劳动力资源', value: 856, unit: '人' },
             { name: '弱势群体人数', value: 0, unit: '人' },
           ],
         },

@@ -7,14 +7,14 @@
           <div class="name">当前等待人数</div>
         </div>
         <div class="item1">
-          <digital :loop="loop" :endNum="12 || 0" :data="data" :config="config"></digital>
+          <digital :loop="loop" :endNum="11 || 0" :data="data" :config="config"></digital>
         </div>
         <div class="item">
           <img src="" alt="" />
           <div class="name1">今日办理量</div>
         </div>
         <div class="item1">
-          <digital :loop="loop" :endNum="118 || 0" :data="data" :config="config1"></digital>
+          <digital :loop="loop" :endNum="51 || 0" :data="data" :config="config1"></digital>
         </div>
       </div>
       <div class="flex">
@@ -23,14 +23,14 @@
           <div class="name2">本周办理量</div>
         </div>
         <div class="item1">
-          <digital :loop="loop" :endNum="118 || 0" :data="data" :config="config2"></digital>
+          <digital :loop="loop" :endNum="409 || 0" :data="data" :config="config2"></digital>
         </div>
         <div class="item">
           <img src="" alt="" />
           <div class="name3">月度办理量</div>
         </div>
         <div class="item1">
-          <digital :loop="loop" :endNum="1867 || 0" :data="data" :config="config3"></digital>
+          <digital :loop="loop" :endNum="2653 || 0" :data="data" :config="config3"></digital>
         </div>
       </div>
     </div>

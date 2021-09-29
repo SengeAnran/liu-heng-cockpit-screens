@@ -59,23 +59,14 @@ export default {
     optionData(data) {
       return {
         title: {
-          text: `{a|${this.getTotal}}次 \n {b|截止2021-05}`,
+          text: `执法事件\n类型占比`,
           top: '35%',
           textAlign: 'center',
           left: '18.5%',
           textStyle: {
             color: '#fff',
-            rich: {
-              a: {
-                fontSize: 56,
-                fontFamily: 'DIN Alternate',
-              },
-              b: {
-                fontSize: 22,
-                fontFamily: 'DIN Alternate',
-                padding: [0, 0, 0, 10],
-              },
-            },
+            fontSize: 35,
+            fontWeight: '400',
           },
         },
         color: this.colors,

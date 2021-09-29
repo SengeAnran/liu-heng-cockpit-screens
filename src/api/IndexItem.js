@@ -10,12 +10,22 @@ export const peopleBasicInfo = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/party/peopleBasicInfo' });
 };
 
-// 数字社区
+// 数字社区 老的
 export const getVillagerInfo = () => {
   return new MetroApi({
     myType: 0,
     url: '/community/coreIndicator',
     method: 'get',
+  });
+};
+
+// 数字社区 新的
+export const getCommunityBottomInfo = (data) => {
+  return new MetroApi({
+    myType: 0,
+    url: '/community/getBottomInfo',
+    method: 'get',
+    data,
   });
 };
 

@@ -11,6 +11,7 @@
 import Map from '@/components/AMap';
 import AGeoJSON from '@/components/AMap/AGeoJSON';
 import MarkerPopup from './MarkerPopup';
+import ponits from './mock.json';
 
 export default {
   // props: [currentLegend],
@@ -20,28 +21,38 @@ export default {
       default: () => 1,
     },
     markerList: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {},
     },
   },
   data() {
     return {
-      points: Object.freeze(this.markerList),
-      markerStyle: Object.freeze({
-        content: (feature) => {
-          return `<div class="marker-content 文化礼堂">
-            <div class="catalog-content">
-              <h3 class="title">${feature.properties.name}</h3>
-            </div>
-          </div>`;
-        },
-      }),
+      points: null,
+      markerStyle: null,
     };
   },
+
   components: {
     Map,
     AGeoJSON,
     MarkerPopup,
+  },
+  created() {
+    this.zhengli();
+  },
+  methods: {
+    zhengli() {
+      this.points = Object.freeze(ponits);
+      this.markerStyle = Object.freeze({
+        content: (item) => {
+          return `<div class="marker-content 文化礼堂">
+                <div class="catalog-content">
+                  <h3 class="title">${item.properties.name}</h3>
+                </div>
+              </div>`;
+        },
+      });
+    },
   },
 };
 </script>

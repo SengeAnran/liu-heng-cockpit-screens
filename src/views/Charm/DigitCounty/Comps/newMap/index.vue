@@ -1,7 +1,7 @@
 <template>
   <div class="map_wrapper">
     <div class="mask"></div>
-    <Map2d :currentLegend="currentLegend" :markerList="MarkerList" />
+    <Map2d :currentLegend="currentLegend" :markerList="markerList" />
     <div class="map-legend">
       <p class="legend-title">小区图例</p>
       <ul class="legend-list">
@@ -50,7 +50,11 @@ export default {
       lanlat: {
         name: '荷花小区',
       },
-      MarkerList: [],
+      markerList: {
+        type: 'FeatureCollection',
+        features: [],
+      },
+      MapMaker: {},
     };
   },
   mounted() {
@@ -70,11 +74,10 @@ export default {
     },
     async getLocation(data) {
       const result = await getLocation(data).request();
-      console.log(result, '地图点位数据');
+      console.log(result);
       if (result) {
         const MapLngLat = result.coordinates.split(',');
-        console.log(MapLngLat);
-        const MapMaker = {
+        this.MapMaker = {
           type: 'Feature',
           properties: {
             name: '五星村',
@@ -84,8 +87,10 @@ export default {
             coordinates: [MapLngLat[0], MapLngLat[1]],
           },
         };
-        this.MarkerList.push(MapMaker);
       }
+
+      this.markerList.features.push(this.MapMaker);
+      console.log(this.markerList);
     },
   },
 };

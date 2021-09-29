@@ -1,27 +1,45 @@
 <template>
   <div class="DataAnalysis">
-    <iframe
-      name="iframeMap"
-      id="iframeMapViewComponent"
-      :src="getPageUrl"
-      width="100%"
-      height="1100px"
-      frameborder="0"
-      scrolling="no"
-      ref="iframeDom"
-    ></iframe>
+    <div class="left-webview">
+      <!-- 宜居之岛 -->
+      <livable-island />
+      <!-- 产业之岛 -->
+      <industry-island />
+    </div>
+    <div class="center-webview">
+      <!-- 奋斗之岛 -->
+      <struggle-island />
+      <!-- 平安之岛 -->
+      <safe-island />
+    </div>
+    <div class="right-webview">
+      <!-- 中枢之岛 -->
+      <hub-island />
+      <!-- 制造之岛 -->
+      <create-island />
+    </div>
   </div>
 </template>
 
+
 <script>
+import LivableIsland from './modules/LivableIsland';
+import IndustryIsland from './modules/IndustryIsland';
+import StruggleIsland from './modules/StruggleIsland';
+import SafeIsland from './modules/SafeIsland';
+import HubIsland from './modules/HubIsland';
+import CreateIsland from './modules/CreateIsland';
+
 export default {
   name: 'DataAnalysis',
-  components: {},
-  data() {
-    return {
-      getPageUrl:
-        'http://10.25.17.237:18155/cas/autologin?service=http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html&username=lh_zhzx1&prd=c930f523978124163fb8da3ed8cbfc2a&credentials=1594368613286&token=1594368613286',
-    };
+  components: {
+    LivableIsland,
+    IndustryIsland,
+    StruggleIsland,
+    SafeIsland,
+    HubIsland,
+    CreateIsland,
+
   },
 };
 </script>

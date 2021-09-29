@@ -83,6 +83,12 @@ export default {
       ],
       videoList2: [
         {
+          name: '涨起港渔业码头',
+          date: new Date(),
+          id: 4,
+          url: 'b3bdc6a7f0b6428b98e5aa829f4dfab8',
+        },
+        {
           name: '危险品企业监控',
           date: new Date(),
           id: 0,
@@ -106,12 +112,7 @@ export default {
           id: 3,
           url: '656dcb6572e64b80ba72eae5f85a6374',
         },
-        {
-          name: '涨起港渔业码头',
-          date: new Date(),
-          id: 4,
-          url: 'b3bdc6a7f0b6428b98e5aa829f4dfab8',
-        },
+
         {
           name: '台门铜盘桥旁码头',
           date: new Date(),

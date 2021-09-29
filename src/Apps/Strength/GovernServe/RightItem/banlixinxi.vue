@@ -6,11 +6,11 @@
           <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>
         </div>
         <div class="table-body">
-          <div class="table-body-item" v-for="(item, index) in 9" :key="item">
+          <div class="table-body-item" v-for="(item, index) in list1" :key="item">
             <div>{{ index + 1 }}</div>
-            <div>综合受理</div>
-            <div>203</div>
-            <div>80%</div>
+            <div>{{ item.content }}</div>
+            <div>{{ item.number }}</div>
+            <div>{{ item.name }}</div>
           </div>
         </div>
       </div>
@@ -25,10 +25,49 @@ export default {
       list: ['排序', '办事项', '受理量', '满意度'],
       list1: [
         {
-          content: '不动产(收费发证)',
-          number: 'SF002',
-          name: '王*强',
-          time: '14:34:45',
+          content: '非现场违法处理',
+          number: '321',
+          name: '100%',
+        },
+        {
+          content: '综合受理',
+          number: '382',
+          name: '100%',
+        },
+        {
+          content: '公安综合',
+          number: '304',
+          name: '100%',
+        },
+        {
+          content: '水务综合',
+          number: '444',
+          name: '100%',
+        },
+        {
+          content: '电力综合',
+          number: '22',
+          name: '100%',
+        },
+        {
+          content: '宅基地审批',
+          number: '7',
+          name: '100%',
+        },
+        {
+          content: '交通管理',
+          number: '1',
+          name: '100%',
+        },
+        {
+          content: '城市管理',
+          number: '18',
+          name: '100%',
+        },
+        {
+          content: '婚姻登记',
+          number: '31',
+          name: '100%',
         },
       ],
     };

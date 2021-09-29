@@ -13,7 +13,7 @@ export const getCommunityInfo = (data) => {
   });
 };
 
-// 社区概述
+// 社区地图点位
 export const getLocation = (data) => {
   return new MetroApi({
     myType: 0,

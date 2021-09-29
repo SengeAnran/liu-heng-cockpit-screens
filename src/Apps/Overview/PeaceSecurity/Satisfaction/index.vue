@@ -52,7 +52,6 @@ export default {
       getSatisfactionTrend()
         .request()
         .then((json) => {
-          debugger;
           this.list = json.map((item) => {
             item.name = item.sqmc;
             item.value = item.mydzs * 100 || 0;

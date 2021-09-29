@@ -13,55 +13,66 @@ export default {
     return {
       barData: [
         {
-          label: '行业1',
-          value: 1.2,
+          label: '海事',
+          value: 12,
         },
         {
-          label: '行业2',
-          value: 0.9,
+          label: '边检',
+          value: 10,
         },
         {
-          label: '行业3',
-          value: 0.8,
+          label: '公安',
+          value: 9,
         },
         {
-          label: '行业4',
-          value: 0.7,
+          label: '渔政',
+          value: 8,
         },
         {
-          label: '行业5',
-          value: 0.6,
+          label: '城管',
+          value: 7,
+        },
+        {
+          label: '海关',
+          value: 6,
+        },
+        {
+          label: '交通',
+          value: 4,
         },
       ],
+      yData: ['海事', '边检', '公安', '渔政', '城管', '海关', '交通'],
     };
   },
-  components: {
-  },
+  components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.barChart);
     this.loadData();
   },
   methods: {
     loadData() {
-      getIndustryRank().request().then((json) => {
-        if (json[0].je !== 999999999) {
-          this.barData = json.map((item) => {
-            item.label = item.hymc;
-            item.value = item.je;
-            return item;
-          });
-        }
-        this.chart.setOption(this.optionData(this.barData));
-        // console.log(json, '排名');
-      });
+      getIndustryRank()
+        .request()
+        .then((json) => {
+          if (json[0].je !== 999999999) {
+            this.barData = json.map((item) => {
+              item.label = item.hymc;
+              item.value = item.je;
+              this.yData = item.hymc;
+              return item;
+            });
+          }
+          this.chart.setOption(this.optionData(this.barData));
+          // console.log(json, '排名');
+        });
     },
     optionData(data) {
       return {
         grid: {
-          top: 15,
-          left: 10,
-          right: 210,
-          bottom: 60,
+          top: 5,
+          // left: 10,
+          // right: 210,
+          // bottom: 20,
           containLabel: true,
         },
         xAxis: {
@@ -69,83 +80,76 @@ export default {
           show: false,
         },
         yAxis: {
-          show: true,
-          inverse: true,
-          type: 'category',
-          axisLine: {
+          splitLine: {
             show: false,
           },
-        },
-        series: [{
-          name: 'label',
-          type: 'bar',
-          barWidth: 24,
-          yAxisIndex: 0,
-          label: {
-            show: true,
-            position: [10, -10],
-            color: '#fff',
-            fontSize: 22,
+          axisLine: {
+            //y轴
+            show: false,
           },
-          data: data.map((item, index) => {
-            return {
-              value: 0,
-              label: {
-                formatter() {
-                  return item.label;
+          type: 'category',
+          axisTick: {
+            show: false,
+          },
+          inverse: true,
+          data: this.yData,
+          axisLabel: {
+            color: '#A7D6F4',
+            fontSize: 24,
+          },
+        },
+        series: [
+          {
+            name: 'value',
+            type: 'bar',
+            barWidth: 18,
+            barMinHeight: 20, // 最小高度
+            yAxisIndex: 0,
+            label: {
+              show: true,
+              position: 'right',
+              color: '#fff',
+              offset: [10, 0],
+              formatter({ value }) {
+                return `{c|''}{a|${value}} {b|件}`;
+              },
+              rich: {
+                a: {
+                  padding: [0, 0, 0, 30],
+                  fontSize: 26,
+                  fontFamily: 'DIN Alternate',
+                },
+                b: {
+                  fontSize: 24,
+                },
+                c: {
+                  padding: [0, 0, 0, -15],
+                  width: 0,
+                  height: 18,
+                  align: 'left',
+                  backgroundColor: '#ff6ed',
                 },
               },
-            };
-          }),
-        },
-        {
-          name: 'value',
-          type: 'bar',
-          barWidth: 18,
-          barMinHeight: 20, // 最小高度
-          yAxisIndex: 0,
-          label: {
-            show: true,
-            position: 'right',
-            color: '#fff',
-            offset: [10, 0],
-            formatter({ value }) {
-              return `{c|''}{a|${value}} {b|亿元}`;
             },
-            rich: {
-              a: {
-                padding: [0, 0, 0, 30],
-                fontSize: 26,
-                fontFamily: 'DIN Alternate',
-              },
-              b: {
-                fontSize: 24,
-              },
-              c: {
-                padding: [0, 0, 0, -15],
-                width: 0,
-                height: 18,
-                align: 'left',
-                backgroundColor: '#ff6ed',
-              },
-            },
-          },
-          data: data.map(({ value }, index) => {
-            return {
-              value,
-              itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-                  offset: 0,
-                  color: 'rgba(92, 111, 255, 0.1)',
+            data: data.map(({ value }, index) => {
+              return {
+                value,
+                itemStyle: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                    {
+                      offset: 0,
+                      color: 'rgba(92, 111, 255, 0.1)',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(92, 111, 255, 1)',
+                    },
+                  ]),
                 },
-                {
-                  offset: 1,
-                  color: 'rgba(92, 111, 255, 1)',
-                }]),
-              },
-            };
-          }),
-        }],
+              };
+            }),
+          },
+        ],
       };
     },
   },

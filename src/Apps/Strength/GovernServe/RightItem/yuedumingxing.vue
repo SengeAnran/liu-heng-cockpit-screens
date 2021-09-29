@@ -1,22 +1,22 @@
 <template>
   <div>
     <div class="content1">
-      <div class="img">1</div>
+      <div class="img">
+        <img src="../img/mingxi.png" />
+      </div>
       <div class="content">
-        <div class="name">张茜茜</div>
+        <div class="name">贺玲蒙</div>
         <div>
           <span class="font-name">工号</span>
-          <span class="font-content">AQ34</span>
+          <span class="font-content">A048</span>
         </div>
         <div>
           <span class="font-name">部门</span>
-          <span class="font-content">海事部</span>
+          <span class="font-content">交警</span>
         </div>
         <div class="kouhao">
           <div style="font-size: 20px">服务口号</div>
-          <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">
-            这是一段服务口号,这是一段服务口号,这是一段服务口号,
-          </div>
+          <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">为民服务</div>
         </div>
       </div>
     </div>
@@ -38,6 +38,11 @@ export default {};
     margin: 50px;
     height: 240px;
     width: 230px;
+    img {
+      object-fit: fill;
+      width: 100%;
+      height: 100%;
+    }
   }
   .content {
     margin: 20px;

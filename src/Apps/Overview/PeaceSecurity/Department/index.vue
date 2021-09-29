@@ -17,7 +17,7 @@ export default {
         { value: 735, name: '投诉占比' },
         { value: 580, name: '咨询占比' },
       ],
-      title: '部门办理类型占比',
+      title: `50次 \n 截止2021年5月`,
     };
   },
   components: {},
@@ -64,7 +64,7 @@ export default {
           left: '18.5%',
           textStyle: {
             color: '#fff',
-            fontSize: 35,
+            fontSize: 25,
             fontWeight: '400',
           },
         },

@@ -1,6 +1,6 @@
 <template>
   <div class="chart-box">
-    <PieChart :data="pieTypeData" :color="pieColor" legendType="pec" title="资金占比分析" />
+    <PieChart :data="pieTypeData" :color="pieColor" legendType="pec" title="满意度占比分析" />
   </div>
 </template>
 
