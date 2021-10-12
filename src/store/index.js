@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     intervalId: 0, // 定时器 id
     interval: 0,
+    navShow: true,
   },
   mutations: {
     setIntervalId(state, msg) {

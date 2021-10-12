@@ -20,15 +20,28 @@ export default {
       default: () => ({ width: 5760, height: 2070 }),
     },
   },
+  watch: {
+    'pageSize.height': {
+      handler(newVal, oldVal) {
+        console.log('newVal', newVal);
+        console.log('oldVal', oldVal);
+        this.init();
+      },
+      deep: true,
+    },
+  },
   mounted() {
-    const fitScreen = this.fitScreen.bind(this);
-    fitScreen();
-    window.addEventListener('resize', fitScreen);
-    this.$once('hook:beforeDestroy', function () {
-      window.removeEventListener('resize', fitScreen);
-    });
+    this.init();
   },
   methods: {
+    init() {
+      const fitScreen = this.fitScreen.bind(this);
+      fitScreen();
+      window.addEventListener('resize', fitScreen);
+      this.$once('hook:beforeDestroy', function () {
+        window.removeEventListener('resize', fitScreen);
+      });
+    },
     fitScreen() {
       displayMap[this.displayType](this.pageSize);
     },

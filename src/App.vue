@@ -13,8 +13,8 @@
       </keep-alive>
     </div>
 
-    <div class="nav-bg">
-      <Nav />
+    <div class="nav-bg" v-if="navShow">
+      <Nav/>
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ export default {
         height: 2070,
         transitionName: '',
       },
+      navShow: true,
     };
   },
   components: {
@@ -41,9 +42,19 @@ export default {
     Nav,
     AppTitle,
   },
-
   mounted() {
     this.interval();
+    // if (!this.$store.state) {
+    //   this.navShow = false;
+    // }
+  },
+  updated() {
+    if (this.$route.query.navShow === 'false') {
+      this.$store.state.navShow = false;
+      console.log(this.$store.state);
+      this.navShow = false;
+      this.pageSize.height = 1350;
+    }
   },
   methods: {
     interval() {
