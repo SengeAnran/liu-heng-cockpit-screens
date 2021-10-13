@@ -225,6 +225,9 @@ export default {
             symbolOffset: [0, '-50%'],
             symbolSize: [20, 12],
             zlevel: 2,
+            tooltip: {
+              show: false,
+            },
           },
           {
             type: 'line',

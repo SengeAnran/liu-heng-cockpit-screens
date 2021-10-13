@@ -202,6 +202,9 @@ export default {
                 color: '#8bead4',
               },
             },
+            tooltip: {
+              show: false,
+            },
           },
 
           {
@@ -244,6 +247,9 @@ export default {
                 borderWidth: 2,
                 color: '#8bead4',
               },
+            },
+            tooltip: {
+              show: false,
             },
           },
           {

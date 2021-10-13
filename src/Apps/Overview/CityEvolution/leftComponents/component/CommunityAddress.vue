@@ -208,6 +208,7 @@ export default {
         ],
         series: [
           {
+            name: '收入',
             type: 'bar',
             barWidth: barWidth,
             itemStyle: {
@@ -269,6 +270,9 @@ export default {
                 );
               },
             },
+            tooltip: {
+              show: false,
+            },
           },
           {
             z: 3,
@@ -284,6 +288,9 @@ export default {
                   return colors[params.dataIndex % 7];
                 },
               },
+            },
+            tooltip: {
+              show: false,
             },
           },
           {

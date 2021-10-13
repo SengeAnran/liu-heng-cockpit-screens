@@ -260,6 +260,9 @@ export default {
                 ],
               },
             },
+            tooltip: {
+              show: false,
+            },
           },
           {
             type: 'pictorialBar',
