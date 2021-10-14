@@ -51,7 +51,7 @@
       </div>
     </transition>
     <div class="center-wrapper">
-      <Map />
+      <Map @changePlace="changePlace" />
     </div>
     <transition name="slide1" appear>
       <div class="right-wrapper">
@@ -214,6 +214,10 @@ export default {
     };
   },
   methods: {
+    changePlace(name) {
+      console.log(name);
+      this.initData({ name: name });
+    },
     initData(data) {
       this.getCommunityInfoData(data);
       this.getAgeDistributionData(data);

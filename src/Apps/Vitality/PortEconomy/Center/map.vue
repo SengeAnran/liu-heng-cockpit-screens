@@ -80,38 +80,82 @@ export default {
         }),
       });
       this.geoCoordMap.forEach((item, i) => {
-        this.series.push({
-          type: 'effectScatter',
-          coordinateSystem: 'geo',
-          zlevel: 2,
-          rippleEffect: {
-            period: 4,
-            brushType: 'stroke',
-            scale: 4,
-          },
-          label: {
-            normal: {
-              show: true,
-              position: 'bottom',
-              offset: [0, 10],
-              formatter: '{b}',
-              fontSize: 18,
-              backgroundColor: 'rgba(9,23,55,.2)',
-              padding: [12, 60],
-              color: '#fff',
+        this.series.push(
+          {
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            zlevel: 2,
+            rippleEffect: {
+              period: 4,
+              brushType: 'stroke',
+              scale: 4,
             },
+            label: {
+              normal: {
+                show: true,
+                position: 'bottom',
+                offset: [0, 10],
+                formatter: '{b}',
+                fontSize: 18,
+                backgroundColor: 'rgba(9,23,55,.2)',
+                padding: [12, 60],
+                color: '#fff',
+              },
+            },
+            symbol: 'circle',
+            symbolSize: 12,
+            // color: '#eac737',
+            color: '#2be5f8',
+            data: this.geoCoordMap.map((item) => {
+              return {
+                name: item.name,
+                value: item.position,
+              };
+            }),
           },
-          symbol: 'circle',
-          symbolSize: 12,
-          // color: '#eac737',
-          color: '#2be5f8',
-          data: this.geoCoordMap.map((item) => {
-            return {
-              name: item.name,
-              value: item.position,
-            };
-          }),
-        });
+          {
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            zlevel: 5,
+            rippleEffect: { // 涟漪特效
+              period: 4, // 动画时间，值越小速度越快
+              brushType: 'stroke', // 波纹绘制方式 stroke, fill
+              scale: 4, // 波纹圆环最大限制，值越大波纹越大
+            },
+            label: {
+              normal: {
+                show: false,
+                position: 'right',
+                offset: [0, 10],
+                formatter: '{b}',
+                fontSize: 18,
+                backgroundColor: 'rgba(9,23,55,.2)',
+                padding: [12, 12],
+                color: '#fff',
+                width: 400,
+                overflow: 'break',
+                lineHeight: 30,
+              },
+              emphasis: {
+                show: true,
+              },
+            },
+            symbol: 'circle',
+            symbolSize: 16, // 圆环大小
+            itemStyle: {
+              normal: {
+                show: false,
+                color: '#34c6bb',
+              },
+            },
+            data: this.geoCoordMap.map(function (dataItem) {
+              return {
+                name: dataItem.content,
+                value: dataItem.position,
+              };
+            }),
+          },
+        );
       });
 
       const option = {

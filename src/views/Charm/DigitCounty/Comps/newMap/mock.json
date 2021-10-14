@@ -13,6 +13,19 @@
                     "29.750423"
                 ]
             }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "青山村"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    "122.126806",
+                    "29.740323"
+                ]
+            }
         }
     ]
 }

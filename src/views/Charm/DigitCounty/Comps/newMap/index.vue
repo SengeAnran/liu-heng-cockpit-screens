@@ -1,7 +1,11 @@
 <template>
   <div class="map_wrapper">
     <div class="mask"></div>
-    <Map2d :currentLegend="currentLegend" :markerList="markerList" v-show="!threeDMap" />
+    <Map2d
+      :markerList.sync="markerList"
+      v-show="!threeDMap"
+      @changePlace="changePlace"
+    />
     <div class="main-map" v-show="threeDMap">
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
@@ -14,21 +18,21 @@
       <ul class="legend-list">
         <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
           <div class="main-label-wrap">
-            <span class="select-rect">
-              <span class="selected-inner" v-show="currentLegend === item.value"></span>
-            </span>
+<!--            <span class="select-rect">-->
+<!--              <span class="selected-inner" v-show="currentLegend === item.value"></span>-->
+<!--            </span>-->
             {{ item.label }}
           </div>
-          <ul v-if="item.children" class="legend-children-list">
-            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">
-              <div class="main-label-wrap">
-                <span class="select-rect">
-                  <span class="selected-inner" v-show="currentLegend === item.value"></span>
-                </span>
-                {{ item2.label }}
-              </div>
-            </li>
-          </ul>
+<!--          <ul v-if="item.children" class="legend-children-list">-->
+<!--            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">-->
+<!--              <div class="main-label-wrap">-->
+<!--                <span class="select-rect">-->
+<!--                  <span class="selected-inner" v-show="currentLegend === item.value"></span>-->
+<!--                </span>-->
+<!--                {{ item2.label }}-->
+<!--              </div>-->
+<!--            </li>-->
+<!--          </ul>-->
         </li>
       </ul>
     </div>
@@ -52,7 +56,10 @@ export default {
       lastDetailMarker: null,
       threeDMap: false,
       currentLegend: 1,
-      legendList: [{ value: 1, label: '五星村' }],
+      legendList: [
+        { value: 1, label: '五星村' },
+        { value: 2, label: '田岙村' },
+      ],
       // 这是一个坑，五星没有数据，传荷花小区 得到的是五星村的数据
       lanlat: {
         name: '荷花小区',
@@ -77,9 +84,11 @@ export default {
     },
     selectLegend(item) {
       this.currentLegend = item.value;
+      // this.getLocation(item.label);
       console.log(this.currentLegend);
     },
     async getLocation(data) {
+      let MapMaker2;
       const result = await getLocation(data).request();
       console.log(result);
       if (result) {
@@ -94,10 +103,24 @@ export default {
             coordinates: [MapLngLat[0], MapLngLat[1]],
           },
         };
+        MapMaker2 = {
+          type: 'Feature',
+          properties: {
+            name: '田岙村',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: ['122.126806', '29.740323'],
+          },
+        };
       }
 
       this.markerList.features.push(this.MapMaker);
+      this.markerList.features.push(MapMaker2);
       console.log(this.markerList);
+    },
+    changePlace(name) {
+      this.$emit('changePlace', name);
     },
   },
 };

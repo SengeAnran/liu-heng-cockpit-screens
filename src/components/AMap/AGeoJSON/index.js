@@ -14,10 +14,18 @@ export default {
     },
   },
   watch: {
-    source() {
-      this.clearInfoWindow();
-      this.renderLayer();
+    // source() {
+    //   console.log('变 了');
+    //   this.clearInfoWindow();
+    //   this.renderLayer();
+    // },
+    'source.features': {
+      handler(newVal, oldVal) {
+        this.clearInfoWindow();
+        this.renderLayer();
+      },
     },
+    deep: true,
   },
   mounted() {
     this.initGeoJSON();
@@ -80,6 +88,7 @@ export default {
       const map = await this.mapPromise;
       this.layer.on('click', async (ev) => {
         const feature = ev.target.getExtData();
+        this.$emit('onClick', feature);
         const popup = new Vue({
           render: () => this.$scopedSlots.popup(feature),
         }).$mount(document.createElement('div'));

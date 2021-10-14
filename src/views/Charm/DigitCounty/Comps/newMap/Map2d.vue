@@ -1,6 +1,12 @@
 <template>
   <Map>
-    <AGeoJSON key="lhArea" v-if="currentLegend == 1" :source="points" :geoStyle="{ marker: markerStyle }">
+    <AGeoJSON
+      key="lhArea"
+      v-if="currentLegend == 1"
+      :source="points"
+      :geoStyle="{ marker: markerStyle }"
+      @onClick="pointsClick"
+    >
       <template v-slot:popup="feature">
         <MarkerPopup :feature="feature" />
       </template>
@@ -11,7 +17,7 @@
 import Map from '@/components/AMap';
 import AGeoJSON from '@/components/AMap/AGeoJSON';
 import MarkerPopup from './MarkerPopup';
-import ponits from './mock.json';
+// import ponits from './mock.json';
 
 export default {
   // props: [currentLegend],
@@ -31,7 +37,6 @@ export default {
       markerStyle: null,
     };
   },
-
   components: {
     Map,
     AGeoJSON,
@@ -40,9 +45,24 @@ export default {
   created() {
     this.zhengli();
   },
+  watch: {
+    'markerList.features': {
+      handler(newVal, oldVal) {
+        this.zhengli();
+      },
+    },
+    deep: true,
+  },
+  mounted() {
+    setTimeout(() => {
+      console.log('到了');
+      this.zhengli();
+    }, 3000);
+  },
   methods: {
     zhengli() {
-      this.points = Object.freeze(ponits);
+      this.points = Object.freeze(this.markerList);
+      console.log(this.points);
       this.markerStyle = Object.freeze({
         content: (item) => {
           return `<div class="marker-content 文化礼堂">
@@ -52,6 +72,9 @@ export default {
               </div>`;
         },
       });
+    },
+    pointsClick(data) {
+      this.$emit('changePlace', data.properties.name);
     },
   },
 };
