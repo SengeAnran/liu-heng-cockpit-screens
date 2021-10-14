@@ -233,6 +233,9 @@ export default {
                 color: '#8bead4',
               },
             },
+            tooltip: {
+              show: false,
+            },
           },
         ],
       };

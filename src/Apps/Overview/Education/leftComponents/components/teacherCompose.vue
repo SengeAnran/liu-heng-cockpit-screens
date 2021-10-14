@@ -218,6 +218,9 @@ export default {
                 color: '#8bead4',
               },
             },
+            tooltip: {
+              show: false,
+            },
           },
 
           {
@@ -281,6 +284,9 @@ export default {
                 borderWidth: 2,
                 color: 'rgba(255, 151, 152, 1)',
               },
+            },
+            tooltip: {
+              show: false,
             },
           },
         ],

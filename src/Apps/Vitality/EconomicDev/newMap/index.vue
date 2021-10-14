@@ -9,6 +9,29 @@
       <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
       <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
     </div>
+    <div class="map-legend">
+      <p class="legend-title">规上企业图例</p>
+      <ul class="legend-list">
+        <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
+          <div class="main-label-wrap">
+            <span class="select-rect">
+              <span class="selected-inner" v-show="currentLegend === item.value"></span>
+            </span>
+            {{ item.label }}
+          </div>
+          <ul v-if="item.children" class="legend-children-list">
+            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">
+              <div class="main-label-wrap">
+                <span class="select-rect">
+                  <span class="selected-inner" v-show="currentLegend === item.value"></span>
+                </span>
+                {{ item2.label }}
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -30,6 +53,9 @@ export default {
       currentLegend: 0,
       lastDetailMarker: null,
       threeDMap: false,
+      legendList: [
+        // { value: 1, label: '五星村' },
+      ],
     };
   },
   // mounted() {
@@ -101,6 +127,60 @@ export default {
       &.active {
         color: white;
         background: url('./img/mmexport1.jpg') no-repeat;
+      }
+    }
+  }
+  .map-legend {
+    position: absolute;
+    z-index: 10;
+    top: 110.6rem;
+    right: 37%;
+    width: 27.4rem;
+    // height: 28.2rem;
+    height: auto;
+    background: url('./img/legend-bg.png') no-repeat 0 0;
+    box-sizing: border-box;
+    background-size: 100% 100%;
+    color: #fff;
+    padding: 3rem;
+    .legend-title {
+      margin: 0;
+      font-size: 3.1rem;
+    }
+    .legend-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 2.6rem;
+      line-height: 2.2;
+      li {
+        .main-label-wrap {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
+      .legend-children-list {
+        list-style: none;
+        padding-left: 2rem;
+      }
+      .select-rect {
+        display: inline-block;
+        width: 3rem;
+        height: 3rem;
+        box-sizing: border-box;
+        margin-right: 1.2rem;
+        border: 0.3rem solid #9bfcfd;
+        border-radius: 0.4rem;
+        padding: 0.2rem;
+        line-height: 0;
+        .selected-inner {
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+          background: #fdef8e;
+          border-radius: 0.4rem;
+        }
       }
     }
   }

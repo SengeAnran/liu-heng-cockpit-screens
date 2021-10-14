@@ -1,7 +1,14 @@
 <template>
   <div class="map_wrapper">
     <div class="mask"></div>
-    <Map2d :currentLegend="currentLegend" />
+    <Map2d :currentLegend="currentLegend" v-show="!threeDMap"/>
+    <div class="main-map" v-show="threeDMap">
+      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+    </div>
+    <div class="switch">
+      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
+    </div>
     <div class="map-legend">
       <p class="legend-title">污染图例</p>
       <ul class="legend-list">
@@ -92,6 +99,30 @@ export default {
     right: 0;
     width: 100%;
     height: 135rem;
+  }
+  .switch {
+    width: 274px;
+    height: 360px;
+    position: absolute;
+    bottom: 48rem;
+    right: 200rem;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    .button {
+      width: 114px;
+      height: 44px;
+      font-size: 24px;
+      line-height: 44px;
+      text-align: center;
+      color: #82e2e4;
+      cursor: pointer;
+      background: url('./img/mmexport.jpg') no-repeat;
+      &.active {
+        color: white;
+        background: url('./img/mmexport1.jpg') no-repeat;
+      }
+    }
   }
   .map-legend {
     position: absolute;

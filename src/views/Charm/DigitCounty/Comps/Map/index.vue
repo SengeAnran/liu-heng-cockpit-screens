@@ -1,7 +1,14 @@
 <template>
   <div class="map_wrapper" >
     <div class="mask"></div>
-    <div class="main-map" ref="map"></div>
+    <div class="main-map" ref="map" v-show="!threeDMap"></div>
+    <div class="main-map" v-show="threeDMap">
+      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+    </div>
+    <div class="switch">
+      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
+    </div>
     <!-- <div class="map-legend">
       <p class="legend-title">党群建设图例</p>
       <ul class="legend-list">
@@ -55,12 +62,20 @@ export default {
         },
       ],
       lastDetailMarker: null,
+      threeDMap: false,
     };
   },
   mounted() {
     this.initMap();
   },
   methods: {
+    changeMap(type) {
+      if (type === 3) {
+        this.threeDMap = true;
+      } else {
+        this.threeDMap = false;
+      }
+    },
     selectLegend(item) {
       this.currentLegend = item.value;
     },
@@ -119,8 +134,66 @@ export default {
     left: 0;
     right: 0;
     width: 100%;
-    height: 135rem;
+    height: 1350px;
+    ::v-deep .custom-marker {
+      position: absolute;
+      width: 49.7px;
+      height: 49.7px;
+      background: url('./img/icon.png');
+      background-size: contain;
+    }
+    ::v-deep .info {
+      position: relative;
+      z-index: 999;
+      width: 274px;
+      height: 282px;
+      padding: 10px;
+      background: url('./img/info.png');
+      box-sizing: border-box;
+      color: #fff;
+      > div {
+        font-size: 26px;
+        font-family: 'Source Han Sans SC';
+        margin-top: 15px;
+        margin-left: 10px;
+        &:nth-child(1) {
+          font-size: 28px;
+          color: #00ffff;
+        }
+      }
+    }
   }
+  .switch {
+    width: 274px;
+    height: 360px;
+    position: absolute;
+    bottom: 48rem;
+    right: 200rem;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    .button {
+      width: 114px;
+      height: 44px;
+      font-size: 24px;
+      line-height: 44px;
+      text-align: center;
+      color: #82e2e4;
+      cursor: pointer;
+      background: url('./img/mmexport.jpg') no-repeat;
+      &.active {
+        color: white;
+        background: url('./img/mmexport1.jpg') no-repeat;
+      }
+    }
+  }
+  //.main-map {
+  //  position: absolute;
+  //  left: 0;
+  //  right: 0;
+  //  width: 100%;
+  //  height: 135rem;
+  //}
   .map-legend{
     position: absolute;
     z-index: 10;

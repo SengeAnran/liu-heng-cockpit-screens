@@ -9,13 +9,24 @@ import features from './word';
 export default {
   data() {
     return {
-      geoCoordMap: [],
+      geoCoordMap: [
+        {
+          name: '宁波舟山港 北仑港区',
+          position: [121.887824, 29.931505],
+          content: '舟山港（Zhoushan Port），是中国浙江省舟山市港口，位于中国长江三角洲和东部沿海要冲，背靠上海、杭州、宁波等大中城市 ，是长江三角洲综合运输网的重要节点',
+        },
+        {
+          name: '美国长滩港',
+          position: [-118.269465, 33.722667],
+          content: '相比邻港洛杉矶的交通拥堵状况， 长滩在这方面的问题较少。 长滩港口管理局约翰.佩伯说：“长滩集装箱吞吐量增加的推动力是美国不断增长的消费需求和中国日益提升的制造能力。',
+        },
+      ],
       series: [],
     };
   },
   mounted() {
     this.chart = echarts.init(this.$refs.mapChart);
-    this.loadData();
+    // this.loadData();
     echarts.registerMap('world', {
       type: 'FeatureCollection',
       crs: {
@@ -64,7 +75,7 @@ export default {
         },
         data: this.geoCoordMap.map((item) => {
           return {
-            coords: [item.position, [114.195466, 22.282751]],
+            coords: [item.position, [122.153209, 29.749349]],
           };
         }),
       });

@@ -1,6 +1,6 @@
 <template>
   <div class="left">
-    <Title>工业生产总值与工业企业数</Title>
+    <Title>规上工业生产总值与规上工业企业数</Title>
     <div class="first-row">
       <BarLine
         :data="list1"
@@ -77,11 +77,11 @@ export default {
         line: d.gyqys,
       }));
       this.content1 = {
-        title: '工业生产总值',
-        rightUnit: '工业企业数',
+        title: '规上工业生产总值',
+        rightUnit: '规上工业企业数',
         leftUnit: '（亿元）',
-        barName: '工业产值',
-        lineName: '工业企业数',
+        barName: '规上工业产值',
+        lineName: '规上工业企业数',
       };
       this.key1 = true;
       // console.log(data);
