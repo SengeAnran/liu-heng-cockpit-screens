@@ -58,6 +58,7 @@ export default {
   methods: {
     selectTab(name, index) {
       this.currentTab = name;
+      this.formatDataList();
     },
     async getData() {
       const result = await partyDocument().request();
@@ -76,6 +77,7 @@ export default {
     },
     formatDataList() {
       this.dataList = this.allDataList.find((i) => i.type === this.currentTab).data;
+      // console.log(this.dataList);
     },
   },
 };

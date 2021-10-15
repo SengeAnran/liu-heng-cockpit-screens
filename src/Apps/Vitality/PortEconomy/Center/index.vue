@@ -3,7 +3,14 @@
     <div>
       <div class="preview"></div>
       <div class="mask"></div>
-      <chart-map />
+      <chart-map v-show="!threeDMap"/>
+      <div class="main-map" v-show="threeDMap">
+        <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+      </div>
+<!--      <div class="switch">-->
+<!--        <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>-->
+<!--        <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -15,10 +22,20 @@ export default {
     ChartMap,
   },
   data() {
-    return {};
+    return {
+      threeDMap: false,
+    };
   },
   mounted() {},
-  methods: {},
+  methods: {
+    changeMap(type) {
+      if (type === 3) {
+        this.threeDMap = true;
+      } else {
+        this.threeDMap = false;
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -52,7 +69,38 @@ export default {
   height: 207rem;
   background: url(../images/mask.png) no-repeat center bottom;
   background-size: 100% 100%;
-  z-index: 9;
+  z-index: -1;
   pointer-events: none;
+}
+.main-map {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 135rem;
+}
+.switch {
+  width: 274px;
+  height: 360px;
+  position: absolute;
+  bottom: 48rem;
+  right: 200rem;
+  display: flex;
+  justify-content: space-around;
+  z-index: 1000;
+  .button {
+    width: 114px;
+    height: 44px;
+    font-size: 24px;
+    line-height: 44px;
+    text-align: center;
+    color: #82e2e4;
+    cursor: pointer;
+    background: url('./img/mmexport.jpg') no-repeat;
+    &.active {
+      color: white;
+      background: url('./img/mmexport1.jpg') no-repeat;
+    }
+  }
 }
 </style>

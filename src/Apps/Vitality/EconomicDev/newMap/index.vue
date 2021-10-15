@@ -50,11 +50,11 @@ export default {
       mapLayer: null,
       markerLayer: null,
       mapDom: null,
-      currentLegend: 0,
+      currentLegend: 1,
       lastDetailMarker: null,
       threeDMap: false,
       legendList: [
-        // { value: 1, label: '五星村' },
+        { value: 1, label: '企业信息' },
       ],
     };
   },
@@ -133,7 +133,7 @@ export default {
   .map-legend {
     position: absolute;
     z-index: 10;
-    top: 110.6rem;
+    top: 104.6rem;
     right: 37%;
     width: 27.4rem;
     // height: 28.2rem;

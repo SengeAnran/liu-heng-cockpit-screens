@@ -77,11 +77,11 @@ export default {
         },
       },
       tabList: [
-        { name: '工会' },
         { name: '妇联' },
+        { name: '工会' },
         { name: '团委' },
       ],
-      currentTab: '工会',
+      currentTab: '妇联',
       dataList: [],
       currentData: {},
     };
@@ -98,13 +98,15 @@ export default {
     onSlideChange() {
       this.currentTab = this.tabList[this.mySwiper.activeIndex].name;
       this.currentData = this.dataList[this.mySwiper.activeIndex];
+      // console.log(this.currentData);
     },
     selectTab(name, index) {
+      // console.log(name, index);
       this.mySwiper.slideTo(index);
     },
     async getData() {
       const result = await workCompetition().request();
-      console.log('workCompetition', result);
+      // console.log('workCompetition', result);
 
       this.dataList = result.map((i) => {
         return {

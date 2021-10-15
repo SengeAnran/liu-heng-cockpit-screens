@@ -84,6 +84,7 @@ export default {
     onSlideChange(item) {
       this.currentTab = this.tabList[this.mySwiper.activeIndex].name;
       this.currentContent = this.dataList[this.mySwiper.activeIndex].xcnr;
+      // console.log(this.dataList);
     },
     selectTab(name, index) {
       this.mySwiper.slideTo(index);

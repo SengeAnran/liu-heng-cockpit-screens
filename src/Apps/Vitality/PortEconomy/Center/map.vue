@@ -13,7 +13,7 @@ export default {
         {
           name: '宁波舟山港 北仑港区',
           position: [121.887824, 29.931505],
-          content: '舟山港（Zhoushan Port），是中国浙江省舟山市港口，位于中国长江三角洲和东部沿海要冲，背靠上海、杭州、宁波等大中城市 ，是长江三角洲综合运输网的重要节点',
+          content: '舟山港（Zhoushan Port），是中国浙江省舟山市港口，位于中国长江三角洲和东部沿海要冲，背靠上海、杭州、宁波等大中城市 ，是长江三角洲综合运输网的重要节点。',
         },
         {
           name: '美国长滩港',
@@ -125,11 +125,11 @@ export default {
             label: {
               normal: {
                 show: false,
-                position: 'right',
+                position: 'top',
                 offset: [0, 10],
                 formatter: '{b}',
                 fontSize: 18,
-                backgroundColor: 'rgba(9,23,55,.2)',
+                backgroundColor: 'rgb(0,0,0)',
                 padding: [12, 12],
                 color: '#fff',
                 width: 400,
@@ -159,7 +159,7 @@ export default {
       });
 
       const option = {
-        backgroundColor: '#013954',
+        backgroundColor: '#191d23',
         geo: {
           map: 'world',
           label: {
