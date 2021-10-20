@@ -58,7 +58,7 @@
 import routes from '@/config/routes';
 import {
   getBottomInfo,
-  getVillagerInfo,
+  // getVillagerInfo,
   getRealtimeHandling,
   realtimeInvestment,
   getCountyAirQualityStatus,
@@ -73,6 +73,7 @@ import {
   // getPartyGroupEduStructure,
   peopleBasicInfo,
 } from '@/api/Charm/PartyConstruction';
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -82,6 +83,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['indicator']),
     primalNavActiveName() {
       // console.log(this.$route);
       return this.$route.matched?.[0]?.name || '';
@@ -135,6 +137,12 @@ export default {
     primalNavActiveName() {
       this.secondNavStart = 0;
     },
+    'indicator.sqrk': {
+      handler() {
+        this.charmLoadData();
+      },
+      deep: true,
+    },
   },
   methods: {
     // 六横总览
@@ -163,17 +171,20 @@ export default {
         params: [],
       };
       const res = await getPartyMemberBasicSit(data);
-      const res2 = await getVillagerInfo().request();
+      // const res2 = await getVillagerInfo().request();
+      console.log(this.$store.state, 'ssss');
       // debugger;
       // console.log(res, '131231231');
       // console.log(this.secondaryNav);
       // for (let i = 0; i < res.length; i++) {
-      this.secondaryNav[0].meta.indicator[0].value = res.list[0].zsdyrs;
-      this.secondaryNav[0].meta.indicator[1].value = res.list[0].ybdyrs;
+      if (res && res.list[0]) {
+        this.secondaryNav[0].meta.indicator[0].value = res.list[0].zsdyrs;
+        this.secondaryNav[0].meta.indicator[1].value = res.list[0].ybdyrs;
+      }
       // this.secondaryNav[0].meta.indicator[2].value = res.list[0].fzdyrs;
-      this.secondaryNav[1].meta.indicator[0].value = res2.sqrks;
-      this.secondaryNav[1].meta.indicator[1].value = res2.sqldls;
-      this.secondaryNav[1].meta.indicator[2].value = res2.rsqts;
+      this.secondaryNav[1].meta.indicator[0].value = this.indicator.sqrk;
+      this.secondaryNav[1].meta.indicator[1].value = this.indicator.sqldlzy;
+      this.secondaryNav[1].meta.indicator[2].value = this.indicator.wwlrzh;
       // }
     },
     // 实力六横

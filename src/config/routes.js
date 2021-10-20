@@ -266,7 +266,6 @@ export default [
           ],
         },
       },
-  
       {
         path: 'digit-county',
         name: '数字乡社',

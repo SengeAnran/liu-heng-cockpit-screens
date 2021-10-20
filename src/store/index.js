@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import digitCounty from './digitCounty';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,11 @@ export default new Vuex.Store({
       }
     },
   },
+  getters: {
+    indicator: (state) => state.digitCounty.indicator,
+  },
   actions: {},
-  modules: {},
+  modules: {
+    digitCounty,
+  },
 });

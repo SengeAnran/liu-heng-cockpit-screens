@@ -62,7 +62,7 @@ export default {
       ],
       // 这是一个坑，五星没有数据，传荷花小区 得到的是五星村的数据
       lanlat: {
-        name: '荷花小区',
+        name: '五星村',
       },
       markerList: {
         type: 'FeatureCollection',

@@ -1,7 +1,7 @@
 <template>
   <div class="map_wrapper">
     <div class="mask"></div>
-    <Map2d v-show="!threeDMap" />
+    <Map2d :currentLegend="currentLegend" v-show="!threeDMap" />
     <div class="main-map" v-show="threeDMap">
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
@@ -134,9 +134,9 @@ export default {
   .map-legend {
     position: absolute;
     z-index: 10;
-    top: 104.6rem;
+    top: 98.6rem;
     right: 37%;
-    width: 27.4rem;
+    width: 32.4rem;
     // height: 28.2rem;
     height: auto;
     background: url('./img/legend-bg.png') no-repeat 0 0;

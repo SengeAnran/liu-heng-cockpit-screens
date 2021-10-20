@@ -12,6 +12,18 @@ export const getCommunityInfo = (data) => {
     },
   });
 };
+// 下屏数据
+export const getBottomInfo = (data) => {
+  return new MetroApi({
+    myType: 0,
+    url: '/community/getBottomInfo',
+    method: 'get',
+    data,
+    header: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
+  });
+};
 
 // 社区地图点位
 export const getLocation = (data) => {

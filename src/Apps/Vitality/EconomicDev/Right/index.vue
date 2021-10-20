@@ -77,8 +77,8 @@ export default {
       }));
       this.content1 = {
         title: '外贸总额和增长率',
-        rightUnit: '（%）',
-        leftUnit: '（元）',
+        rightUnit: '（元）',
+        leftUnit: '（%）',
         barName: '进出口总额',
         lineName: '增幅',
       };
@@ -98,8 +98,8 @@ export default {
       }));
       this.content2 = {
         title: '旅游接待人数和旅游收入',
-        rightUnit: '（亿元）',
-        leftUnit: '（万人次）',
+        rightUnit: '（万人次）',
+        leftUnit: '（亿元）',
         barName: '接待人数',
         lineName: '旅游收入',
       };
@@ -119,8 +119,8 @@ export default {
       }));
       this.content3 = {
         title: '渔农村常住居民人均可支配收入',
-        rightUnit: '（%）',
-        leftUnit: '（元）',
+        rightUnit: '（元）',
+        leftUnit: '（%）',
         barName: '渔农村常住居民人均可支配收入',
         lineName: '增幅',
       };

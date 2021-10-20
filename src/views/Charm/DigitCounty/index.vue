@@ -104,6 +104,7 @@ import {
   getVillagerInfo,
   getPlanning,
   getWaterElectTrend,
+  getBottomInfo,
 } from '@/api/Charm/DigitCounty';
 
 export default {
@@ -224,6 +225,7 @@ export default {
       this.getEduDistributionData(data);
       this.getResidentInfoData();
       this.getOldPeopleData(data);
+      this.getBottomInfo(data);
       this.getVillagerInfoData();
       this.getPlanningData();
       this.getWaterElectTrendData();
@@ -249,6 +251,14 @@ export default {
       if (result) {
         this.ageData.xData = result.map((i) => i.rs);
         this.ageData.yData = result.map((i) => i.nld);
+      }
+    },
+    async getBottomInfo(data) {
+      const result = await getBottomInfo(data).request();
+      if (result) {
+        console.log(result, '1111');
+        // this.$store.dispatch('digitCounty/achangeIndicator', { ...result });
+        this.$store.commit('digitCounty/changeIndicator', { ...result });
       }
     },
     async getEduDistributionData(data) {
