@@ -2,7 +2,7 @@
   <Map>
     <AGeoJSON
       key="lhArea"
-      v-if="currentLegend == 1"
+      v-if="currentLegend === 1"
       :source="points"
       :geoStyle="{ marker: markerStyle }"
       @onClick="pointsClick"

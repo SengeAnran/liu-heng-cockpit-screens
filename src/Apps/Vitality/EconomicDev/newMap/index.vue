@@ -55,6 +55,7 @@ export default {
       threeDMap: false,
       legendList: [
         { value: 1, label: '企业信息' },
+        { value: 2, label: '经济发展核心指标' },
       ],
     };
   },
