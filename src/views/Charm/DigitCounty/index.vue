@@ -216,16 +216,16 @@ export default {
   },
   methods: {
     changePlace(name) {
-      console.log(name);
+      // console.log(name);
       this.initData({ name: name });
     },
     initData(data) {
+      this.getBottomInfo(data);
       this.getCommunityInfoData(data);
       this.getAgeDistributionData(data);
       this.getEduDistributionData(data);
       this.getResidentInfoData();
       this.getOldPeopleData(data);
-      this.getBottomInfo(data);
       this.getVillagerInfoData();
       this.getPlanningData();
       this.getWaterElectTrendData();
@@ -256,7 +256,6 @@ export default {
     async getBottomInfo(data) {
       const result = await getBottomInfo(data).request();
       if (result) {
-        console.log(result, '1111');
         // this.$store.dispatch('digitCounty/achangeIndicator', { ...result });
         this.$store.commit('digitCounty/changeIndicator', { ...result });
       }

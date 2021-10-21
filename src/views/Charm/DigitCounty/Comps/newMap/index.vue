@@ -18,9 +18,9 @@
       <ul class="legend-list">
         <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
           <div class="main-label-wrap">
-<!--            <span class="select-rect">-->
-<!--              <span class="selected-inner" v-show="currentLegend === item.value"></span>-->
-<!--            </span>-->
+            <span class="select-rect">
+              <span class="selected-inner" v-show="currentLegend === item.value"></span>
+            </span>
             {{ item.label }}
           </div>
 <!--          <ul v-if="item.children" class="legend-children-list">-->
@@ -57,8 +57,8 @@ export default {
       threeDMap: false,
       currentLegend: 1,
       legendList: [
-        { value: 1, label: '五星村' },
-        { value: 2, label: '田岙村' },
+        { value: 1, label: '数字村社' },
+        // { value: 2, label: '田岙村' },
       ],
       // 这是一个坑，五星没有数据，传荷花小区 得到的是五星村的数据
       lanlat: {
@@ -72,7 +72,7 @@ export default {
     };
   },
   mounted() {
-    this.getLocation(this.lanlat);
+    this.getLocation();
   },
   methods: {
     changeMap(type) {
@@ -85,39 +85,25 @@ export default {
     selectLegend(item) {
       this.currentLegend = item.value;
       // this.getLocation(item.label);
-      console.log(this.currentLegend);
     },
-    async getLocation(data) {
-      let MapMaker2;
-      const result = await getLocation(data).request();
-      console.log(result);
+    async getLocation() {
+      const result = await getLocation().request();
       if (result) {
-        const MapLngLat = result.coordinates.split(',');
-        this.MapMaker = {
-          type: 'Feature',
-          properties: {
-            name: '五星村',
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [MapLngLat[0], MapLngLat[1]],
-          },
-        };
-        MapMaker2 = {
-          type: 'Feature',
-          properties: {
-            name: '田岙村',
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: ['122.126806', '29.740323'],
-          },
-        };
+        this.markerList.features = result.map((item) => {
+          const MapLngLat = item.coordinates.split(',');
+          return {
+            type: 'Feature',
+            properties: {
+              name: item.sqmc,
+              content: item.js,
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: [MapLngLat[0], MapLngLat[1]],
+            },
+          };
+        });
       }
-
-      this.markerList.features.push(this.MapMaker);
-      this.markerList.features.push(MapMaker2);
-      console.log(this.markerList);
     },
     changePlace(name) {
       this.$emit('changePlace', name);

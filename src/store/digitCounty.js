@@ -10,7 +10,6 @@ export default {
   },
   mutations: {
     changeIndicator(state, param) {
-      console.log(param, '222');
       state.indicator.sqrk = param.sqrk;
       state.indicator.sqldlzy = param.sqldlzy;
       state.indicator.wwlrzh = param.wwlrzh;

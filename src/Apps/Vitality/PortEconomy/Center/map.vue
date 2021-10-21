@@ -170,7 +170,7 @@ export default {
               show: false,
             },
           },
-          roam: false, // 是否允许缩放
+          roam: true, // 是否允许缩放
           layoutCenter: ['50%', '56%'], // 地图位置
           layoutSize: '170%',
           itemStyle: {
