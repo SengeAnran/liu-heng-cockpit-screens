@@ -15,6 +15,10 @@ export default {
   threeTypeIndustriesYears() {
     return axios.get('/energy/getYears');
   },
+  // 第一、二、三产业产值
+  getThreeType() {
+    return axios.get('/energy/getThreeType');
+  },
   // 人均GDP趋势
   gdp() {
     return axios.get('/energy/getGDPTrend');

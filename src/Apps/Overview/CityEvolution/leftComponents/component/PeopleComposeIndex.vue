@@ -2,7 +2,7 @@
   <div class="people_compose">
     <BaseTitle title="人口组成情况" :width="720" />
     <div class="item_wrapper">
-      <swiper ref="mySwiper" :options="swiperOption">
+      <swiper ref="mySwiper" :options="swiperOption" pagination>
         <swiper-slider>
           <div class="item">
             <img class="img" src="../../images/people_num.png" />
@@ -11,8 +11,6 @@
               <digital :loop="loop" :endNum="item.hjrksl || 0" :data="data" :config="config"></digital>
             </div>
           </div>
-        </swiper-slider>
-        <swiper-slider>
           <div class="item">
             <img class="img" src="../../images/children_num.png" />
             <div class="title">新生儿出生数量</div>
@@ -22,8 +20,6 @@
               <span class="unit">人</span> -->
             </div>
           </div>
-        </swiper-slider>
-        <swiper-slider>
           <div class="item">
             <img class="img" src="../../images/dead_num.png" />
             <div class="title">人口死亡数量</div>
@@ -36,32 +32,28 @@
         </swiper-slider>
         <swiper-slider>
           <div class="item">
-            <img class="img" src="../../images/dead_num.png" />
-            <div class="title">人口死亡数量</div>
+            <img class="img" src="../../images/people_add_num.png" />
+            <div class="title">自然增长人口</div>
             <div class="count_wrapper dead">
-              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+              <digital :loop="loop" :endNum="item.zrzzrk || 0" :data="data" :config="config1"></digital>
               <!-- <CountUp :num="item.rkswsl" />
               <span class="unit">人</span> -->
             </div>
           </div>
-        </swiper-slider>
-        <swiper-slider>
           <div class="item">
-            <img class="img" src="../../images/dead_num.png" />
-            <div class="title">人口死亡数量</div>
+            <img class="img" src="../../images/increase_num.png" />
+            <div class="title">自然增长率</div>
             <div class="count_wrapper dead">
-              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+              <digital :loop="loop" :endNum="item.zrzzl || 0" :data="data2" :config="config"></digital>
               <!-- <CountUp :num="item.rkswsl" />
               <span class="unit">人</span> -->
             </div>
           </div>
-        </swiper-slider>
-        <swiper-slider>
           <div class="item">
-            <img class="img" src="../../images/dead_num.png" />
-            <div class="title">人口死亡数量</div>
+            <img class="img" src="../../images/planning_num.png" />
+            <div class="title">计划生育率</div>
             <div class="count_wrapper dead">
-              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+              <digital :loop="loop" :endNum="item.jhsyl || 0" :data="data2" :config="config2"></digital>
               <!-- <CountUp :num="item.rkswsl" />
               <span class="unit">人</span> -->
             </div>
@@ -90,10 +82,17 @@ export default {
         hjrksl: 10345,
         xscssl: 34,
         rkswsl: 12,
+        jhsyl: 90,
+        zrzzrk: 134,
+        zrzzl: 11,
       },
       data: {
         content: 1000,
         unit: '人',
+      },
+      data2: {
+        content: 100,
+        unit: '%',
       },
       loop: {
         // 是否开启数值循环
@@ -146,13 +145,17 @@ export default {
       swiperOption: {
         // direction: '',
         speed: 1000,
-        slidesPerView: 3,
+        slidesPerView: 1,
         spaceBetween: 0,
         loop: true,
         grabCursor: true,
         autoplay: {
-          delay: 1500,
+          delay: 3000,
           disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
         },
         // autoplay: true,
       },
@@ -255,13 +258,25 @@ export default {
       }
     }
   }
-  //.swiper-container {
-  //  width: 100%;
-  //  height: 227px;
-  //  .swiper-slide {
-  //    //height: 76px;
-  //    box-sizing: border-box;
-  //  }
-  //}
+  .swiper-container {
+    width: 100%;
+    height: 451px;
+    --swiper-theme-color: #fdfcfc;
+    .swiper-slide {
+      //height: 76px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    //::v-deep .swiper-pagination-bullet {
+    //  //width: 8px;
+    //  //height: 8px;
+    //  //display: inline-block;
+    //  //border-radius: 100%;
+    //  background: #000;
+    //  opacity: 0.3;
+    //}
+  }
 }
 </style>

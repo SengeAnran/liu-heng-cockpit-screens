@@ -23,7 +23,7 @@
           <div class="table-body-item" v-for="item in list1" :key="item">
             <div>{{ item.name }}</div>
             <div>{{ item.suoshu }}</div>
-            <div>{{ item.value }}</div>
+            <div>{{ item.value }}万元</div>
           </div>
         </div>
       </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { itemsList } from '@/api/Strength/ProjectManage/api.js';
 export default {
   data() {
     return {
@@ -90,6 +91,23 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      itemsList().request().then((res) => {
+        // console.log(res);
+        this.list1 = res.map((item) => {
+          return {
+            name: item.qymc,
+            suoshu: item.qtdw,
+            value: item.tze,
+          };
+        });
+      });
+    },
   },
 };
 </script>

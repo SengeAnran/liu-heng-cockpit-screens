@@ -3,6 +3,7 @@
     <div :class="defaultSwiperClasses.wrapperClass">
       <slot></slot>
     </div>
+    <div v-if="pagination" class="swiper-pagination"></div>
   </div>
 </template>
 <script>
@@ -18,6 +19,10 @@ export default {
           autoplay: 3500,
         };
       },
+    },
+    pagination: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

@@ -7,8 +7,12 @@
         :content="content1"
         :refresh-key="key1"
       />
-      <Pie />
-<!--      <BarLine />-->
+<!--      <Pie />-->
+      <BarBars
+        :data="list4"
+        :content="content4"
+        :refresh-key="key4"
+      />
     </div>
     <Title>渔业</Title>
     <div class="second-row">
@@ -33,8 +37,9 @@
 import Title from '../Title';
 import BarLine from '../components/BarLine';
 import BarBar from '../components/BarBar';
+import BarBars from '../components/BarBars';
 // import DoubleBar from './DoubleBar';
-import Pie from './Pie';
+// import Pie from './Pie';
 import economicAPI from '@/api/Vitality/EconomicDev';
 
 export default {
@@ -43,8 +48,9 @@ export default {
     // Indicators,
     BarLine,
     BarBar,
+    BarBars,
     // DoubleBar,
-    Pie,
+    // Pie,
   },
   data() {
     return {
@@ -58,10 +64,14 @@ export default {
       list3: [],
       content3: {},
       key3: false,
+      list4: [],
+      content4: {},
+      key4: false,
     };
   },
   mounted() {
     this.industrialAndEnterprises();
+    this.threeTypeIndustries();
     this.fishAndAgricultural();
     this.aquaticProductsTotal();
   },
@@ -128,6 +138,30 @@ export default {
       this.key3 = true;
       // console.log(data);
       // console.log(this.list1);
+    },
+    // 第一、二、三产业产值
+    async threeTypeIndustries() {
+      const data = await economicAPI.getThreeType();
+      // console.log(data);
+      this.list4 = data.map((d) => ({
+        // ...d,
+        name: d.sj,
+        bar1: d.one / 10000,
+        bar2: d.two / 10000,
+        bar3: d.three / 10000,
+      }));
+      this.content4 = {
+        title: '第一、二、三产业产值',
+        // rightUnit: '（亿元）',
+        leftUnit: '万元',
+        barName1: '第一产业',
+        barName2: '第二产业',
+        barName3: '第三产业',
+        // lineName: '养殖产量',
+      };
+      this.key4 = true;
+      // console.log(data);
+      // console.log(this.list4);
     },
   },
 };
