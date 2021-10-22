@@ -224,11 +224,11 @@ export default {
       this.getCommunityInfoData(data);
       this.getAgeDistributionData(data);
       this.getEduDistributionData(data);
-      this.getResidentInfoData();
+      this.getResidentInfoData(data);
       this.getOldPeopleData(data);
-      this.getVillagerInfoData();
-      this.getPlanningData();
-      this.getWaterElectTrendData();
+      this.getVillagerInfoData(data);
+      this.getPlanningData(data);
+      this.getWaterElectTrendData(data);
     },
 
     async getCommunityInfoData(data) {
@@ -277,8 +277,8 @@ export default {
         this.oldManInfo[4].value = result.gglrs;
       }
     },
-    async getVillagerInfoData() {
-      const result = await getVillagerInfo().request();
+    async getVillagerInfoData(data) {
+      const result = await getVillagerInfo(data).request();
       if (result) {
         console.log(result);
         this.villagerInfo[0].value = result.dbrys;
@@ -288,16 +288,16 @@ export default {
         this.villagerInfo[4].value = result.lszns;
       }
     },
-    async getResidentInfoData() {
-      const result = await getResidentInfo().request();
+    async getResidentInfoData(data) {
+      const result = await getResidentInfo(data).request();
       if (result) {
         this.residentInfo[0].value = result[0].zgdyrs;
         this.residentInfo[1].value = result[0].gqtyrs;
         this.residentInfo[2].value = result[0].qzrs;
       }
     },
-    async getPlanningData() {
-      const result = await getPlanning().request();
+    async getPlanningData(data) {
+      const result = await getPlanning(data).request();
       if (result) {
         this.indicatorData[0].value = result.gdmj;
         this.indicatorData[0].max = result.gdmj + 1000;
@@ -312,8 +312,8 @@ export default {
         this.indicatorDataList = this.indicatorData.map((i) => i.value);
       }
     },
-    async getWaterElectTrendData() {
-      const result = await getWaterElectTrend().request();
+    async getWaterElectTrendData(data) {
+      const result = await getWaterElectTrend(data).request();
       if (result) {
         this.waterXData = result.map((i) => i.yf);
         this.waterYData1 = result.map((i) => i.ydl);

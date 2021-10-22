@@ -2,31 +2,72 @@
   <div class="people_compose">
     <BaseTitle title="人口组成情况" :width="720" />
     <div class="item_wrapper">
-      <div class="item">
-        <img class="img" src="../../images/people_num.png" />
-        <div class="title">户籍人口数量</div>
-        <div class="count_wrapper">
-          <digital :loop="loop" :endNum="item.hjrksl || 0" :data="data" :config="config"></digital>
-        </div>
-      </div>
-      <div class="item">
-        <img class="img" src="../../images/children_num.png" />
-        <div class="title">新生儿出生数量</div>
-        <div class="count_wrapper children">
-          <digital :loop="loop" :endNum="item.xscssl || 0" :data="data" :config="config1"></digital>
-          <!-- <CountUp :num="item.xscssl" />
-          <span class="unit">人</span> -->
-        </div>
-      </div>
-      <div class="item">
-        <img class="img" src="../../images/dead_num.png" />
-        <div class="title">人口死亡数量</div>
-        <div class="count_wrapper dead">
-          <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
-          <!-- <CountUp :num="item.rkswsl" />
-          <span class="unit">人</span> -->
-        </div>
-      </div>
+      <swiper ref="mySwiper" :options="swiperOption">
+        <swiper-slider>
+          <div class="item">
+            <img class="img" src="../../images/people_num.png" />
+            <div class="title">户籍人口数量</div>
+            <div class="count_wrapper">
+              <digital :loop="loop" :endNum="item.hjrksl || 0" :data="data" :config="config"></digital>
+            </div>
+          </div>
+        </swiper-slider>
+        <swiper-slider>
+          <div class="item">
+            <img class="img" src="../../images/children_num.png" />
+            <div class="title">新生儿出生数量</div>
+            <div class="count_wrapper children">
+              <digital :loop="loop" :endNum="item.xscssl || 0" :data="data" :config="config1"></digital>
+              <!-- <CountUp :num="item.xscssl" />
+              <span class="unit">人</span> -->
+            </div>
+          </div>
+        </swiper-slider>
+        <swiper-slider>
+          <div class="item">
+            <img class="img" src="../../images/dead_num.png" />
+            <div class="title">人口死亡数量</div>
+            <div class="count_wrapper dead">
+              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+              <!-- <CountUp :num="item.rkswsl" />
+              <span class="unit">人</span> -->
+            </div>
+          </div>
+        </swiper-slider>
+        <swiper-slider>
+          <div class="item">
+            <img class="img" src="../../images/dead_num.png" />
+            <div class="title">人口死亡数量</div>
+            <div class="count_wrapper dead">
+              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+              <!-- <CountUp :num="item.rkswsl" />
+              <span class="unit">人</span> -->
+            </div>
+          </div>
+        </swiper-slider>
+        <swiper-slider>
+          <div class="item">
+            <img class="img" src="../../images/dead_num.png" />
+            <div class="title">人口死亡数量</div>
+            <div class="count_wrapper dead">
+              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+              <!-- <CountUp :num="item.rkswsl" />
+              <span class="unit">人</span> -->
+            </div>
+          </div>
+        </swiper-slider>
+        <swiper-slider>
+          <div class="item">
+            <img class="img" src="../../images/dead_num.png" />
+            <div class="title">人口死亡数量</div>
+            <div class="count_wrapper dead">
+              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
+              <!-- <CountUp :num="item.rkswsl" />
+              <span class="unit">人</span> -->
+            </div>
+          </div>
+        </swiper-slider>
+      </swiper>
     </div>
   </div>
 </template>
@@ -34,10 +75,14 @@
 <script>
 import BaseTitle from '../../components/BaseTitle';
 import { getPoputionForm } from '@/api/Overview/CityEvolution/api';
+import swiper from '@/components/Swiper';
+import SwiperSlider from '@/components/SwiperSlider';
 export default {
   name: 'CityEvolution',
   components: {
     BaseTitle,
+    swiper,
+    SwiperSlider,
   },
   data() {
     return {
@@ -98,6 +143,19 @@ export default {
           color: '#DF7B7A',
         },
       },
+      swiperOption: {
+        // direction: '',
+        speed: 1000,
+        slidesPerView: 3,
+        spaceBetween: 0,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false,
+        },
+        // autoplay: true,
+      },
     };
   },
   mounted() {
@@ -110,6 +168,18 @@ export default {
         .then((res) => {
           this.item = res;
         });
+    },
+    mouseEnter(lists) {
+      if (lists.length < 3) {
+        return;
+      }
+      this.swiper.autoplay.stop();
+    },
+    mouseleave(lists) {
+      if (lists.length < 3) {
+        return;
+      }
+      this.swiper.autoplay.start();
     },
   },
 };
@@ -185,5 +255,13 @@ export default {
       }
     }
   }
+  //.swiper-container {
+  //  width: 100%;
+  //  height: 227px;
+  //  .swiper-slide {
+  //    //height: 76px;
+  //    box-sizing: border-box;
+  //  }
+  //}
 }
 </style>

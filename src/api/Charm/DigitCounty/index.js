@@ -69,37 +69,41 @@ export const getOldPeople = (data) => {
 };
 
 // 乡村规划
-export const getPlanning = () => {
+export const getPlanning = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/community/planning',
     method: 'get',
+    data,
   });
 };
 
 // 居民情况
-export const getResidentInfo = () => {
+export const getResidentInfo = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/community/residentInfo',
     method: 'get',
+    data,
   });
 };
 
 // 村民信息
-export const getVillagerInfo = () => {
+export const getVillagerInfo = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/community/villagerInfo',
     method: 'get',
+    data,
   });
 };
 
 // 村民用水用电趋势
-export const getWaterElectTrend = () => {
+export const getWaterElectTrend = (data) => {
   return new MetroApi({
     myType: 0,
     url: '/community/waterElectTrend',
     method: 'get',
+    data,
   });
 };
