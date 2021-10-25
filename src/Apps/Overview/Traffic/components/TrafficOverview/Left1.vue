@@ -55,6 +55,10 @@
 import Title from './Title';
 // import BarPie from './BarPie';
 // import Bar1 from './Bar1';
+import {
+  getStatistics,
+  getRoadTransport,
+} from '@/api/Overview/Traffic';
 
 export default {
   components: {
@@ -151,6 +155,36 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      this.getStatistics();
+      this.getRoadTransport();
+    },
+    // 公路桥隧
+    async getStatistics() {
+      const res = await getStatistics();
+      res.forEach((item, index) => {
+        this.highway[index].name = item.name;
+        this.highway[index].number = item.count;
+        this.highway[index].length = item.length;
+      });
+    },
+    // 道路运营
+    async getRoadTransport() {
+      const res = await getRoadTransport();
+      this.passenger = res.map((item) => {
+        return {
+          name: item.type,
+          number: item.count,
+          seat: item.seat || '-',
+          shiftLine: item.lineNum || '-',
+        };
+      });
+    },
   },
 };
 </script>

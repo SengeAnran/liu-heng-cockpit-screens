@@ -64,6 +64,11 @@
 import Title from './Title';
 // import Indicator from './Indicator';
 // import LineChart from './LineChart';
+import {
+  getWaterwayRoute,
+  getWaterwayTransport,
+  getRoadMaintain,
+} from '@/api/Overview/Traffic';
 
 export default {
   components: {
@@ -263,6 +268,44 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      this.getWaterwayRoute();
+      this.getWaterwayTransport();
+      this.getRoadMaintain();
+      this.getRoadMonitor();
+    },
+    // 水路信息航线信息
+    async getWaterwayRoute() {
+      const res = await getWaterwayRoute();
+      // console.log(res, 111111);
+    },
+    // 水路信息客运信息
+    async getWaterwayTransport() {
+      const res = await getWaterwayTransport();
+      this.passenger = res.map((item) => {
+        return {
+          name: item.type,
+          number: item.count,
+          seat: item.seat || '-',
+          shiftLine: item.parkNum || '-',
+        };
+      });
+    },
+    // 道路货运及维修
+    async getRoadMaintain() {
+      const res = await getRoadMaintain();
+      this.dataList[0].number = res[0].vehicle;
+      this.dataList[1].number = res[0].trunck;
+      this.dataList[2].number = res[0].danger;
+      this.dataList[3].number = res[0].repair;
+      this.dataList[4].number = res[0].employee;
+      this.dataList[5].number = res[0].dangerVehicle;
+    },
   },
 };
 </script>

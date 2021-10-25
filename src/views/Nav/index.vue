@@ -148,7 +148,7 @@ export default {
     // 六横总览
     async loadData() {
       const res = await getBottomInfo().request();
-      console.log(res, 1231);
+      // console.log(res, 1231);
       for (let i = 0; i < res.length; i++) {
         this.secondaryNav[i].meta.indicator[0].value = res[i].value1;
         this.secondaryNav[i].meta.indicator[1].value = res[i].value2;
@@ -172,7 +172,7 @@ export default {
       };
       const res = await getPartyMemberBasicSit(data);
       // const res2 = await getVillagerInfo().request();
-      console.log(this.$store.state, 'ssss');
+      // console.log(this.$store.state, 'ssss');
       // debugger;
       // console.log(res, '131231231');
       // console.log(this.secondaryNav);
@@ -214,8 +214,8 @@ export default {
     async vitalityLoadData() {
       const res = await getEconomicDevelopmentIndicator().request();
       const res1 = await getGkjjGoal().request();
-      console.log(res);
-      console.log(this.secondaryNav);
+      // console.log(res);
+      // console.log(this.secondaryNav);
       this.secondaryNav[0].meta.indicator[0].value = res.gysczz / 10000;
       this.secondaryNav[0].meta.indicator[1].value = res.gyqys;
       this.secondaryNav[0].meta.indicator[2].value = res.ynyzcz / 10000;

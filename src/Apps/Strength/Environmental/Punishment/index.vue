@@ -50,6 +50,7 @@ export default {
         .request()
         .then((json) => {
           this.list = json || [];
+          console.log(this.list);
         });
     },
   },

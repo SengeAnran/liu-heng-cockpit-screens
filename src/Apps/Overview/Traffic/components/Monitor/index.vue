@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     onClick(index, id) {
+      console.log(index, id);
       this.activeId = id;
       this.cameraIndexCode = this.videoList[index].url;
       this.name = this.videoList[index].name;

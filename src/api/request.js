@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const baseURL = '/api';
 
-const instance = axios.create({
+const service = axios.create({
   baseURL: baseURL,
-  timeOur: 5000, // 请求过期时间
+  timeOut: 5000, // 请求过期时间
 });
 
 // instance.interceptors.request.use(
@@ -15,7 +15,7 @@ const instance = axios.create({
 //   (error) => Promise.reject(error),
 // );
 
-instance.interceptors.response.use(
+service.interceptors.response.use(
   ({ data }) => {
     // const data = res.data;
     // if (data.code !== 200) {
@@ -29,4 +29,4 @@ instance.interceptors.response.use(
   () => ({}),
 );
 
-export default instance;
+export default service;

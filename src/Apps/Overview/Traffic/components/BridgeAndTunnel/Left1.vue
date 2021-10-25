@@ -103,7 +103,10 @@ import Title from './Title';
 // import Bar1 from './Bar1';
 import swiper from '@/components/Swiper';
 import SwiperSlider from '@/components/SwiperSlider';
-
+import {
+  getCountryRoad,
+  getVillageRoad,
+} from '@/api/Overview/Traffic';
 export default {
   components: {
     Title,
@@ -247,7 +250,38 @@ export default {
       },
     };
   },
+  mounted() {
+    this.initData();
+  },
   methods: {
+    initData() {
+      this.getCountryRoad();
+      this.getVillageRoad();
+    },
+    // 县道
+    async getCountryRoad() {
+      const res = await getCountryRoad();
+      this.highway = res.map((item) => {
+        return {
+          name: item.road,
+          startName: item.start,
+          endName: item.point,
+          length: item.length,
+        };
+      });
+    },
+    // 村道
+    async getVillageRoad() {
+      const res = await getVillageRoad();
+      this.passenger = res.map((item) => {
+        return {
+          name: item.road,
+          startName: item.start,
+          endName: item.point,
+          length: item.length,
+        };
+      });
+    },
     mouseEnter(lists) {
       if (lists.length < 3) {
         return;

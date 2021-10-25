@@ -21,16 +21,19 @@
           <div class="jiezhongxinxi">
             <div>
               <div class="xinxi">
-                <span class="number">400</span>
+<!--                <span class="number">400</span>-->
+<!--                <span class="unit">剂/日</span>-->
+<!--                <div class="content">蛟头中科睿启科园区</div>-->
+                <span class="number">{{ vacSiteInformation.inoAbility1 }}</span>
                 <span class="unit">剂/日</span>
-                <div class="content">蛟头中科睿启科园区</div>
+                <div class="content">{{ vacSiteInformation.name1 }}</div>
               </div>
             </div>
             <div>
               <div class="xinxi1">
-                <span class="number1">1200</span>
+                <span class="number1">{{ vacSiteInformation.inoAbility2 }}</span>
                 <span class="unit1">剂/日</span>
-                <div class="content1">台门中心卫生院</div>
+                <div class="content1">{{ vacSiteInformation.name2 }}</div>
               </div>
             </div>
           </div>
@@ -99,6 +102,12 @@ export default {
         data1: [1, 3, 5, 26, 8, 49, 99], // 增长率
         data2: [10, 31, 5, 163, 18, 9, 199], // 人数
       },
+      vacSiteInformation: {
+        name1: '',
+        name2: '',
+        inoAbility1: '',
+        inoAbility2: '',
+      },
     };
   },
   computed: {},
@@ -124,6 +133,7 @@ export default {
             });
           return this.isoNames;
         });
+      // console.log(res, 1111);
       // // 隔离点人数趋势图
       for (let i = 0; i < 2; i++) {
         const place = res[i];
@@ -160,6 +170,10 @@ export default {
         .request()
         .then((res) => {
           this.ymPlaces = res;
+          this.vacSiteInformation.name1 = res[0].jzdmc;
+          this.vacSiteInformation.name2 = res[1].jzdmc;
+          this.vacSiteInformation.inoAbility1 = res[0].jznl;
+          this.vacSiteInformation.inoAbility2 = res[1].jznl;
         });
     },
     getVaccinateTrend() {

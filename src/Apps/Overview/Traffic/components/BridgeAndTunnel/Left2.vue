@@ -73,7 +73,7 @@
       </div>
       <div @mouseenter="mouseEnter(passenger)" @mouseleave="mouseleave(passenger)">
         <div class="line titles">
-          <div class="second_item">隧道名称</div>
+          <div class="second_item">桥梁名称</div>
           <div class="second_item" style="text-align: center">全长</div>
           <div class="second_item">跨径总长</div>
           <div class="second_item">跨径分类</div>
@@ -111,7 +111,10 @@ import Title from './Title';
 // import LineChart from './LineChart';
 import swiper from '@/components/Swiper';
 import SwiperSlider from '@/components/SwiperSlider';
-
+import {
+  getTunnel,
+  getBridge,
+} from '@/api/Overview/Traffic';
 export default {
   components: {
     Title,
@@ -285,7 +288,38 @@ export default {
       },
     };
   },
+  mounted() {
+    this.initData();
+  },
   methods: {
+    initData() {
+      this.getTunnel();
+      // this.getBridge();
+    },
+    // 隧道
+    async getTunnel() {
+      const res = await getTunnel();
+      this.highway = res.map((item) => {
+        return {
+          name: item.tunnel,
+          startName: item.route,
+          endName: item.classification,
+          length: item.length,
+        };
+      });
+    },
+    // 桥梁
+    async getBridge() {
+      const res = await getBridge();
+      this.passenger = res.map((item) => {
+        return {
+          name: item.road,
+          startName: item.start,
+          endName: item.point,
+          length: item.length,
+        };
+      });
+    },
     mouseEnter(lists) {
       if (lists.length < 3) {
         return;

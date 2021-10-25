@@ -12,34 +12,34 @@ export default {
   data() {
     return {
       barData: [
-        {
-          label: '海事',
-          value: 12,
-        },
-        {
-          label: '边检',
-          value: 10,
-        },
-        {
-          label: '公安',
-          value: 9,
-        },
-        {
-          label: '渔政',
-          value: 8,
-        },
-        {
-          label: '城管',
-          value: 7,
-        },
-        {
-          label: '海关',
-          value: 6,
-        },
-        {
-          label: '交通',
-          value: 4,
-        },
+        // {
+        //   label: '海事',
+        //   value: 12,
+        // },
+        // {
+        //   label: '边检',
+        //   value: 10,
+        // },
+        // {
+        //   label: '公安',
+        //   value: 9,
+        // },
+        // {
+        //   label: '渔政',
+        //   value: 8,
+        // },
+        // {
+        //   label: '城管',
+        //   value: 7,
+        // },
+        // {
+        //   label: '海关',
+        //   value: 6,
+        // },
+        // {
+        //   label: '交通',
+        //   value: 4,
+        // },
       ],
       yData: ['海事', '边检', '公安', '渔政', '城管', '海关', '交通'],
     };
@@ -55,10 +55,10 @@ export default {
         .request()
         .then((json) => {
           if (json[0].je !== 999999999) {
-            this.barData = json.map((item) => {
+            this.barData = json.map((item, index) => {
               item.label = item.hymc;
               item.value = item.je;
-              this.yData = item.hymc;
+              this.yData[index] = item.hymc;
               return item;
             });
           }
@@ -84,7 +84,7 @@ export default {
             show: false,
           },
           axisLine: {
-            //y轴
+            // y轴
             show: false,
           },
           type: 'category',
