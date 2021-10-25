@@ -277,7 +277,8 @@ export default {
       this.list = data.map((d) => ({
         title: d.bt,
         type: d.qgqx,
-        date: '2021-09-28' + d.fbsj.substring(10),
+        // date: '2021-09-28' + d.fbsj.substring(10),
+        date: d.fbsj,
         content: d.nrzy,
         link: d.ywlj,
         source: d.lywz,
