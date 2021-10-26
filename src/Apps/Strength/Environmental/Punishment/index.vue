@@ -35,22 +35,32 @@ export default {
         },
         {
           cflx: '行政处罚',
-          cs: 4.76,
+          cs: 2.76,
           unit: '万元',
         },
       ],
     };
   },
   mounted() {
-    // this.loadData();
+    this.loadData();
   },
   methods: {
     loadData() {
       getPenaltyForPollution()
         .request()
         .then((json) => {
-          this.list = json || [];
-          console.log(this.list);
+          // this.list = json || [];
+          this.list.forEach((item) => {
+            json.map((item1) => {
+              if (item.cflx === item1.cflx) {
+                item.cs = parseFloat(item1.cs);
+                if (item1.cs.length > 3 && item1.cs.slice(-2) === '万元') {
+                  item.unit = '万元';
+                }
+              }
+            });
+          });
+          // console.log(this.list, 11111);
         });
     },
   },

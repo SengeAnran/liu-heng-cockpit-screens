@@ -1,5 +1,27 @@
 import MetroApi from '@/utils/http';
 
+// 办理量信息
+export const getHandlingStatistic = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getHandlingStatistic' });
+};
+// 办理量详细信息
+export const getHandlingList = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getHandlingList' });
+};
+// 监控视频
+export const getRoadMonitor = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/traffic/getRoadMonitor' });
+};
+// 月度明星
+export const getMonthlyStar = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getMonthlyStar' });
+};
+// 本月事件办理量
+export const getMonthlyHandling = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getMonthlyHandling' });
+};
+
+// **********************************
 // 预约情况分析
 export const getAppointmentAnalysis = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/appointmentAnalysis' });

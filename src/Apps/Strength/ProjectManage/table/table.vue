@@ -5,13 +5,13 @@
         <div class="table-digital">
           <div style="margin-top: 30px">
             <span class="title"> 项目总数（个） </span>
-            <digital :loop="loop" :endNum="12452 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="allNumber1 || 0" :data="data" :config="config"></digital>
           </div>
         </div>
         <div class="table-digital">
           <div style="margin-top: 30px">
             <span class="title"> 项目总数（亿） </span>
-            <digital :loop="loop" :endNum="321 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="allNumber2 || 0" :data="data" :config="config"></digital>
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { itemsList } from '@/api/Strength/ProjectManage/api.js';
+import { itemsList, majorProjects } from '@/api/Strength/ProjectManage/api.js';
 export default {
   data() {
     return {
@@ -90,6 +90,8 @@ export default {
           value: '7000万元',
         },
       ],
+      allNumber1: 12452,
+      allNumber2: 321,
     };
   },
   mounted() {
@@ -106,6 +108,10 @@ export default {
             value: item.tze,
           };
         });
+      });
+      majorProjects().request().then((res) => {
+        this.allNumber1 = res.xmzs;
+        this.allNumber2 = res.xmzl;
       });
     },
   },

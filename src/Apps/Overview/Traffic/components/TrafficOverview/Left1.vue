@@ -72,7 +72,7 @@ export default {
         {
           name: '县道',
           number: '4',
-          length: '61.991',
+          length: '',
           src: require('./img/xdtj.png'),
           unit: '公里',
         },
@@ -168,10 +168,11 @@ export default {
     async getStatistics() {
       const res = await getStatistics();
       res.forEach((item, index) => {
-        this.highway[index].name = item.name;
+        this.highway[index].name = item.type;
         this.highway[index].number = item.count;
         this.highway[index].length = item.length;
       });
+      // console.log(this.highway);
     },
     // 道路运营
     async getRoadTransport() {

@@ -30,6 +30,15 @@ export const itemsList = (data) => {
   });
 };
 
+// 六横招商地块推介图层
+export const getMerchants = (data) => {
+  return new MetroApi({
+    myType: 0,
+    url: '/project/management/getMerchants',
+    method: 'get',
+    data,
+  });
+};
 // 重大项目
 export const majorProjects = (data) => {
   return new MetroApi({

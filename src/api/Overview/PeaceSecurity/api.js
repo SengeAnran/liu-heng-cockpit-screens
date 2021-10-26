@@ -24,3 +24,8 @@ export const getComplainTrend = () => {
 export const getSatisfactionTrend = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/safety/getSatisfactionTrend' });
 };
+
+// 获取云词
+export const getKeyWords = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/safety/getKeyWords' });
+};

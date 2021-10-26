@@ -1,5 +1,13 @@
 import MetroApi from '@/utils/http';
 import { request } from '@/utils/request';
+// 党员行业分布
+export const partyIndustrial = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/party/partyIndustrial' });
+};
+// 学历结构
+export const partyAcademical = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/party/partyAcademical' });
+};
 // 党员基本情况
 export const peopleBasicInfo = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/party/peopleBasicInfo' });

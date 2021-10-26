@@ -7,7 +7,7 @@
         <div class="hehua-box">
           <div class="hehua-box-left">
             <div class="img-item">
-              <img :src="contain1.img" alt="" />
+              <img :src="'data:image/png;base64,'+contain1.img" alt="" />
             </div>
             <div class="hehua-text">
               <h4>{{ contain1.title }}</h4>
@@ -127,7 +127,8 @@ export default {
       manAwomenList: [], // 男女性别比
       contain1: {
         // 社区概述-荷花小区
-        img: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3228549874,2173006364&fm=26&gp=0.jpg',
+        // img: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3228549874,2173006364&fm=26&gp=0.jpg',
+        img: '',
         title: '',
         content: '',
       },
@@ -240,6 +241,7 @@ export default {
 
         this.contain1.title = result.sqmc;
         this.contain1.content = result.sqjs;
+        this.contain1.img = result.zp;
         this.contain2[0].count = result.zzzqs; // 镇宅住区数
         this.contain2[1].count = result.zzdys; // 住宅单元数
         this.contain3[0].count = result.sqrks; // 社区人口

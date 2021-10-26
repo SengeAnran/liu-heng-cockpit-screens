@@ -24,21 +24,20 @@ export default {
   components: {},
   mounted() {
     this.chart = echarts.init(this.$refs.pieChart);
-    this.chart.setOption(this.optionData(this.list));
-    // this.loadData();
+    this.loadData();
   },
   methods: {
     loadData() {
       this.chart.setOption(this.optionData(this.list));
-      // getWasteControl()
-      //   .request()
-      //   .then((json) => {
-      //     this.list[0].value = json[0].cfl || 0;
-      //     this.list[1].value = json[0].zyl || 0;
-      //     this.list[2].value = json[0].ccl || 0;
-      //     // this.list[3].value = json[0].sjssl || 0;
-
-      //   });
+      getWasteControl()
+        .request()
+        .then((json) => {
+          this.list[0].value = json[0].cfl || 0;
+          this.list[1].value = json[0].zyl || 0;
+          this.list[2].value = json[0].ccl || 0;
+          // this.list[3].value = json[0].sjssl || 0;
+          this.chart.setOption(this.optionData(this.list));
+        });
     },
     optionData(data) {
       const total = data.reduce((prev, next) => prev + next.value, 0);

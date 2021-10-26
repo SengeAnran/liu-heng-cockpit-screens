@@ -29,14 +29,15 @@
           <div class="zhanbi">
             <div>
               男性占比
-              <span class="nanxing">70.5%</span>
+              <span class="nanxing">{{sexRatio.male}}%</span>
             </div>
             <div style="margin-right: 100px">
-              <span class="nvxing">29.5%</span>
+              <span class="nvxing">{{sexRatio.female}}%</span>
               女性占比
             </div>
           </div>
         </div>
+
         <div class="dangyuanchart">
           <div class="title">党员行业分布</div>
           <div ref="echartsPie" :style="{ width: '100%', height: '400px' }"></div>
@@ -53,18 +54,20 @@ import Title from './components/Title';
 import PieChart from './components/PieChart';
 import * as echarts from 'echarts/core';
 import {
-  getPartyMemberBasicSit,
-  getQuantityTrend,
-  getSexAndAgeStructure,
-  getPartyGroupEduStructure,
+  // getPartyMemberBasicSit,
+  // getQuantityTrend,
+  // // getSexAndAgeStructure,
+  // getPartyGroupEduStructure,
+  partyAcademical,
   peopleBasicInfo,
+  partyIndustrial,
 } from '@/api/Charm/PartyConstruction';
 
 // 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
 import { TitleComponent, TooltipComponent, LegendComponent, GridComponent } from 'echarts/components';
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from 'echarts/renderers';
-import { sort } from '@/utils/common';
+// import { sort } from '@/utils/common';
 // 注册必须的组件
 echarts.use([TitleComponent, LegendComponent, TooltipComponent, GridComponent, CanvasRenderer]);
 
@@ -135,6 +138,12 @@ export default {
           unit: '人',
         },
       ],
+      sexRatio: {
+        male: 70.5,
+        female: 29.5,
+      },
+      pieData: [],
+      barData: [],
       sexAgeData: null,
       educationData: null,
       currentTab: 'sexAge',
@@ -146,8 +155,7 @@ export default {
   mounted() {
     this.getData();
     this.initdram();
-    this.initPie();
-    this.inithengecharts();
+    // this.initPie();
   },
   beforeDestroy() {
     this.lineChart && this.lineChart.dispose();
@@ -158,72 +166,90 @@ export default {
       this.currentTab = val;
     },
     async getData() {
-      const data = {
-        auth: {
-          serviceId: '09a3fe0aa4634c608b9c103b053480d3', // 数据开放服务Id
-          subServiceId: '1f73865f63b84465934ee1c71fa83916', // 数据开放订阅服务Id
-          // signature: localStorage.autograph, // 请求参数签名
-          signatureVersion: '2.0', // 当前使用的签名版本
-          timestamp: new Date().getTime(), // 请求的时间戳
-        }, // 认证参数
-        size: 100,
-        includeColumns: false,
-        params: [],
-      };
+      const res = await peopleBasicInfo().request();
+      this.indiData[0].value = res.basicCnt.zsdyrs;
+      this.indiData[1].value = res.basicCnt.ybdyrs;
+      this.indiData[2].value = res.basicCnt.fzdyrs;
+      // this.sexRatio.male = res.
+      const res4 = await partyAcademical().request();
+      this.barData = res4.map((item) => {
+        return {
+          name: item.xl,
+          value: item.zsdyrs,
+        };
+      });
+      if (this.barData) {
+        this.inithengecharts(this.barData.sort(this.compare('value')));
+      }
+      const res3 = await partyIndustrial().request();
+      this.pieData = res3.map((item) => {
+        return {
+          name: item.dyhylx,
+          value: item.dysl,
+        };
+      });
+      this.initPie(this.pieData);
+      // const data = {
+      //   auth: {
+      //     serviceId: '09a3fe0aa4634c608b9c103b053480d3', // 数据开放服务Id
+      //     subServiceId: '1f73865f63b84465934ee1c71fa83916', // 数据开放订阅服务Id
+      //     // signature: localStorage.autograph, // 请求参数签名
+      //     signatureVersion: '2.0', // 当前使用的签名版本
+      //     timestamp: new Date().getTime(), // 请求的时间戳
+      //   }, // 认证参数
+      //   size: 100,
+      //   includeColumns: false,
+      //   params: [],
+      // };
 
-      const data2 = {
-        auth: {
-          serviceId: '01f02290599d4d3b97bb76ae6a000f9e', // 数据开放服务Id
-          subServiceId: '43a43c2d3fbd45d1bf97016c7d43d776', // 数据开放订阅服务Id
-          // signature: localStorage.autograph, // 请求参数签名
-          signatureVersion: '2.0', // 当前使用的签名版本
-          timestamp: new Date().getTime(), // 请求的时间戳
-        }, // 认证参数
-        size: 100,
-        includeColumns: false,
-        params: [],
-      };
-      const data3 = {
-        auth: {
-          serviceId: '3527aac315134f5c98b4224022e08d41', // 数据开放服务Id
-          subServiceId: 'c2efcab4c2af4b5097ec1d497cc18a5f', // 数据开放订阅服务Id
-          // signature: localStorage.autograph, // 请求参数签名
-          signatureVersion: '2.0', // 当前使用的签名版本
-          timestamp: new Date().getTime(), // 请求的时间戳
-        }, // 认证参数
-        size: 100,
-        includeColumns: false,
-        params: [],
-      };
-      const data4 = {
-        auth: {
-          serviceId: 'b9d383418e0b4f71856311ef2914f45a', // 数据开放服务Id
-          subServiceId: 'b8b5f9ee37e847c3ae5d32f22fcf2433', // 数据开放订阅服务Id
-          // signature: localStorage.autograph, // 请求参数签名
-          signatureVersion: '2.0', // 当前使用的签名版本
-          timestamp: new Date().getTime(), // 请求的时间戳
-        }, // 认证参数
-        size: 100,
-        includeColumns: false,
-        params: [],
-      };
-      const res = await getPartyMemberBasicSit(data);
+      // const data2 = {
+      //   auth: {
+      //     serviceId: '01f02290599d4d3b97bb76ae6a000f9e', // 数据开放服务Id
+      //     subServiceId: '43a43c2d3fbd45d1bf97016c7d43d776', // 数据开放订阅服务Id
+      //     // signature: localStorage.autograph, // 请求参数签名
+      //     signatureVersion: '2.0', // 当前使用的签名版本
+      //     timestamp: new Date().getTime(), // 请求的时间戳
+      //   }, // 认证参数
+      //   size: 100,
+      //   includeColumns: false,
+      //   params: [],
+      // };
+      // const data3 = {
+      //   auth: {
+      //     serviceId: '3527aac315134f5c98b4224022e08d41', // 数据开放服务Id
+      //     subServiceId: 'c2efcab4c2af4b5097ec1d497cc18a5f', // 数据开放订阅服务Id
+      //     // signature: localStorage.autograph, // 请求参数签名
+      //     signatureVersion: '2.0', // 当前使用的签名版本
+      //     timestamp: new Date().getTime(), // 请求的时间戳
+      //   }, // 认证参数
+      //   size: 100,
+      //   includeColumns: false,
+      //   params: [],
+      // };
+      // const data4 = {
+      //   auth: {
+      //     serviceId: 'b9d383418e0b4f71856311ef2914f45a', // 数据开放服务Id
+      //     subServiceId: 'b8b5f9ee37e847c3ae5d32f22fcf2433', // 数据开放订阅服务Id
+      //     // signature: localStorage.autograph, // 请求参数签名
+      //     signatureVersion: '2.0', // 当前使用的签名版本
+      //     timestamp: new Date().getTime(), // 请求的时间戳
+      //   }, // 认证参数
+      //   size: 100,
+      //   includeColumns: false,
+      //   params: [],
+      // };
+      // const res = await getPartyMemberBasicSit(data);
       // debugger;
       // const res = await peopleBasicInfo().request();
-      const res2 = await getQuantityTrend(data2);
-      // const res3 = await getSexAndAgeStructure(data3);
-      const res4 = await getPartyGroupEduStructure(data4);
-      console.log(res4, res, res2, 'json');
-      const ageSexData = [];
+      // const res2 = await getQuantityTrend(data2);
+      // // const res3 = await getSexAndAgeStructure(data3);
+      // const res4 = await getPartyGroupEduStructure(data4);
+      // const ageSexData = [];
       // ageSexData.push(this.SexAge(res3.list, '男'));
       // ageSexData.push(this.SexAge(res3.list, '女'));
-
-      this.indiData[0].value = res.list[0].zsdyrs;
-      this.indiData[1].value = res.list[0].ybdyrs;
-      // this.indiData[2].value = res.list[0].fzdyrs;
-      this.sexAgeData = ageSexData;
-      console.log(res4.list.sort(this.SortBai));
-      this.educationData = res4.list;
+      //
+      // this.sexAgeData = ageSexData;
+      // this.educationData = res4.list;
     },
     SortBai(a, b) {
       return a.zsdyrs - b.zsdyrs;
@@ -457,7 +483,7 @@ export default {
       this.lineChart.setOption(option);
     },
     // 加载饼图
-    initPie() {
+    initPie(dataList) {
       this.pieChart = echarts.init(this.$refs.echartsPie);
       const option = {
         tooltip: {
@@ -498,13 +524,14 @@ export default {
               show: false,
             },
             //  机关事业单位：251人   农村党员：2808    退休党员：174人       非公党员：162人       其他：233人
-            data: [
-              { value: 251, name: ' 机关事业单位' },
-              { value: 2808, name: ' 农村党员' },
-              { value: 174, name: '退休党员' },
-              { value: 168, name: ' 非公党员' },
-              { value: 233, name: '  其他' },
-            ],
+            // data: [
+            //   { value: 251, name: ' 机关事业单位' },
+            //   { value: 2808, name: ' 农村党员' },
+            //   { value: 174, name: '退休党员' },
+            //   { value: 168, name: ' 非公党员' },
+            //   { value: 233, name: '  其他' },
+            // ],
+            data: dataList,
             label: {
               normal: {
                 show: true,
@@ -524,12 +551,15 @@ export default {
       this.pieChart.setOption(option);
     },
     // 加载横向柱状图
-    inithengecharts() {
+    inithengecharts(dataList) {
+      console.log(dataList);
       this.hengcharts = echarts.init(this.$refs.hengEcharts);
       var charts = {
         // 按顺序排列从大到小
-        cityList: ['初中学历', '小学学历', '高中学历', '大专学历', '本科学历', '中专学历', '中技学历', '研究生学历'],
-        cityData: [1171, 625, 621, 610, 386, 161, 30, 24],
+        // cityList: ['初中学历', '小学学历', '高中学历', '大专学历', '本科学历', '中专学历', '中技学历', '研究生学历'],
+        // cityData: [1171, 625, 621, 610, 386, 161, 30, 24],
+        cityList: dataList.map((item) => item.name),
+        cityData: dataList.map((item) => item.value),
       };
       var top10CityList = charts.cityList;
       var top10CityData = charts.cityData;
@@ -674,7 +704,7 @@ export default {
                   fontSize: 28,
                 },
                 formatter: function (a, b) {
-                  return a.name + a.value + '人';
+                  return a.name + '学历' + a.value + '人';
                 },
               },
             },
@@ -697,6 +727,13 @@ export default {
       };
 
       this.hengcharts.setOption(option);
+    },
+    compare(property) {
+      return function (a, b) {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value2 - value1;
+      };
     },
   },
 };

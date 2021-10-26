@@ -12,15 +12,15 @@
         </div>
         <div class="top-cancer item">
           <div class="item-span-number sdcolor">
-            <digital :loop="loop" :endNum="9 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="tunnelStatistics.count || 0" :data="data" :config="config"></digital>
           </div>
           <div class="item-span-name">隧道数量</div>
         </div>
         <div class="top-right item">
           <div class="item-span-number sdcolor">
-            <digital :loop="loop" :endNum="4217 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="tunnelStatistics.length || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">总长(米)</div>
+          <div class="item-span-name">总长({{tunnelStatistics.unit}})</div>
         </div>
       </div>
       <div @mouseenter="mouseEnter(highway)" @mouseleave="mouseleave(highway)">
@@ -59,16 +59,16 @@
         </div>
         <div class="top-cancer item">
           <div class="item-span-number qlcolor">
-            <digital :loop="loop" :endNum="27 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="bridgeStatistics.count || 0" :data="data" :config="config"></digital>
           </div>
           <div class="item-span-name">桥梁数量</div>
         </div>
         <div class="top-right item">
           <div class="item-span-number qlcolor">
             <!-- 637.2 -->
-            <digital :loop="loop" :endNum="637.2 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="bridgeStatistics.length || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">总长(米)</div>
+          <div class="item-span-name">总长({{bridgeStatistics.unit}})</div>
         </div>
       </div>
       <div @mouseenter="mouseEnter(passenger)" @mouseleave="mouseleave(passenger)">
@@ -114,6 +114,7 @@ import SwiperSlider from '@/components/SwiperSlider';
 import {
   getTunnel,
   getBridge,
+  getStatistics,
 } from '@/api/Overview/Traffic';
 export default {
   components: {
@@ -273,6 +274,18 @@ export default {
           length: '小桥',
         },
       ],
+      bridgeStatistics: {
+        name: '桥梁',
+        count: 27,
+        length: '637.2',
+        unit: '米',
+      },
+      tunnelStatistics: {
+        name: '隧道',
+        count: 9,
+        length: '4217',
+        unit: '米',
+      },
       swiperOption: {
         direction: 'vertical',
         speed: 1000,
@@ -293,8 +306,9 @@ export default {
   },
   methods: {
     initData() {
+      this.getStatistics();
       this.getTunnel();
-      // this.getBridge();
+      this.getBridge();
     },
     // 隧道
     async getTunnel() {
@@ -308,15 +322,30 @@ export default {
         };
       });
     },
+    // 隧道桥梁统计
+    async getStatistics() {
+      const res = await getStatistics();
+      res.forEach((item) => {
+        if (item.type === '桥梁') {
+          this.bridgeStatistics.count = item.count;
+          this.bridgeStatistics.length = item.length;
+          // this.bridgeStatistics.unit = item.unit;
+        } else if (item.type === '隧道') {
+          this.tunnelStatistics.count = item.count;
+          this.tunnelStatistics.length = item.length;
+          // this.tunnelStatistics.unit = item.unit;
+        }
+      });
+    },
     // 桥梁
     async getBridge() {
       const res = await getBridge();
       this.passenger = res.map((item) => {
         return {
-          name: item.road,
-          startName: item.start,
-          endName: item.point,
-          length: item.length,
+          name: item.bridge,
+          startName: item.length,
+          endName: item.spanLength,
+          length: item.type,
         };
       });
     },

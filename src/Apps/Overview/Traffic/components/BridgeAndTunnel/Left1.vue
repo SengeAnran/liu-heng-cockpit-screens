@@ -11,15 +11,15 @@
         </div>
         <div class="top-cancer item">
           <div class="item-span-number xdcolor">
-            <digital :loop="loop" :endNum="4 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="countyHighwayStatistics.count || 0" :data="data" :config="config"></digital>
           </div>
           <div class="item-span-name">县道数量</div>
         </div>
         <div class="top-right item">
           <div class="item-span-number xdcolor">
-            <digital :loop="loop" :endNum="61.991 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="countyHighwayStatistics.length || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">总长(公里)</div>
+          <div class="item-span-name">总长({{countyHighwayStatistics.unit}})</div>
         </div>
       </div>
       <div @mouseenter="mouseEnter(highway)" @mouseleave="mouseleave(highway)">
@@ -58,15 +58,15 @@
         </div>
         <div class="top-cancer item">
           <div class="item-span-number cdcolor">
-            <digital :loop="loop" :endNum="90 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="villageRoadStatistics.count || 0" :data="data" :config="config"></digital>
           </div>
           <div class="item-span-name">村道数量</div>
         </div>
         <div class="top-right item">
           <div class="item-span-number cdcolor">
-            <digital :loop="loop" :endNum="109.683 || 0" :data="data" :config="config"></digital>
+            <digital :loop="loop" :endNum="villageRoadStatistics.length || 0" :data="data" :config="config"></digital>
           </div>
-          <div class="item-span-name">总长(公里)</div>
+          <div class="item-span-name">总长({{villageRoadStatistics.unit}})</div>
         </div>
       </div>
       <div @mouseenter="mouseEnter(passenger)" @mouseleave="mouseleave(passenger)">
@@ -106,6 +106,7 @@ import SwiperSlider from '@/components/SwiperSlider';
 import {
   getCountryRoad,
   getVillageRoad,
+  getStatistics,
 } from '@/api/Overview/Traffic';
 export default {
   components: {
@@ -235,6 +236,18 @@ export default {
           length: '0.806',
         },
       ],
+      countyHighwayStatistics: {
+        name: '县道',
+        count: 4,
+        length: '61.991',
+        unit: '公里',
+      },
+      villageRoadStatistics: {
+        name: '村道',
+        count: 90,
+        length: '109.683',
+        unit: '公里',
+      },
       swiperOption: {
         direction: 'vertical',
         speed: 1000,
@@ -255,8 +268,24 @@ export default {
   },
   methods: {
     initData() {
+      this.getStatistics();
       this.getCountryRoad();
       this.getVillageRoad();
+    },
+    // 县道和村道统计
+    async getStatistics() {
+      const res = await getStatistics();
+      res.forEach((item) => {
+        if (item.type === '县道') {
+          this.countyHighwayStatistics.count = item.count;
+          this.countyHighwayStatistics.length = item.length;
+          // this.countyHighwayStatistics.unit = item.unit;
+        } else if (item.type === '村道') {
+          this.villageRoadStatistics.count = item.count;
+          this.villageRoadStatistics.length = item.length;
+          // this.villageRoadStatistics.unit = item.unit;
+        }
+      });
     },
     // 县道
     async getCountryRoad() {

@@ -2,11 +2,12 @@
   <div class="center-webview">
     <div>
       <div class="preview"></div>
-      <div class="mask"></div>
-      <chart-map v-show="!threeDMap"/>
-      <div class="main-map" v-show="threeDMap">
-        <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
-      </div>
+<!--      <div class="mask"></div>-->
+      <div class="img_bg"></div>
+<!--      <chart-map v-show="!threeDMap"/>-->
+<!--      <div class="main-map" v-show="threeDMap">-->
+<!--        <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+<!--      </div>-->
 <!--      <div class="switch">-->
 <!--        <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>-->
 <!--        <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>-->
@@ -102,5 +103,17 @@ export default {
       background: url('./img/mmexport1.jpg') no-repeat;
     }
   }
+}
+.img_bg{
+  z-index: -2;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 135rem;
+  //background: url("./img/bg_02.png") 100% 100% no-repeat;
+  background: url(./img/bg_01.png) no-repeat center bottom;
+  background-size: 100% 100%;
+  //background: #3de7c9;
 }
 </style>

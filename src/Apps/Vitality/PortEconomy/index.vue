@@ -1,7 +1,6 @@
 <template>
   <div class="Innovation">
     <transition name="slide" appear> <Left :key="Left" /></transition>
-
     <Center />
     <transition name="slide1" appear> <Right :key="Right" /></transition>
   </div>
@@ -27,7 +26,7 @@ export default {
   position: relative;
   width: 100%;
   height: 135rem;
-  background-color: red;
+  //background-color: red;
   display: flex;
   justify-content: space-between;
   padding: 263px 160px 0;

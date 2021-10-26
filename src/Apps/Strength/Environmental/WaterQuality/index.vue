@@ -58,20 +58,25 @@ export default {
   data() {
     return {
       keyValues: {
+        wfpfl: '污水排放',
         codpfl: 'COD排放',
         adpfl: '氨氮排放',
       },
       lineData: {
         // xAxisData: ['1', '1', '2', '2', '3', '3', '3'],
         data: [
-          {
-            name: 'COD排放',
-            data: [3.3, 3.1, 1.8, 4.4, 2.7],
-          },
-          {
-            name: '氨氮排放',
-            data: [0.06, 0.08, 0.18, 0.03, 0.03],
-          },
+          // {
+          //   name: '污水排放',
+          //   data: [0.06, 0.08, 0.18, 0.03, 0.03],
+          // },
+          // {
+          //   name: 'COD排放',
+          //   data: [3.3, 3.1, 1.8, 4.4, 2.7],
+          // },
+          // {
+          //   name: '氨氮排放',
+          //   data: [0.06, 0.08, 0.18, 0.03, 0.03],
+          // },
         ],
       },
       list: [
@@ -129,19 +134,19 @@ export default {
           this.list1[1].number = json[0].qnyjzcxcs || 0;
           this.list1[1].number1 = json[0].jryjzcxcs || 0;
         });
-      // getMonthlySewage()
-      //   .request()
-      //   .then((json) => {
-      //     if (!json) {
-      //       return;
-      //     }
-      //     const data = [];
-      //     // this.lineData.xAxisData = json.map((item) => item.yf);
-      //     Object.keys(this.keyValues).forEach((key) => {
-      //       data.push({ name: this.keyValues[key], data: json.map((item) => item[key]) });
-      //     });
-      //     this.lineData.data = data;
-      //   });
+      getMonthlySewage()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          const data = [];
+          this.lineData.xAxisData = json.map((item) => item.yf);
+          Object.keys(this.keyValues).forEach((key) => {
+            data.push({ name: this.keyValues[key], data: json.map((item) => item[key]) });
+          });
+          this.lineData.data = data;
+        });
     },
   },
 };

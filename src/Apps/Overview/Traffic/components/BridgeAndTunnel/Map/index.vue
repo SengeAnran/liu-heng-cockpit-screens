@@ -105,6 +105,9 @@ import line2 from './line2.json';
 import line3 from './line3.json';
 import line4 from './line4.json';
 import tunnel from './tunnel.json';
+import {
+  getStatistics,
+} from '@/api/Overview/Traffic';
 
 export default {
   data() {
@@ -146,7 +149,7 @@ export default {
     return {
       list,
       statisticsList,
-      activeItem: '',
+      activeItem: '台台线',
       points: Object.freeze(points),
       points2: Object.freeze(points2),
       markerStyle: Object.freeze({
@@ -167,7 +170,33 @@ export default {
       tunnel: Object.freeze(tunnel),
     };
   },
+  mounted() {
+    this.getStatistics();
+  },
   methods: {
+    // 公路桥隧
+    async getStatistics() {
+      const res = await getStatistics();
+      res.forEach((item) => {
+        if (item.type === '桥梁') {
+          this.statisticsList[3].number = item.count;
+          this.statisticsList[3].length = parseFloat(item.length);
+          // this.bridgeStatistics.unit = item.unit;
+        } else if (item.type === '隧道') {
+          this.statisticsList[1].number = item.count;
+          this.statisticsList[1].length = parseFloat(item.length);
+          // this.tunnelStatistics.unit = item.unit;
+        } else if (item.type === '县道') {
+          this.statisticsList[0].number = item.count;
+          this.statisticsList[0].length = parseFloat(item.length);
+          // this.tunnelStatistics.unit = item.unit;
+        } else {
+          this.statisticsList[2].number = item.count;
+          this.statisticsList[2].length = parseFloat(item.length);
+          // this.tunnelStatistics.unit = item.unit;
+        }
+      });
+    },
     change(item) {
       this.activeItem = item;
     },
@@ -297,7 +326,7 @@ export default {
         }
       }
       .item-bottom-left {
-        width: 28%;
+        width: 29%;
       }
       .item-bottom-right {
       }
