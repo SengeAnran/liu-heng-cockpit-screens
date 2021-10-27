@@ -47,11 +47,11 @@ export default {
     },
     init() {
       const ele = this.$refs.rollItem;
-      console.log(ele);
       ele.forEach((item, index) => {
         const randomTop = Math.random() * 80;
         const randomDelay = Math.random() * 20;
         item.style.top = `${randomTop}%`;
+        item.style.fontSize = `${this.list[index].percentage * 500}px`;
         item.style.animationDelay = `-${randomDelay}s`;
       });
     },

@@ -106,6 +106,7 @@ export default {
             },
             symbol: 'circle',
             symbolSize: 12,
+            // symbolSize: 5,
             // color: '#eac737',
             color: '#2be5f8',
             data: this.geoCoordMap.map((item) => {

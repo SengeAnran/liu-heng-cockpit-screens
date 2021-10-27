@@ -8,6 +8,11 @@ export const getHandlingStatistic = () => {
 export const getHandlingList = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getHandlingList' });
 };
+// 办理量趋势
+export const getTrendOfHandlingVolume = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/trendOfHandlingVolume' });
+};
+
 // 监控视频
 export const getRoadMonitor = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/traffic/getRoadMonitor' });
@@ -67,8 +72,4 @@ export const geTopFiveHotIssues = () => {
 // 本月事项满意度排行TOP5
 export const getTopFiveSatisfactionRank = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/topFiveSatisfactionRank' });
-};
-// 办理量趋势
-export const getTrendOfHandlingVolume = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/trendOfHandlingVolume' });
 };

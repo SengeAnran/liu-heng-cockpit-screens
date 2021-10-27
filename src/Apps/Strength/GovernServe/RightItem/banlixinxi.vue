@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { getMonthlyHandling } from '@/api/Strength/GovernServe/api';
 export default {
   data() {
     return {
@@ -71,6 +72,27 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      getMonthlyHandling()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          this.list1 = json.map((item) => {
+            return {
+              content: item.bsx,
+              number: item.sll,
+              name: item.myd,
+            };
+          });
+        });
+    },
   },
 };
 </script>

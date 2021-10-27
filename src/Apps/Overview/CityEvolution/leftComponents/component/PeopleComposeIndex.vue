@@ -8,25 +8,29 @@
             <img class="img" src="../../images/people_num.png" />
             <div class="title">户籍人口数量</div>
             <div class="count_wrapper">
-              <digital :loop="loop" :endNum="item.hjrksl || 0" :data="data" :config="config"></digital>
+<!--              <digital :loop="loop" :endNum="item.hjrksl || 0" :data="data" :config="config"></digital>-->
+              {{item.hjrksl}}
+              <span class="unit">人</span>
             </div>
           </div>
           <div class="item">
             <img class="img" src="../../images/children_num.png" />
             <div class="title">新生儿出生数量</div>
             <div class="count_wrapper children">
-              <digital :loop="loop" :endNum="item.xscssl || 0" :data="data" :config="config1"></digital>
-              <!-- <CountUp :num="item.xscssl" />
-              <span class="unit">人</span> -->
+<!--              <digital :loop="loop" :endNum="item.xscssl || 0" :data="data" :config="config1"></digital>-->
+<!--              <CountUp :num="item.xscssl" />-->
+              {{item.xscssl}}
+              <span class="unit">人</span>
             </div>
           </div>
           <div class="item">
             <img class="img" src="../../images/dead_num.png" />
             <div class="title">人口死亡数量</div>
             <div class="count_wrapper dead">
-              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>
-              <!-- <CountUp :num="item.rkswsl" />
-              <span class="unit">人</span> -->
+<!--              <digital :loop="loop" :endNum="item.rkswsl || 0" :data="data" :config="config2"></digital>-->
+<!--              <CountUp :num="item.rkswsl" />-->
+              {{item.rkswsl}}
+              <span class="unit">人</span>
             </div>
           </div>
         </swiper-slider>
@@ -87,18 +91,18 @@ export default {
         zrzzl: 11,
       },
       data: {
-        content: 1000,
+        // content: 1000,
         unit: '人',
       },
       data2: {
-        content: 100,
+        // content: 100,
         unit: '%',
       },
       loop: {
         // 是否开启数值循环
-        loop1: true,
+        loop1: false,
         // 多久循环一次
-        time: 10000,
+        time: 5000,
         // 循环几次
         count: 99999,
         // 精确的小数位数
@@ -150,7 +154,7 @@ export default {
         loop: true,
         grabCursor: true,
         autoplay: {
-          delay: 3000,
+          delay: 4000,
           disableOnInteraction: false,
         },
         pagination: {

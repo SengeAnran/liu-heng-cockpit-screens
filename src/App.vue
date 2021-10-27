@@ -98,6 +98,6 @@ body {
 }
 .nav-bg {
   height: 72rem;
-  background-image: url('./title-bg.png');
+  //background-image: url('./title-bg.png');
 }
 </style>

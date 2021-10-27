@@ -1,5 +1,13 @@
 import MetroApi from '../utils/http';
-
+// 底部指标
+export const getBottom = (data) => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/indexSummary/getBottom', data });
+};
+// 底部指标
+export const getVillageBottom = (data) => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/community/getBottomInfo', data });
+};
+// *************************************
 // 底部总览指标
 export const getBottomInfo = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/city/getBottomInfo' });

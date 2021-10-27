@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { getHandlingList } from '@/api/Strength/GovernServe/api';
 export default {
   data() {
     return {
@@ -30,7 +31,6 @@ export default {
           name: '刘*艳',
           time: '10：39：42',
         },
-
         {
           content: '非现场违法处理',
           number: 'BA010',
@@ -51,6 +51,28 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      getHandlingList()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          this.list1 = json.map((item) => {
+            return {
+              content: item.swmc,
+              number: item.pdh,
+              name: item.xm,
+              time: item.qhsj,
+            };
+          });
+        });
+    },
   },
 };
 </script>

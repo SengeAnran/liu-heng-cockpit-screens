@@ -6,14 +6,33 @@
 
 <script>
 import * as echarts from 'echarts';
+import { getTrendOfHandlingVolume } from '@/api/Strength/GovernServe/api';
 export default {
   data() {
-    return {};
+    return {
+      dataList: [],
+    };
   },
   mounted() {
     this.initDraw();
   },
   methods: {
+    initData() {
+      getTrendOfHandlingVolume()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          this.dataList = json.map((item) => {
+            return {
+              name: item.pjzt,
+              value: item.pjzs,
+              value2: item.pjzs,
+            };
+          });
+        });
+    },
     initDraw() {
       const myChart = echarts.init(this.$refs.echarts);
       //   let bgColor = '#fff';

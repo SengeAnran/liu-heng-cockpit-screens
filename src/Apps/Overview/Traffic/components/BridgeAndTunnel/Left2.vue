@@ -338,7 +338,7 @@ export default {
       });
     },
     // 桥梁
-    async getBridge() {
+    async getBridgegetBridge() {
       const res = await getBridge();
       this.passenger = res.map((item) => {
         return {

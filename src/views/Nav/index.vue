@@ -52,11 +52,19 @@
       <div class="to-left" v-if="secondNavStart > 0" @click="toSecondaryLeft" />
       <div class="to-right" v-if="secondNavStart < secondaryNav.length - 6" @click="toSecondaryRight" />
     </div>
+    <div class="video-bg">
+      <video autoplay="autoplay" muted width="100%" loop src="./video_bg.mp4"></video>
+<!--      <video name="media" autoplay loop width="100%">-->
+<!--        <source src="./video_bg.mp4">-->
+<!--      </video>-->
+    </div>
   </div>
 </template>
 <script>
 import routes from '@/config/routes';
 import {
+  getBottom,
+  // getVillageBottom,
   getBottomInfo,
   // getVillagerInfo,
   getRealtimeHandling,
@@ -80,6 +88,10 @@ export default {
       routes: [...routes],
       secondNavStart: 0,
       imgUrl: require('./zonglan.png'),
+      overviewName: ['历史变迁', '人口一张图', '平安建设', '民生教育', '民生医疗', '交通畅行', '创新转型', '数据分析'], // 六横总览
+      charmName: ['党群建设', '数字乡社'], // 魅力六横
+      strengthName: ['政务服务', '项目管理', '环保专题', '舆情分析'], // 实力六横
+      vitalityName: ['经济发展', '港口经济'], // 活力六横
     };
   },
   computed: {
@@ -92,22 +104,22 @@ export default {
       // console.log(this.routes);
       switch (this.primalNavActiveName) {
         case '六横总览':
-          this.loadData();
+          this.overviewData();
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           this.imgUrl = require('./zonglan.png');
           break;
         case '魅力六横':
-          this.charmLoadData();
+          this.charmData();
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           this.imgUrl = require('./meili.png');
           break;
         case '实力六横':
-          this.strengthLoadData();
+          this.strengthData();
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           this.imgUrl = require('./shili.png');
           break;
         case '活力六横':
-          this.vitalityLoadData();
+          this.vitalityData();
           // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           this.imgUrl = require('./huoli.png');
           break;
@@ -144,8 +156,68 @@ export default {
       deep: true,
     },
   },
+  mounted() {
+  },
   methods: {
     // 六横总览
+    overviewData() {
+      this.overviewName.forEach(async (item, index) => {
+        const res = await getBottom({ type: item }).request();
+        res.forEach((item2, index2) => {
+          this.secondaryNav[index].meta.indicator[index2].value = parseFloat(item2.value);
+          this.secondaryNav[index].meta.indicator[index2].name = item2.title;
+          if (item2.unit) {
+            this.secondaryNav[index].meta.indicator[index2].unit = item2.unit;
+          }
+        });
+      });
+    },
+    // 魅力六横
+    charmData() {
+      this.charmName.forEach(async (item, index) => {
+        const res = await getBottom({ type: item }).request();
+        res.forEach((item2, index2) => {
+          this.secondaryNav[index].meta.indicator[index2].value = parseFloat(item2.value);
+          this.secondaryNav[index].meta.indicator[index2].name = item2.title;
+          if (item2.unit) {
+            this.secondaryNav[index].meta.indicator[index2].unit = item2.unit;
+          }
+        });
+        this.secondaryNav[1].meta.indicator[0].value = this.indicator.sqrk;
+        this.secondaryNav[1].meta.indicator[1].value = this.indicator.sqldlzy;
+        this.secondaryNav[1].meta.indicator[2].value = this.indicator.wwlrzh;
+      });
+      // getVillageBottom({}).request().then((res) => {
+      //
+      // });
+    },
+    // 活力六横
+    strengthData() {
+      this.strengthName.forEach(async (item, index) => {
+        const res = await getBottom({ type: item }).request();
+        res.forEach((item2, index2) => {
+          this.secondaryNav[index].meta.indicator[index2].value = parseFloat(item2.value);
+          this.secondaryNav[index].meta.indicator[index2].name = item2.title;
+          if (item2.unit) {
+            this.secondaryNav[index].meta.indicator[index2].unit = item2.unit;
+          }
+        });
+      });
+    },
+    // ********************
+    // 六横总览
+    vitalityData() {
+      this.vitalityName.forEach(async (item, index) => {
+        const res = await getBottom({ type: item }).request();
+        res.forEach((item2, index2) => {
+          this.secondaryNav[index].meta.indicator[index2].value = parseFloat(item2.value);
+          this.secondaryNav[index].meta.indicator[index2].name = item2.title;
+          if (item2.unit) {
+            this.secondaryNav[index].meta.indicator[index2].unit = item2.unit;
+          }
+        });
+      });
+    },
     async loadData() {
       const res = await getBottomInfo().request();
       // console.log(res, 1231);
@@ -261,7 +333,7 @@ export default {
   // height: 144rem;
   height: 72rem;
   flex: none;
-  background: url('./nav-bg.png') no-repeat;
+  //background: url('./nav-bg.png') no-repeat;
   background-size: 576rem 73rem;
   background-position: 0 0;
   z-index: 100000;
@@ -523,5 +595,12 @@ export default {
     -webkit-text-fill-color: transparent;
     font-weight: bold;
   }
+}
+.video-bg {
+  position: absolute;
+  width: 100%;
+  height: 74rem;
+  //background: #3de7c9;
+  z-index: -2;
 }
 </style>

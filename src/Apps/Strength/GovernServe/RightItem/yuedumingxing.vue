@@ -2,21 +2,21 @@
   <div>
     <div class="content1">
       <div class="img">
-        <img src="../img/mingxi.png" />
+        <img :src="'data:image/png;base64,'+dataList.zp" />
       </div>
       <div class="content">
-        <div class="name">贺玲蒙</div>
+        <div class="name">{{dataList.xm}}</div>
         <div>
           <span class="font-name">工号</span>
-          <span class="font-content">A048</span>
+          <span class="font-content">{{dataList.gh}}</span>
         </div>
         <div>
           <span class="font-name">部门</span>
-          <span class="font-content">交警</span>
+          <span class="font-content">{{dataList.bm}}</span>
         </div>
         <div class="kouhao">
           <div style="font-size: 20px">服务口号</div>
-          <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">为民服务</div>
+          <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">{{dataList.fwkh}}</div>
         </div>
       </div>
     </div>
@@ -24,7 +24,29 @@
 </template>
 
 <script>
-export default {};
+import { getMonthlyStar } from '@/api/Strength/GovernServe/api';
+export default {
+  data() {
+    return {
+      dataList: {},
+    };
+  },
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      getMonthlyStar()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          this.dataList = json;
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss">
