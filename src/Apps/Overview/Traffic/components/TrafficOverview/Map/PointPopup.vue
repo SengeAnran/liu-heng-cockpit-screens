@@ -3,7 +3,7 @@
     <div style="margin-bottom: 2rem">
       {{ name }}
     </div>
-    <div class="content1" v-if="feature.properties.type == 1">
+    <div class="content1" v-if="feature.properties.content">
       {{ feature.properties.content }}
     </div>
   </div>

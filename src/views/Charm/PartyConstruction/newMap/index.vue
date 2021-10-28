@@ -55,7 +55,6 @@ export default {
       legendList: [
         { value: 1, label: '党组织' },
         { value: 2, label: '群团阵地' },
-
         { value: 4, label: '文化礼堂' },
         { value: 5, label: '综合文化站' },
       ],

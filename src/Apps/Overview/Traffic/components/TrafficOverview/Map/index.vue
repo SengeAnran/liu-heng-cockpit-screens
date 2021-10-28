@@ -1,7 +1,7 @@
 <template>
   <div>
     <Map>
-      <AGeoJSON v-if="activeItem === '长途客运'" key="bus-points" :source="busStation" :geoStyle="{ marker: busStyle }">
+      <AGeoJSON v-if="activeItem === '长途客运'" key="bus-points" :source="point" :geoStyle="{ marker: busStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
@@ -9,7 +9,7 @@
       <AGeoJSON
         v-if="activeItem === '危险品运输企业'"
         key="bus-points"
-        :source="weixian"
+        :source="point"
         :geoStyle="{ marker: weixianStyle }"
       >
         <template v-slot:popup="feature">
@@ -19,19 +19,19 @@
       <AGeoJSON
         v-if="activeItem === '二类维修厂'"
         key="bus-points"
-        :source="qixiuchang"
+        :source="point"
         :geoStyle="{ marker: qixiuStyle }"
       >
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '码头'" key="wharf-points" :source="wharf" :geoStyle="{ marker: wharfStyle }">
+      <AGeoJSON v-if="activeItem === '码头'" key="wharf-points" :source="point" :geoStyle="{ marker: wharfStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '岛屿'" key="island-points" :source="island" :geoStyle="{ marker: islandStyle }">
+      <AGeoJSON v-if="activeItem === '岛屿'" key="island-points" :source="point" :geoStyle="{ marker: islandStyle }">
         <template v-slot:popup="feature">
           <PointPopup :feature="feature" />
         </template>
@@ -47,32 +47,39 @@
         </template>
       </AGeoJSON>
       <template v-if="activeItem === '县道'">
-        <AGeoJSON key="line1" :source="line1" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
+        <AGeoJSON key="line1" :source="line[3]" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">
           <template v-slot:popup="feature">
             <LinePopup :feature="feature" />
           </template>
         </AGeoJSON>
-        <AGeoJSON key="line2" :source="line2" :geoStyle="{ polyline: { strokeColor: 'rgb(255, 203, 0)' } }">
+        <AGeoJSON key="line2" :source="line[2]" :geoStyle="{ polyline: { strokeColor: 'rgb(255, 203, 0)' } }">
           <template v-slot:popup="feature">
             <LinePopup :feature="feature" />
           </template>
         </AGeoJSON>
-        <AGeoJSON key="line3" :source="line3" :geoStyle="{ polyline: { strokeColor: 'rgb(255, 75, 215)' } }">
+        <AGeoJSON key="line3" :source="line[1]" :geoStyle="{ polyline: { strokeColor: 'rgb(255, 75, 215)' } }">
           <template v-slot:popup="feature">
             <LinePopup :feature="feature" />
           </template>
         </AGeoJSON>
-        <AGeoJSON key="line4" :source="line4" :geoStyle="{ polyline: { strokeColor: 'rgb(0, 125, 255)' } }">
+        <AGeoJSON key="line4" :source="line[0]" :geoStyle="{ polyline: { strokeColor: 'rgb(0, 125, 255)' } }">
           <template v-slot:popup="feature">
             <LinePopup :feature="feature" />
           </template>
         </AGeoJSON>
       </template>
+<!--      <template v-if="activeItem === '县道'">-->
+<!--        <AGeoJSON key="line1" :source="line" :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }">-->
+<!--          <template v-slot:popup="feature">-->
+<!--            <LinePopup :feature="feature" />-->
+<!--          </template>-->
+<!--        </AGeoJSON>-->
+<!--      </template>-->
     </Map>
     <div class="map-legend">
       <h3>交通运营图例</h3>
       <ul>
-        <li v-for="item in list" :key="item" @click="change(item)" :class="{ active: activeItem === item }">
+        <li v-for="item in list" :key="item" @click="selectMark(item)" :class="{ active: activeItem === item }">
           {{ item }}
         </li>
       </ul>
@@ -89,8 +96,11 @@ import line2 from './line2.json';
 import line3 from './line3.json';
 import line4 from './line4.json';
 import tunnel from './tunnel.json';
-import { wharf, busStation, island, weixian, qixiuchang } from './data';
-
+// import { wharf, busStation, island, weixian, qixiuchang } from './data';
+import {
+  getLocationList,
+  getLocationInfo,
+} from '@/api/IndexItem';
 export default {
   data() {
     const list = [
@@ -98,21 +108,19 @@ export default {
       '码头',
       '长途客运',
       '县道',
-      // '隧道',
-      // '公交车',
-      // '出租车',
-      // '码头',
       '危险品运输企业',
       '二类维修厂',
     ];
     return {
       list,
-      activeItem: list[0],
-      wharf: Object.freeze(wharf),
-      busStation: Object.freeze(busStation),
-      island: Object.freeze(island),
-      weixian: Object.freeze(weixian),
-      qixiuchang: Object.freeze(qixiuchang),
+      activeItem: '',
+      activeItem1: list[0],
+      point: {},
+      // wharf: Object.freeze(wharf),
+      // busStation: Object.freeze(busStation),
+      // island: Object.freeze(island),
+      // weixian: Object.freeze(weixian),
+      // qixiuchang: Object.freeze(qixiuchang),
       line1: Object.freeze(line1),
       line2: Object.freeze(line2),
       line3: Object.freeze(line3),
@@ -135,9 +143,88 @@ export default {
       }),
     };
   },
+  mounted() {
+    this.getClassDate();
+    // this.selectMark('岛屿', 0);
+    // this.getData(this.activeItem);
+  },
   methods: {
-    change(item) {
-      this.activeItem = item;
+    // 获得图例弹窗数
+    async getClassDate() {
+      const res = await getLocationList({ type: '交通概况' }).request();
+      this.list = res;
+      this.selectMark(res[0], 0);
+    },
+    selectMark(item, index) {
+      this.activeItem1 = item;
+      this.getData(item);
+    },
+    async getData(item1) {
+      const res = await getLocationInfo({ type: item1 }).request();
+      const data = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+      res.map((item) => {
+        data.features.push({
+          type: 'Feature',
+          properties: {
+            name: item.locationName,
+            content: item.popupList[0] ? item.popupList[0].value : '',
+          },
+          geometry: {
+            type: item.geoType,
+            coordinates: JSON.parse(item.geoCoord),
+          },
+        });
+      });
+      // console.log(data);
+      switch (this.activeItem1) {
+        case '岛屿': {
+          this.point = data;
+          break;
+        }
+        case '码头': {
+          this.point = data;
+          break;
+        }
+        case '长途客运': {
+          this.point = data;
+          break;
+        }
+        case '县道': {
+          let line = [];
+          res.map((item) => {
+            line.push({
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {
+                    name: item.locationName,
+                    content: item.popupList[0] ? item.popupList[0].value : '',
+                  },
+                  geometry: {
+                    type: item.geoType,
+                    coordinates: JSON.parse(item.geoCoord),
+                  },
+                },
+              ],
+            });
+          });
+          this.line = line;
+          break;
+        }
+        case '危险品运输企业': {
+          this.point = data;
+          break;
+        }
+        default: this.point = data;
+      }
+      console.log(data);
+      this.activeItem = item1;
+      // console.log(this.line);
+      // this.markDown();
     },
   },
   components: {

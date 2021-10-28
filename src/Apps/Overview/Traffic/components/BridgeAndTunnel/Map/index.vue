@@ -2,46 +2,6 @@
   <div>
     <Map ref="trafficMap">
       <AGeoJSON
-        v-if="activeItem === '台台线'"
-        key="line4"
-        :source="line4"
-        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
-      >
-        <template v-slot:popup="feature">
-          <LinePopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-      <AGeoJSON
-        v-if="activeItem === '外涨线'"
-        key="line1"
-        :source="line1"
-        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
-      >
-        <template v-slot:popup="feature">
-          <LinePopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-      <AGeoJSON
-        v-if="activeItem === '大梅线'"
-        key="line2"
-        :source="line2"
-        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
-      >
-        <template v-slot:popup="feature">
-          <LinePopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-      <AGeoJSON
-        v-if="activeItem === '孙干线'"
-        key="line3"
-        :source="line3"
-        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
-      >
-        <template v-slot:popup="feature">
-          <LinePopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-      <AGeoJSON
         v-if="activeItem === '隧道'"
         key="tunnel"
         :source="tunnel"
@@ -66,11 +26,21 @@
           <PointPopup :feature="feature" />
         </template>
       </AGeoJSON>
+      <AGeoJSON
+        v-if="lineKey"
+        key="line"
+        :source="line"
+        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
+      >
+        <template v-slot:popup="feature">
+          <LinePopup :feature="feature" />
+        </template>
+      </AGeoJSON>
     </Map>
     <div class="map-legend">
       <h3>交通运营图例</h3>
       <ul>
-        <li v-for="item in list" :key="item" @click="change(item)" :class="{ active: activeItem === item }">
+        <li v-for="(item, index) in list" :key="item" @click="selectMark(item, index)" :class="{ active: activeItem === item }">
           {{ item }}
         </li>
       </ul>
@@ -96,19 +66,14 @@
 import Map from '@/components/AMap';
 import AGeoJSON from '@/components/AMap/AGeoJSON';
 import PointPopup from './PointPopup';
-import points from './mock.json';
-import points2 from './points2.json';
 import LinePopup from '../../TrafficOverview/Map/LinePopup';
-// import LinePopup from './LinePopup';
-import line1 from './line1.json';
-import line2 from './line2.json';
-import line3 from './line3.json';
-import line4 from './line4.json';
-import tunnel from './tunnel.json';
 import {
   getStatistics,
 } from '@/api/Overview/Traffic';
-
+import {
+  getLocationList,
+  getLocationInfo,
+} from '@/api/IndexItem';
 export default {
   data() {
     const list = ['台台线', '外涨线', '大梅线', '孙干线', '隧道', '桥梁', '公路隐患点'];
@@ -149,9 +114,18 @@ export default {
     return {
       list,
       statisticsList,
-      activeItem: '台台线',
-      points: Object.freeze(points),
-      points2: Object.freeze(points2),
+      activeItem: list[0],
+      activeItem1: list[0],
+      lineKey: false,
+      lineName: {
+        台台线: true,
+        外涨线: true,
+        大梅线: true,
+        孙干线: true,
+        隧道: false,
+        桥梁: false,
+        公路隐患点: false,
+      },
       markerStyle: Object.freeze({
         content:
           '<div style="width: 2rem; height: 2rem; border: 0.8rem solid #FDF17950; background: #FDF179; background-clip: content-box; border-radius: 50%;"></div>',
@@ -163,15 +137,15 @@ export default {
       pitfallsStyle: Object.freeze({
         content: '<div style="width: 6rem; height: 6rem;" class="pitfalls-point-afhwa"></div>',
       }),
-      line1: Object.freeze(line1),
-      line2: Object.freeze(line2),
-      line3: Object.freeze(line3),
-      line4: Object.freeze(line4),
-      tunnel: Object.freeze(tunnel),
+      line: {},
+      tunnel: {},
+      points: {},
+      points2: {},
     };
   },
   mounted() {
     this.getStatistics();
+    this.getClassDate();
   },
   methods: {
     // 公路桥隧
@@ -197,8 +171,59 @@ export default {
         }
       });
     },
-    change(item) {
+    // 获得图例弹窗数据
+    async getClassDate() {
+      const res = await getLocationList({ type: '公路桥隧' }).request();
+      this.list = res;
+      this.activeItem = res[0];
+      this.selectMark(res[0], 0);
+    },
+    selectMark(item, index) {
+      this.activeItem1 = item;
+      this.getData(item);
+    },
+    async getData(item) {
+      const res = await getLocationInfo({ type: item }).request();
+      const data = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+      res.map((item) => {
+        data.features.push({
+          type: 'Feature',
+          properties: {
+            name: item.locationName,
+          },
+          geometry: {
+            type: item.geoType,
+            // type: 'MultiLineString',
+            coordinates: JSON.parse(item.geoCoord),
+          },
+        });
+      });
+      console.log(data);
+      switch (this.activeItem1) {
+        case '隧道': {
+          this.tunnel = data;
+          this.lineKey = false;
+          break;
+        }
+        case '桥梁': {
+          this.points = data;
+          this.lineKey = false;
+          break;
+        }
+        case '公路隐患点': {
+          this.points2 = data;
+          this.lineKey = false;
+          break;
+        }
+        default: this.line = data; this.lineKey = true;
+      }
       this.activeItem = item;
+      console.log(this.lineName[this.activeItem]);
+      // console.log(this.line);
+      // this.markDown();
     },
     // 交通畅行---公交桥隧---地图线路方法
   },

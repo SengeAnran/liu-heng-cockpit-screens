@@ -3,10 +3,19 @@ import MetroApi from '../utils/http';
 export const getBottom = (data) => {
   return new MetroApi({ myType: 0, method: 'get', url: '/indexSummary/getBottom', data });
 };
-// 底部指标
+// 底部数字乡社指标
 export const getVillageBottom = (data) => {
   return new MetroApi({ myType: 0, method: 'get', url: '/community/getBottomInfo', data });
 };
+// 中屏图例弹窗
+export const getLocationList = (data) => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/indexSummary/v2/getLocationList', data });
+};
+// 中屏图例类型列表
+export const getLocationInfo = (data) => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/indexSummary/v2/getLocationInfo', data });
+};
+//
 // *************************************
 // 底部总览指标
 export const getBottomInfo = () => {

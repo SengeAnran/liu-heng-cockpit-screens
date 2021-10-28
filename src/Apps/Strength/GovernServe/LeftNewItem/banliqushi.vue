@@ -14,7 +14,7 @@ export default {
     };
   },
   mounted() {
-    this.initDraw();
+    this.initData();
   },
   methods: {
     initData() {
@@ -24,61 +24,71 @@ export default {
           if (!json) {
             return;
           }
-          this.dataList = json.map((item) => {
+          this.dataList = json.today.map((item, index) => {
             return {
-              name: item.pjzt,
-              value: item.pjzs,
-              value2: item.pjzs,
+              name: item.hour,
+              value1: Number(item.blajs),
+              value2: '',
             };
           });
+          json.last.forEach((item) => {
+            this.dataList.forEach((item2, index2) => {
+              if (item2.name === item.hour) {
+                this.dataList[index2].value2 = Number(item.blajs);
+              }
+            });
+          });
+          // console.log(this.dataList, 111111);
+          this.initDraw(this.dataList);
         });
     },
-    initDraw() {
+    initDraw(dataList) {
       const myChart = echarts.init(this.$refs.echarts);
       //   let bgColor = '#fff';
       let color = ['#0090FF', '#36CE9E', '#FFC005', '#FF515A', '#8B5CFF', '#00CA69'];
-      let echartData = [
-        {
-          name: '1',
-          value1: 100,
-          value2: 233,
-        },
-        {
-          name: '2',
-          value1: 138,
-          value2: 233,
-        },
-        {
-          name: '3',
-          value1: 350,
-          value2: 200,
-        },
-        {
-          name: '4',
-          value1: 173,
-          value2: 180,
-        },
-        {
-          name: '5',
-          value1: 180,
-          value2: 199,
-        },
-        {
-          name: '6',
-          value1: 150,
-          value2: 233,
-        },
-        {
-          name: '7',
-          value1: 180,
-          value2: 210,
-        },
-        {
-          name: '8',
-          value1: 230,
-          value2: 180,
-        },
-      ];
+      // let echartData = [
+      //   {
+      //     name: '1',
+      //     value1: 100,
+      //     value2: 233,
+      //   },
+      //   {
+      //     name: '2',
+      //     value1: 138,
+      //     value2: 233,
+      //   },
+      //   {
+      //     name: '3',
+      //     value1: 350,
+      //     value2: 200,
+      //   },
+      //   {
+      //     name: '4',
+      //     value1: 173,
+      //     value2: 180,
+      //   },
+      //   {
+      //     name: '5',
+      //     value1: 180,
+      //     value2: 199,
+      //   },
+      //   {
+      //     name: '6',
+      //     value1: 150,
+      //     value2: 233,
+      //   },
+      //   {
+      //     name: '7',
+      //     value1: 180,
+      //     value2: 210,
+      //   },
+      //   {
+      //     name: '8',
+      //     value1: 230,
+      //     value2: 180,
+      //   },
+      // ];
+      let echartData = dataList;
 
       let xAxisData = echartData.map((v) => v.name);
       //  ["1", "2", "3", "4", "5", "6", "7", "8"]
@@ -112,7 +122,7 @@ export default {
           formatter: function (params) {
             let html = '';
             params.forEach((v) => {
-              console.log(v);
+              // console.log(v);
               html += `<div style="color: #666;font-size: 14px;line-height: 24px">
                 <span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
                   color[v.componentIndex]
