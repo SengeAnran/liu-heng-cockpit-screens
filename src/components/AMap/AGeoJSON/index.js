@@ -40,8 +40,14 @@ export default {
       } = this.geoStyle;
       const layer = new AMap.GeoJSON({
         getPolygon(feature, path) {
+          console.log(...polygonStyle);
           return new AMap.Polygon({
             ...polygonStyle,
+            strokeColor: '#FF33FF',
+            strokeOpacity: 0.2,
+            strokeWeight: 3,
+            fillColor: '#1791fc',
+            fillOpacity: 0.35,
             path,
             extData: feature,
           });
@@ -88,16 +94,20 @@ export default {
       const map = await this.mapPromise;
       this.layer.on('click', async (ev) => {
         const feature = ev.target.getExtData();
+        // console.log(feature);
         this.$emit('onClick', feature);
         const popup = new Vue({
           render: () => this.$scopedSlots.popup(feature),
         }).$mount(document.createElement('div'));
+        // console.log(popup);
         const infoWindow = new AMap.InfoWindow({
           content: popup.$el,
           isCustom: true,
           closeWhenClickMap: true,
         });
+        console.log(infoWindow);
         const position = getPopupPostion(feature);
+        console.log(position);
         infoWindow.on('close', () => {
           popup.$destroy();
         });

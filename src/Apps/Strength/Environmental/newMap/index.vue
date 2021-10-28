@@ -1,7 +1,7 @@
 <template>
   <div class="map_wrapper">
     <div class="mask"></div>
-    <Map2d :currentLegend="currentLegend" v-show="!threeDMap"/>
+    <Map2d :activeItem="activeItem" v-show="!threeDMap"/>
     <div class="main-map" v-show="threeDMap">
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
@@ -12,23 +12,23 @@
     <div class="map-legend">
       <p class="legend-title">污染图例</p>
       <ul class="legend-list">
-        <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
+        <li v-for="(item, index) in  list" :key="index" @click="selectMark(item)">
           <div class="main-label-wrap">
             <span class="select-rect">
-              <span class="selected-inner" v-show="currentLegend === item.value"></span>
+              <span class="selected-inner" v-show="activeItem === item"></span>
             </span>
-            {{ item.label }}
+            {{ item }}
           </div>
-          <ul v-if="item.children" class="legend-children-list">
-            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">
-              <div class="main-label-wrap">
-                <span class="select-rect">
-                  <span class="selected-inner" v-show="currentLegend === item.value"></span>
-                </span>
-                {{ item2.label }}
-              </div>
-            </li>
-          </ul>
+<!--          <ul v-if="item.children" class="legend-children-list">-->
+<!--            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">-->
+<!--              <div class="main-label-wrap">-->
+<!--                <span class="select-rect">-->
+<!--                  <span class="selected-inner" v-show="activeItem === item"></span>-->
+<!--                </span>-->
+<!--                {{ item2.label }}-->
+<!--              </div>-->
+<!--            </li>-->
+<!--          </ul>-->
         </li>
       </ul>
     </div>
@@ -38,27 +38,30 @@
 <script>
 // import './mark.scss';
 import Map2d from './Map2d';
+import {
+  getLocationList,
+} from '@/api/IndexItem';
 export default {
   name: 'CityEvolution',
   components: {
     Map2d,
   },
   data() {
+    // const list = ['涉水污染企业', '涉气污染企业'];
     return {
+      list: [],
       map: null,
       mapLayer: null,
       markerLayer: null,
       mapDom: null,
       lastDetailMarker: null,
       threeDMap: false,
-      currentLegend: 1,
-      legendList: [
-        { value: 1, label: '涉水污染企业' },
-        { value: 2, label: '涉气污染企业' },
-      ],
+      activeItem: '',
     };
   },
-
+  mounted() {
+    this.getClassDate();
+  },
   methods: {
     changeMap(type) {
       if (type === 3) {
@@ -67,9 +70,17 @@ export default {
         this.threeDMap = false;
       }
     },
-    selectLegend(item) {
-      this.currentLegend = item.value;
-      console.log(this.currentLegend);
+    // 获得图例弹窗数
+    async getClassDate() {
+      const res = await getLocationList({ type: '环保专题' }).request();
+      res.forEach((item) => {
+        this.list.push(item);
+      });
+      console.log(this.list);
+      this.selectMark(res[0], 0);
+    },
+    selectMark(item, index) {
+      this.activeItem = item;
     },
   },
 };
@@ -129,7 +140,7 @@ export default {
     z-index: 10;
     top: 90.6rem;
     right: 37%;
-    width: 27.4rem;
+    width: max-content;
     // height: 28.2rem;
     height: auto;
     background: url('./img/legend-bg.png') no-repeat 0 0;

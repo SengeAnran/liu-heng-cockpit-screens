@@ -6,6 +6,11 @@
     <div class="content1" v-if="feature.properties.content">
       {{ feature.properties.content }}
     </div>
+    <div  v-if="feature.properties.listData">
+      <div class="content2 item" v-for="(item, index) in feature.properties.listData" :key="index">
+        <span>{{item.title}}</span> <span>{{item.value}}</span>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -49,6 +54,11 @@ export default {
 }
 .content1 {
   width: 1000px;
+  // border: 1px solid #00f;
+  word-wrap: break-word;
+}
+.content2 {
+  width: 700px;
   // border: 1px solid #00f;
   word-wrap: break-word;
 }

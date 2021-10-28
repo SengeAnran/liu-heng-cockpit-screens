@@ -1,13 +1,8 @@
 <template>
   <Map>
-    <AGeoJSON key="lhArea" v-if="currentLegend == 1" :source="points" :geoStyle="{ marker: markerStyle }">
+    <AGeoJSON key="lhArea" v-if="show" :source="points" :geoStyle="{ marker: markerStyle }">
       <template v-slot:popup="feature">
-        <MarkerPopup :feature="feature" />
-      </template>
-    </AGeoJSON>
-    <AGeoJSON key="lhArea" v-if="currentLegend == 4" :source="wenhualitang" :geoStyle="{ marker: markerStyle1 }">
-      <template v-slot:popup="feature">
-        <MarkerPopup :feature="feature" />
+        <PointPopup :feature="feature" />
       </template>
     </AGeoJSON>
   </Map>
@@ -15,21 +10,21 @@
 <script>
 import Map from '@/components/AMap';
 import AGeoJSON from '@/components/AMap/AGeoJSON';
-import points from './mock.json';
-import wenhualitang from './wenhua.json';
-import MarkerPopup from './MarkerPopup';
-
+import {
+  getLocationInfo,
+} from '@/api/IndexItem';
 export default {
   // props: [currentLegend],
   props: {
-    currentLegend: {
-      type: Number,
-      default: () => 1,
+    activeItem: {
+      type: String,
+      // default: () => 1,
     },
   },
   data() {
     return {
-      points: Object.freeze(points),
+      show: false,
+      points: {},
       markerStyle: Object.freeze({
         content: (feature) => {
           return `<div class="marker-content 文化礼堂">
@@ -39,7 +34,7 @@ export default {
           </div>`;
         },
       }),
-      wenhualitang: Object.freeze(wenhualitang),
+      wenhualitang: {},
       markerStyle1: Object.freeze({
         content: (feature) => {
           return `<div class="marker-content 文化礼堂">
@@ -54,7 +49,42 @@ export default {
   components: {
     Map,
     AGeoJSON,
-    MarkerPopup,
+    // MarkerPopup,
+  },
+  watch: {
+    activeItem() {
+      this.show = false;
+      this.getData(this.activeItem);
+    },
+  },
+  mounted() {
+    this.getData(this.activeItem);
+  },
+  methods: {
+    async getData(item1) {
+      const res = await getLocationInfo({ type: item1 }).request();
+      const data = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+      res.map((item) => {
+        data.features.push({
+          type: 'Feature',
+          properties: {
+            name: item.locationName,
+            content: item.popupList[0] && item.popupList.length === 1 ? item.popupList[0].value : '',
+            listData: item.popupList[0] && item.popupList.length > 1 ? item.popupList : '',
+          },
+          geometry: {
+            type: item.geoType,
+            coordinates: JSON.parse(item.geoCoord),
+          },
+        });
+      });
+      this.points = data;
+      this.show = true;
+      console.log(this.points);
+    },
   },
 };
 </script>

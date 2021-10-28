@@ -1,5 +1,5 @@
 <template>
-  <Map>
+  <Map>'
     <AGeoJSON key="lhArea" v-if="show" :source="points" :geoStyle="{ marker: markerStyle }">
       <template v-slot:popup="feature">
         <PointPopup :feature="feature" />
@@ -15,8 +15,13 @@ import {
 } from '@/api/IndexItem';
 export default {
   props: {
+    currentLegend: {
+      type: Number,
+      default: 2,
+    },
     activeItem: {
       type: String,
+      // default: () => 1,
     },
   },
   data() {
@@ -25,16 +30,7 @@ export default {
       points: {},
       markerStyle: Object.freeze({
         content: (feature) => {
-          return `<div class="marker-content-sheshui">
-            <div class="catalog-content">
-              <h3 class="title">${feature.properties.name}</h3>
-            </div>
-          </div>`;
-        },
-      }),
-      markerStyle1: Object.freeze({
-        content: (feature) => {
-          return `<div class="marker-content1-sheqi">
+          return `<div class="marker-content 文化礼堂">
             <div class="catalog-content">
               <h3 class="title">${feature.properties.name}</h3>
             </div>
@@ -79,7 +75,7 @@ export default {
       });
       this.points = data;
       this.show = true;
-      // console.log(this.points);
+      console.log(this.points);
     },
   },
 };

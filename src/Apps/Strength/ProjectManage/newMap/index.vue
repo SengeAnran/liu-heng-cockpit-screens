@@ -10,7 +10,7 @@
       <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
     </div>
     <div class="map-legend">
-      <p class="legend-title">党群建设图例</p>
+      <p class="legend-title">项目图例</p>
       <ul class="legend-list">
         <li v-for="(item, index) in list" :key="index" @click="selectMark(item)">
           <div class="main-label-wrap">
@@ -36,7 +36,6 @@
 </template>
 
 <script>
-// import './mark.scss';
 import Map2d from './Map2d';
 import {
   getLocationList,
@@ -47,13 +46,13 @@ export default {
     Map2d,
   },
   data() {
-    // const list = ['党组织', '群团阵地', '文化礼堂', '综合文化站'];
     return {
       list: [],
       map: null,
       mapLayer: null,
       markerLayer: null,
       mapDom: null,
+      currentLegend: 1,
       lastDetailMarker: null,
       threeDMap: false,
       activeItem: '',
@@ -72,7 +71,7 @@ export default {
     },
     // 获得图例弹窗数
     async getClassDate() {
-      const res = await getLocationList({ type: '党群建设' }).request();
+      const res = await getLocationList({ type: '项目管理' }).request();
       this.list = res;
       this.selectMark(res[0], 0);
     },
@@ -135,9 +134,9 @@ export default {
   .map-legend {
     position: absolute;
     z-index: 10;
-    top: 87.6rem;
+    top: 98.6rem;
     right: 37%;
-    width: max-content;
+    width: 32.4rem;
     // height: 28.2rem;
     height: auto;
     background: url('./img/legend-bg.png') no-repeat 0 0;

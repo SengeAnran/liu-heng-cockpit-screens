@@ -9,7 +9,7 @@
 
 <script>
 import ProjectManageLeft from './Left';
-import ProjectManageMap from './Map';
+import ProjectManageMap from './newMap';
 import ProjectManageRight from './RightNew';
 
 export default {

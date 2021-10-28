@@ -170,7 +170,8 @@ export default {
           type: 'Feature',
           properties: {
             name: item.locationName,
-            content: item.popupList[0] ? item.popupList[0].value : '',
+            content: item.popupList[0] && item.popupList.length === 1 ? item.popupList[0].value : '',
+            listData: item.popupList[0] && item.popupList.length > 1 ? item.popupList : '',
           },
           geometry: {
             type: item.geoType,

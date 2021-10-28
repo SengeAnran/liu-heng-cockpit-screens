@@ -1,7 +1,7 @@
 <template>
   <div class="map_wrapper">
     <div class="mask"></div>
-    <Map2d :currentLegend="currentLegend" v-show="!threeDMap" />
+    <Map2d :activeItem="activeItem" v-show="!threeDMap"/>
     <div class="main-map" v-show="threeDMap">
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
@@ -12,18 +12,18 @@
     <div class="map-legend">
       <p class="legend-title">规上企业图例</p>
       <ul class="legend-list">
-        <li v-for="(item, index) in legendList" :key="index" @click="selectLegend(item)">
+        <li v-for="(item, index) in list" :key="index" @click="selectMark(item)">
           <div class="main-label-wrap">
             <span class="select-rect">
-              <span class="selected-inner" v-show="currentLegend === item.value"></span>
+              <span class="selected-inner" v-show="activeItem === item"></span>
             </span>
-            {{ item.label }}
+            {{ item }}
           </div>
           <ul v-if="item.children" class="legend-children-list">
-            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectLegend(item2)">
+            <li v-for="(item2, index2) in item.children" :key="index2" @click="selectMark(item2)">
               <div class="main-label-wrap">
                 <span class="select-rect">
-                  <span class="selected-inner" v-show="currentLegend === item.value"></span>
+                  <span class="selected-inner" v-show="activeItem === item"></span>
                 </span>
                 {{ item2.label }}
               </div>
@@ -36,9 +36,10 @@
 </template>
 
 <script>
-// import './mark.scss';
-import { partyConstruct } from '@/api/Charm/PartyConstruction';
 import Map2d from './Map2d';
+import {
+  getLocationList,
+} from '@/api/IndexItem';
 export default {
   name: 'CityEvolution',
   components: {
@@ -46,6 +47,7 @@ export default {
   },
   data() {
     return {
+      list: [],
       map: null,
       mapLayer: null,
       markerLayer: null,
@@ -53,16 +55,12 @@ export default {
       currentLegend: 1,
       lastDetailMarker: null,
       threeDMap: false,
-      legendList: [
-        { value: 1, label: '企业信息' },
-        { value: 2, label: '经济发展核心指标' },
-      ],
+      activeItem: '',
     };
   },
-  // mounted() {
-  //   this.initMap();
-  //   this.renderMarker();
-  // },
+  mounted() {
+    this.getClassDate();
+  },
   methods: {
     changeMap(type) {
       if (type === 3) {
@@ -71,12 +69,14 @@ export default {
         this.threeDMap = false;
       }
     },
-    selectLegend(item) {
-      this.currentLegend = item.value;
+    // 获得图例弹窗数
+    async getClassDate() {
+      const res = await getLocationList({ type: '经济发展' }).request();
+      this.list = res;
+      this.selectMark(res[0], 0);
     },
-    async renderMarker() {
-      const result = await partyConstruct().request();
-      console.log('map data:', result);
+    selectMark(item, index) {
+      this.activeItem = item;
     },
   },
 };
