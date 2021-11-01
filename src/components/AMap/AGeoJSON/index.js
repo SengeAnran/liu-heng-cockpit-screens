@@ -40,7 +40,8 @@ export default {
       } = this.geoStyle;
       const layer = new AMap.GeoJSON({
         getPolygon(feature, path) {
-          console.log(...polygonStyle);
+          // console.log(feature, path);
+          // console.log(polygonStyle);
           return new AMap.Polygon({
             ...polygonStyle,
             strokeColor: '#FF33FF',

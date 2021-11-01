@@ -104,7 +104,10 @@ export default {
       });
       this.points = data[1];
       this.Polygon = data[0];
-      this.show = true;
+      console.log(this.Polygon);
+      setTimeout(() => {
+        this.show = true;
+      }, 500);
     },
     onClick(feature) {
 

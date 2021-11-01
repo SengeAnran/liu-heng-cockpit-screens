@@ -35,4 +35,8 @@ export default {
   mediaIndexRank() {
     return axios.get('/opinion/analysis/mediaIndexRank');
   },
+  // 最新舆情
+  getLatelyPublicSentiment() {
+    return axios.get('/opinion/analysis/getLatelyPublicSentiment');
+  },
 };

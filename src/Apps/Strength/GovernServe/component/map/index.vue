@@ -12,9 +12,13 @@
   </div>
 </template>
 <script>
-import { getInfoGovernment } from '@/api/Strength/GovernServe/api';
+// import { getInfoGovernment } from '@/api/Strength/GovernServe/api';
+import {
+  getLocationInfo,
+} from '@/api/IndexItem';
 import './mark.scss';
 import AMap from 'AMap';
+// import Vue from 'vue';
 export default {
   name: 'MedicalMap',
   components: {},
@@ -22,24 +26,26 @@ export default {
     return {
       map: null,
       mapDom: null,
-      data: null,
+      infoWindow: null,
+      // data: null,
       title: '六横政务大厅',
       list: [
-        { name: '当前叫号等待人数：', unit: '人', key: 'ddrs', number: 11 },
-        { name: '今日办理数量：', unit: '件', key: 'bjnsl', number: 51 },
-        { name: '本周办理数量：', unit: '件', key: 'blzsl', number: 409 },
-        { name: '本月办理数量', unit: '人', key: 'bsrys', number: 2653 },
+        // { name: '当前叫号等待人数：', unit: '人', key: 'ddrs', number: 11 },
+        // { name: '今日办理数量：', unit: '件', key: 'bjnsl', number: 51 },
+        // { name: '本周办理数量：', unit: '件', key: 'blzsl', number: 409 },
+        // { name: '本月办理数量', unit: '人', key: 'bsrys', number: 2653 },
       ],
       threeDMap: false,
     };
   },
   watch: {
-    data(val) {
-      val && this.initMap();
-    },
+    // data(val) {
+    //   val && this.initMap();
+    // },
   },
   mounted() {
-    this.loadData();
+    this.initMap();
+    this.getData();
   },
   methods: {
     changeMap(type) {
@@ -50,6 +56,43 @@ export default {
       }
     },
     initMap() {
+      this.map = new AMap.Map(this.$refs.map, {
+        resizeEnable: true,
+        // zoomEnable: true,
+        zoom: 13.3,
+        zooms: [3, 20],
+        center: [122.138836, 29.730147],
+        mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
+      });
+    },
+    addMarker(data) {
+      data.forEach((item) => {
+        const marker = new AMap.Marker({
+          position: JSON.parse(item.geoCoord),
+          content: '<div class="custom-marker"></div>',
+          closeWhenClickMap: true,
+        });
+        marker.setMap(this.map);
+        marker.on('click', (e) => {
+          this.addInfoWindow(item);
+        });
+      });
+    },
+    addInfoWindow(item) {
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗体
+        content: this.boxTemp(), // 传入 dom 对象，或者 html 字符串
+        offset: new AMap.Pixel(165, 243),
+        closeWhenClickMap: true,
+      });
+      this.infoWindow = infoWindow;
+      // infoWindow.on('close', () => {
+      //   console.log(1111);
+      //   this.boxTemp().$destroy();
+      // });
+      infoWindow.open(this.map, JSON.parse(item.geoCoord));
+    },
+    initMap2() {
       this.map = new AMap.Map(this.$refs.map, {
         zoom: 13,
         zooms: [3, 20],
@@ -66,6 +109,7 @@ export default {
     },
     boxTemp() {
       let contentItems = '';
+      // console.log(this.list);
       this.list.forEach((item) => {
         contentItems =
           contentItems +
@@ -73,27 +117,51 @@ export default {
             <div class="name">${item.name} </div>
             <div class="number">
               <div>${item.number}</div>
-              <div class="unit">${item.unit}</div>
             </div>
           </div>`;
       });
       return `
        <div class="box">
-          <div class="title"> ${this.data[0].zwdtmc}</div>
+          <div class="title"> ${this.title}</div>
           <div class="content">
           ${contentItems}
           </div>
       </div>`;
     },
-    loadData() {
-      getInfoGovernment()
-        .request()
-        .then((json) => {
-          if (!json) {
-            return;
-          }
-          this.data = json;
+    async getData() {
+      const res = await getLocationInfo({ type: '政务服务' }).request();
+      // const data = [];
+      if (res && res[0].popupList) {
+        this.list = res[0].popupList.map((item, index) => {
+          return { name: item.title, number: item.value };
         });
+        this.addMarker(res);
+      }
+      // this.data
+      // res.map((item) => {
+      //   data.push(
+      //     {
+      //       type: 'FeatureCollection',
+      //       features: [
+      //         {
+      //           type: 'Feature',
+      //           properties: {
+      //             name: item.locationName,
+      //             content: item.popupList[0] && item.popupList.length === 1 ? item.popupList[0].value : '',
+      //             listData: item.popupList[0] && item.popupList.length > 1 ? item.popupList : '',
+      //           },
+      //           geometry: {
+      //             type: item.geoType,
+      //             coordinates: JSON.parse(item.geoCoord),
+      //           },
+      //         },
+      //       ],
+      //     });
+      // });
+      // console.log(this.Polygon);
+      // setTimeout(() => {
+      //   this.show = true;
+      // }, 500);
     },
   },
 };
@@ -124,6 +192,13 @@ export default {
     right: 0;
     width: 100%;
     height: 1350px;
+    ::v-deep .custom-marker {
+      position: absolute;
+      width: 89.7px;
+      height: 89.7px;
+      background: url('./img/icon.png');
+      background-size: contain;
+    }
   }
   .switch {
   width: 274px;

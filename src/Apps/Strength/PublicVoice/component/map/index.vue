@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-// import { getInfoGovernment } from '@/api/Strength/GovernServe/api';
+import economicAPI from '@/api/Strength/PublicVoice';
 import './item.scss';
 import AMap from 'AMap';
 export default {
@@ -28,8 +28,8 @@ export default {
     },
   },
   mounted() {
-    this.loadData();
-    this.initMap();
+    this.getData();
+    // this.initMap();
   },
   methods: {
     initMap() {
@@ -57,13 +57,16 @@ export default {
           </div>
       </div>`;
     },
-    loadData() {
-      // getInfoGovernment()
-      //   .request()
-      //   .then((json) => {
-      //     if (!json) { return; }
-      //     this.data = json;
-      //   });
+    async getData() {
+      const data = await economicAPI.getLatelyPublicSentiment();
+      if (data) {
+        this.time = data.fbsj;
+        this.content = data.nrzy;
+      }
+      this.initMap();
+      // this.positive = data[0].zmsjs;
+      // this.negative = data[0].fmsjs;
+      // this.neutral = data[0].zxsjs;
     },
   },
 };

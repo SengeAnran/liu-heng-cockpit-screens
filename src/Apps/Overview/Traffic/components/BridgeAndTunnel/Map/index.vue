@@ -114,7 +114,7 @@ export default {
     return {
       list,
       statisticsList,
-      activeItem: list[0],
+      activeItem: '',
       activeItem1: list[0],
       lineKey: false,
       lineName: {
@@ -175,7 +175,6 @@ export default {
     async getClassDate() {
       const res = await getLocationList({ type: '公路桥隧' }).request();
       this.list = res;
-      this.activeItem = res[0];
       this.selectMark(res[0], 0);
     },
     selectMark(item, index) {
