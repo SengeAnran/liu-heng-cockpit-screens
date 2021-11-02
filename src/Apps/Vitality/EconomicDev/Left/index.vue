@@ -169,7 +169,7 @@ export default {
 <style lang="scss" scoped>
 .left {
   position: absolute;
-  top: 26rem;
+  top: 150px;
   left: 16rem;
   width: 165rem;
   z-index: 999;

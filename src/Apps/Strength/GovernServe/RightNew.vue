@@ -44,5 +44,7 @@ export default {
 .yuedu {
   position: absolute;
   top: 500px;
+  margin-top: 51px;
 }
+
 </style>

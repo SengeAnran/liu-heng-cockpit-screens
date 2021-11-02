@@ -355,7 +355,7 @@ export default {
     position: absolute;
     width: 160rem;
     left: 25rem;
-    top: 13rem;
+    top: 20.3rem;
     z-index: 10;
     .hehua-box {
       display: flex;
@@ -422,7 +422,7 @@ export default {
     position: absolute;
     width: 160rem;
     right: 25rem;
-    top: 13rem;
+    top: 20.3rem;
     display: flex;
     z-index: 10;
     justify-content: space-between;

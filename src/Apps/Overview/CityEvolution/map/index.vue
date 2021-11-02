@@ -162,7 +162,8 @@ export default {
     },
     paly() {
       if (this.activeIndex >= this.years.length) {
-        return;
+        this.activeIndex = -1;
+        // return;
       }
       this.activeIndex += 1;
       this.getData();

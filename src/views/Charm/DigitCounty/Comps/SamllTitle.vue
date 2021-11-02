@@ -19,8 +19,8 @@ export default {
   font-size: 3.17rem;
   width: 100%;
   padding: 0 2rem;
-  height: 6.3rem;
-  line-height: 6.3rem;
+  height: 63px;
+  line-height: 63px;
   background: linear-gradient(90deg, rgba(116, 226, 252, .2) 0% , rgba(116, 226, 252, 0) 100%);
   img{
     width: 2.99rem;

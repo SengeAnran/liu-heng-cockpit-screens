@@ -272,6 +272,9 @@ export default {
       align-items: center;
       div {
         height: 200px;
+        &:nth-child(2) {
+          width: 266px;
+        }
         // border: 1px solid;
       }
       .xinxi {

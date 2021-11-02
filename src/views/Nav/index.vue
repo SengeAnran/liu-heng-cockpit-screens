@@ -52,12 +52,12 @@
       <div class="to-left" v-if="secondNavStart > 0" @click="toSecondaryLeft" />
       <div class="to-right" v-if="secondNavStart < secondaryNav.length - 6" @click="toSecondaryRight" />
     </div>
-    <div class="video-bg">
-      <video autoplay="autoplay" muted width="100%" loop src="./video_bg.mp4"></video>
-<!--      <video name="media" autoplay loop width="100%">-->
-<!--        <source src="./video_bg.mp4">-->
-<!--      </video>-->
-    </div>
+<!--    <div class="video-bg">-->
+<!--      <video autoplay="autoplay" muted width="100%" loop src="./video_bg.mp4"></video>-->
+<!--&lt;!&ndash;      <video name="media" autoplay loop width="100%">&ndash;&gt;-->
+<!--&lt;!&ndash;        <source src="./video_bg.mp4">&ndash;&gt;-->
+<!--&lt;!&ndash;      </video>&ndash;&gt;-->
+<!--    </div>-->
   </div>
 </template>
 <script>
@@ -333,7 +333,7 @@ export default {
   // height: 144rem;
   height: 72rem;
   flex: none;
-  //background: url('./nav-bg.png') no-repeat;
+  background: url('./nav-bg.png') no-repeat;
   background-size: 576rem 73rem;
   background-position: 0 0;
   z-index: 100000;

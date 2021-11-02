@@ -51,9 +51,9 @@ export default {
 
 <style lang="scss">
 .content1 {
-  margin-top: 20px;
-  background-image: url('../img/yue_bg.png');
-  height: 350px;
+  margin-top: 28px;
+  background: url('../img/yue_bg.png') 100% 100% no-repeat;
+  height: 356px;
   width: 800px;
   display: flex;
   .img {

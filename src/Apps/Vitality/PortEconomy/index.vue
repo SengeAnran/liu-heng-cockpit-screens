@@ -29,7 +29,7 @@ export default {
   //background-color: red;
   display: flex;
   justify-content: space-between;
-  padding: 263px 160px 0;
+  padding: 150px 160px 0;
   // background-color: transparent;
   .left-webview,
   .right-webview {

@@ -122,7 +122,7 @@ export default {
           formatter: function (params) {
             let html = '';
             params.forEach((v) => {
-              // console.log(v);
+              console.log(v);
               html += `<div style="color: #666;font-size: 14px;line-height: 24px">
                 <span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${
                   color[v.componentIndex]
@@ -131,18 +131,20 @@ export default {
                 <span style="color:${color[v.componentIndex]};font-weight:700;font-size: 18px">${v.value}</span>
                 件数`;
             });
-
+            console.log(html);
             return html;
           },
           extraCssText: 'background: #fff; border-radius: 0;box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);color: #333;',
           axisPointer: {
             type: 'shadow',
             shadowStyle: {
-              color: '#ffffff',
-              shadowColor: 'rgba(225,225,225,1)',
+              color: '#7e7777',
+              shadowColor: 'rgba(0, 0, 0, 0.3)',
               shadowBlur: 5,
             },
           },
+          borderColor: 'rgba(255, 255, 255, 0.4)',
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
         },
         grid: {
           top: 80,

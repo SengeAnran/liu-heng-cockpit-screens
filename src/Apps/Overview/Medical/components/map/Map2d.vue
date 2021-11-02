@@ -2,7 +2,7 @@
   <Map>'
     <AGeoJSON key="lhArea" v-if="show" :source="points" :geoStyle="{ marker: markerStyle }">
       <template v-slot:popup="feature">
-        <PointPopup :feature="feature" />
+        <PointPop :feature="feature" />
       </template>
     </AGeoJSON>
   </Map>
@@ -10,6 +10,7 @@
 <script>
 import Map from '@/components/AMap';
 import AGeoJSON from '@/components/AMap/AGeoJSON';
+import PointPop from "./PointPop";
 import {
   getLocationInfo,
 } from '@/api/IndexItem';
@@ -42,6 +43,7 @@ export default {
   components: {
     Map,
     AGeoJSON,
+    PointPop,
   },
   watch: {
     activeItem() {

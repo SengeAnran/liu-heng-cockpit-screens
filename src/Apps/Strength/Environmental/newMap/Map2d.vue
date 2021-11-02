@@ -2,7 +2,7 @@
   <Map>
     <AGeoJSON key="lhArea" v-if="show" :source="points" :geoStyle="{ marker: markerStyle }">
       <template v-slot:popup="feature">
-        <PointPopup :feature="feature" />
+        <PointPopup contentWidth="500px" itemWidth="450px" :feature="feature" />
       </template>
     </AGeoJSON>
   </Map>

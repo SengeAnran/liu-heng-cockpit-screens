@@ -134,7 +134,7 @@ export default {
 <style lang="scss" scoped>
 .right {
   position: absolute;
-  top: 26rem;
+  top: 150px;
   right: 16rem;
   width: 165rem;
   z-index: 999;

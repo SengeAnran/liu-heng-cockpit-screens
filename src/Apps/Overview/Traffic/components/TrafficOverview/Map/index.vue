@@ -89,7 +89,7 @@
 <script>
 import Map from '@/components/AMap';
 import AGeoJSON from '@/components/AMap/AGeoJSON';
-import PointPopup from './PointPopup';
+// import PointPopup from './PointPopup';
 import LinePopup from './LinePopup';
 import line1 from './line1.json';
 import line2 from './line2.json';
@@ -233,7 +233,7 @@ export default {
     // Line1,
     AGeoJSON,
     LinePopup,
-    PointPopup,
+    // PointPopup,
   },
 };
 </script>
