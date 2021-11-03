@@ -27,7 +27,7 @@ export default {
       map: null,
       mapDom: null,
       infoWindow: null,
-      // data: null,
+      data: null,
       title: '六横政务大厅',
       list: [
         // { name: '当前叫号等待人数：', unit: '人', key: 'ddrs', number: 11 },
@@ -44,7 +44,7 @@ export default {
     // },
   },
   mounted() {
-    this.initMap();
+    // this.initMap();
     this.getData();
   },
   methods: {
@@ -55,7 +55,7 @@ export default {
         this.threeDMap = false;
       }
     },
-    initMap() {
+    initMap2() {
       this.map = new AMap.Map(this.$refs.map, {
         resizeEnable: true,
         // zoomEnable: true,
@@ -92,7 +92,7 @@ export default {
       // });
       infoWindow.open(this.map, JSON.parse(item.geoCoord));
     },
-    initMap2() {
+    initMap() {
       this.map = new AMap.Map(this.$refs.map, {
         zoom: 13,
         zooms: [3, 20],
@@ -135,33 +135,9 @@ export default {
         this.list = res[0].popupList.map((item, index) => {
           return { name: item.title, number: item.value };
         });
-        this.addMarker(res);
+        // this.addMarker(res);
+        this.initMap();
       }
-      // this.data
-      // res.map((item) => {
-      //   data.push(
-      //     {
-      //       type: 'FeatureCollection',
-      //       features: [
-      //         {
-      //           type: 'Feature',
-      //           properties: {
-      //             name: item.locationName,
-      //             content: item.popupList[0] && item.popupList.length === 1 ? item.popupList[0].value : '',
-      //             listData: item.popupList[0] && item.popupList.length > 1 ? item.popupList : '',
-      //           },
-      //           geometry: {
-      //             type: item.geoType,
-      //             coordinates: JSON.parse(item.geoCoord),
-      //           },
-      //         },
-      //       ],
-      //     });
-      // });
-      // console.log(this.Polygon);
-      // setTimeout(() => {
-      //   this.show = true;
-      // }, 500);
     },
   },
 };

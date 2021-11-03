@@ -77,11 +77,11 @@ export default {
         },
       },
       tabList: [
-        { name: '妇联' },
         { name: '工会' },
+        { name: '妇联' },
         { name: '团委' },
       ],
-      currentTab: '妇联',
+      currentTab: '工会',
       dataList: [],
       currentData: {},
     };

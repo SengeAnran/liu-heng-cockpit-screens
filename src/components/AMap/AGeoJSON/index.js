@@ -104,6 +104,7 @@ export default {
         const infoWindow = new AMap.InfoWindow({
           content: popup.$el,
           isCustom: true,
+          autoMove: true,
           closeWhenClickMap: true,
         });
         console.log(infoWindow);

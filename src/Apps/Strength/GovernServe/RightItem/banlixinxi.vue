@@ -23,7 +23,7 @@ import { getMonthlyHandling } from '@/api/Strength/GovernServe/api';
 export default {
   data() {
     return {
-      list: ['排序', '办事项', '受理量', '满意度'],
+      list: ['排序', '办事项', '受理量（件）', '满意度（%）'],
       list1: [
         {
           content: '非现场违法处理',
@@ -143,7 +143,7 @@ export default {
     background: url('../img/list-bg.png') no-repeat 100% 100%;
     margin-top: 10px;
     div {
-      margin-left: 10px;
+      //margin-left: 10px;
       width: 180px;
       text-align: center;
       line-height: 75px;

@@ -23,8 +23,9 @@
         <span>2020</span>
       </div>
     </div>
-    <div class="main-map" v-show="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+    <div class="main-map" v-if="threeDMap">
+<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+      <ThreeDMap/>
     </div>
     <div class="switch">
       <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
@@ -34,12 +35,14 @@
 </template>
 
 <script>
+import ThreeDMap from './ThreeDMap';
 import './mark.scss';
 import AMap from 'AMap';
 import { getAreaStatisticsByYear } from '@/api/Overview/CityEvolution/api';
 export default {
   name: 'CityEvolution',
   components: {
+    ThreeDMap,
   },
   data() {
     return {

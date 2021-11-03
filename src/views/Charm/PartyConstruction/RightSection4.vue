@@ -39,6 +39,7 @@ export default {
     return {
       tabList: [{ name: '工会' }, { name: '妇联' }, { name: '团委' }],
       currentTab: '工会',
+      tabIndex: 0,
       swiperOptions: {
         direction: 'vertical',
         slidesPerView: 4,
