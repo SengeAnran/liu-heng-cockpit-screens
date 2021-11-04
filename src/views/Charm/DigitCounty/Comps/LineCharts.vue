@@ -102,7 +102,7 @@ export default {
           },
           {
             type: 'value',
-            name: '砘/t',
+            name: '吨/t',
             nameTextStyle: {
               fontSize: 20,
             },

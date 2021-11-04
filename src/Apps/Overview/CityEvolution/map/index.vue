@@ -136,6 +136,10 @@ export default {
         zooms: [3, 20],
         zoomEnable: true,
         center: [122.138836, 29.730147],
+        layers: [
+          new AMap.TileLayer.Satellite(),
+          new AMap.TileLayer.RoadNet(),
+        ],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
     },

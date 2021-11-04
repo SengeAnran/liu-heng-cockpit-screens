@@ -14,7 +14,7 @@ export default {
 <style lang="scss" scoped>
 .AppTitle-root {
   position: absolute;
-  z-index: 999;
+  z-index: 1003;
   top: 0;
   width: 100%;
   height: 134px;

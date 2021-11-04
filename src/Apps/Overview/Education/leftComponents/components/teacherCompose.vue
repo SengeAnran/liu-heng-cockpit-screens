@@ -268,27 +268,28 @@ export default {
             symbolOffset: ['-100%', '50%'],
             symbolSize: [20, 20],
           },
-          {
-            name: '非在编教师',
-            data: this.notOrganization,
-            type: 'pictorialBar',
-            barMaxWidth: '20',
-            symbolPosition: 'end',
-            symbol: 'diamond',
-            symbolOffset: ['70%', '-50%'],
-            symbolSize: [20, 15],
-            zlevel: 2,
-            itemStyle: {
-              normal: {
-                borderColor: 'rgba(255, 151, 152, 1)',
-                borderWidth: 2,
-                color: 'rgba(255, 151, 152, 1)',
-              },
-            },
-            tooltip: {
-              show: false,
-            },
-          },
+          // {
+          //   name: '非在编教师',
+          //   data: this.notOrganization,
+          //   type: 'pictorialBar',
+          //   barMaxWidth: '20',
+          //   symbolPosition: 'end',
+          //   symbol: 'diamond',
+          //   symbolOffset: ['70%', '-50%'],
+          //   symbolSize: [20, 15],
+          //   zlevel: 2,
+          //   itemStyle: {
+          //     normal: {
+          //       borderColor: 'rgba(255, 151, 152, 1)',
+          //       borderWidth: 2,
+          //       // color: 'rgba(255, 151, 152, 1)',
+          //       color: 'rgba(255, 151, 152, 1)',
+          //     },
+          //   },
+          //   tooltip: {
+          //     show: false,
+          //   },
+          // },
         ],
       };
       return option;

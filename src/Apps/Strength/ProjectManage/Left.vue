@@ -352,9 +352,10 @@ export default {
 
     .lunbo {
       position: absolute;
-      top: 83px;
+      top: 62px;
       width: 50%;
       height: 500px;
+      margin-top: 0;
       .titles {
         width: 793px;
         height: 75px;

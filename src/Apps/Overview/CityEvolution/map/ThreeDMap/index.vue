@@ -5,11 +5,6 @@
 
 <script>
 // import './css/main.css';
-// import Cesium from './js/Cesium';
-// import './js/jquery.min';
-// import './js/layer';
-// import Srit from './js/srit';
-// import './js/turf.min';
 export default {
   name: 'index',
   data() {
@@ -24,14 +19,15 @@ export default {
   },
   methods: {
     initMap() {
-      this.sritMap = new Srit.Map("container", {
-        onload: () => {
+      // new Map(id: string div的编号, config?: any 主配置文件, 或者用户信息及rest服务地址, options?: any 地图配置选项):
+      this.sritMap = new Srit.Map('container', {
+        onload: () => { // 地图准备就绪
           console.log('onload');
           this.drawMarker();
         },
       });
     },
-    drawMarker() {
+    drawMarker() { // 打点
       var jsondata = [
         { x: 122.12616955240874, y: 29.745451506244246, z: 100, 层高: 100, 层数: "19", 编号: "183445", 楼名: "弘燕名居", 地址: "东大路386号", 建筑年代: '2009年', 开发商: '北京朝阳房地产开发集团有限公司' },
         { x: 122.12567042146035, y: 29.74666313560775, z: 85.498019, 层高: 181.474, 层数: "30", 编号: "168691", 楼名: "北京金港科技创业中心", 地址: "东大路251号", 建筑年代: '2015年', 开发商: '北京朝阳房地产开发集团有限公司' },
@@ -56,8 +52,8 @@ export default {
             "开发商": "开发商"
           },
         });
-      console.log('markers');
-      console.log(this.markers);
+      // console.log('markers');
+      // console.log(this.markers);
     },
     clear() {
       this.sritMap.clear(this.markers);
@@ -70,8 +66,6 @@ export default {
 #container {
   width: 100%;
   height: 1350px;
-  //width: 100%;
-  //height: 2070px;
   position: fixed;
   top: 0;
   left: 0;

@@ -53,7 +53,16 @@ export default {
         zoom: 13.3,
         zooms: [3, 20],
         center: [122.138836, 29.730147],
+        // layers: [
+        //   // 卫星
+        //   new AMap.TileLayer.Satellite(),
+        //   // 路网
+        //   new AMap.TileLayer.RoadNet(),
+        // ],
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
+        // mapStyle: 'amap://styles/macaron',
+        // mapStyle: 'amap://styles/fresh',
+        // mapStyle: 'amap://styles/darkblue',
       });
     },
     addInfoWindow(item) {
