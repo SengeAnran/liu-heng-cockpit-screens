@@ -1,9 +1,14 @@
 <template>
   <div class="map-container">
     <div class="mask"></div>
-    <div class="main-map" ref="map" v-show="!threeDMap"></div>
+    <div class="main-map" ref="map" v-if="!threeDMap"></div>
     <div class="main-map" v-if="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+      <ThreeDMap
+        :dataList="this.threeDDataList"
+        :tipTemplate="this.tipTemplate"
+        title="社区"
+      />
     </div>
     <div class="switch">
       <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
@@ -13,17 +18,22 @@
 </template>
 
 <script>
+import ThreeDMap from './ThreeDMap';
 import AMap from 'AMap';
 import './map.scss';
 import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Map',
-  components: {},
+  components: {
+    ThreeDMap,
+  },
   data() {
     return {
       map: null,
       infoWindow: null,
       threeDMap: false,
+      threeDDataList: [],
+      tipTemplate: {},
     };
   },
   mounted() {
@@ -44,8 +54,33 @@ export default {
         .then((json) => {
           if (json) {
             this.addMarker(json);
+            this.initThreeDData(json);
           }
         });
+    },
+    initThreeDData(data){
+      console.log(data)
+      this.threeDDataList = data.map((item) => {
+        return {
+          x: item.lng,
+          y: item.lat,
+          z: 0,
+          社区名称: item.sqmc,
+          总人口数: item.zrks,
+          户口数: item.hksl,
+          男性人口数: item.manrk,
+          女性人口数: item.felmanrk,
+        }
+      });
+      console.log(this.threeDDataList);
+      this.tipTemplate = {
+        '社区名称': '社区名称',
+        '总人口数': '总人口数',
+        '户口数': '户口数',
+        '男性人口数': '男性人口数',
+        '女性人口数': '女性人口数',
+      }
+      console.log(this.tipTemplate);
     },
     initMap() {
       this.map = new AMap.Map(this.$refs.map, {
@@ -75,6 +110,7 @@ export default {
       </div>`;
       const infoWindow = new AMap.InfoWindow({
         isCustom: true, // 使用自定义窗体
+        closeWhenClickMap: true,
         content: html, // 传入 dom 对象，或者 html 字符串
         offset: new AMap.Pixel(165, 243),
       });

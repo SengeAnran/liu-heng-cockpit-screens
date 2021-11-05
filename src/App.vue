@@ -2,6 +2,7 @@
   <div id="app">
     <FitScreen displayType="centerFull" :pageSize="pageSize" />
 <!--     <FitScreen displayType="equalRatioFull" :pageSize="pageSize" />-->
+<!--    <div class="subject"></div>-->
     <AppTitle />
     <!-- <div class="content">
       <router-view />
@@ -76,6 +77,10 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+.subject {
+  width: 100%;
+  height: 100%;
 }
 .content {
   position: relative;

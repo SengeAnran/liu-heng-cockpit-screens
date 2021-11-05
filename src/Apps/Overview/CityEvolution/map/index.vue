@@ -1,8 +1,8 @@
 <template>
   <div class="map_wrapper" >
     <div class="mask"></div>
-    <div class="main-map" ref="map" v-show="!threeDMap"></div>
-    <div class="swipper" v-show="!threeDMap">
+    <div class="main-map" ref="map" v-if="!threeDMap"></div>
+    <div class="swipper" v-if="!threeDMap">
       <div class="line" ref="line">
         <div class="line_task_point"></div>
       </div>
@@ -140,7 +140,7 @@ export default {
           new AMap.TileLayer.Satellite(),
           new AMap.TileLayer.RoadNet(),
         ],
-        mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
+        // mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
     },
     markerDownList() {

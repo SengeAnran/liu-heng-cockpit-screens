@@ -9,6 +9,7 @@ export default new Vuex.Store({
     intervalId: 0, // 定时器 id
     interval: 0,
     navShow: true,
+    threeDShow: false,
   },
   mutations: {
     setIntervalId(state, msg) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
         state.interval = 0;
         clearInterval(state.intervalId);
       }
+    },
+    showThreeD(state) {
+      state.threeDShow = true
     },
   },
   getters: {

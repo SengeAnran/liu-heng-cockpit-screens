@@ -3,7 +3,7 @@
     <transition name="slide" appear> <LeftComponent :key="LeftComponent" /></transition>
     <transition name="slide1" appear>
        <RightComponent :key="RightComponent" />
-       </transition>
+    </transition>
     <Map />
   </div>
 </template>
