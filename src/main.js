@@ -7,6 +7,7 @@ import CountUp from '@/components/CountUp';
 import Digital from '@/components/Digital';
 import ViewTemplate from '@/components/ViewTemplate';
 import PointPopup from '@/components/PointPopup';
+import ThreeDMap from '@/components/ThreeDMap';
 import * as echarts from 'echarts';
 
 // eslint-disable-next-line quotes
@@ -35,6 +36,7 @@ Vue.component('CountUp', CountUp);
 Vue.component('BaseTitle', BaseTitle);
 Vue.component('PointPopup', PointPopup);
 Vue.component('view-template', ViewTemplate);
+Vue.component('ThreeDMap', ThreeDMap);
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
 

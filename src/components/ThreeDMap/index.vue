@@ -11,9 +11,17 @@ export default {
       type: Array,
       default: () => {}
     },
+    polygonList: {
+      type: Array,
+      default: () => {}
+    },
     title: {
       type: String,
       default: ''
+    },
+    Scale: {
+      type: Number,
+      default: 1.3
     },
     tipTemplate: {
       type: Object,
@@ -29,6 +37,12 @@ export default {
       scaleX: 1,
       scaleY: 1,
     };
+  },
+  watch: {
+    dataList() {
+      this.sritMap.clear();
+      this.drawMarker();
+    }
   },
   mounted() {
     this.initMap();
@@ -47,7 +61,16 @@ export default {
       this.sritMap = new Srit.Map('container', {
         onload: () => { // 地图准备就绪
           console.log('onload');
-          this.drawMarker();
+          if (this.polygonList && this.polygonList.length > 0) {
+            this.drawPolygon();
+            setTimeout(() => {
+              this.drawMarker();
+            },500)
+          } else {
+            this.drawMarker();
+          }
+
+
           // this.displayRange();
         },
       });
@@ -59,21 +82,44 @@ export default {
     },
     drawMarker() { // 打点
       var jsondata = this.dataList;
-      this.markers = this.sritMap.marker(jsondata, { "image": "images/GreenPin1LargeB.png" },
+      this.markers = this.sritMap.marker(jsondata, { "image": "images/markerHB.png" },
         {
           // is3D: true,
           isZoom: true,
           cluster: false,
-          highlightStyle: {
-            "image": "images/RedPin1LargeB.png"
-          },
-          zoomFactor: 1.1, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
+          // highlightStyle: {
+          //   "image": "images/RedPin1LargeB.png"
+          // },
+          zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
           title: this.title,
           tipTemplate: this.tipTemplate,
         });
       // console.log('markers');
       // console.log(this.markers);
     },
+    drawPolygon() { // 画面
+      this.polygonList.forEach((item) => {
+        console.log(item);
+        const points = item.points;
+        const data = {...item}
+        console.log(data);
+        const polygonType = {style: 0, color: "#0080c088", outlineColor: "#ff0", outlineWidth: 1 };
+        this.markers = this.sritMap.addPolygon(points, polygonType,
+          {
+            isZoom: true,
+            cluster: false,
+            disableInfoWindow: false,
+            zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
+            title: this.title,
+            tipTemplate: this.tipTemplate,
+            attrs: data,
+          });
+      })
+
+      // console.log('markers');
+      // console.log(this.markers);
+    },
+
     clear() {
       this.sritMap.clear(this.markers);
     },

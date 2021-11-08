@@ -3,11 +3,16 @@
     <div class="mask"></div>
     <Map2d
       :markerList.sync="markerList"
-      v-show="!threeDMap"
+      v-if="!threeDMap"
       @changePlace="changePlace"
     />
-    <div class="main-map" v-show="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+    <div class="main-map" v-if="threeDMap">
+<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+      <ThreeDMap
+        :dataList="this.threeDDataList"
+        :tipTemplate="this.tipTemplate"
+        title="社区"
+      />
     </div>
     <div class="switch">
       <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
@@ -40,12 +45,14 @@
 </template>
 
 <script>
+// import ThreeDMap from './ThreeDMap';
 import Map2d from './Map2d';
 import { getLocation } from '@/api/Charm/DigitCounty';
 export default {
   name: 'CityEvolution',
   components: {
     Map2d,
+    // ThreeDMap,
   },
   data() {
     return {
@@ -69,6 +76,9 @@ export default {
         features: [],
       },
       MapMaker: {},
+
+      threeDDataList: [],
+      tipTemplate: {},
     };
   },
   mounted() {
@@ -103,7 +113,25 @@ export default {
             },
           };
         });
+        this.initThreeDData(result);
       }
+    },
+    initThreeDData(data){
+      // console.log(data)
+      this.threeDDataList = data.map((item) => {
+        const MapLngLat = item.coordinates.split(',');
+        return {
+          x: MapLngLat[0],
+          y: MapLngLat[1],
+          z: 0,
+          社区名称: item.sqmc,
+        }
+      });
+      console.log(this.threeDDataList);
+      this.tipTemplate = {
+        '社区名称': '社区名称',
+      }
+      // console.log(this.tipTemplate);
     },
     changePlace(name) {
       this.$emit('changePlace', name);

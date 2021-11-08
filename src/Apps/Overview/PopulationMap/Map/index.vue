@@ -18,14 +18,14 @@
 </template>
 
 <script>
-import ThreeDMap from './ThreeDMap';
+// import ThreeDMap from './ThreeDMap';
 import AMap from 'AMap';
 import './map.scss';
 import { getPopuliationNumRank } from '@/api/Overview/PopulationMap/api';
 export default {
   name: 'Map',
   components: {
-    ThreeDMap,
+    // ThreeDMap,
   },
   data() {
     return {

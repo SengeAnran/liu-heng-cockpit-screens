@@ -2,8 +2,14 @@
   <div class="map_wrapper">
     <div class="mask"></div>
     <Map2d :activeItem="activeItem" v-show="!threeDMap"/>
-    <div class="main-map" v-show="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+    <div class="main-map" v-if="threeDMap">
+<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+      <ThreeDMap
+        :dataList="this.threeDDataList"
+        :tipTemplate="this.tipTemplate"
+        :title="title"
+        :Scale="1.3"
+      />
     </div>
     <div class="switch">
       <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
@@ -40,6 +46,7 @@
 import Map2d from './Map2d';
 import {
   getLocationList,
+  getLocationInfo,
 } from '@/api/IndexItem';
 export default {
   name: 'CityEvolution',
@@ -57,6 +64,10 @@ export default {
       lastDetailMarker: null,
       threeDMap: false,
       activeItem: '',
+
+      threeDDataList: [],
+      tipTemplate: {},
+      title: '',
     };
   },
   mounted() {
@@ -78,6 +89,44 @@ export default {
     },
     selectMark(item, index) {
       this.activeItem = item;
+      this.getData(this.activeItem);
+    },
+    async getData(item1) {
+      this.title = item1;
+      const res = await getLocationInfo({ type: item1 }).request();
+      // console.log(res);
+      this.initThreeDData(res);
+    },
+    initThreeDData(data){
+      // console.log(data)
+      if (data) {
+        this.threeDDataList = data.map((item,index) => {
+          const MapLngLat = JSON.parse(item.geoCoord);
+          let listItem = {}
+          let tipTemplates = {}
+          if (item.popupList) {
+            item.popupList.forEach((item2) => {
+              listItem[item2.title] = item2.value;
+              tipTemplates[item2.title] = item2.title;
+            })
+          }
+          if ( index === 0) {
+            this.tipTemplate = {
+              '地点名称': '地点名称',
+              ...tipTemplates
+            }
+          }
+          return {
+            x: MapLngLat[0],
+            y: MapLngLat[1],
+            z: 0,
+            地点名称: item.locationName,
+            ...listItem,
+          }
+        });
+      }
+      // console.log(this.threeDDataList);
+      // console.log(this.tipTemplate);
     },
   },
 };

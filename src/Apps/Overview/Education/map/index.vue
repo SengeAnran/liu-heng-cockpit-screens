@@ -2,7 +2,7 @@
   <div class="map_wrapper">
     <div class="main-map" ref="map" v-show="!threeDMap"></div>
     <div class="mask"></div>
-    <div class="toggle-layer" v-show="!threeDMap">
+    <div class="toggle-layer">
       <h3>学校图例</h3>
       <ul>
         <li v-for="(item, i) in list" :key="`toggle-${i}`">
@@ -11,8 +11,13 @@
         </li>
       </ul>
     </div>
-    <div class="main-map" v-show="threeDMap">
-      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+    <div class="main-map" v-if="threeDMap">
+<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+      <ThreeDMap
+        :dataList="this.threeDDataList"
+        :tipTemplate="this.tipTemplate"
+        title="学校"
+      />
     </div>
     <div class="switch">
       <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
@@ -22,12 +27,15 @@
 </template>
 
 <script>
+// import ThreeDMap from './ThreeDMap';
 import AMap from 'AMap';
 import hosIcon from '../images/hospital-icon.png';
 import { getSchoolListByCategory } from '@/api/Overview/Education/api';
 export default {
   name: 'MedicalMap',
-  components: {},
+  components: {
+    // ThreeDMap,
+  },
   data() {
     return {
       threeDMap: false,
@@ -38,6 +46,8 @@ export default {
       list: [{ type: '幼儿园' }, { type: '小学' }, { type: '初中' }, { type: '高中' }],
       markers: [],
       infoWindow: {},
+      threeDDataList: [],
+      tipTemplate: {},
     };
   },
   mounted() {
@@ -58,8 +68,33 @@ export default {
         .then((res) => {
           // debugger;
           this.markData = res;
+          this.initThreeDData(res)
           this.markDown();
         });
+    },
+    initThreeDData(data){
+      console.log(data)
+      this.threeDDataList = data.map((item) => {
+        return {
+          x: item.lng,
+          y: item.lat,
+          z: 0,
+          学校名称: item.xxmc,
+          联系电话: item.lxdh,
+          职教人数: item.jzrs,
+          学生人数: item.xszs,
+          地址: item.dz,
+        }
+      });
+      console.log(this.threeDDataList);
+      this.tipTemplate = {
+        '学校名称': '学校名称',
+        '联系电话': '联系电话',
+        '职教人数': '职教人数',
+        '学生人数': '学生人数',
+        '地址': '地址',
+      }
+      console.log(this.tipTemplate);
     },
     markDown() {
       this.markers.forEach((item) => {
