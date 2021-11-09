@@ -4,8 +4,8 @@
     <transition name="slide" appear> <EventRank :key="EventRank" /></transition>
     <transition name="slide" appear> <Department :key="Department" /></transition>
     <transition name="slide" appear> <Complaint :key="Complaint" /></transition>
-
-    <Map />
+    <SurveillanceVideo></SurveillanceVideo>
+<!--    <Map />-->
     <transition name="slide1" appear> <Satisfaction :key="Satisfaction" /></transition>
     <transition name="slide1" appear> <Keywords :key="Keywords" /></transition>
     <!-- <Satisfaction />
@@ -18,6 +18,7 @@ import Supervision from './Supervision';
 import EventRank from './EventRank';
 import Department from './Department';
 import Complaint from './Complaint';
+import SurveillanceVideo from './SurveillanceVideo';
 import Map from './Map';
 import Satisfaction from './Satisfaction';
 import Keywords from './Keywords';
@@ -31,6 +32,7 @@ export default {
     Map,
     Satisfaction,
     Keywords,
+    SurveillanceVideo,
   },
 };
 </script>

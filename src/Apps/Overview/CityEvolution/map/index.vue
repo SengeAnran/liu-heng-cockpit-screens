@@ -1,8 +1,9 @@
 <template>
   <div class="map_wrapper" >
     <div class="mask"></div>
-    <div class="main-map" ref="map" v-show="!threeDMap"></div>
-    <div class="swipper" v-if="!threeDMap">
+    <div class="main-map" ref="map" ></div>
+<!--    <div class="main-map" ref="threeDMap" v-show="threeDMap"></div>-->
+    <div class="swipper" >
       <div class="line" ref="line">
         <div class="line_task_point"></div>
       </div>
@@ -23,10 +24,10 @@
         <span>2020</span>
       </div>
     </div>
-    <div class="main-map" v-if="threeDMap">
-<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
-      <ThreeDMap/>
-    </div>
+<!--    <div class="main-map" v-if="threeDMap">-->
+<!--&lt;!&ndash;      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>&ndash;&gt;-->
+<!--      <ThreeDMap/>-->
+<!--    </div>-->
     <div class="switch">
       <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
       <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
@@ -54,6 +55,7 @@ export default {
       marskLine: '',
       activeIndex: 0,
       timer: null,
+      layers: [],
       leftMarkMessage: [
         {
           name: '工业生产总值',
@@ -98,6 +100,10 @@ export default {
   },
   mounted() {
     this.marskLine = this.$refs.line;
+    this.layers =  [
+      new AMap.TileLayer.Satellite(),
+      new AMap.TileLayer.RoadNet()
+    ];
     this.initMap();
     this.autoClick();
     this.getData();
@@ -106,8 +112,14 @@ export default {
     changeMap(type) {
       if (type === 3) {
         this.threeDMap = true;
+        this.map.add(this.layers);
+        this.autoClick();
+        this.getData();
       } else {
         this.threeDMap = false;
+        this.map.remove(this.layers);
+        this.autoClick();
+        this.getData();
       }
     },
     getData() {

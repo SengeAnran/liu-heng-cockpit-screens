@@ -61,16 +61,15 @@ export default {
       this.sritMap = new Srit.Map('container', {
         onload: () => { // 地图准备就绪
           console.log('onload');
+          // console.log(this.Scale);
           if (this.polygonList && this.polygonList.length > 0) {
             this.drawPolygon();
             setTimeout(() => {
               this.drawMarker();
-            },500)
+            },5000)
           } else {
             this.drawMarker();
           }
-
-
           // this.displayRange();
         },
       });
@@ -95,21 +94,21 @@ export default {
           tipTemplate: this.tipTemplate,
         });
       // console.log('markers');
-      // console.log(this.markers);
+      console.log(this.markers);
     },
     drawPolygon() { // 画面
       this.polygonList.forEach((item) => {
         console.log(item);
         const points = item.points;
         const data = {...item}
-        console.log(data);
+        // console.log(data);
         const polygonType = {style: 0, color: "#0080c088", outlineColor: "#ff0", outlineWidth: 1 };
         this.markers = this.sritMap.addPolygon(points, polygonType,
           {
             isZoom: true,
             cluster: false,
             disableInfoWindow: false,
-            zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
+            // zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
             title: this.title,
             tipTemplate: this.tipTemplate,
             attrs: data,
