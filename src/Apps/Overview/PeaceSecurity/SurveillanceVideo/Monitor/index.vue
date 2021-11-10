@@ -68,15 +68,15 @@ export default {
     // },
     changeVideo(action){
       if (action === 'left') {
-        if (this.activeIndex - 1 >0) {
+        if (this.activeIndex - 1 >-1) {
           this.cameraIndexCode = this.videoList[--this.activeIndex].url;
-          this.name = this.videoList[--this.activeIndex].name;
+          this.name = this.videoList[this.activeIndex].name;
         }
       }
       else {
         if (this.activeIndex + 1 < this.videoList.length) {
           this.cameraIndexCode = this.videoList[++this.activeIndex].url;
-          this.name = this.videoList[++this.activeIndex].name;
+          this.name = this.videoList[this.activeIndex].name;
         }
       }
     },

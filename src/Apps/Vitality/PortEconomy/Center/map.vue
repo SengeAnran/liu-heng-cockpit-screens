@@ -1,5 +1,6 @@
 <template>
-  <div ref="mapChart" class="chart-map"></div>
+<!--  <div ref="mapChart" class="chart-map"></div>-->
+  <div class="chart-map" id="container"></div>
 </template>
 
 <script>
@@ -21,23 +22,26 @@ export default {
         //   content: '相比邻港洛杉矶的交通拥堵状况， 长滩在这方面的问题较少。 长滩港口管理局约翰.佩伯说：“长滩集装箱吞吐量增加的推动力是美国不断增长的消费需求和中国日益提升的制造能力。',
         // },
       ],
+      map: null,
       series: [],
     };
   },
   mounted() {
-    this.chart = echarts.init(this.$refs.mapChart);
-    this.loadData();
-    echarts.registerMap('world', {
-      type: 'FeatureCollection',
-      crs: {
-        type: 'name',
-        properties: {
-          name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
-        },
-      },
-      features,
-    });
-    this.initEcharts();
+    this.getData();
+    // this.initMap();
+    // this.chart = echarts.init(this.$refs.mapChart);
+    // this.loadData();
+    // echarts.registerMap('world', {
+    //   type: 'FeatureCollection',
+    //   crs: {
+    //     type: 'name',
+    //     properties: {
+    //       name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
+    //     },
+    //   },
+    //   features,
+    // });
+    // this.initEcharts();
   },
   methods: {
     loadData() {
@@ -53,7 +57,7 @@ export default {
           this.initEcharts();
         });
     },
-    initEcharts() {
+    initEcharts()   {
       this.series = [];
       this.series.push({
         type: 'lines',
@@ -188,6 +192,85 @@ export default {
       };
       this.chart.setOption(option);
     },
+    getData() {
+      getPortDetail()
+        .request()
+        .then((json) => {
+          json.map((item) => {
+            item.name = item.gkmc;
+            item.position = [item.lng, item.lat];
+            item.content = item.js;
+          });
+          this.geoCoordMap = json;
+          this.initMap();
+          this.addMarker(json);
+        });
+    },
+    initMap() {
+      this.map = new AMap.Map('container', {
+        resizeEnable: true,
+        center: [13.021057,27.317153],
+        layers: [
+          new AMap.TileLayer.Satellite(),
+          new AMap.TileLayer.RoadNet(),
+        ],
+        zoom: 3,
+        viewMode: '3D',
+      });
+      this.geoCoordMap.map((item) => {
+        var lineArr = [
+          item.position,
+          ['122.153209', '29.749349']
+        ];
+        // var lineArr = [
+        //   ['75.757904', '38.118117'],
+        //   ['117.375719', '24.598057']
+        // ];
+        var polyline = new AMap.Polyline({
+          path: lineArr,            // 设置线覆盖物路径
+          strokeColor: '#2be5f8',   // 线颜色
+          strokeOpacity: 1,         // 线透明度
+          strokeWeight: 3,          // 线宽
+          strokeStyle: 'solid',     // 线样式
+          strokeDasharray: [10, 5], // 补充线样式
+          // geodesic: true,            // 绘制大地线
+          // isOutline: true,
+          showDir: true,
+        });
+        polyline.setMap(this.map);
+      })
+
+    },
+    addInfoWindow(item) {
+      const html = `<div class='info'>
+        <div>${item.gkmc}</div>
+        <div>简介: ${item.js}</div>
+      </div>`;
+      const infoWindow = new AMap.InfoWindow({
+        isCustom: true, // 使用自定义窗体
+        closeWhenClickMap: true,
+        content: html, // 传入 dom 对象，或者 html 字符串
+        offset: new AMap.Pixel(165, 243),
+      });
+      this.infoWindow = infoWindow;
+      infoWindow.open(this.map, [item.lng, item.lat]);
+    },
+    addMarker(data) {
+      data.forEach((item) => {
+        const marker = new AMap.Marker({
+          position: [item.lng, item.lat],
+          content: `<div class="custom-marker">{{${item.gkmc}}}</div>`,
+        });
+        marker.setMap(this.map);
+        marker.on('click', (e) => {
+          this.addInfoWindow(item);
+        });
+      });
+    },
+    markerClick(item) {
+      this.popup.setContent(this.createText(item));
+      this.popup.open(this.map, [item.lng, item.lat]);
+    },
   },
 };
 </script>
@@ -198,5 +281,32 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
+  ::v-deep .custom-marker {
+    position: absolute;
+    width: 49.7px;
+    height: 49.7px;
+    background: url('./img/icon.png');
+    background-size: contain;
+  }
+  ::v-deep .info {
+    position: relative;
+    z-index: 999;
+    width: 474px;
+    //height: 282px;
+    padding: 10px;
+    background: url('./img/info.png') 100% 100% no-repeat;
+    box-sizing: border-box;
+    color: #fff;
+    > div {
+      font-size: 26px;
+      font-family: 'Source Han Sans SC';
+      margin-top: 15px;
+      margin-left: 10px;
+      &:nth-child(1) {
+        font-size: 28px;
+        color: #00ffff;
+      }
+    }
+  }
 }
 </style>

@@ -2,14 +2,14 @@
   <div class="center-webview">
     <div>
       <div class="preview"></div>
-<!--      <div class="mask"></div>-->
-      <div class="img_bg">
-          <div class="item" v-for="item in dataList" :key="item">
-            <div class="content">{{item.content}}</div>
-            <div class="name">{{item.name}}</div>
-          </div>
-      </div>
-<!--      <chart-map v-show="!threeDMap"/>-->
+      <div class="mask"></div>
+<!--      <div class="img_bg">-->
+<!--          <div class="item" v-for="item in dataList" :key="item">-->
+<!--            <div class="content">{{item.content}}</div>-->
+<!--            <div class="name">{{item.name}}</div>-->
+<!--          </div>-->
+<!--      </div>-->
+      <chart-map v-show="!threeDMap"/>
 <!--      <div class="main-map" v-show="threeDMap">-->
 <!--        <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
 <!--      </div>-->
@@ -105,7 +105,7 @@ export default {
   height: 207rem;
   background: url(../images/mask.png) no-repeat center bottom;
   background-size: 100% 100%;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
 }
 .main-map {

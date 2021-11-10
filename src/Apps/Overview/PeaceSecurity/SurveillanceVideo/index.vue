@@ -43,7 +43,6 @@ export default {
     // 道路监控
     async getRoadMonitor() {
       const res = await getRoadMonitor();
-      console.log(1/2);
       let videoList1 = 0;
       let videoList2 = 0;
       let videoList3 = 0;
