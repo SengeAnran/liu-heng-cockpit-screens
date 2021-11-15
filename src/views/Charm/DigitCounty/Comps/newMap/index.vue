@@ -2,6 +2,7 @@
   <div class="map_wrapper">
     <div class="mask"></div>
     <Map2d
+      :satelliteMap="satelliteMap"
       :markerList.sync="markerList"
       v-if="!threeDMap"
       @changePlace="changePlace"
@@ -15,8 +16,9 @@
       />
     </div>
     <div class="switch">
-      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
+      <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+      <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
     </div>
     <div class="map-legend">
       <p class="legend-title">小区图例</p>
@@ -62,6 +64,9 @@ export default {
       mapDom: null,
       lastDetailMarker: null,
       threeDMap: false,
+      iconIndex: 1, // 图层切换按钮
+      satelliteMap: true,
+
       currentLegend: 1,
       legendList: [
         { value: 1, label: '数字村社' },
@@ -86,9 +91,14 @@ export default {
   },
   methods: {
     changeMap(type) {
+      this.iconIndex = type;
       if (type === 3) {
         this.threeDMap = true;
+      } else if (type === 2){
+        this.satelliteMap = false;
+        this.threeDMap = false;
       } else {
+        this.satelliteMap = true;
         this.threeDMap = false;
       }
     },
@@ -220,7 +230,7 @@ export default {
     }
   }
   .switch {
-    width: 274px;
+    width: 374px;
     height: 360px;
     position: absolute;
     bottom: 48rem;

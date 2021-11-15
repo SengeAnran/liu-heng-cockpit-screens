@@ -2,6 +2,10 @@
   <div class="map_wrapper">
     <div class="mask"></div>
     <div class="main-map" ref="map"></div>
+    <div class="switch">
+      <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+      <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+    </div>
   </div>
 </template>
 <script>
@@ -13,6 +17,9 @@ export default {
   components: {},
   data() {
     return {
+      iconIndex: 1,
+      layers: [],
+
       map: null,
       mapDom: null,
       data: null,
@@ -28,10 +35,24 @@ export default {
     },
   },
   mounted() {
+    this.layers =  [
+      new AMap.TileLayer.Satellite(),
+      new AMap.TileLayer.RoadNet()
+    ];
     this.getData();
     // this.initMap();
   },
   methods: {
+    changeMap(type) {
+      this.iconIndex = type;
+      if (type === 1) {
+        this.threeDMap = false;
+        this.map.add(this.layers);
+      } else {
+        this.threeDMap = false;
+        this.map.remove(this.layers);
+      }
+    },
     initMap() {
       this.map = new AMap.Map(this.$refs.map, {
         resizeEnable: true,
@@ -64,6 +85,7 @@ export default {
         this.content = data.nrzy;
       }
       this.initMap();
+      this.map.add(this.layers);
       // this.positive = data[0].zmsjs;
       // this.negative = data[0].fmsjs;
       // this.neutral = data[0].zxsjs;
@@ -97,6 +119,30 @@ export default {
     right: 0;
     width: 100%;
     height: 1350px;
+  }
+  .switch {
+    width: 274px;
+    height: 360px;
+    position: absolute;
+    bottom: 48rem;
+    right: 200rem;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    .button{
+      width: 114px;
+      height: 44px;
+      font-size: 24px;
+      line-height: 44px;
+      text-align: center;
+      color: #82e2e4;
+      cursor: pointer;
+      background: url("./img/mmexport.jpg") no-repeat;
+      &.active {
+        color: white;
+        background: url("./img/mmexport1.jpg") no-repeat;
+      }
+    }
   }
 }
 </style>

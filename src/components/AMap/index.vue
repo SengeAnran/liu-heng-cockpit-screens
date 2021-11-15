@@ -5,11 +5,26 @@
 </template>
 <script>
 export default {
+  props: {
+    satelliteMap: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       // 记录点击的数组
       ObjeClickArr: [],
     };
+  },
+  watch: {
+    satelliteMap() {
+      if (this.satelliteMap) {
+        this.map.add(this.layers);
+      } else {
+        this.map.remove(this.layers);
+      }
+    }
   },
   provide() {
     return {
@@ -19,6 +34,10 @@ export default {
     };
   },
   mounted() {
+    this.layers =  [
+      new AMap.TileLayer.Satellite(),
+      new AMap.TileLayer.RoadNet()
+    ];
     this.map = new AMap.Map(this.$refs.mapEle, {
       resizeEnable: true,
       zoom: 13,
@@ -26,6 +45,9 @@ export default {
       center: [122.138836, 29.730147],
       mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
     });
+    if (this.satelliteMap) {
+      this.map.add(this.layers);
+    }
     this.resolveMap(this.map);
     window.amap = this.map;
   },

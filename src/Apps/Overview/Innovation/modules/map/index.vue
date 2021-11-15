@@ -1,6 +1,20 @@
 <template>
   <div class="map_wrapper">
     <div class="main-map" ref="map"></div>
+    <div class="main-map" v-if="threeDMap">
+      <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+      <ThreeDMap
+        :dataList="this.threeDDataList"
+        :tipTemplate="this.tipTemplate"
+        title=""
+        :Scale="4.5"
+      />
+    </div>
+    <div class="switch">
+      <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+      <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
+    </div>
     <div class="mask"></div>
   </div>
 </template>
@@ -21,13 +35,37 @@ export default {
       list: [{ type: '幼儿园' }, { type: '小学' }, { type: '初中' }, { type: '高中' }],
       markers: [],
       infoWindow: {},
+
+      threeDMap: false,
+      iconIndex: 1, // 图层切换按钮,
+      layers: [],
+
+      threeDDataList: [],
+      tipTemplate: {},
     };
   },
   mounted() {
+    this.layers =  [
+      new AMap.TileLayer.Satellite(),
+      new AMap.TileLayer.RoadNet()
+    ];
     this.initMap();
+    this.map.add(this.layers);
     this.getData();
   },
   methods: {
+    changeMap(type) {
+      this.iconIndex = type;
+      if (type === 1) {
+        this.threeDMap = false;
+        this.map.add(this.layers);
+      } else if( type === 3) {
+        this.threeDMap = true;
+      } else {
+        this.threeDMap = false;
+        this.map.remove(this.layers);
+      }
+    },
     getData() {
       getCompanyList()
         .request()
@@ -36,6 +74,7 @@ export default {
           const filterRes = res.filter((item) => item.lng && item.lat);
           this.markData = filterRes;
           this.markDown();
+          this.initThreeDData(res);
         });
     },
     markDown() {
@@ -98,6 +137,29 @@ export default {
     selectMark(item, index) {
       this.currentIndex = index;
       this.getData(item.type);
+    },
+    initThreeDData(data){
+      // console.log(data)
+      if (data) {
+        this.threeDDataList = data.map((item) => {
+          return {
+            x: item.lng,
+            y: item.lat,
+            z: 0,
+            企业名称: item.gsmc,
+            人才数量: item.rcsl,
+            拥有专利发明: item.yyzlfmsl,
+          }
+        });
+        // console.log(this.threeDDataList);
+        this.tipTemplate = {
+          '企业名称': '企业名称',
+          '人才数量': '人才数量',
+          '拥有专利发明': '拥有专利发明',
+        }
+      }
+      // console.log(this.threeDDataList);
+      // console.log(this.tipTemplate);
     },
   },
 };
@@ -179,6 +241,30 @@ export default {
         font-family: 'DIN';
         font-weight: bold;
         color: #ffffff;
+      }
+    }
+  }
+  .switch {
+    width: 374px;
+    height: 360px;
+    position: absolute;
+    bottom: 48rem;
+    right: 200rem;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1000;
+    .button {
+      width: 114px;
+      height: 44px;
+      font-size: 24px;
+      line-height: 44px;
+      text-align: center;
+      color: #82e2e4;
+      cursor: pointer;
+      background: url('./img/mmexport.jpg') no-repeat;
+      &.active {
+        color: white;
+        background: url('./img/mmexport1.jpg') no-repeat;
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <Map>
+  <Map :satelliteMap="satelliteMap">
     <AGeoJSON
       key="lhArea"
       v-if="currentLegend === 1"
@@ -30,6 +30,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    satelliteMap: {
+      type: Boolean,
+      default: true,
+    }
   },
   data() {
     return {

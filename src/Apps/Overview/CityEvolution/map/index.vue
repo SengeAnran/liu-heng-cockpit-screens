@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <div class="main-map" ref="map" ></div>
 <!--    <div class="main-map" ref="threeDMap" v-show="threeDMap"></div>-->
-    <div class="swipper" >
+    <div class="swipper" v-if="!threeDMap" >
       <div class="line" ref="line">
         <div class="line_task_point"></div>
       </div>
@@ -24,13 +24,14 @@
         <span>2020</span>
       </div>
     </div>
-<!--    <div class="main-map" v-if="threeDMap">-->
-<!--&lt;!&ndash;      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>&ndash;&gt;-->
-<!--      <ThreeDMap/>-->
-<!--    </div>-->
+    <div class="main-map" v-if="threeDMap">
+<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+      <ThreeDMap/>
+    </div>
     <div class="switch">
-      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
+      <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+      <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
     </div>
   </div>
 </template>
@@ -48,6 +49,9 @@ export default {
   data() {
     return {
       threeDMap: false,
+      iconIndex: 1,
+      layers: [],
+
       years: [2015, 2016, 2017, 2018, 2019],
       map: null,
       mapDom: null,
@@ -55,7 +59,6 @@ export default {
       marskLine: '',
       activeIndex: 0,
       timer: null,
-      layers: [],
       leftMarkMessage: [
         {
           name: '工业生产总值',
@@ -105,16 +108,20 @@ export default {
       new AMap.TileLayer.RoadNet()
     ];
     this.initMap();
+    this.map.add(this.layers);
     this.autoClick();
     this.getData();
   },
   methods: {
     changeMap(type) {
-      if (type === 3) {
-        this.threeDMap = true;
+      this.iconIndex = type;
+      if (type === 1) {
+        this.threeDMap = false;
         this.map.add(this.layers);
         this.autoClick();
         this.getData();
+      } else if( type === 3) {
+        this.threeDMap = true;
       } else {
         this.threeDMap = false;
         this.map.remove(this.layers);
@@ -383,7 +390,7 @@ export default {
     }
   }
   .switch {
-    width: 274px;
+    width: 374px;
     height: 360px;
     position: absolute;
     bottom: 48rem;

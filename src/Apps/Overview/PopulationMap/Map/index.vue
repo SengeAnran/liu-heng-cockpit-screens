@@ -11,8 +11,9 @@
       />
     </div>
     <div class="switch">
-      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
+      <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+      <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
     </div>
   </div>
 </template>
@@ -32,20 +33,32 @@ export default {
       map: null,
       infoWindow: null,
       threeDMap: false,
+      iconIndex: 1, // 图层切换按钮
+      layers: [], // 高德地图图层
       threeDDataList: [],
       tipTemplate: {},
     };
   },
   mounted() {
+    this.layers =  [
+      new AMap.TileLayer.Satellite(),
+      new AMap.TileLayer.RoadNet()
+    ];
     this.initMap();
+    this.map.add(this.layers);
     this.loadData();
   },
   methods: {
     changeMap(type) {
+      this.iconIndex = type;
       if (type === 3) {
         this.threeDMap = true;
+      } else if (type === 2){
+        this.threeDMap = false;
+        this.map.remove(this.layers);
       } else {
         this.threeDMap = false;
+        this.map.add(this.layers);
       }
     },
     loadData() {
@@ -194,7 +207,7 @@ export default {
     }
   }
   .switch {
-    width: 274px;
+    width: 374px;
     height: 360px;
     position: absolute;
     bottom: 48rem;

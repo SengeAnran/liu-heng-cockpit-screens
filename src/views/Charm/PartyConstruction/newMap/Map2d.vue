@@ -1,5 +1,5 @@
 <template>
-  <Map>
+  <Map :satelliteMap="satelliteMap">
     <AGeoJSON key="lhArea" v-if="show" :source="points" :geoStyle="{ marker: markerStyle }">
       <template v-slot:popup="feature">
         <PointPopup :feature="feature" />
@@ -20,6 +20,10 @@ export default {
       type: String,
       // default: () => 1,
     },
+    satelliteMap: {
+      type: Boolean,
+      default: true,
+    }
   },
   data() {
     return {

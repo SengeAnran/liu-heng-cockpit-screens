@@ -1,65 +1,82 @@
 <template>
   <div>
-    <Map ref="trafficMap">
-      <AGeoJSON
-        v-if="activeItem === '隧道'"
-        key="tunnel"
-        :source="tunnel"
-        :geoStyle="{ polyline: { strokeColor: 'rgb(0, 255, 124)' } }"
-      >
-        <template v-slot:popup="feature">
-          <LinePopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-      <AGeoJSON v-if="activeItem === '桥梁'" key="bridge-points" :source="points" :geoStyle="{ marker: bridgeStyle }">
-        <template v-slot:popup="feature">
-          <PointPopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-      <AGeoJSON
-        v-if="activeItem === '公路隐患点'"
-        key="pitfalls-points"
-        :source="points2"
-        :geoStyle="{ marker: pitfallsStyle }"
-      >
-        <template v-slot:popup="feature">
-          <PointPopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-      <AGeoJSON
-        v-if="lineKey"
-        key="line"
-        :source="line"
-        :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
-      >
-        <template v-slot:popup="feature">
-          <LinePopup :feature="feature" />
-        </template>
-      </AGeoJSON>
-    </Map>
-    <div class="map-legend">
-      <h3>交通运营图例</h3>
-      <ul>
-        <li v-for="(item, index) in list" :key="item" @click="selectMark(item, index)" :class="{ active: activeItem === item }">
-          {{ item }}
-        </li>
-      </ul>
-    </div>
-    <div class="map-Statistics">
-      <div class="item" v-for="(item, index) in statisticsList" :key="index">
-        <div class="item-top">{{ item.name }}</div>
-        <div class="item-bottom" :style="{ color: item.color }">
-          <div class="item-bottom-left bottom-item">
+    <div class="main-map">
+      <Map  :satelliteMap="satelliteMap" v-show="!threeDMap" ref="trafficMap">
+        <AGeoJSON
+          v-if="activeItem === '隧道'"
+          key="tunnel"
+          :source="tunnel"
+          :geoStyle="{ polyline: { strokeColor: 'rgb(0, 255, 124)' } }"
+        >
+          <template v-slot:popup="feature">
+            <LinePopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+        <AGeoJSON v-if="activeItem === '桥梁'" key="bridge-points" :source="points" :geoStyle="{ marker: bridgeStyle }">
+          <template v-slot:popup="feature">
+            <PointPopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+        <AGeoJSON
+          v-if="activeItem === '公路隐患点'"
+          key="pitfalls-points"
+          :source="points2"
+          :geoStyle="{ marker: pitfallsStyle }"
+        >
+          <template v-slot:popup="feature">
+            <PointPopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+        <AGeoJSON
+          v-if="lineKey"
+          key="line"
+          :source="line"
+          :geoStyle="{ polyline: { strokeColor: 'rgb(135, 227, 0)' } }"
+        >
+          <template v-slot:popup="feature">
+            <LinePopup :feature="feature" />
+          </template>
+        </AGeoJSON>
+      </Map>
+      <div class="map" v-if="threeDMap">
+        <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+        <ThreeDMap
+          :dataList="threeDDataList"
+          :tipTemplate="tipTemplate"
+          title=""
+          :Scale="Scale"
+        />
+      </div>
+      <div class="map-legend">
+        <h3>交通运营图例</h3>
+        <ul>
+          <li v-for="(item, index) in list" :key="item" @click="selectMark(item, index)" :class="{ active: activeItem === item }">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+      <div class="map-Statistics">
+        <div class="item" v-for="(item, index) in statisticsList" :key="index">
+          <div class="item-top">{{ item.name }}</div>
+          <div class="item-bottom" :style="{ color: item.color }">
+            <div class="item-bottom-left bottom-item">
             <span>{{ item.number }}</span
             >{{ item.unit }}
-          </div>
-          <div class="item-bottom-right bottom-item">
+            </div>
+            <div class="item-bottom-right bottom-item">
             <span>{{ item.length }}</span
             >{{ item.lengthUnit }}
+            </div>
           </div>
         </div>
       </div>
+      <div class="switch">
+        <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+        <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+        <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
+      </div>
     </div>
+
   </div>
 </template>
 <script>
@@ -112,6 +129,14 @@ export default {
       },
     ];
     return {
+      threeDMap: false,
+      iconIndex: 1, // 图层切换按钮
+      satelliteMap: true,
+
+      threeDDataList: [],
+      tipTemplate: {},
+      Scale: 37.7,
+
       list,
       statisticsList,
       activeItem: '',
@@ -148,6 +173,18 @@ export default {
     this.getClassDate();
   },
   methods: {
+    changeMap(type) {
+      this.iconIndex = type;
+      if (type === 3) {
+        this.threeDMap = true;
+      } else if (type === 2){
+        this.satelliteMap = false;
+        this.threeDMap = false;
+      } else {
+        this.satelliteMap = true;
+        this.threeDMap = false;
+      }
+    },
     // 公路桥隧
     async getStatistics() {
       const res = await getStatistics();
@@ -220,11 +257,42 @@ export default {
         default: this.line = data; this.lineKey = true;
       }
       this.activeItem = item;
+      this.initThreeDData(res);
       console.log(this.lineName[this.activeItem]);
       // console.log(this.line);
       // this.markDown();
     },
     // 交通畅行---公交桥隧---地图线路方法
+    initThreeDData(data){
+      // console.log(data)
+      this.Scale =data.length > 1? 1.3:37.7
+      if (data) {
+        this.threeDDataList = data.map((item,index) => {
+          const MapLngLat = JSON.parse(item.geoCoord);
+          let listItem = {}
+          let tipTemplates = {}
+          item.popupList.forEach((item2) => {
+            listItem[item2.title] = item2.value;
+            tipTemplates[item2.title] = item2.title;
+          })
+          if ( index === 0) {
+            this.tipTemplate = {
+              '地点名称': '地点名称',
+              ...tipTemplates
+            }
+          }
+          return {
+            x: MapLngLat[0],
+            y: MapLngLat[1],
+            z: 0,
+            地点名称: item.locationName,
+            ...listItem,
+          }
+        });
+      }
+      // console.log(this.threeDDataList);
+      // console.log(this.tipTemplate);
+    },
   },
   components: {
     Map,
@@ -235,12 +303,32 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.main-map {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 135rem;
+  .map {
+    &::after {
+      position: absolute;
+      content: ' ';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 207rem;
+      pointer-events: none;
+      background: url('./img/mask_bg.png') no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+}
 .map-legend {
   width: 27.4rem;
   height: 49.1rem;
   position: absolute;
   left: 332rem;
-  top: 81rem;
+  top: 77rem;
   background: url('./img/legend.png') no-repeat;
   background-size: 100% 100%;
   padding-left: 4.2rem;
@@ -283,6 +371,30 @@ export default {
       border-radius: 0.4rem;
       border: 0.3rem solid #9bfcfd;
       background: rgba(155, 252, 253, 0.3);
+    }
+  }
+}
+.switch {
+  width: 374px;
+  height: 360px;
+  position: absolute;
+  top: 128rem;
+  right: 200rem;
+  display: flex;
+  justify-content: space-around;
+  z-index: 1000;
+  .button {
+    width: 114px;
+    height: 44px;
+    font-size: 24px;
+    line-height: 44px;
+    text-align: center;
+    color: #82e2e4;
+    cursor: pointer;
+    background: url('./img/mmexport.jpg') no-repeat;
+    &.active {
+      color: white;
+      background: url('./img/mmexport1.jpg') no-repeat;
     }
   }
 }

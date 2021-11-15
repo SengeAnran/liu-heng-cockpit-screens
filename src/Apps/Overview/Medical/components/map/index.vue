@@ -1,7 +1,7 @@
 <template>
   <div class="map_wrapper">
     <div class="mask"></div>
-    <Map2d :activeItem="activeItem" v-show="!threeDMap"/>
+    <Map2d :satelliteMap="satelliteMap"  :activeItem="activeItem" v-show="!threeDMap"/>
     <div class="main-map" v-if="threeDMap">
 <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
       <ThreeDMap
@@ -12,8 +12,9 @@
       />
     </div>
     <div class="switch">
-      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
+      <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+      <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
     </div>
     <div class="map-legend">
       <p class="legend-title">医院图例</p>
@@ -62,6 +63,8 @@ export default {
       currentLegend: 1,
       lastDetailMarker: null,
       threeDMap: false,
+      iconIndex: 1, // 图层切换按钮
+      satelliteMap: true,
       activeItem: '',
 
       threeDDataList: [],
@@ -73,9 +76,14 @@ export default {
   },
   methods: {
     changeMap(type) {
+      this.iconIndex = type;
       if (type === 3) {
         this.threeDMap = true;
+      } else if (type === 2){
+        this.satelliteMap = false;
+        this.threeDMap = false;
       } else {
+        this.satelliteMap = true;
         this.threeDMap = false;
       }
     },
@@ -154,7 +162,7 @@ export default {
     height: 135rem;
   }
   .switch {
-    width: 274px;
+    width: 374px;
     height: 360px;
     position: absolute;
     bottom: 48rem;
@@ -180,7 +188,7 @@ export default {
   .map-legend {
     position: absolute;
     z-index: 10;
-    top: 98.6rem;
+    top: 94rem;
     right: 37%;
     width: 32.4rem;
     // height: 28.2rem;

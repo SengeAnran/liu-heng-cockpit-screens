@@ -15,6 +15,10 @@ export default {
       type: Array,
       default: () => {}
     },
+    multiLineList: {
+      type: Array,
+      default: () => {}
+    },
     title: {
       type: String,
       default: ''
@@ -67,6 +71,9 @@ export default {
             setTimeout(() => {
               this.drawMarker();
             },5000)
+          } else if (this.multiLineList && this.multiLineList.length > 0) {
+            console.log('画线');
+            this.drawLines();
           } else {
             this.drawMarker();
           }
@@ -118,7 +125,25 @@ export default {
       // console.log('markers');
       // console.log(this.markers);
     },
-
+    drawLines() { // 画线
+      this.multiLineList.forEach((item) => {
+        console.log(item);
+        const points = item.points;
+        const data = {...item}
+        console.log(points);
+        const polygonType = { style: 0, color: "#ffff00", width: 3.0 };
+        this.markers = this.sritMap.addPolyline(points, polygonType,
+          {
+            isZoom: true,
+            // cluster: false,
+            disableInfoWindow: false,
+            // // zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
+            // title: this.title,
+            tipTemplate: this.tipTemplate,
+            attrs: data,
+          });
+      })
+    },
     clear() {
       this.sritMap.clear(this.markers);
     },

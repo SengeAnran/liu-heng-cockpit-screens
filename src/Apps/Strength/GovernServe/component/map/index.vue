@@ -6,8 +6,9 @@
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
     <div class="switch">
-      <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
+      <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
+      <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
+      <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
     </div>
   </div>
 </template>
@@ -36,6 +37,8 @@ export default {
         // { name: '本月办理数量', unit: '人', key: 'bsrys', number: 2653 },
       ],
       threeDMap: false,
+      iconIndex: 1,
+      layers: [],
     };
   },
   watch: {
@@ -45,14 +48,23 @@ export default {
   },
   mounted() {
     // this.initMap();
+    this.layers =  [
+      new AMap.TileLayer.Satellite(),
+      new AMap.TileLayer.RoadNet()
+    ];
     this.getData();
   },
   methods: {
     changeMap(type) {
-      if (type === 3) {
+      this.iconIndex = type;
+      if (type === 1) {
+        this.threeDMap = false;
+        this.map.add(this.layers);
+      } else if( type === 3) {
         this.threeDMap = true;
       } else {
         this.threeDMap = false;
+        this.map.remove(this.layers);
       }
     },
     initMap2() {
@@ -137,6 +149,7 @@ export default {
         });
         // this.addMarker(res);
         this.initMap();
+        this.map.add(this.layers);
       }
     },
   },
@@ -177,7 +190,7 @@ export default {
     }
   }
   .switch {
-  width: 274px;
+  width: 374px;
   height: 360px;
   position: absolute;
   bottom: 48rem;
