@@ -195,6 +195,8 @@ export default {
     },
     selectMark(item, index) {
       this.activeItem1 = item;
+      this.threeDDataList = [];
+      this.multiLineList = [];
       this.getData(item);
     },
     async getData(item1) {
@@ -266,30 +268,30 @@ export default {
       // console.log(this.line);
       // this.markDown();
     },
-    initThreeDData(data){
+    initThreeDData(data) {
+      // let listData = []
       // console.log(data)
       if (data) {
         data.forEach((item,index) => {
           const MapLngLat = JSON.parse(item.geoCoord);
-          let listItem = {}
-          let tipTemplates = {}
+          let listItem = {};
+          let tipTemplates = {};
           item.popupList.forEach((item2) => {
             listItem[item2.title] = item2.value;
             tipTemplates[item2.title] = item2.title;
-          })
-          if ( index === 0) {
+          });
+          if (index === 0) {
             this.tipTemplate = {
               '地点名称': '地点名称',
-              ...tipTemplates
-            }
+              ...tipTemplates,
+            };
           }
           if (item.geoType === 'MultiLineString') {
-            this.multiLineList.push( {
+            this.multiLineList.push({
               points: MapLngLat,
               地块名称: item.locationName,
               ...listItem,
             });
-            console.log(this.multiLineList)
           } else {
             this.threeDDataList.push({
               x: MapLngLat[0],
@@ -297,7 +299,7 @@ export default {
               z: 0,
               地点名称: item.locationName,
               ...listItem,
-            })
+            });
           }
         });
       }

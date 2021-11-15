@@ -43,6 +43,7 @@
         <ThreeDMap
           :dataList="threeDDataList"
           :tipTemplate="tipTemplate"
+          :multiLineList="multiLineList"
           title=""
           :Scale="Scale"
         />
@@ -134,6 +135,7 @@ export default {
       satelliteMap: true,
 
       threeDDataList: [],
+      multiLineList: [],
       tipTemplate: {},
       Scale: 37.7,
 
@@ -177,7 +179,7 @@ export default {
       this.iconIndex = type;
       if (type === 3) {
         this.threeDMap = true;
-      } else if (type === 2){
+      } else if (type === 2) {
         this.satelliteMap = false;
         this.threeDMap = false;
       } else {
@@ -216,6 +218,8 @@ export default {
     },
     selectMark(item, index) {
       this.activeItem1 = item;
+      this.threeDDataList = [];
+      this.multiLineList = [];
       this.getData(item);
     },
     async getData(item) {
@@ -267,7 +271,7 @@ export default {
       // console.log(data)
       this.Scale =data.length > 1? 1.3:37.7
       if (data) {
-        this.threeDDataList = data.map((item,index) => {
+        data.forEach((item,index) => {
           const MapLngLat = JSON.parse(item.geoCoord);
           let listItem = {}
           let tipTemplates = {}
@@ -278,20 +282,28 @@ export default {
           if ( index === 0) {
             this.tipTemplate = {
               '地点名称': '地点名称',
-              ...tipTemplates
-            }
+              ...tipTemplates,
+            };
           }
-          return {
-            x: MapLngLat[0],
-            y: MapLngLat[1],
-            z: 0,
-            地点名称: item.locationName,
-            ...listItem,
+          if (item.geoType === 'MultiLineString') {
+            this.multiLineList.push({
+              points: MapLngLat,
+              地点名称: item.locationName,
+              ...listItem,
+            });
+          } else {
+            this.threeDDataList.push({
+              x: MapLngLat[0],
+              y: MapLngLat[1],
+              z: 0,
+              地点名称: item.locationName,
+              ...listItem,
+            });
           }
         });
       }
-      // console.log(this.threeDDataList);
-      // console.log(this.tipTemplate);
+      console.log(this.multiLineList);
+      console.log(this.tipTemplate);
     },
   },
   components: {
