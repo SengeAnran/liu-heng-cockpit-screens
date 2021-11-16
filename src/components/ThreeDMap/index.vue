@@ -47,10 +47,10 @@ export default {
         // xmin: 120.92327212639972,
         // ymax: 30.47052982667381,
         // ymin: 29.1857049354057,
-        xmax: 122.251519,
-        xmin: 121.981629,
-        ymax: 29.80163,
-        ymin: 29.638456,
+        xmax: 122.261519,
+        xmin: 122.041629,
+        ymax: 29.84163,
+        ymin: 29.678456,
       },
     };
   },
@@ -117,7 +117,9 @@ export default {
           tipTemplate: this.tipTemplate,
         });
       // console.log('markers');
-      console.log(this.sritMap.getExtent());
+      setTimeout(() => {
+        this.sritMap.zoomToExtent(this.extent);
+      }, 5000);
       // console.log(this.markers);
     },
     drawPolygon() { // 画面
@@ -138,7 +140,9 @@ export default {
             attrs: data,
           });
       });
-
+      setTimeout(() => {
+        this.sritMap.zoomToExtent(this.extent);
+      }, 5000);
       // console.log('markers');
       // console.log(this.markers);
     },
@@ -170,11 +174,9 @@ export default {
       //     console.log(this.sritMap.getCurrentLevel());
       //   }
       // }, 8000);
-      console.log(this.sritMap.getExtent());
       setTimeout(() => {
         this.sritMap.zoomToExtent(this.extent);
       }, 5000);
-      console.log(this.sritMap.getCurrentLevel());
     },
     clear() {
       this.sritMap.clear(this.markers);
