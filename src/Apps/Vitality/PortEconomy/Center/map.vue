@@ -6,6 +6,9 @@
 <script>
 import * as echarts from 'echarts';
 import { getPortDetail } from '@/api/Vitality/PortEconomy/api';
+import {
+  getLocationInfo,
+} from '@/api/IndexItem';
 import features from './word';
 export default {
   data() {
@@ -23,25 +26,26 @@ export default {
         // },
       ],
       map: null,
+      points: [],
       series: [],
     };
   },
   mounted() {
     this.getData();
-    // this.initMap();
-    // this.chart = echarts.init(this.$refs.mapChart);
-    // this.loadData();
-    // echarts.registerMap('world', {
-    //   type: 'FeatureCollection',
-    //   crs: {
-    //     type: 'name',
-    //     properties: {
-    //       name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
-    //     },
-    //   },
-    //   features,
-    // });
-    // this.initEcharts();
+    this.initMap();
+    this.chart = echarts.init(this.$refs.mapChart);
+    this.loadData();
+    echarts.registerMap('world', {
+      type: 'FeatureCollection',
+      crs: {
+        type: 'name',
+        properties: {
+          name: 'urn:ogc:def:crs:OGC:1.3:CRS84',
+        },
+      },
+      features,
+    });
+    this.initEcharts();
   },
   methods: {
     // loadData() {
@@ -202,11 +206,26 @@ export default {
             item.content = item.js;
           });
           this.geoCoordMap = json;
+          // this.points = json.map((item) => {
+          //   return {
+          //     geometry: {
+          //       type: "Point",
+          //       coordinates: item.position,
+          //     },
+          //     properties: {
+          //       country: item.gkmc,
+          //       time: "1949年10月6日",
+          //       flagName: item.gkmc,
+          //       type: 1,
+          //     },
+          //     type: "Feature",
+          //   }
+          // })
           this.initMap();
           this.addMarker(json);
         });
     },
-    initMap() {
+    async initMap() {
       this.map = new AMap.Map('container', {
         resizeEnable: true,
         center: [13.021057,27.317153],
@@ -215,72 +234,65 @@ export default {
           new AMap.TileLayer.RoadNet(),
         ],
         zoom: 3,
-        pitch: 12,
+        pitch: 30,
         viewMode: '3D',
       });
-
-      // 文字图层
-      var labelLayer = new AMap.LabelsLayer({ // 构造一个标注图层对象，通过LabelsLayerOptions设置图层属性
-        rejectMapMask: true,
-        collision: true, // 是否开启碰撞检测，默认为 true
-        animation: true, // 是否开启标注淡入动画，默认为 true
+      // console.log(1111);
+      var layer = new Loca.LinkLayer({
+        map: this.map,
+        // fitView: true,
       });
-      this.map.add(labelLayer);
-      var loca = new Loca.Container({ // 创建可视化作品前，首先要创建一个 Loca 容器，这个容器可以帮您加载高德地图作为底图，或者帮您关联已有的高德地图作为底图。
-        // 在使用地图的时，您可以使用任何一个 JS API 已有的功能，Loca 容器不会影响原有地图的任何功能和特性。这里创建的 Loca 容器您可以理解为是可视化图层的管理器。
-        map:this.map,
-      });
+      const lines = this.geoCoordMap.map((item) => {
+          return {
+            line: [item.position,
+              [122.153209, 29.749349]],
+            distance: 1201,
+          }
 
-      // // 连接线图层
-      // var linkLayer = new Loca.LinkLayer({
-      //   zIndex: 20,
-      //   opacity: 1,
-      //   visible: true,
-      //   zooms: [2, 22],
-      // });
 
-      // var scatterLayer1 = new Loca.ScatterLayer({
-      //   zIndex: 10,
-      //   opacity: 1,
-      //   visible: true,
-      //   zooms: [2, 22],
-      // });
-      // var scatterLayer2 = new Loca.ScatterLayer({
-      //   zIndex: 10,
-      //   opacity: 0.8,
-      //   visible: true,
-      //   zooms: [2, 22],
-      // });
-      // var scatterLayer3 = new Loca.ScatterLayer({
-      //   zIndex: 10,
-      //   opacity: 0.8,
-      //   visible: true,
-      //   zooms: [2, 22],
-      // });
-
-      this.geoCoordMap.map((item) => {
-        var lineArr = [
-          item.position,
-          ['122.153209', '29.749349']
-        ];
-        // var lineArr = [
-        //   ['75.757904', '38.118117'],
-        //   ['117.375719', '24.598057']
-        // ];
-        var polyline = new AMap.Polyline({
-          path: lineArr,            // 设置线覆盖物路径
-          strokeColor: '#2be5f8',   // 线颜色
-          strokeOpacity: 1,         // 线透明度
-          strokeWeight: 3,          // 线宽
-          strokeStyle: 'solid',     // 线样式
-          strokeDasharray: [10, 5], // 补充线样式
-          // geodesic: true,            // 绘制大地线
-          // isOutline: true,
-          showDir: true,
-        });
-        polyline.setMap(this.map);
       })
+      console.log(lines);
+      layer.setData(lines, {
+        lnglat: (e) => {
+          console.log(e)
+          return [e.value.line]
+        },
+      }).setOptions({
+        style: {
+          // 弧度
+          // curveness: 1,
+          // 弧度
+          curveness: 6,
+          // 填充颜色
+          color: '#07d2e8',
+          borderWidth: 16,
+          width: 25,
+          opacity: 0.8,
+        },
+      }).render();
 
+      // this.geoCoordMap.map((item) => {
+      //   var lineArr = [
+      //     item.position,
+      //     ['122.153209', '29.749349']
+      //   ];
+      //   // var lineArr = [
+      //   //   ['75.757904', '38.118117'],
+      //   //   ['117.375719', '24.598057']
+      //   // ];
+      //   var polyline = new AMap.Polyline({
+      //     path: lineArr,            // 设置线覆盖物路径
+      //     strokeColor: '#2be5f8',   // 线颜色
+      //     strokeOpacity: 1,         // 线透明度
+      //     strokeWeight: 3,          // 线宽
+      //     strokeStyle: 'solid',     // 线样式
+      //     strokeDasharray: [10, 5], // 补充线样式
+      //     // geodesic: true,            // 绘制大地线
+      //     // isOutline: true,
+      //     showDir: true,
+      //   });
+      //   polyline.setMap(this.map);
+      // })
     },
     addInfoWindow(item) {
       const html = `<div class='info'>
@@ -300,7 +312,10 @@ export default {
       data.forEach((item) => {
         const marker = new AMap.Marker({
           position: [item.lng, item.lat],
-          content: `<div class="custom-marker">{{${item.gkmc}}}</div>`,
+          content: `
+            <div class="custom-marker">
+              <div class="name">${item.name}</div>
+            </div>`,
         });
         marker.setMap(this.map);
         marker.on('click', (e) => {
@@ -312,6 +327,195 @@ export default {
       this.popup.setContent(this.createText(item));
       this.popup.open(this.map, [item.lng, item.lat]);
     },
+    async local() {
+      // 文字图层
+      var labelLayer = new AMap.LabelsLayer({ // 构造一个标注图层对象，通过LabelsLayerOptions设置图层属性
+        rejectMapMask: true,
+        collision: true, // 是否开启碰撞检测，默认为 true
+        animation: true, // 是否开启标注淡入动画，默认为 true
+      });
+      this.map.add(labelLayer);
+      console.log(1111);
+      var loca = new Loca.Container({ // 创建可视化作品前，首先要创建一个 Loca 容器，这个容器可以帮您加载高德地图作为底图，或者帮您关联已有的高德地图作为底图。
+        // 在使用地图的时，您可以使用任何一个 JS API 已有的功能，Loca 容器不会影响原有地图的任何功能和特性。这里创建的 Loca 容器您可以理解为是可视化图层的管理器。
+        map:this.map,
+      });
+      console.log(1111);
+      // 连接线图层
+      var linkLayer = new Loca.LinkLayer({
+        zIndex: 20,
+        opacity: 1,
+        visible: true,
+        zooms: [2, 22],
+      });
+
+      var scatterLayer1 = new Loca.ScatterLayer({
+        zIndex: 10,
+        opacity: 1,
+        visible: true,
+        zooms: [2, 22],
+      });
+      // var scatterLayer2 = new Loca.ScatterLayer({
+      //   zIndex: 10,
+      //   opacity: 0.8,
+      //   visible: true,
+      //   zooms: [2, 22],
+      // });
+      var scatterLayer3 = new Loca.ScatterLayer({
+        zIndex: 10,
+        opacity: 0.8,
+        visible: true,
+        zooms: [2, 22],
+      });
+      var centerPoint = new Loca.GeoJSONSource({
+        data: {
+          'type': 'FeatureCollection',
+          'features': [
+            {
+              'type': 'Feature',
+              'geometry': {
+                'type': 'Point',
+                'coordinates': [116.39, 39.9],
+              },
+            },
+          ],
+        },
+      });
+
+      scatterLayer3.setSource(centerPoint);
+      scatterLayer3.setStyle({
+        size: [300000, 300000],
+        unit: 'meter',
+        texture: 'https://a.amap.com/Loca/static/static/center-point.png',
+      });
+      loca.add(scatterLayer3);
+
+      var lineGeoMap;
+      var scatterGeoMap;
+
+      var filterGeoJSON = (json, type) => {
+        var newJSON = {
+          type: 'FeatureCollection',
+          features: [...json.features.filter((item) => item.properties.type === type)],
+        };
+        return new Loca.GeoJSONSource({
+          data: newJSON,
+        });
+      };
+
+      var setLabelsLayer = (data) => {
+        labelLayer.clear();
+        data.features.forEach((item) => {
+          var labelsMarker = new AMap.LabelMarker({
+            name: item.properties.flagName,
+            position: item.geometry.coordinates,
+            zooms: [2, 22],
+            opacity: 1,
+            zIndex: 10,
+            text: {
+              content: item.properties.country,
+              direction: 'bottom',
+              offset: [0, -5],
+              style: {
+                fontSize: 13,
+                fontWeight: 'normal',
+                fillColor: '#fff',
+              },
+            },
+          });
+          labelLayer.add(labelsMarker);
+        });
+        labelLayer.add(
+          new AMap.LabelMarker({
+            name: 'china',
+            position: [116.39, 39.9],
+            zooms: [2, 22],
+            opacity: 1,
+            zIndex: 10,
+            rank: 100,
+            text: {
+              content: '中国',
+              direction: 'bottom',
+              offset: [0, -5],
+              style: {
+                fontSize: 13,
+                fontWeight: 'normal',
+                fillColor: '#fff',
+              },
+            },
+          }),
+        );
+      };
+
+      scatterGeoMap = data;
+      setLabelsLayer(this.points);
+      var source1 = filterGeoJSON(scatterGeoMap[50], 1);
+      // var source2 = filterGeoJSON(scatterGeoMap[50], 1);
+      scatterLayer1.setSource(source1);
+      // scatterLayer2.setSource(source2);
+      scatterLayer1.setStyle({
+        size: [500000, 500000],
+        unit: 'miter',
+        animate: true,
+        duration: 1000,
+        texture: 'https://a.amap.com/Loca/static/static/green.png',
+      });
+      // scatterLayer2.setStyle({
+      //   size: [500000, 500000],
+      //   unit: 'miter',
+      //   animate: true,
+      //   duration: 1000,
+      //   texture: 'https://a.amap.com/Loca/static/static/orange.png',
+      // });
+      loca.add(scatterLayer1);
+      // loca.add(scatterLayer2);
+      loca.animate.start();
+
+      const res = await getLocationInfo({ type: '港口飞线' }).request();
+      console.log(res)
+
+      fetch('https://a.amap.com/Loca/static/static/diplomacy-line.json')
+        .then((res) => res.json())
+        .then((data) => {
+          lineGeoMap = Object.entries(data).reduce((accu, curr) => {
+            var [key, geo] = curr;
+            accu[key] = new Loca.GeoJSONSource({
+              data: geo,
+            });
+            return accu;
+          }, {});
+          linkLayer.setSource(lineGeoMap[50]);
+          linkLayer.setStyle({
+            lineColors: function (index, item) {
+              return item.link.properties.type === 0 ? ['#25CDEA', '#12BFBF'] : ['#FFD87B', '#FF4F00'];
+            },
+            height: function (index, item) {
+              return item.distance / 3;
+            },
+            smoothSteps: function (index, item) {
+              return 200;
+            },
+          });
+          loca.add(linkLayer);
+        });
+
+      var items = document.querySelectorAll('.item');
+
+      for (var i = 0; i < items.length; i++) {
+        (function (j) {
+          items[j].onclick = () => {
+            var element = items[j];
+            var key = element.children[0].dataset.year;
+            document.querySelector('div.item.active').classList.remove('active');
+            element.classList.add('active');
+            linkLayer.setSource(lineGeoMap[key]);
+            setLabelsLayer(scatterGeoMap[key]);
+            scatterLayer1.setSource(filterGeoJSON(scatterGeoMap[key], 0));
+            // scatterLayer2.setSource(filterGeoJSON(scatterGeoMap[key], 1));
+          };
+        })(i);
+      }
+    }
   },
 };
 </script>
@@ -328,6 +532,17 @@ export default {
     height: 49.7px;
     background: url('./img/icon.png');
     background-size: contain;
+    .name{
+      position: absolute;
+      top: 5rem;
+      left: -7rem;
+      padding: 1rem 2rem;
+      font-size: 32px;
+      line-height: 66px;
+      background: rgba(20, 31, 62, 0.8);
+      border-radius: 1rem;
+      color: white;
+    }
   }
   ::v-deep .info {
     position: relative;
