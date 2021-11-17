@@ -104,6 +104,9 @@ export default {
     },
     drawMarker() { // 打点
       var jsondata = this.dataList;
+      const mainContent = {
+
+      }
       this.markers = this.sritMap.marker(jsondata, { "image": "images/markerHB.png" },
         {
           // is3D: true,
@@ -114,6 +117,20 @@ export default {
           // },
           zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
           title: this.title,
+          // customInfoDom: (mainContent, attrs) => {
+          //   console.log(mainContent);
+          //   console.log(attrs)
+          //
+          //   var textNode = document.createTextNode("Hello world!");
+          //
+          //   // mainContent.appendChild(textNode);
+          //   // mainContent.context = `<div style="font-size: 30px; color: #0d1f38">${attrs['简介']}</div>`;
+          //   mainContent.context = `${attrs['简介']}`;
+          //   // attrs = this.tipTemplate;
+          //   return {
+          //      mainContent, attrs
+          //   }
+          // }, // 根据回调方法提供的div及属性信息，自定义信息显示的DomNode
           tipTemplate: this.tipTemplate,
         });
       // console.log('markers');
@@ -189,9 +206,35 @@ export default {
 #container {
   width: 100vw;
   height: 65.21739vh;
-  position: fixed;
+  //position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   transform-origin: top left;
+  &::v-deep .gis-popup {
+    z-index: 9999;
+    max-width: 350px;
+    .gis-popup-content {
+      font: normal 4.5pt 微软雅黑;
+      color: white;
+      //overflow-y: scroll;
+      overflow-x: hidden;
+      max-height: 300px;
+      //&::-webkit-scrollbar {
+      //  display: none;
+      //}
+      .gis-widget-row {
+        padding: 3px;
+        .mcirLabel {
+          min-width: 20%;
+        }
+      }
+    }
+    .gis-popup-title {
+      font: normal 5.5pt 微软雅黑;
+      color: white;
+    }
+
+  }
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <div class="main-map" ref="map" ></div>
 <!--    <div class="main-map" ref="threeDMap" v-show="threeDMap"></div>-->
-    <div class="swipper" v-if="!threeDMap" >
+    <div class="swipper" v-show="!threeDMap" >
       <div class="line" ref="line">
         <div class="line_task_point"></div>
       </div>
@@ -116,6 +116,8 @@ export default {
     changeMap(type) {
       this.iconIndex = type;
       if (type === 1) {
+        this.marskLine = this.$refs.line;
+        this.initMap();
         this.threeDMap = false;
         this.map.add(this.layers);
         this.autoClick();
@@ -123,6 +125,8 @@ export default {
       } else if( type === 3) {
         this.threeDMap = true;
       } else {
+        this.marskLine = this.$refs.line;
+        this.initMap();
         this.threeDMap = false;
         this.map.remove(this.layers);
         this.autoClick();
