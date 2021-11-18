@@ -3,7 +3,7 @@
       <div style="width:5760px;height:1100px;overflow:hidden;border:0px">
           <iframe
             :src="getPageUrl"
-            width="10000px"
+            width="11520px"
             height="1100px"
             ref="iframeDom"
           ></iframe>
@@ -17,8 +17,8 @@ export default {
   components: {},
   data() {
     return {
-      // getPageUrl: 'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html',
-      getPageUrl: 'http://172.16.17.119:8081/#/',
+      getPageUrl: 'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html',
+      // getPageUrl: 'http://172.16.17.119:8081/#/',
     };
   },
   mounted() {
