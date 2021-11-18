@@ -9,7 +9,7 @@
 <!--            <div class="name">{{item.name}}</div>-->
 <!--          </div>-->
 <!--      </div>-->
-      <chart-map v-show="!threeDMap"/>
+      <chart-map v-if="!threeDMap"/>
       <div class="main-map" v-if="threeDMap">
         <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
         <ThreeDMap
@@ -79,7 +79,9 @@ export default {
       Scale: 37.7,
     };
   },
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
   methods: {
     changeMap(type) {
       if (type === 3) {
@@ -91,43 +93,47 @@ export default {
     async getData() {
       const res2 = await getLocationInfo({ type: '港口飞线' }).request();
       const res = await getPortDetail().request();
-      console.log(res);
+      // console.log(res);
       this.initThreeDData(res);
       this.initThreeDData2(res2);
     },
-    initThreeDData(data){
+    initThreeDData(data) {
       // console.log(data)
       if (data) {
-        const endPoints = []
-        data.forEach((item,index) => {
+        const endPoints = [];
+        data.forEach((item, index) => {
           endPoints.push([item.lng, item.lat]);
         });
-        console.log(endPoints);
+        // console.log(endPoints);
         this.flyingLineList.push({
           startPoint: [122.153209, 29.749349],
           endPoints: endPoints,
         });
       }
+      console.log(this.flyingLineList);
     },
-    initThreeDData2(data){
-      // console.log(data)
+    initThreeDData2(data) {
+      console.log(data);
       if (data) {
-        this.Scale =data.length > 1? 1.3:37.7
-        this.threeDDataList = data.map((item,index) => {
-          const MapLngLat = JSON.parse(item.geoCoord)[1];
-          let listItem = {}
-          let tipTemplates = {}
+        this.Scale = data.length > 1 ? 1.3 : 37.7;
+        this.threeDDataList = data.map((item, index) => {
+          // console.log(item.geoCoord);
+          // console.log(JSON.parse(item.geoCoord));
+          const MapLngLat = (JSON.parse(item.geoCoord))[1];
+          console.log(MapLngLat);
+          let listItem = {};
+          let tipTemplates = {};
           if (item.popupList) {
             item.popupList.forEach((item2) => {
               listItem[item2.title] = item2.value;
               tipTemplates[item2.title] = item2.title;
-            })
+            });
           }
-          if ( index === 0) {
+          if (index === 0) {
             this.tipTemplate = {
               '港口名称': '港口名称',
-              ...tipTemplates
-            }
+              ...tipTemplates,
+            };
           }
           return {
             x: MapLngLat[0],
@@ -135,9 +141,13 @@ export default {
             z: 0,
             港口名称: item.locationName,
             ...listItem,
-          }
+          };
         });
       }
+      this.threeDDataList[0].x = 50.131333;
+      this.threeDDataList[0].y = 29.774833;
+      this.threeDDataList[1].x = 122.061068;
+      this.threeDDataList[1].y = 29.71412;
       console.log(this.threeDDataList);
       console.log(this.tipTemplate);
       console.log(this.Scale);
@@ -164,7 +174,7 @@ export default {
   height: 100%;
   background: url(../images/map_mask.png) no-repeat top center;
   background-size: 5740px auto;
-  position: relative;
+  position: absolute;
   z-index: 11;
   pointer-events: none;
 }

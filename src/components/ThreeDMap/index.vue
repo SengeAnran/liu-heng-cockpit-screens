@@ -98,9 +98,10 @@ export default {
           }
           if (this.flyingLineList && this.flyingLineList.length > 0) {
             console.log('画飞线');
-            this.drawLines();
+            // this.drawFlyingLine();
           }
           if (this.dataList && this.dataList.length > 0) {
+            console.log('画点');
             this.drawMarker();
           }
           // this.displayRange();
@@ -115,13 +116,14 @@ export default {
     // 打点
     drawMarker() {
       var jsondata = this.dataList;
-      const mainContent = {
-
-      }
+      // const mainContent = {
+      //
+      // };
+      console.log(jsondata);
       this.markers = this.sritMap.marker(jsondata, { "image": "images/markerHB.png" },
         {
           // is3D: true, // 3d模式
-          isZoom: true, //自适应缩放层级
+          isZoom: true, // 自适应缩放层级
           cluster: false,
           // highlightStyle: {
           //   "image": "images/RedPin1LargeB.png"
@@ -144,10 +146,10 @@ export default {
           // }, // 根据回调方法提供的div及属性信息，自定义信息显示的DomNode
           tipTemplate: this.tipTemplate,
         });
-      // console.log('markers');
-      setTimeout(() => {
-        this.sritMap.zoomToExtent(this.extent);
-      }, 5000);
+      console.log(this.markers);
+      // setTimeout(() => {
+      //   this.sritMap.zoomToExtent(this.extent);
+      // }, 5000);
       // console.log(this.markers);
     },
     // 画面
@@ -210,17 +212,18 @@ export default {
     },
     // 画飞线
     drawFlyingLine() {
+      console.log(this.flyingLineList);
       this.flyingLineList.forEach((item) => {
-        // console.log(item);
+        console.log(item);
         const startPoint = item.startPoint;
-        const endPoints = item.points; // 终止点坐标集合 [[x1,y1],[x2,y2],[x3,y3],...]
-        const polygonType = { style: 0, color: "#ffff00", width: 3.0 };
-        this.markers = this.sritMap.addParabola(startPoint, endPoints, 1500,
+        const endPoints = item.endPoints.slice(1); // 终止点坐标集合 [[x1,y1],[x2,y2],[x3,y3],...]
+        console.log(endPoints);
+        this.sritMap.addParabola(startPoint, endPoints, 1500,
           {
-            style: 5, color: "#fffe", image: "images/colors1.png", width: 4, duration: 3000
+            style: 5, color: "#fffe", image: "images/colors1.png", width: 4, duration: 3000,
           },
           {
-            isZoom: true
+            isZoom: true,
           });
       });
       setTimeout(() => {
