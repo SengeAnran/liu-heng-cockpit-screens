@@ -59,6 +59,7 @@ export default {
         zoom: 13.4,
         zoomEnable: false,
         center: [122.138762, 29.731102],
+        viewMode:'3D',
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
       const marker = new AMap.Marker({

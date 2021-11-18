@@ -10,19 +10,30 @@
 <!--          </div>-->
 <!--      </div>-->
       <chart-map v-show="!threeDMap"/>
-<!--      <div class="main-map" v-show="threeDMap">-->
-<!--        <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
-<!--      </div>-->
-<!--      <div class="switch">-->
-<!--        <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">2D地图</div>-->
-<!--        <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>-->
-<!--      </div>-->
+      <div class="main-map" v-if="threeDMap">
+        <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
+        <ThreeDMap
+          :dataList="this.threeDDataList"
+          :flyingLineList="this.flyingLineList"
+          :tipTemplate="this.tipTemplate"
+          :title="title"
+          :Scale="Scale"
+        />
+      </div>
+      <div class="switch">
+        <div class="button" :class="{ active: !threeDMap }" @click="changeMap(2)">卫星地图</div>
+        <div class="button" :class="{ active: threeDMap }" @click="changeMap(3)">3D地图</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ChartMap from './map';
+import { getPortDetail } from '@/api/Vitality/PortEconomy/api';
+import {
+  getLocationInfo,
+} from '@/api/IndexItem';
 export default {
   components: {
     ChartMap,
@@ -60,6 +71,12 @@ export default {
           content: '港口位于新加坡南部的沿海，西临马六甲海峡（Straits of Malacca）的东南侧，南临新加坡海峡的北侧。是亚太地区最二大的港口，也是世界最大的集装箱港口之一。',
         },
       ],
+
+      threeDDataList: [],
+      flyingLineList: [],
+      tipTemplate: {},
+      title: '规上企业',
+      Scale: 37.7,
     };
   },
   mounted() {},
@@ -70,6 +87,60 @@ export default {
       } else {
         this.threeDMap = false;
       }
+    },
+    async getData() {
+      const res2 = await getLocationInfo({ type: '港口飞线' }).request();
+      const res = await getPortDetail().request();
+      console.log(res);
+      this.initThreeDData(res);
+      this.initThreeDData2(res2);
+    },
+    initThreeDData(data){
+      // console.log(data)
+      if (data) {
+        const endPoints = []
+        data.forEach((item,index) => {
+          endPoints.push([item.lng, item.lat]);
+        });
+        console.log(endPoints);
+        this.flyingLineList.push({
+          startPoint: [122.153209, 29.749349],
+          endPoints: endPoints,
+        });
+      }
+    },
+    initThreeDData2(data){
+      // console.log(data)
+      if (data) {
+        this.Scale =data.length > 1? 1.3:37.7
+        this.threeDDataList = data.map((item,index) => {
+          const MapLngLat = JSON.parse(item.geoCoord)[1];
+          let listItem = {}
+          let tipTemplates = {}
+          if (item.popupList) {
+            item.popupList.forEach((item2) => {
+              listItem[item2.title] = item2.value;
+              tipTemplates[item2.title] = item2.title;
+            })
+          }
+          if ( index === 0) {
+            this.tipTemplate = {
+              '港口名称': '港口名称',
+              ...tipTemplates
+            }
+          }
+          return {
+            x: MapLngLat[0],
+            y: MapLngLat[1],
+            z: 0,
+            港口名称: item.locationName,
+            ...listItem,
+          }
+        });
+      }
+      console.log(this.threeDDataList);
+      console.log(this.tipTemplate);
+      console.log(this.Scale);
     },
   },
 };
@@ -119,7 +190,7 @@ export default {
   width: 274px;
   height: 360px;
   position: absolute;
-  bottom: 48rem;
+  top: 120rem;
   right: 200rem;
   display: flex;
   justify-content: space-around;

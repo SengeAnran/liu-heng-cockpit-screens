@@ -43,6 +43,7 @@ export default {
       zoom: 13,
       zooms: [3, 16],
       center: [122.138836, 29.730147],
+      viewMode:'3D',
       mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
     });
     if (this.satelliteMap) {

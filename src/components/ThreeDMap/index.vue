@@ -7,27 +7,31 @@
 // import './css/main.css';
 export default {
   props: {
-    dataList: {
+    dataList: { // 点数据
       type: Array,
       default: () => {},
     },
-    polygonList: {
+    polygonList: { // 面数据
       type: Array,
       default: () => {},
     },
-    multiLineList: {
+    multiLineList: { // 线数据
       type: Array,
       default: () => {},
     },
-    title: {
+    flyingLineList: { // 线数据
+      type: Array,
+      default: () => {},
+    },
+    title: { // 弹窗标题
       type: String,
       default: '',
     },
-    Scale: {
+    Scale: { // 放大倍数（点）
       type: Number,
       default: 1.3,
     },
-    tipTemplate: {
+    tipTemplate: { // 弹窗展示数据项
       type: Object,
       default: () => {},
     },
@@ -84,13 +88,19 @@ export default {
           // console.log(this.Scale);
           if (this.polygonList && this.polygonList.length > 0) {
             this.drawPolygon();
-            setTimeout(() => {
-              this.drawMarker();
-            }, 5000);
-          } else if (this.multiLineList && this.multiLineList.length > 0) {
+            // setTimeout(() => {
+            //   this.drawMarker();
+            // }, 5000);
+          }
+          if (this.multiLineList && this.multiLineList.length > 0) {
             console.log('画线');
             this.drawLines();
-          } else {
+          }
+          if (this.flyingLineList && this.flyingLineList.length > 0) {
+            console.log('画飞线');
+            this.drawLines();
+          }
+          if (this.dataList && this.dataList.length > 0) {
             this.drawMarker();
           }
           // this.displayRange();
@@ -102,20 +112,21 @@ export default {
       const extent = this.sritMap.getExtent();
       this.sritMap.zoomToExtent([extent.xmin, extent.ymin, extent.xmax, extent.ymax])
     },
-    drawMarker() { // 打点
+    // 打点
+    drawMarker() {
       var jsondata = this.dataList;
       const mainContent = {
 
       }
       this.markers = this.sritMap.marker(jsondata, { "image": "images/markerHB.png" },
         {
-          // is3D: true,
-          isZoom: true,
+          // is3D: true, // 3d模式
+          isZoom: true, //自适应缩放层级
           cluster: false,
           // highlightStyle: {
           //   "image": "images/RedPin1LargeB.png"
           // },
-          zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
+          // zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
           title: this.title,
           // customInfoDom: (mainContent, attrs) => {
           //   console.log(mainContent);
@@ -139,7 +150,8 @@ export default {
       }, 5000);
       // console.log(this.markers);
     },
-    drawPolygon() { // 画面
+    // 画面
+    drawPolygon() {
       this.polygonList.forEach((item) => {
         console.log(item);
         const points = item.points;
@@ -163,7 +175,8 @@ export default {
       // console.log('markers');
       // console.log(this.markers);
     },
-    drawLines() { // 画线
+    // 画线
+    drawLines() {
       this.multiLineList.forEach((item) => {
         // console.log(item);
         const points = item.points;
@@ -191,6 +204,25 @@ export default {
       //     console.log(this.sritMap.getCurrentLevel());
       //   }
       // }, 8000);
+      setTimeout(() => {
+        this.sritMap.zoomToExtent(this.extent);
+      }, 5000);
+    },
+    // 画飞线
+    drawFlyingLine() {
+      this.flyingLineList.forEach((item) => {
+        // console.log(item);
+        const startPoint = item.startPoint;
+        const endPoints = item.points; // 终止点坐标集合 [[x1,y1],[x2,y2],[x3,y3],...]
+        const polygonType = { style: 0, color: "#ffff00", width: 3.0 };
+        this.markers = this.sritMap.addParabola(startPoint, endPoints, 1500,
+          {
+            style: 5, color: "#fffe", image: "images/colors1.png", width: 4, duration: 3000
+          },
+          {
+            isZoom: true
+          });
+      });
       setTimeout(() => {
         this.sritMap.zoomToExtent(this.extent);
       }, 5000);

@@ -50,14 +50,18 @@ export default {
     return {
 
       formatDate,
-      cameraIndexCode: this.videoList[Math.floor(this.videoList.length/2)].url,
+      // cameraIndexCode: this.videoList[Math.floor(this.videoList.length/2)].url,
+      cameraIndexCode: this.videoList[0].url,
       name: '',
-      activeIndex: Math.floor(this.videoList.length/2),
+      // activeIndex: Math.floor(this.videoList.length/2),
+      activeIndex: 0,
     };
   },
   mounted() {
-    this.cameraIndexCode = this.videoList[Math.floor(this.videoList.length/2)].url;
-    this.name = this.videoList[Math.floor(this.videoList.length/2)].name;
+    // this.cameraIndexCode = this.videoList[Math.floor(this.videoList.length/2)].url;
+    // this.name = this.videoList[Math.floor(this.videoList.length/2)].name;
+    this.cameraIndexCode = this.videoList[0].url;
+    this.name = this.videoList[0].name;
   },
   methods: {
     // onClick(index, id) {

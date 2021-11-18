@@ -163,6 +163,7 @@ export default {
         //   new AMap.TileLayer.Satellite(),
         //   new AMap.TileLayer.RoadNet(),
         // ],
+        viewMode:'3D',
         mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
       });
     },

@@ -1,14 +1,13 @@
 <template>
-  <div class="DataAnalysis">
-      <div style="width:5760px;height:1100px;overflow:hidden;border:0px">
-          <iframe
-            :src="getPageUrl"
-            width="11520px"
-            height="1100px"
-            ref="iframeDom"
-          ></iframe>
-      </div>
-    </div>
+  <div class="DataAnalysis ">
+    <iframe
+      :src="getPageUrl"
+      width="100%"
+      height="1100px"
+      ref="iframeDom"
+      style="transform-origin: top left; transform: scale(2.9,1)"
+    ></iframe>
+  </div>
 </template>
 
 <script>
@@ -18,11 +17,9 @@ export default {
   data() {
     return {
       getPageUrl: 'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html',
-      // getPageUrl: 'http://172.16.17.119:8081/#/',
     };
   },
   mounted() {
-    console.log(this.$refs.iframeDom)
   }
 };
 </script>
