@@ -5,7 +5,7 @@
     <transition name="slide" appear> <Department :key="Department" /></transition>
     <transition name="slide" appear> <Complaint :key="Complaint" /></transition>
     <SurveillanceVideo></SurveillanceVideo>
-<!--    <Map />-->
+    <Map />
     <transition name="slide1" appear> <Satisfaction :key="Satisfaction" /></transition>
     <transition name="slide1" appear> <Keywords :key="Keywords" /></transition>
     <!-- <Satisfaction />

@@ -13,6 +13,7 @@
       <div class="main-map" v-if="threeDMap">
         <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
         <ThreeDMap
+          showChinaOutLine
           :dataList="this.threeDDataList"
           :flyingLineList="this.flyingLineList"
           :tipTemplate="this.tipTemplate"
@@ -91,7 +92,7 @@ export default {
       }
     },
     async getData() {
-      const res2 = await getLocationInfo({ type: '港口飞线' }).request();
+      const res2 = await getLocationInfo({ type: '港口名称' }).request();
       const res = await getPortDetail().request();
       // console.log(res);
       this.initThreeDData(res);
@@ -119,7 +120,7 @@ export default {
         this.threeDDataList = data.map((item, index) => {
           // console.log(item.geoCoord);
           // console.log(JSON.parse(item.geoCoord));
-          const MapLngLat = (JSON.parse(item.geoCoord))[1];
+          const MapLngLat = JSON.parse(item.geoCoord);
           console.log(MapLngLat);
           let listItem = {};
           let tipTemplates = {};
@@ -144,13 +145,7 @@ export default {
           };
         });
       }
-      this.threeDDataList[0].x = 50.131333;
-      this.threeDDataList[0].y = 29.774833;
-      this.threeDDataList[1].x = 122.061068;
-      this.threeDDataList[1].y = 29.71412;
       console.log(this.threeDDataList);
-      console.log(this.tipTemplate);
-      console.log(this.Scale);
     },
   },
 };

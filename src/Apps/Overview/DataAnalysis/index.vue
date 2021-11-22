@@ -1,5 +1,6 @@
 <template>
-  <div class="DataAnalysis ">
+  <div class="DataAnalysis " @click="goPage">
+    <div class="mask"></div>
     <iframe
       :src="getPageUrl"
       width="100%"
@@ -20,17 +21,32 @@ export default {
     };
   },
   mounted() {
-  }
+  },
+  methods: {
+    goPage() {
+      // console.log('click');
+      window.open(this.getPageUrl);
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>
 .DataAnalysis {
+  cursor: pointer;
   box-sizing: border-box;
   position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 244px 160px 0;
+  .mask{
+    position: absolute;
+    width: 100%;
+    height: 1100px;
+    z-index: 100;
+    cursor: pointer;
+    //background: red;
+  }
   & > div {
     width: 1650px;
     overflow: hidden;

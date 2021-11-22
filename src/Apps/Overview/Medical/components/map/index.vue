@@ -1,6 +1,6 @@
 <template>
   <div class="map_wrapper">
-    <div class="mask"></div>
+<!--    <div class="mask"></div>-->
     <Map2d :satelliteMap="satelliteMap"  :activeItem="activeItem" v-show="!threeDMap"/>
     <div class="main-map" v-if="threeDMap">
 <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->

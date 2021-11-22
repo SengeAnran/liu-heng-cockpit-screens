@@ -1,6 +1,10 @@
 <template>
-  <div ref='container' id='container' :style="{ transform: `scale(${scaleX}, ${scaleY})` }">
+  <div>
+    <div ref='container' id='container' :style="{ transform: `scale(${scaleX}, ${scaleY})` }">
+    </div>
+<!--    <div style="position:absolute; left: 222rem;cursor:pointer; width: 30rem; height: 30rem; background: red" @click="showFW"></div>-->
   </div>
+
 </template>
 
 <script>
@@ -35,6 +39,14 @@ export default {
       type: Object,
       default: () => {},
     },
+    Global: {
+      type: Boolean,
+      default: false,
+    },
+    showChinaOutLine: {
+      type: Boolean,
+      default: false,
+    },
   },
   name: 'index',
   data() {
@@ -56,6 +68,23 @@ export default {
         ymax: 29.84163,
         ymin: 29.678456,
       },
+      globalExtent: {
+        heading: 5.088887490341627e-14,
+        pitch: -60.60014509027408,
+        // xmax: 144.45400012614263,
+        // xmin: 60.957866454540365,
+        // ymax: 51.074200623064215,
+        // ymin: 35.84404579104466,
+        // xmax: 136.80813149038022,
+        // xmin: 87.16314880849087,
+        // ymax: 50.00105650283994,
+        // ymin: 38.95979864273946,
+        xmax: 107.261519,
+        xmin: 107.041629,
+        ymax: 33.84163,
+        ymin: 33.678456,
+      },
+      outLinesJson: require('./100000.json'),
     };
   },
   watch: {
@@ -69,6 +98,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.outLinesJson);
     this.initMap();
     const handleScale = (scaleX, scaleY) => {
       this.scaleX = 1 / scaleX;
@@ -80,12 +110,19 @@ export default {
     });
   },
   methods: {
+    showFW() {
+      console.log(this.sritMap.getExtent());
+      console.log(this.sritMap.getCurrentScale());
+    },
     initMap() {
       // new Map(id: string div的编号, config?: any 主配置文件, 或者用户信息及rest服务地址, options?: any 地图配置选项):
       this.sritMap = new Srit.Map('container', {
         onload: () => { // 地图准备就绪
           console.log('onload');
           // console.log(this.Scale);
+          if (this.showChinaOutLine) {
+            this.drawOutLines();
+          }
           if (this.polygonList && this.polygonList.length > 0) {
             this.drawPolygon();
             // setTimeout(() => {
@@ -146,11 +183,17 @@ export default {
           // }, // 根据回调方法提供的div及属性信息，自定义信息显示的DomNode
           tipTemplate: this.tipTemplate,
         });
-      console.log(this.markers);
-      // setTimeout(() => {
-      //   this.sritMap.zoomToExtent(this.extent);
-      // }, 5000);
       // console.log(this.markers);
+      setTimeout(() => {
+        this.sritMap.zoomToExtent(this.extent);
+        // this.sritMap.zoomToExtent(this.globalExtent,{
+        //   heading: this.globalExtent.heading,
+        //   pitch: this.globalExtent.pitch,
+        //   zoomFactor: 398,
+        //   // zoomFactor: 1.5,
+        // });
+      }, 5000);
+      console.log(this.markers);
     },
     // 画面
     drawPolygon() {
@@ -210,6 +253,29 @@ export default {
         this.sritMap.zoomToExtent(this.extent);
       }, 5000);
     },
+    // 画轮廓线
+    drawOutLines() {
+      const polygonType = { style: 1, color: "#ffff00", width: 3.0 };
+      this.markers = this.sritMap.addPolyline(this.outLinesJson, polygonType,
+        {
+          // isZoom: true,
+          // cluster: false,
+          // // zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
+          // title: this.title,
+          clampToGround: true,
+        });
+      console.log(this.sritMap.getCurrentLevel());
+      // console.log(this.sritMap.getCurrentScale());
+      // setTimeout(() => {
+      //   for (let i = 13; i > 0; i--) {
+      //     this.sritMap.zoomOut();
+      //     console.log(this.sritMap.getCurrentLevel());
+      //   }
+      // }, 8000);
+      // setTimeout(() => {
+      //   this.sritMap.zoomToExtent(this.extent);
+      // }, 5000);
+    },
     // 画飞线
     drawFlyingLine() {
       console.log(this.flyingLineList);
@@ -227,7 +293,12 @@ export default {
           });
       });
       setTimeout(() => {
-        this.sritMap.zoomToExtent(this.extent);
+        this.sritMap.zoomToExtent(this.extent,{
+          heading: this.globalExtent.heading,
+          pitch: this.globalExtent.pitch,
+          zoomFactor: 398,
+          // zoomFactor: 1.5,
+        });
       }, 5000);
     },
     clear() {

@@ -93,5 +93,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.amap-marker:hover{
+  z-index: 120 !important;
+}
 @import './mark.scss';
+
 </style>

@@ -5,10 +5,10 @@
     <div class="main-map" v-show="threeDMap">
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
     </div>
-    <div class="switch">
-      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>
-      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>
-    </div>
+<!--    <div class="switch">-->
+<!--      <div class="button" :class="{'active': !threeDMap}" @click="changeMap(2)">2D地图</div>-->
+<!--      <div class="button" :class="{'active': threeDMap }" @click="changeMap(3)" >3D地图</div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -28,10 +28,14 @@ export default {
   mounted() {
     this.mapDom = this.$refs.map;
     this.map = new AMap.Map(this.mapDom, {
-      resizeEnable: true,
+      // resizeEnable: true,
       zoom: 13.4,
       zooms: [3, 16],
       center: [122.200254, 29.717613],
+      layers: [
+        new AMap.TileLayer.Satellite(),
+        new AMap.TileLayer.RoadNet()
+      ],
       mapStyle: 'amap://styles/fd920fcbd2be012ec26b3d6f90c39f09',
     });
     // const marker = new AMap.Marker({
