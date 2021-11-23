@@ -39,11 +39,11 @@ export default {
       type: Object,
       default: () => {},
     },
-    Global: {
+    Global: { // 展示地球
       type: Boolean,
       default: false,
     },
-    showChinaOutLine: {
+    showChinaOutLine: { // 展示中国边界线
       type: Boolean,
       default: false,
     },
@@ -135,11 +135,16 @@ export default {
           }
           if (this.flyingLineList && this.flyingLineList.length > 0) {
             console.log('画飞线');
-            // this.drawFlyingLine();
+            this.drawFlyingLine();
           }
           if (this.dataList && this.dataList.length > 0) {
             console.log('画点');
-            this.drawMarker();
+            if (this.Global) {
+              this.drawMarker2();
+            } else {
+              this.drawMarker();
+            }
+
           }
           // this.displayRange();
         },
@@ -184,15 +189,64 @@ export default {
           tipTemplate: this.tipTemplate,
         });
       // console.log(this.markers);
-      setTimeout(() => {
-        this.sritMap.zoomToExtent(this.extent);
-        // this.sritMap.zoomToExtent(this.globalExtent,{
-        //   heading: this.globalExtent.heading,
-        //   pitch: this.globalExtent.pitch,
-        //   zoomFactor: 398,
-        //   // zoomFactor: 1.5,
-        // });
-      }, 5000);
+      if(!this.Global) {
+        setTimeout(() => {
+          this.sritMap.zoomToExtent(this.extent);
+          // this.sritMap.zoomToExtent(this.globalExtent,{
+          //   heading: this.globalExtent.heading,
+          //   pitch: this.globalExtent.pitch,
+          //   zoomFactor: 398,
+          //   // zoomFactor: 1.5,
+          // });
+        }, 5000);
+      }
+      console.log(this.markers);
+    },
+    // 港口打点
+    drawMarker2() {
+      var jsondata = this.dataList;
+      // const mainContent = {
+      //
+      // };
+      console.log(jsondata);
+      this.markers = this.sritMap.marker(jsondata, { "image": "images/markerZA.png" },
+        {
+          // is3D: true, // 3d模式
+          isZoom: true, // 自适应缩放层级
+          cluster: false,
+          // highlightStyle: {
+          //   "image": "images/RedPin1LargeB.png"
+          // },
+          // zoomFactor: this.Scale, // 针对缩放的范围比例因子,默认值为0.1,即缩放范围增大0.1倍
+          title: this.title,
+          // customInfoDom: (mainContent, attrs) => {
+          //   console.log(mainContent);
+          //   console.log(attrs)
+          //
+          //   var textNode = document.createTextNode("Hello world!");
+          //
+          //   // mainContent.appendChild(textNode);
+          //   // mainContent.context = `<div style="font-size: 30px; color: #0d1f38">${attrs['简介']}</div>`;
+          //   mainContent.context = `${attrs['简介']}`;
+          //   // attrs = this.tipTemplate;
+          //   return {
+          //      mainContent, attrs
+          //   }
+          // }, // 根据回调方法提供的div及属性信息，自定义信息显示的DomNode
+          tipTemplate: this.tipTemplate,
+        });
+      // console.log(this.markers);
+      if(!this.Global) {
+        setTimeout(() => {
+          this.sritMap.zoomToExtent(this.extent);
+          // this.sritMap.zoomToExtent(this.globalExtent,{
+          //   heading: this.globalExtent.heading,
+          //   pitch: this.globalExtent.pitch,
+          //   zoomFactor: 398,
+          //   // zoomFactor: 1.5,
+          // });
+        }, 5000);
+      }
       console.log(this.markers);
     },
     // 画面
@@ -255,7 +309,8 @@ export default {
     },
     // 画轮廓线
     drawOutLines() {
-      const polygonType = { style: 1, color: "#ffff00", width: 3.0 };
+      // const polygonType = { style: 1, color: "#ffff0055", width: 3.0, opacity: 0.1, };
+      const polygonType = { style: 1, color: "#F5FFFA55", width: 3.0, opacity: 0.1, };
       this.markers = this.sritMap.addPolyline(this.outLinesJson, polygonType,
         {
           // isZoom: true,
@@ -286,14 +341,14 @@ export default {
         console.log(endPoints);
         this.sritMap.addParabola(startPoint, endPoints, 1500,
           {
-            style: 5, color: "#fffe", image: "images/colors1.png", width: 4, duration: 3000,
+            style: 5, color: "#FF450055", image: "images/colors1.png", width: 4, duration: 3000,
           },
           {
             isZoom: true,
           });
       });
       setTimeout(() => {
-        this.sritMap.zoomToExtent(this.extent,{
+        this.sritMap.zoomToExtent(this.globalExtent,{
           heading: this.globalExtent.heading,
           pitch: this.globalExtent.pitch,
           zoomFactor: 398,

@@ -14,6 +14,7 @@
         <!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
         <ThreeDMap
           showChinaOutLine
+          Global
           :dataList="this.threeDDataList"
           :flyingLineList="this.flyingLineList"
           :tipTemplate="this.tipTemplate"
