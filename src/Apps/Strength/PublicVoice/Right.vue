@@ -261,6 +261,7 @@ export default {
         },
       ],
       currentTab: '全部',
+      features: 'width=1800,height=700,left=50,top=200',
       tabList: [{ name: '全部' }, { name: '正面' }, { name: '负面' }, { name: '中性' }],
     };
   },
@@ -270,6 +271,10 @@ export default {
   mounted() {
     this.list = this.list0;
     this.getData();
+    this.countStyle();
+    window.onresize = () => {
+      this.countStyle();
+    };
   },
   methods: {
     async getData(qgqx) {
@@ -296,7 +301,17 @@ export default {
       // }
     },
     onClick(link) {
-      window.open(link);
+      window.open(link,'_blank',this.features);
+    },
+    countStyle() {
+      const clientWidth = document.documentElement.clientWidth
+      const clientHeight = document.documentElement.clientHeight
+      // console.log(document.documentElement);
+      // console.log(document.documentElement.clientHeight);
+      this.features = 'width=' + clientWidth +
+        ',height=' + (parseInt(clientHeight * 0.83)) +
+        ',left=' + 0 +
+        ',top=' + (parseInt(clientHeight * 0.23));
     },
   },
 };

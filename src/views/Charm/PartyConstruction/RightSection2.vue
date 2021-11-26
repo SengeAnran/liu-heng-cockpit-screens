@@ -8,6 +8,7 @@
           :options="swiperOptions"
           @slideChange="onSlideChange"
           class="swiper-main"
+          v-if="showKey"
         >
           <swiper-slide v-for="(item, index) in dataList" :key="index">
             <div class="img-bg">
@@ -84,6 +85,7 @@ export default {
       currentTab: '工会',
       dataList: [],
       currentData: {},
+      showKey: false,
     };
   },
   mounted() {
@@ -102,12 +104,17 @@ export default {
     },
     selectTab(name, index) {
       // console.log(name, index);
+      // console.log(name);
       this.mySwiper.slideTo(index);
     },
     async getData() {
       const result = await workCompetition().request();
       // console.log('workCompetition', result);
-
+      // this.tabList = result.map((i) => {
+      //   return {
+      //     name: i.qtlx,
+      //   }
+      // });
       this.dataList = result.map((i) => {
         return {
           ...i,
@@ -115,6 +122,7 @@ export default {
         };
       });
       this.currentData = this.dataList[0];
+      this.showKey = true;
     },
   },
 };
