@@ -25,6 +25,8 @@ export default {
       data: null,
       title: '最新评论',
       time: '2021-09-28 22:25',
+      link: '',
+      features: 'width=1800,height=700,left=50,top=200',
       content:
         '百年征程波澜壮阔， 百年初心历久弥坚。在中国共产党成立100周年之际，舟山市税务系统开展“最佳基层党组织”“最佳党支部书记”“最佳共产党员”等“五最佳”评选活动，深入探寻他们的故事，感悟共产党人的初...',
     };
@@ -41,6 +43,10 @@ export default {
     ];
     this.getData();
     // this.initMap();
+    window.onresize = () => {
+      this.countStyle();
+    };
+    // document.getElementById('boxWind').addEventListener("click",this.goPage());
   },
   methods: {
     changeMap(type) {
@@ -66,12 +72,14 @@ export default {
         position: [122.180087, 29.702798],
         content: this.boxTemp(),
         offset: new AMap.Pixel(0, 0),
+        clickable: true,
       });
+      marker.on('click', this.goPage);
       marker.setMap(this.map);
     },
     boxTemp() {
       return `
-       <div class="box">
+       <div class="box" id="boxWind">
           <div class="title"> ${this.title}</div>
           <div class="time"> ${this.time}</div>
           <div class="content">
@@ -84,12 +92,27 @@ export default {
       if (data) {
         this.time = data.fbsj;
         this.content = data.nrzy;
+        this.link = data.ywlj;
       }
       this.initMap();
       this.map.add(this.layers);
       // this.positive = data[0].zmsjs;
       // this.negative = data[0].fmsjs;
       // this.neutral = data[0].zxsjs;
+    },
+    goPage(){
+      console.log('onclick');
+      window.open(this.link,'_blank',this.features);
+    },
+    countStyle() {
+      const clientWidth = document.documentElement.clientWidth
+      const clientHeight = document.documentElement.clientHeight
+      // console.log(document.documentElement);
+      // console.log(document.documentElement.clientHeight);
+      this.features = 'width=' + clientWidth +
+        ',height=' + (parseInt(clientHeight * 0.83)) +
+        ',left=' + 0 +
+        ',top=' + (parseInt(clientHeight * 0.23));
     },
   },
 };

@@ -208,8 +208,9 @@ export default {
       // const mainContent = {
       //
       // };
-      console.log(jsondata);
-      this.markers = this.sritMap.marker(jsondata, { "image": "images/markerZA.png" },
+      console.log(location);
+      // this.markers = this.sritMap.marker(jsondata, { "image": location.origin +'/imgs/gangkou.png' },
+      this.markers = this.sritMap.marker(jsondata, { "image": "images/markerCG.png" },
         {
           // is3D: true, // 3d模式
           isZoom: true, // 自适应缩放层级
@@ -341,7 +342,7 @@ export default {
         console.log(endPoints);
         this.sritMap.addParabola(startPoint, endPoints, 1500,
           {
-            style: 5, color: "#FF450055", image: "images/colors1.png", width: 4, duration: 3000,
+            style: 5, color: "#006fff66", image: "images/colors2.png", width: 4, duration: 3000,
           },
           {
             isZoom: true,
