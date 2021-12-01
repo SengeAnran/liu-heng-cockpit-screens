@@ -1,3 +1,5 @@
+import {left} from "core-js/internals/array-reduce";
+
 export default function getOptions(data) {
   return {
     grid: {
@@ -30,6 +32,9 @@ export default function getOptions(data) {
         fontWeight: 500,
         color: '#FFF',
         opacity: 0.7,
+        showMaxLabel: true,
+        showMinLabel: false,
+        align: 'right',
       },
       splitLine: {
         lineStyle: {
