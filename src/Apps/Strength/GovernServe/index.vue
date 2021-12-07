@@ -1,37 +1,138 @@
 <template>
-  <div class="govern-serve">
-    <transition name="slide" appear> <Left :key="Left" /></transition>
-    <Map />
-    <transition name="slide1" appear> <Right :key="Right" /></transition>
+  <div class="traffic">
+    <div class="nav">
+      <ul class="loop-tab">
+        <li
+          :class="{ active: currentTab === item.name }"
+          v-for="(item, index) in listData"
+          :key="index"
+          @click="selectTab(item.name, item.index)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+    </div>
+    <GovernmentService v-if="tabIndex === 1"></GovernmentService>
+<!--    <Bidding v-if="tabIndex === 2"></Bidding>-->
   </div>
 </template>
-
 <script>
-import Left from './LeftNew';
-import Map from './Map';
-import Right from './RightNew';
+import GovernmentService from './components/GovernmentService';
+// import Bidding from './components/Bidding';
 
 export default {
-  name: 'GovernServe',
-  components: { Left, Map, Right },
-  data() {
-    return {};
+  components: {
+    GovernmentService,
+    // Bidding,
   },
-  computed: {},
-  mounted() {},
-  methods: {},
+  data() {
+    return {
+      listData: [
+        {
+          index: 1,
+          name: '政务服务',
+        },
+        {
+          index: 2,
+          name: '招投标',
+        },
+      ],
+      currentTab: '政务服务',
+      tabIndex: 1,
+    };
+  },
+
+  methods: {
+    selectTab(name, index) {
+      this.currentTab = name;
+      this.tabIndex = index;
+    },
+  },
 };
 </script>
-
 <style lang="scss" scoped>
-@import url('../../../transform.css');
-.govern-serve {
-  width: 100%;
-  height: 2070px;
-  background-position: center;
-  // background: url('./img/bg.png') no-repeat 100% 100%;
-  position: absolute;
+.traffic {
+  position: fixed;
   top: 0;
-  left: 0;
+  width: 100%;
+  height: 135rem;
+  // background: url('/imgs/overview-traffic.jpg');
+  .nav {
+    position: absolute;
+    top: 12rem;
+    left: 20rem;
+    z-index: 99999;
+    &::after {
+      content: '';
+      display: block;
+      height: 3px;
+      background: #233049;
+    }
+    .loop-tab {
+      display: flex;
+      contain: content;
+      //justify-content: space-between;
+      align-items: center;
+      height: 44px;
+      list-style: none;
+      width: 149rem;
+      overflow-x: auto;
+      padding: 0;
+      //margin: 1rem 3rem;
+      &::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+        background-color: #413f3f;
+      }
+      /*定义滚动条轨道
+      内阴影+圆角*/
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(20, 34, 49, 0.3);
+        // border-radius:10px;
+        background-color: #0d1f38;
+      }
+      /*定义滑块
+      内阴影+圆角*/
+      &::-webkit-scrollbar-thumb {
+        // border-radius:10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: rgb(70, 70, 70);
+      }
+      li {
+        font-size: 28px;
+        color: #ffffff;
+        padding: 0 3rem;
+        cursor: pointer;
+        min-width: 14rem;
+        height: 44px;
+        text-align: center;
+        &.active {
+          font-size: 28px;
+          font-family: Source Han Sans CN;
+          font-weight: 500;
+          color: #95f5f7;
+          //background: url('~@/assets/images/Charm/tab-active.png') no-repeat center;
+          //background: url('./img/xz.png') no-repeat center;
+          background: url('./img/xz.png') 100% 100%;
+          //background-size: 160%;
+        }
+      }
+    }
+    //ul {
+    //  list-style-type: none;
+    //  margin: 0;
+    //  padding: 0;
+    //  overflow: hidden;
+    //  background-color: #333;
+    //  li {
+    //    //width: 15rem;
+    //    display: block;
+    //    padding: 2rem;
+    //    background-color: #dddddd;
+    //    font-size: 3rem;
+    //    float: left;
+    //  }
+    //}
+  }
 }
 </style>

@@ -1,0 +1,52 @@
+.govern-serve {
+  position: relative;
+  .box {
+    background: url(./img/bg-box.png) 100% 100% no-repeat;
+    //background: url(./img/info.png) 100% 100% no-repeat;
+    width: 592px;
+    height: 463px;
+    //position: absolute;
+    //top: 30%;
+    //left: 50%;
+    transform: translate(-20%, -50%);
+    align-items: center;
+    padding: 20px 0 0 100px;
+    box-sizing: border-box;
+    .content {
+      width: 500px;
+      height: 300px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .item {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+    }
+    .item:nth-child(1) {
+      width: 100%;
+    }
+    .title {
+      font-size: 34px;
+      font-family: Source Han Sans SC;
+      font-weight: bold;
+      color: #77ffff;
+      width: 100%;
+    }
+    .name {
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 500;
+      color: #ffffff;
+    }
+    .number {
+      font-size: 30px;
+      font-weight: bold;
+      color: #77ffff;
+      display: flex;
+      align-items: center;
+      font-family: 'DIN Alternate';
+    }
+  }
+}
