@@ -25,6 +25,10 @@ export const getMonthlyStar = () => {
 export const getMonthlyHandling = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getMonthlyHandling' });
 };
+// 好差评数据概览
+export const getGoodReview = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getGoodReview' });
+};
 
 // **********************************
 // 预约情况分析

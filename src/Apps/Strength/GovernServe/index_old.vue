@@ -8,7 +8,8 @@
 
 <script>
 import Left from './LeftNew';
-import Map from './newMap';
+// import Map from './Map';
+import Map from './newMap/index';
 import Right from './RightNew';
 
 export default {
@@ -24,7 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('../../../../../transform.css');
+@import url('../../../transform.css');
 .govern-serve {
   width: 100%;
   height: 2070px;

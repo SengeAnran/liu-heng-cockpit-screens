@@ -8,7 +8,7 @@
 
 <script>
 import Left from './LeftNew';
-import Map from './Map';
+import Map from './newMap';
 import Right from './RightNew';
 
 export default {

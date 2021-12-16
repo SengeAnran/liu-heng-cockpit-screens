@@ -175,7 +175,7 @@ export default {
     z-index: 6;
     pointer-events: none;
     background-size: 100% 100%;
-    background: url('./img/mask.png') no-repeat;
+    //background: url('./img/mask.png') no-repeat;
   }
   .main-map {
     position: absolute;

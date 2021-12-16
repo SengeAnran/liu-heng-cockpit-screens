@@ -1,0 +1,25 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "核心指标",
+                "dqsczz": "1106724",
+                "gdzctz": "1106724",
+                "gkhwttl": "4534",
+                "wmjckze": "53453",
+                "czzsr": "54363",
+                "gsqys": "415",
+                "ynyzz": "115200000"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    122.130411,
+                    29.720321
+                ]
+            }
+        }
+    ]
+}

@@ -16,8 +16,8 @@
         <banliqushi></banliqushi>
       </div>
       <div style="margin-top: 30px">
-        <BaseTitle title="服务总满意度" :width="800" />
-        <Zhanbifenxi></Zhanbifenxi>
+        <BaseTitle title="好差评数据概览" :width="800" />
+        <goodBedDate></goodBedDate>
       </div>
     </div>
   </div>
@@ -26,7 +26,7 @@
 <script>
 import Banli from './LeftNewItem/banli';
 import Banliqushi from './LeftNewItem/banliqushi';
-import Zhanbifenxi from './LeftNewItem/zhanbifenxi';
+import goodBedDate from './LeftNewItem/goodBedDate';
 import Banlixinxi from './LeftNewItem/banlixinxi';
 // import {
 //   getRealtimeBooking,
@@ -36,7 +36,7 @@ import Banlixinxi from './LeftNewItem/banlixinxi';
 // } from '@/api/Strength/GovernServe/api';
 export default {
   name: 'ProjectManageLeft',
-  components: { Banli, Banliqushi, Zhanbifenxi, Banlixinxi },
+  components: { Banli, Banliqushi, goodBedDate, Banlixinxi },
   data() {
     return {
       data: {

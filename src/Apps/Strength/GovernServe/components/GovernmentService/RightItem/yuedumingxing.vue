@@ -1,6 +1,6 @@
 <template>
-  <div >
-    <swiper  ref="mySwiper" @mouseenter="mouseEnter(dataList)" @mouseleave="mouseleave(dataList)" :options="swiperOption" v-if="dataList.length > 1">
+  <div @mouseenter="mouseEnter(dataList)" @mouseleave="mouseleave(dataList)" >
+    <swiper  ref="mySwiper" :options="swiperOption" v-if="dataList.length > 1">
       <swiper-slider v-for="(item, index) in dataList" :key="index">
         <div class="content1">
           <div class="img">
@@ -108,8 +108,6 @@ export default {
             return;
           }
           this.dataList.push(json);
-          this.dataList.push(json);
-          this.dataList.push(json);
           // console.log(this.dataList);
         });
     },
@@ -118,6 +116,7 @@ export default {
         return;
       }
       // this.swiper.swiper.autoplay.stop();
+      console.log(this.$refs.mySwiper.swiper);
       if (this.$refs.mySwiper) {
         this.$refs.mySwiper.swiper.autoplay.stop();
       }
@@ -181,7 +180,8 @@ export default {
   color: #ffffff;
 }
 .swiper-container {
-  width: 100%;
+  //width: 100%;
+  width: 800px;
   height: 451px;
   --swiper-theme-color: #fdfcfc;
   .swiper-slide {

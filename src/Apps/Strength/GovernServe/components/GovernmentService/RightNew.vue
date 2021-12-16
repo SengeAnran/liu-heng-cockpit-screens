@@ -6,7 +6,7 @@
         <Jiankong></Jiankong>
       </div>
       <div class="yuedu">
-        <BaseTitle title="月度明星" :width="800" />
+        <BaseTitle title="异常行为分析" :width="800" />
         <Yuedumingxing></Yuedumingxing>
       </div>
     </div>
