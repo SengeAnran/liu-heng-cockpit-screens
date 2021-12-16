@@ -46,7 +46,7 @@ export default {
       },
       data1: {
         content: 1000,
-        unit: 'k㎡/人',
+        unit: '人/k㎡',
       },
       loop: {
         // 是否开启数值循环

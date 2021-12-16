@@ -286,6 +286,7 @@ export default {
         length: '4217',
         unit: '米',
       },
+      swiper: this.$refs.mySwiper,
       swiperOption: {
         direction: 'vertical',
         speed: 1000,

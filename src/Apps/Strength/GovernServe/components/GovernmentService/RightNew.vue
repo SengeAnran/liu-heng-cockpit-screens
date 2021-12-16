@@ -11,8 +11,14 @@
       </div>
     </div>
     <div>
-      <BaseTitle title="本月事件办理量排行" :width="800" />
-      <Banlixinxi></Banlixinxi>
+      <div>
+        <BaseTitle title="本月事件办理量排行" :width="800" />
+        <Banlixinxi></Banlixinxi>
+      </div>
+      <div class="yuedu">
+        <BaseTitle title="月度明星" :width="800" />
+        <Yuedumingxing></Yuedumingxing>
+      </div>
     </div>
   </div>
 </template>

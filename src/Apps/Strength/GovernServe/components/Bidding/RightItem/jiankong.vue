@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Monitor from '../../../Overview/Traffic/components/Monitor';
+import Monitor from '@/Apps/Overview/Traffic/components/Monitor';
 import {
   getRoadMonitor,
 } from '@/api/Overview/Traffic';

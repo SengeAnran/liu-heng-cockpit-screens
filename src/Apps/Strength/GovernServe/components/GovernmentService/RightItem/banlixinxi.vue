@@ -1,17 +1,38 @@
 <template>
   <div>
     <div class="table">
-      <div>
+<!--      <div>-->
+<!--        <div class="table-title">-->
+<!--          <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>-->
+<!--        </div>-->
+<!--        <div class="table-body">-->
+<!--          <div class="table-body-item" v-for="(item, index) in list1" :key="item">-->
+<!--            <div>{{ index + 1 }}</div>-->
+<!--            <div>{{ item.content }}</div>-->
+<!--            <div>{{ item.number }}</div>-->
+<!--            <div>{{ item.name }}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div @mouseenter="mouseEnter(list1)" @mouseleave="mouseleave(list1)">
         <div class="table-title">
           <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>
         </div>
-        <div class="table-body">
-          <div class="table-body-item" v-for="(item, index) in list1" :key="item">
-            <div>{{ index + 1 }}</div>
-            <div>{{ item.content }}</div>
-            <div>{{ item.number }}</div>
-            <div>{{ item.name }}</div>
-          </div>
+        <swiper ref="mySwiper" :options="swiperOption" v-if="list1.length > 3">
+          <swiper-slider v-for="(item, index) in list1" :key="index">
+            <div class="table-body-item">
+              <div>{{ index + 1 }}</div>
+              <div>{{ item.content }}</div>
+              <div>{{ item.number }}</div>
+              <div>{{ item.name }}</div>
+            </div>
+          </swiper-slider>
+        </swiper>
+        <div v-else class="table-body-item" v-for="(item, index) in list1" :key="item">
+          <div>{{ index + 1 }}</div>
+          <div>{{ item.content }}</div>
+          <div>{{ item.number }}</div>
+          <div>{{ item.name }}</div>
         </div>
       </div>
     </div>
@@ -19,8 +40,15 @@
 </template>
 
 <script>
+import swiper from '@/components/Swiper';
+import SwiperSlider from '@/components/SwiperSlider';
 import { getMonthlyHandling } from '@/api/Strength/GovernServe/api';
+// import Title from "../../../../../Overview/Traffic/components/BridgeAndTunnel/Title";
 export default {
+  components: {
+    swiper,
+    SwiperSlider,
+  },
   data() {
     return {
       list: ['排序', '办事项', '受理量（件）', '满意度（%）'],
@@ -71,6 +99,19 @@ export default {
           name: '100%',
         },
       ],
+      swiperOption: {
+        direction: 'vertical',
+        speed: 1000,
+        slidesPerView: 5,
+        spaceBetween: 10,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false,
+        },
+        // autoplay: true,
+      },
     };
   },
   mounted() {
@@ -92,6 +133,23 @@ export default {
             };
           });
         });
+    },
+    mouseEnter(lists) {
+      if (lists.length < 5) {
+        return;
+      }
+      // this.swiper.swiper.autoplay.stop();
+      if (this.$refs.mySwiper) {
+        this.$refs.mySwiper.swiper.autoplay.stop();
+      }
+    },
+    mouseleave(lists) {
+      if (lists.length < 5) {
+        return;
+      }
+      if (this.$refs.mySwiper) {
+        this.$refs.mySwiper.swiper.autoplay.start();
+      }
     },
   },
 };
@@ -133,28 +191,60 @@ export default {
     line-height: 75px;
   }
 }
-.table-body {
-  height: 970px;
-  border-radius: 14px;
-
-  overflow: auto;
-  .table-body-item {
-    display: flex;
-    background: url('../img/list-bg.png') no-repeat 100% 100%;
-    margin-top: 10px;
-    div {
-      //margin-left: 10px;
-      width: 180px;
-      text-align: center;
-      line-height: 75px;
-      color: #59dbe6;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
+.table-body-item {
+  background: url('../img/list-bg.png') no-repeat 100% 100%;
+  //margin: 1.2rem 0;
+  //box-sizing: content-box;
+  //margin-top: 10px;
+  //margin-bottom: 10px;
+  width: 795px;
+  height: 75px;
+  line-height: 75px;
+  display: flex;
+  //justify-content: space-between;
+  div {
+    //margin-left: 10px;
+    width: 180px;
+    text-align: center;
+    color: #59dbe6;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
-  .table-body-item :hover {
-    cursor: pointer;
+}
+.table-body-item :hover {
+  cursor: pointer;
+}
+//.table-body {
+//  height: 970px;
+//  border-radius: 14px;
+//
+//  overflow: auto;
+//  .table-body-item {
+//    display: flex;
+//    background: url('../img/list-bg.png') no-repeat 100% 100%;
+//    margin-top: 10px;
+//    div {
+//      //margin-left: 10px;
+//      width: 180px;
+//      text-align: center;
+//      line-height: 75px;
+//      color: #59dbe6;
+//      overflow: hidden;
+//      white-space: nowrap;
+//      text-overflow: ellipsis;
+//    }
+//  }
+//  .table-body-item :hover {
+//    cursor: pointer;
+//  }
+//}
+.swiper-container {
+  width: 100%;
+  height: 347px;
+  .swiper-slide {
+    height: 75px !important;
+    //box-sizing: border-box !important;
   }
 }
 </style>

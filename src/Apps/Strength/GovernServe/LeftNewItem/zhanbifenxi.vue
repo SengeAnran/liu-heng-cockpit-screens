@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PieChart from '../../../Overview/Medical/components/PieChart';
+import PieChart from '@/Apps/Overview/Medical/components/PieChart';
 import { getEvaluationPercent } from '@/api/Strength/GovernServe/api';
 export default {
   components: { PieChart },

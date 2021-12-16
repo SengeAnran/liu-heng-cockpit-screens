@@ -1,8 +1,8 @@
 <template>
   <div class="govern-serve">
-    <transition name="slide" appear> <Left :key="Left" /></transition>
+<!--    <transition name="slide" appear> <Left :key="Left" /></transition>-->
     <Map />
-    <transition name="slide1" appear> <Right :key="Right" /></transition>
+<!--    <transition name="slide1" appear> <Right :key="Right" /></transition>-->
   </div>
 </template>
 
