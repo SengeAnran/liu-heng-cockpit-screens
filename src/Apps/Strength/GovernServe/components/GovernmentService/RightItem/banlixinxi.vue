@@ -1,19 +1,6 @@
 <template>
   <div>
     <div class="table">
-<!--      <div>-->
-<!--        <div class="table-title">-->
-<!--          <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>-->
-<!--        </div>-->
-<!--        <div class="table-body">-->
-<!--          <div class="table-body-item" v-for="(item, index) in list1" :key="item">-->
-<!--            <div>{{ index + 1 }}</div>-->
-<!--            <div>{{ item.content }}</div>-->
-<!--            <div>{{ item.number }}</div>-->
-<!--            <div>{{ item.name }}</div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
       <div @mouseenter="mouseEnter(list1)" @mouseleave="mouseleave(list1)">
         <div class="table-title">
           <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>

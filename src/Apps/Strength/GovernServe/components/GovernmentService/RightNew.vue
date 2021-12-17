@@ -7,7 +7,7 @@
       </div>
       <div class="yuedu">
         <BaseTitle title="异常行为分析" :width="800" />
-        <Yuedumingxing></Yuedumingxing>
+        <abnormalBehavior></abnormalBehavior>
       </div>
     </div>
     <div>
@@ -27,10 +27,11 @@
 import Banlixinxi from './RightItem/banlixinxi';
 import Jiankong from './RightItem/jiankong';
 
+import abnormalBehavior from './RightItem/abnormalBehavior';
 import Yuedumingxing from './RightItem/yuedumingxing';
 
 export default {
-  components: { Jiankong, Banlixinxi, Yuedumingxing },
+  components: { Jiankong, Banlixinxi, Yuedumingxing, abnormalBehavior },
 };
 </script>
 

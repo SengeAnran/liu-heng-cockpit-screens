@@ -16,7 +16,7 @@
         </div>
         <div class="kouhao">
           <div style="font-size: 20px">服务口号</div>
-          <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">{{dataList.fwkh}}</div>
+          <div style="font-size: 20px; font-family: Source Han Sans CN; font-weight: 400; color: #FFFFFF; opacity: 0.5;">{{dataList.fwkh}}</div>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .content1 {
   margin-top: 28px;
   background: url('../img/yue_bg.png') 100% 100% no-repeat;

@@ -69,7 +69,7 @@ export default {
 
       threeDDataList: [],
       tipTemplate: {},
-      title: '政务服务',
+      title: '招投标',
       Scale: 37.7,
     };
   },
@@ -91,7 +91,7 @@ export default {
     },
     // 获得图例弹窗数
     async getClassDate() {
-      const res = await getLocationList({ type: '政务服务' }).request();
+      const res = await getLocationList({ type: '招投标' }).request();
       this.list = res;
       this.selectMark(res[0], 0);
     },

@@ -7,22 +7,9 @@
             <img :src="'data:image/png;base64,'+item.zp" />
           </div>
           <div class="content">
-            <div class="name">{{item.xm}}</div>
-            <div>
-              <span class="font-name">月份</span>
-              <span class="font-content">{{item.yf}}</span>
-            </div>
-            <div>
-              <span class="font-name">工号</span>
-              <span class="font-content">{{item.gh}}</span>
-            </div>
-            <div>
-              <span class="font-name">部门</span>
-              <span class="font-content">{{item.bm}}</span>
-            </div>
+            <div class="name">备注信息</div>
             <div class="kouhao">
-              <div style="font-size: 20px">服务口号</div>
-              <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">{{item.fwkh}}</div>
+              {{ item.bzxx }}
             </div>
           </div>
         </div>
@@ -33,50 +20,19 @@
         <img :src="'data:image/png;base64,'+dataList[0].zp" />
       </div>
       <div class="content">
-        <div class="name">{{dataList[0].xm}}</div>
-        <div>
-          <span class="font-name">工号</span>
-          <span class="font-content">{{dataList[0].gh}}</span>
-        </div>
-        <div>
-          <span class="font-name">部门</span>
-          <span class="font-content">{{dataList[0].bm}}</span>
-        </div>
+        <div class="name">备注信息</div>
         <div class="kouhao">
-          <div style="font-size: 20px">服务口号</div>
-          <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">{{dataList[0].fwkh}}</div>
+          {{ dataList[0].bzxx }}
         </div>
       </div>
     </div>
   </div>
-<!--  <div>-->
-<!--    <div class="content1">-->
-<!--      <div class="img">-->
-<!--        <img :src="'data:image/png;base64,'+dataList.zp" />-->
-<!--      </div>-->
-<!--      <div class="content">-->
-<!--        <div class="name">{{dataList.xm}}</div>-->
-<!--        <div>-->
-<!--          <span class="font-name">工号</span>-->
-<!--          <span class="font-content">{{dataList.gh}}</span>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          <span class="font-name">部门</span>-->
-<!--          <span class="font-content">{{dataList.bm}}</span>-->
-<!--        </div>-->
-<!--        <div class="kouhao">-->
-<!--          <div style="font-size: 20px">服务口号</div>-->
-<!--          <div style="font-size: 18px; color: #dfdfdf; margin-top: 20px">{{dataList.fwkh}}</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
 </template>
 
 <script>
 import swiper from '@/components/Swiper';
 import SwiperSlider from '@/components/SwiperSlider';
-import { getMonthlyStar } from '@/api/Strength/GovernServe/api';
+import { getAbnormalAnalysis } from '@/api/Strength/GovernServe/api';
 export default {
   components: {
     swiper,
@@ -105,12 +61,13 @@ export default {
   },
   methods: {
     initData() {
-      getMonthlyStar()
+      getAbnormalAnalysis()
         .request()
         .then((json) => {
           if (!json) {
             return;
           }
+          console.log(json);
           this.dataList = json;
         });
     },
@@ -139,14 +96,15 @@ export default {
 <style lang="scss" scoped>
 .content1 {
   margin: 28px 0 0 0;
-  background: url('../img/yue_bg.png') 100% 100% no-repeat;
+  background: url('../img/bg_yc2.png') 100% 100% no-repeat;
   height: 356px;
   width: 800px;
   display: flex;
   .img {
     margin: 50px;
-    height: 240px;
-    width: 230px;
+    width: 347px;
+    height: 239px;
+    overflow: hidden;
     img {
       object-fit: fill;
       width: 100%;
@@ -158,12 +116,25 @@ export default {
     .kouhao {
       //border-top: 2px solid slategrey;
       width: 338px;
+
       padding: 10px;
-      margin-top: 20px;
+      margin-top: 46px;
       //width: 390px;
       //height: 99px;
       background: rgba(54, 66, 80, 0.2);
       border-radius: 10px;
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #FFFFFF;
+      line-height: 36px;
+      max-height: 154px;
+      overflow : hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+
     }
   }
   .name {

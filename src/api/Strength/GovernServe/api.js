@@ -17,6 +17,10 @@ export const getTrendOfHandlingVolume = () => {
 export const getRoadMonitor = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/traffic/getRoadMonitor' });
 };
+// 异常行为分析
+export const getAbnormalAnalysis = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getAbnormalAnalysis' });
+};
 // 月度明星
 export const getMonthlyStar = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getMonthlyStar' });
