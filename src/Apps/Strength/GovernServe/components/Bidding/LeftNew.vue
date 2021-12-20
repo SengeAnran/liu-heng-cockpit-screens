@@ -1,44 +1,194 @@
 <template>
   <div class="left">
     <div>
-      <div>
-        <BaseTitle title="办理量信息" :width="800" />
-        <banli></banli>
+      <div style="margin-bottom: 36px">
+        <BaseTitle title="工程建设" :width="800" />
+        <BoxItem :data-list="dataList[0].dataList"></BoxItem>
       </div>
-      <div style="margin-top: 65px">
-        <BaseTitle title="办理量信息" :width="800" />
-        <Banlixinxi></Banlixinxi>
+      <div>
+        <BaseTitle title="产权交易" :width="800" />
+        <BoxItem :data-list="dataList[1].dataList"></BoxItem>
       </div>
     </div>
     <div>
-      <div>
-        <BaseTitle title="办理量趋势" :width="800" />
-        <banliqushi></banliqushi>
+      <div style="margin-bottom: 36px">
+        <BaseTitle title="政府采购" :width="800" />
+        <BoxItem :data-list="dataList[2].dataList"></BoxItem>
       </div>
-      <div style="margin-top: 30px">
-        <BaseTitle title="服务总满意度" :width="800" />
-        <Zhanbifenxi></Zhanbifenxi>
+      <div>
+        <BaseTitle title="“应招必招、应进必进”达成率" :width="800" />
+        <AchievementRate/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Banli from './LeftNewItem/banli';
-import Banliqushi from './LeftNewItem/banliqushi';
-import Zhanbifenxi from './LeftNewItem/zhanbifenxi';
-import Banlixinxi from './LeftNewItem/banlixinxi';
-// import {
-//   getRealtimeBooking,
-//   getAppointmentAnalysis,
-//   getBookingTrend,
-//   getRealtimeReservationDetails,
-// } from '@/api/Strength/GovernServe/api';
+import BoxItem from './LeftNewItem/BoxItem';
+import AchievementRate from "./LeftNewItem/AchievementRate";
+import {
+  getBiddingShow,
+} from '@/api/Strength/GovernServe/api';
 export default {
   name: 'ProjectManageLeft',
-  components: { Banli, Banliqushi, Zhanbifenxi, Banlixinxi },
+  components: { BoxItem, AchievementRate },
   data() {
     return {
+      dataList: [
+        {
+          name: '工程建设',
+          dataList: [
+            {
+              name: '年项目数量',
+              value: '00',
+              valueColor: '#63CEB3',
+              unit: '个',
+              imgUrl: require('./img/icon_xm01.png'),
+              config: {
+                content: {
+                  fontSize: '6.4rem',
+                  fontFamily: 'DINPro',
+                  color: '#63CEB3',
+                },
+                unit: {
+                  fontSize: '30px',
+                  color: '#ffffff',
+                  marginLeft: '17px',
+                },
+              },
+              data: {
+                content: 1000,
+                unit: '个',
+              },
+            },
+            {
+              name: '项目总金额',
+              value: '0000.00',
+              valueColor: '#63CEB3',
+              unit: '万元',
+              imgUrl: require('./img/icon_mn01.png'),
+              config: {
+                content: {
+                  fontSize: '6.4rem',
+                  fontFamily: 'DINPro',
+                  color: '#63CEB3',
+                },
+                unit: {
+                  fontSize: '30px',
+                  color: '#ffffff',
+                  marginLeft: '17px',
+                },
+              },
+              data: {
+                content: 1000,
+                unit: '万元',
+              },
+            }
+          ]
+        },
+        {
+          name: '产权交易',
+          dataList: [
+            {
+              name: '年项目数量',
+              value: '00',
+              valueColor: '#7CD8DB',
+              unit: '个',
+              imgUrl: require('./img/icon_xm03.png'),
+              config: {
+                content: {
+                  fontSize: '6.4rem',
+                  fontFamily: 'DINPro',
+                  color: '#63CEB3',
+                },
+                unit: {
+                  fontSize: '30px',
+                  color: '#ffffff',
+                  marginLeft: '17px',
+                },
+              },
+              data: {
+                content: 1000,
+                unit: '个',
+              },
+            },
+            {
+              name: '项目总金额',
+              value: '0000.00',
+              valueColor: '#E38680',
+              unit: '万元',
+              imgUrl: require('./img/icon_mn03.png'),
+              config: {
+                content: {
+                  fontSize: '6.4rem',
+                  fontFamily: 'DINPro',
+                  color: '#E38680',
+                },
+                unit: {
+                  fontSize: '30px',
+                  color: '#ffffff',
+                  marginLeft: '17px',
+                },
+              },
+              data: {
+                content: 1000,
+                unit: '万元',
+              },
+            }
+          ]
+        },
+        {
+          name: '政府采购',
+          dataList: [
+            {
+              name: '年项目数',
+              value: '00',
+              valueColor: '#6FA7EB',
+              unit: '个',
+              imgUrl: require('./img/icon_xm02.png'),
+              config: {
+                content: {
+                  fontSize: '6.4rem',
+                  fontFamily: 'DINPro',
+                  color: '#6FA7EB',
+                },
+                unit: {
+                  fontSize: '30px',
+                  color: '#ffffff',
+                  marginLeft: '17px',
+                },
+              },
+              data: {
+                content: 1000,
+                unit: '个',
+              },
+            },
+            {
+              name: '项目总金额',
+              value: '0000.00',
+              valueColor: '#BD7BEC',
+              unit: '万元',
+              imgUrl: require('./img/icon_mn02.png'),
+              config: {
+                content: {
+                  fontSize: '6.4rem',
+                  fontFamily: 'DINPro',
+                  color: '#BD7BEC',
+                },
+                unit: {
+                  fontSize: '30px',
+                  color: '#ffffff',
+                  marginLeft: '17px',
+                },
+              },
+              data: {
+                content: 1000,
+                unit: '万元',
+              },
+            }
+          ]
+        },
+      ],
       data: {
         content: 1000,
         // unit: '人',
@@ -71,8 +221,26 @@ export default {
       },
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      getBiddingShow()
+        .request()
+        .then((json) => {
+          if (!json) {
+            return;
+          }
+          this.dataList[0].dataList[0].value = json[0].item.nxmsl;
+          this.dataList[0].dataList[1].value = Number(json[0].item.xmzje).toFixed(2);
+          this.dataList[1].dataList[0].value = json[1].item.nxmsl;
+          this.dataList[1].dataList[1].value = Number(json[1].item.xmzje).toFixed(2);
+          this.dataList[2].dataList[0].value = json[2].item.nxmsl;
+          this.dataList[2].dataList[1].value = Number(json[2].item.xmzje).toFixed(2);
+        });
+    },
+  },
 };
 </script>
 

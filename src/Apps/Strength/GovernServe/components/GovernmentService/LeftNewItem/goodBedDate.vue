@@ -31,11 +31,11 @@ export default {
             content: {
               fontSize: '5rem',
               fontFamily: 'DINPro',
-              color: '5E98E0',
+              color: '#5E98E0',
             },
             unit: {
               fontSize: '2rem',
-              color: '5E98E0',
+              color: '#5E98E0',
             },
           },
           data: {

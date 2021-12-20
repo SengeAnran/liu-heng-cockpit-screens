@@ -1,30 +1,17 @@
 <template>
   <div class="right">
     <div>
-      <div>
-        <BaseTitle title="监控视频" :width="800" />
-        <Jiankong></Jiankong>
-      </div>
-      <div class="yuedu">
-        <BaseTitle title="月度明星" :width="800" />
-        <Yuedumingxing></Yuedumingxing>
-      </div>
-    </div>
-    <div>
-      <BaseTitle title="本月事件办理量排行" :width="800" />
-      <Banlixinxi></Banlixinxi>
+      <BaseTitle title="招标项目" table-width="1650px" />
+        <BiddingProject></BiddingProject>
     </div>
   </div>
 </template>
 
 <script>
-import Banlixinxi from './RightItem/banlixinxi';
-import Jiankong from './RightItem/jiankong';
-
-import Yuedumingxing from './RightItem/yuedumingxing';
+import BiddingProject from './RightItem/BiddingProject';
 
 export default {
-  components: { Jiankong, Banlixinxi, Yuedumingxing },
+  components: { BiddingProject },
 };
 </script>
 
@@ -41,10 +28,10 @@ export default {
   color: #fff;
   z-index: 999;
 }
-.yuedu {
-  position: absolute;
-  top: 500px;
-  margin-top: 51px;
-}
+//.yuedu {
+//  position: absolute;
+//  top: 500px;
+//  margin-top: 51px;
+//}
 
 </style>

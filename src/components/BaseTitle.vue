@@ -1,5 +1,5 @@
 <template>
-  <div class="base-title">
+  <div class="base-title" :style="{ width: tableWidth }">
     {{title}}
   </div>
 </template>
@@ -12,6 +12,10 @@ export default {
       type: String,
       default: () => '',
     },
+    tableWidth: {
+      type: String,
+      default: '782px'
+    }
   },
   components: {},
   data() {
@@ -25,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .base-title {
-  width: 782px;
+  //width: 782px;
   height: 63px;
   line-height: 63px;
   background: url('../assets/images/title.png') no-repeat;

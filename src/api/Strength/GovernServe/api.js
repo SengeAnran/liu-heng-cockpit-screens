@@ -33,6 +33,19 @@ export const getMonthlyHandling = () => {
 export const getGoodReview = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getGoodReview' });
 };
+// *************招投标
+// 招标项目列表
+export const getAchievementList = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/goverment/bidding/achievementList' });
+};
+// 招标达成率
+export const getAchievementRate = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/goverment/bidding/achievementRate' });
+};
+// 招投标指标展示
+export const getBiddingShow = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/goverment/bidding/show' });
+};
 
 // **********************************
 // 预约情况分析
