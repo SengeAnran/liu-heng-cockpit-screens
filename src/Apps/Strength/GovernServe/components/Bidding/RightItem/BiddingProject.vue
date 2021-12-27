@@ -1,12 +1,22 @@
 <template>
   <div>
     <div class="table">
-      <div>
+      <div @mouseenter="mouseEnter(list1)" @mouseleave="mouseleave(list1)">
         <div class="table-title">
           <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>
         </div>
         <div class="table-body">
-          <div class="table-body-item" v-for="(item, index) in list1" :key="item">
+          <swiper ref="mySwiper" :options="swiperOption" v-if="list1.length > 10">
+            <swiper-slider v-for="(item, index) in list1" :key="index">
+              <div class="table-body-item">
+                <div :title="item.project">{{ item.project }}</div>
+                <div>{{ item.type }}</div>
+                <div :title="item.company">{{ item.company }}</div>
+                <div>{{ item.price }}</div>
+              </div>
+            </swiper-slider>
+          </swiper>
+          <div v-else class="table-body-item" v-for="(item, index) in list1" :key="item">
             <div>{{ item.project }}</div>
             <div>{{ item.type }}</div>
             <div>{{ item.company }}</div>
@@ -14,13 +24,33 @@
           </div>
         </div>
       </div>
+<!--      <div>-->
+<!--        <div class="table-title">-->
+<!--          <div v-for="item in list" :key="item" class="title-item">{{ item }}</div>-->
+<!--        </div>-->
+<!--        <div class="table-body">-->
+<!--          <div class="table-body-item" v-for="(item, index) in list1" :key="item">-->
+<!--            <div>{{ item.project }}</div>-->
+<!--            <div>{{ item.type }}</div>-->
+<!--            <div>{{ item.company }}</div>-->
+<!--            <div>{{ item.price }}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
 
 <script>
+import swiper from '@/components/Swiper';
+import SwiperSlider from '@/components/SwiperSlider';
 import { getAchievementList } from '@/api/Strength/GovernServe/api';
+import Title from "../../../../../Overview/Traffic/components/BridgeAndTunnel/Title";
 export default {
+  components: {
+    swiper,
+    SwiperSlider,
+  },
   data() {
     return {
       list: ['项目名称', '交易方式', '建设单位', '中标价 (万元)'],
@@ -86,6 +116,19 @@ export default {
           price: '2206.86',
         },
       ],
+      swiperOption: {
+        direction: 'vertical',
+        speed: 1000,
+        slidesPerView: 10,
+        spaceBetween: 0,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false,
+        },
+        // autoplay: true,
+      },
     };
   },
   mounted() {
@@ -108,6 +151,18 @@ export default {
             };
           });
         });
+    },
+    mouseEnter(lists) {
+      if (lists.length < 10) {
+        return;
+      }
+      this.$refs.mySwiper.swiper.autoplay.stop();
+    },
+    mouseleave(lists) {
+      if (lists.length < 10) {
+        return;
+      }
+      this.$refs.mySwiper.swiper.autoplay.start();
     },
   },
 };
@@ -210,6 +265,14 @@ export default {
   }
   .table-body-item :hover {
     cursor: pointer;
+  }
+  .swiper-container {
+    width: 100%;
+    height: 837px;
+    .swiper-slide {
+      //height: 76px;
+      box-sizing: border-box;
+    }
   }
 }
 </style>

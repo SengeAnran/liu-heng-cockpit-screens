@@ -24,9 +24,9 @@
         <span>2020</span>
       </div>
     </div>
-    <div class="main-map" v-if="threeDMap">
-<!--      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>-->
-      <ThreeDMap/>
+    <div class="main-map" v-show="threeDMap">
+      <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
+<!--      <ThreeDMap/>-->
     </div>
     <div class="switch">
       <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>

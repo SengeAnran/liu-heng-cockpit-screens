@@ -1,6 +1,34 @@
 <template>
   <div style="overflow: auto; height: 1000px">
-    <div class="content" v-for="(item, index) in dataList" :key="index">
+    <div @mouseenter="mouseEnter(dataList)" @mouseleave="mouseleave(dataList)" >
+      <swiper  ref="mySwiper" :options="swiperOption" v-if="dataList.length > 2">
+        <swiper-slider v-for="(item, index) in dataList" :key="index">
+          <div class="content">
+            <div class="title">{{item.name}}</div>
+            <div class="flex">
+<!--              <div @mouseenter="mouseEnter2(item.imgList)" @mouseleave="mouseleave2(item.imgList)" >-->
+<!--                <swiper v-if="item.imgList > 1" ref="myImgSwiper" :options="swiperOption2">-->
+<!--                  <swiper-slider v-for="(item2, index2) in item.imgList" :key="index2">-->
+<!--                    <div v-else class="img">-->
+<!--                      <img :src="'data:image/png;base64,'+item.url" />-->
+<!--                    </div>-->
+<!--                  </swiper-slider>-->
+<!--                </swiper>-->
+<!--                <div v-else class="img">-->
+<!--                  <img :src="'data:image/png;base64,'+item.url" />-->
+<!--                </div>-->
+<!--              </div>-->
+              <div class="img">
+                <img :src="'data:image/png;base64,'+item.url" />
+              </div>
+              <div class="content-name">
+                {{ item.content }}
+              </div>
+            </div>
+          </div>
+        </swiper-slider>
+      </swiper>
+      <div v-else class="content" v-for="(item, index) in dataList" :key="index">
       <div class="title">{{item.name}}</div>
       <div class="flex">
         <div class="img">
@@ -10,6 +38,7 @@
           {{ item.content }}
         </div>
       </div>
+    </div>
     </div>
 <!--    <div class="content">-->
 <!--      <div class="title">小郭巨一期</div>-->
@@ -39,11 +68,42 @@
 
 <script>
 import { getMerchants } from '@/api/Strength/ProjectManage/api';
+import swiper from '@/components/Swiper';
+import SwiperSlider from '@/components/SwiperSlider';
 export default {
+  components: {
+    swiper,
+    SwiperSlider,
+  },
   data() {
     return {
       dataList: [],
-
+      swiperOption: {
+        direction: 'vertical',
+        speed: 1000,
+        slidesPerView: 2,
+        spaceBetween: 0,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false,
+        },
+        // autoplay: true,
+      },
+      swiperOption2: {
+        // direction: 'vertical',
+        speed: 1000,
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false,
+        },
+        // autoplay: true,
+      },
     };
   },
   mounted() {
@@ -61,6 +121,38 @@ export default {
           });
         });
       });
+    },
+    mouseEnter(lists) {
+      if (lists.length < 1) {
+        return;
+      }
+      if (this.$refs.mySwiper) {
+        this.$refs.mySwiper.swiper.autoplay.stop();
+      }
+    },
+    mouseleave(lists) {
+      if (lists.length < 1) {
+        return;
+      }
+      if (this.$refs.mySwiper) {
+        this.$refs.mySwiper.swiper.autoplay.start();
+      }
+    },
+    mouseEnter2(lists) {
+      if (lists.length < 1) {
+        return;
+      }
+      if (this.$refs.myImgSwiper) {
+        this.$refs.myImgSwiper.swiper.autoplay.stop();
+      }
+    },
+    mouseleave2(lists) {
+      if (lists.length < 1) {
+        return;
+      }
+      if (this.$refs.myImgSwiper) {
+        this.$refs.myImgSwiper.swiper.autoplay.start();
+      }
     },
   },
 };
@@ -106,5 +198,23 @@ img {
   font-weight: 500;
   color: #ffffff;
   line-height: 36px;
+}
+.swiper-container {
+  width: 100%;
+  height: 1000px;
+  .swiper-slide {
+    //height: 75px !important;
+    //box-sizing: border-box !important;
+  }
+}
+.img {
+  .swiper-container {
+    width: 795px;
+    height: 308px;
+    .swiper-slide {
+      height: 308px !important;
+      //box-sizing: border-box !important;
+    }
+  }
 }
 </style>

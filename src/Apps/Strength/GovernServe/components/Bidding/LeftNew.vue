@@ -71,7 +71,7 @@ export default {
                 content: {
                   fontSize: '6.4rem',
                   fontFamily: 'DINPro',
-                  color: '#63CEB3',
+                  color: '#F2896B',
                 },
                 unit: {
                   fontSize: '30px',

@@ -11,6 +11,12 @@ export default {
       params: { qgqx },
     });
   },
+  // 舆情搜索
+  selectPublicSentiment(keyWord) {
+    return axios.get('/opinion/analysis/selectPublicSentiment', {
+      params: { keyWord },
+    });
+  },
   // 事件态势
   eventSituation() {
     return axios.get('/opinion/analysis/eventSituation');

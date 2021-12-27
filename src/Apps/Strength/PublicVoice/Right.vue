@@ -1,16 +1,26 @@
 <template>
   <div class="right">
     <Title>重点舆情</Title>
-    <ul class="loop-tab">
-      <li
-        :class="{ active: currentTab === item.name }"
-        v-for="(item, index) in tabList"
-        :key="index"
-        @click="selectTab(item.name, index)"
-      >
-        {{ item.name }}
-      </li>
-    </ul>
+    <div class="box-top">
+      <ul class="loop-tab">
+        <li
+          :class="{ active: currentTab === item.name }"
+          v-for="(item, index) in tabList"
+          :key="index"
+          @click="selectTab(item.name, index)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+      <div class="search">
+        <div class="search-box">
+          <input type="text" v-model="keyWord" name=""/>
+        </div>
+        <div class="search-icon" @click="selectData">
+          <img src="./img/icon_ss.png" alt="">
+        </div>
+      </div>
+    </div>
     <div class="comment-list">
       <div class="item" v-for="(item, index) in list" :key="index">
         <div class="name">
@@ -263,6 +273,7 @@ export default {
       currentTab: '全部',
       features: 'width=1800,height=700,left=50,top=200',
       tabList: [{ name: '全部' }, { name: '正面' }, { name: '负面' }, { name: '中性' }],
+      keyWord: '',
     };
   },
   components: {
@@ -279,6 +290,21 @@ export default {
   methods: {
     async getData(qgqx) {
       const data = await economicAPI.threeTypeIndustries(qgqx);
+      this.list = data.map((d) => ({
+        title: d.bt,
+        type: d.qgqx,
+        // date: '2021-09-28' + d.fbsj.substring(10),
+        date: d.fbsj,
+        content: d.nrzy,
+        link: d.ywlj,
+        source: d.lywz,
+        media: d.mtlx,
+      }));
+    },
+    async selectData() {
+      const keyWord = this.keyWord;
+      const data = await economicAPI.selectPublicSentiment(keyWord);
+      this.currentTab = '全部';
       this.list = data.map((d) => ({
         title: d.bt,
         type: d.qgqx,
@@ -324,6 +350,51 @@ export default {
   width: 165rem;
   // outline: 1px solid red;
   z-index: 999;
+  .box-top {
+    position: relative;
+    .search {
+      position: absolute;
+      top: 15px;
+      right: 75px;
+      width: 379px;
+      height: 54px;
+      background: url("./img/img_ss_bg.png") no-repeat;
+      overflow: hidden;
+      .search-box {
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        input {
+          width: 379px;
+          height: 54px;
+          //background: url("./img/img_ss_bg.png") no-repeat;
+          background-color: rgba(255, 0, 0, 0);
+          //border: 1px solid;
+          //border-image: linear-gradient(0deg, #92FFFF) 10 10;
+          //border-radius: 10px;
+          font-size: 22px;
+          font-family: Source Han Sans SC;
+          font-weight: 400;
+          color: #FFFFFF;
+          padding-left: 20px;
+        }
+      }
+      .search-icon {
+        width: 28px;
+        height: 29px;
+        position: absolute;
+        right: 22px;
+        top: 12px;
+        cursor: pointer;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+    }
+  }
   .loop-tab {
     display: flex;
     justify-content: space-between;

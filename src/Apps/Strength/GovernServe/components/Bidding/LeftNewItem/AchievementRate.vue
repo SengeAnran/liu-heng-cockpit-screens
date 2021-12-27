@@ -8,7 +8,7 @@
       <div class="box-right">
         <div class="item item-left">
           <div class="item-top">
-            <span class="number">3548</span>
+            <span class="number">{{ data.zblx }}</span>
             <span class="unit">个</span>
           </div>
           <div class="item-name">应招必招项目</div>
@@ -16,7 +16,7 @@
         <div class="line"></div>
         <div class="item item-right">
           <div class="item-top">
-            <span class="number">780</span>
+            <span class="number">{{ data.nxmsl }}</span>
             <span class="unit">个</span>
           </div>
           <div class="item-name">公开招标项目</div>
@@ -67,7 +67,6 @@ export default {
           }
           this.data = json;
           this.left = parseFloat(json.rate);
-
           console.log(this.left);
         });
     },
