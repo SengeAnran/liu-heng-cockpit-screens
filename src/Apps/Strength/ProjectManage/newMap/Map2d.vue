@@ -85,6 +85,7 @@ export default {
   methods: {
     async getData(item1) {
       const res = await getLocationInfo({ type: item1 }).request();
+      console.log(res);
       const data = [];
       res.map((item) => {
         data.push(
@@ -106,9 +107,10 @@ export default {
             ],
           });
       });
-      this.points = data[1];
+      console.log(data);
+      this.points = data;
       this.Polygon = data[0];
-      console.log(this.Polygon);
+      // console.log(this.Polygon);
       setTimeout(() => {
         this.show = true;
       }, 500);

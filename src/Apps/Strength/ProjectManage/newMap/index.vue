@@ -108,7 +108,7 @@ export default {
       this.initThreeDData(res);
     },
     initThreeDData(data){
-      // console.log(data)
+      console.log(data)
       if (data) {
         this.Scale =data.length > 2? 1.3:47.7
         // console.log(this.Scale)
@@ -145,9 +145,9 @@ export default {
           }
         });
       }
-      // console.log(this.threeDDataList);
-      // console.log(this.polygonList);
-      // console.log(this.tipTemplate);
+      console.log(this.threeDDataList);
+      console.log(this.polygonList);
+      console.log(this.tipTemplate);
     },
   },
 };

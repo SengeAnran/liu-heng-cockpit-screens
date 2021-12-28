@@ -7,20 +7,17 @@
             <div class="title">{{item.name}}</div>
             <div class="flex">
               <div class="left-img" @mouseenter="mouseEnter2(item.pictures)" @mouseleave="mouseleave2(item.pictures)" >
-                <swiper v-if="item.pictures.length > 1" ref="myImgSwiper" :options="swiperOption2">
+                <swiper v-if="item.pictures && item.pictures.length > 1" ref="myImgSwiper" :options="swiperOption2">
                   <swiper-slider v-for="(item2, index2) in item.pictures" :key="index2">
-                    <div  class="img">
-                      <img :src="'data:image/png;base64,'+item2.tp" />
+                    <div class="img">
+                      <img :src="'data:image/png;base64,'+item2.tp" alt="111" />
                     </div>
                   </swiper-slider>
                 </swiper>
                 <div v-else class="img">
-                  <img :src="'data:image/png;base64,'+item.pictures[0].tp" />
+                  <img v-if="item.pictures && item.pictures.length > 0" :src="'data:image/png;base64,'+item.pictures[0].tp" alt="111" />
                 </div>
               </div>
-              <!--              <div class="img">-->
-<!--                <img :src="'data:image/png;base64,'+item.url" />-->
-<!--              </div>-->
               <div class="content-name">
                 {{ item.content }}
               </div>
@@ -206,7 +203,7 @@ img {
 .img {
   width: 787px;
   height: 308px;
-  padding: 8px;
+  //padding: 8px;
 }
 .content-name {
   padding: 40px;
