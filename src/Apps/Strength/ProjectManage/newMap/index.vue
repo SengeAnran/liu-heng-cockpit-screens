@@ -186,7 +186,7 @@ export default {
     right: 200rem;
     display: flex;
     justify-content: space-around;
-    z-index: 1000;
+    z-index: 890;
     .button {
       width: 114px;
       height: 44px;

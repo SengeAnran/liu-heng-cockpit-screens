@@ -9,7 +9,7 @@
             <p>基本情况</p>
           </div>
           <div class="indi-wrapper">
-            <div class="indi-item" v-for="(item, index) in indiData" :key="index">
+            <div class="indi-item" v-for="(item, index) in indiData" :key="index" @click="openPage(item)">
               <a class="vertical-line" v-show="index !== 0"></a>
               <p class="top-text">
                 <digital
@@ -47,11 +47,13 @@
         <div ref="hengEcharts" :style="{ width: '100%', height: '100%' }"></div>
       </div>
     </div>
+    <pageModal :show.sync="viewShow" :data="viewData" />
   </div>
 </template>
 <script>
 import Title from './components/Title';
 import PieChart from './components/PieChart';
+import pageModal from './components/pageModal';
 import * as echarts from 'echarts/core';
 import {
   // getPartyMemberBasicSit,
@@ -61,6 +63,7 @@ import {
   partyAcademical,
   peopleBasicInfo,
   partyIndustrial,
+  partyOrganization,
 } from '@/api/Charm/PartyConstruction';
 
 // 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
@@ -75,6 +78,7 @@ export default {
   components: {
     Title,
     PieChart,
+    pageModal,
   },
   data() {
     return {
@@ -132,11 +136,11 @@ export default {
           value: 0,
           unit: '人',
         },
-        {
-          label: '发展党员',
-          value: 0,
-          unit: '人',
-        },
+        // {
+        //   label: '发展党员',
+        //   value: 0,
+        //   unit: '人',
+        // },
       ],
       sexRatio: {
         male: 70.5,
@@ -150,6 +154,8 @@ export default {
       lineChart: null,
       pieChart: null,
       hengcharts: null,
+      viewShow: false,
+      viewData: [],
     };
   },
   mounted() {
@@ -169,7 +175,7 @@ export default {
       const res = await peopleBasicInfo().request();
       this.indiData[0].value = res.basicCnt.zsdyrs;
       this.indiData[1].value = res.basicCnt.ybdyrs;
-      this.indiData[2].value = res.basicCnt.fzdyrs;
+      // this.indiData[2].value = res.basicCnt.fzdyrs;
       // this.sexRatio.male = res.
       const res4 = await partyAcademical().request();
       this.barData = res4.map((item) => {
@@ -495,7 +501,7 @@ export default {
           right: '0%',
           orient: 'vertical',
           // eslint-disable-next-line no-dupe-keys
-          top: 'center',
+          // top: 'center',
           textStyle: {
             color: '#fff',
             fontSize: 29,
@@ -735,12 +741,21 @@ export default {
         return value2 - value1;
       };
     },
+    // 党员弹窗列表
+    async openPage(item) {
+      console.log(item);
+      const res = await partyOrganization().request();
+      console.log(res);
+      this.viewData = res;
+      this.viewShow = true;
+    }
   },
 };
 </script>
 <style lang="scss" scoped>
 .left-section1 {
   // height: 85rem;
+  position: relative;
   p {
     margin: 0;
   }
@@ -771,8 +786,9 @@ export default {
           .indi-item {
             display: inline-block;
             text-align: center;
-            width: 22rem;
+            width: 330px;
             position: relative;
+            cursor: pointer;
             .value {
               background-image: -webkit-linear-gradient(bottom, #4ecdd8, white);
               font-size: 5.6rem;
@@ -840,6 +856,25 @@ export default {
           font-weight: 500;
           color: #ffffff;
         }
+      }
+    }
+  }
+  .open-view {
+    z-index: 2021;
+    width: 1442px;
+    max-height: 966px;
+    overflow: hidden;
+    border: 1px solid;
+    position: absolute;
+    left: 200rem;
+    top: 0rem;
+    .view-header {
+      position: relative;
+      .close-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        cursor: pointer;
       }
     }
   }

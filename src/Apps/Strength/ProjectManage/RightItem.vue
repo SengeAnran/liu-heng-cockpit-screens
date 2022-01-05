@@ -6,7 +6,7 @@
           <div class="content">
             <div class="title">{{item.name}}</div>
             <div class="flex">
-              <div class="left-img" @mouseenter="mouseEnter2(item.pictures)" @mouseleave="mouseleave2(item.pictures)" >
+              <div class="left-img" @mouseenter="mouseEnter2(item.pictures)" @mouseleave="mouseleave2(item.pictures)" @click="showImgs(item.pictures)">
                 <swiper v-if="item.pictures && item.pictures.length > 1" ref="myImgSwiper" :options="swiperOption2">
                   <swiper-slider v-for="(item2, index2) in item.pictures" :key="index2">
                     <div class="img">
@@ -18,7 +18,7 @@
                   <img v-if="item.pictures && item.pictures.length > 0" :src="'data:image/png;base64,'+item.pictures[0].tp" alt="111" />
                 </div>
               </div>
-              <div class="content-name">
+              <div class="content-name" :title="item.content">
                 {{ item.content }}
               </div>
             </div>
@@ -46,32 +46,7 @@
         </div>
       </div>
     </div>
-<!--    <div class="content">-->
-<!--      <div class="title">小郭巨一期</div>-->
-<!--      <div class="flex">-->
-<!--        <div class="img">-->
-<!--          <img src="./img/tuceng1.png" />-->
-<!--        </div>-->
-<!--        <div class="content-name">-->
-<!--          小郭巨一期围垦工程已经完工，围垦总面积7000亩，新增岸线2.2公里，水深在8-15米之间。六横发展海上风电项目及创建风电机组制造基地的时机和条件都非常成熟，已建成普陀6#海上风电场2区项目，且已经并网运行。国电在六横小郭巨区域建设的占地100亩的陆上组装基地及2000吨级的配套码头基本闲置，可作为华东海上风机运行维护母港的选址。-->
-<!--          目前已落地的浙能液化天然气（LNG）接收站项目选址在该区块。-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="content">-->
-<!--      <div class="title">棕榈湾地块</div>-->
-<!--      <div class="flex">-->
-<!--        <div class="img">-->
-<!--          <img src="./img/tuceng2.png" />-->
-<!--        </div>-->
-<!--        <div class="content-name">-->
-<!--          棕榈湾地块位于六横岛西北侧，该区块三面环山、一面临海，远离居民区，可用陆域面积876亩，水、电、道路、通讯等基础设施配套完善，并可根据项目需要进行供冷、供热；紧邻宁波-舟山双屿门航道，具有优良的深水岸线，可用深水岸线约460米，岸滩稳定，不冻不淤，可以建造30万吨级码头。目前已完成对该区域的整体搬迁、土地征用等政策处理工作，并完成了海堤及工作船码头建设、部分开山爆破、场地回填等前期工作。重点引进：油气综合储运、船用低硫燃料油生产、清洁能源生产等项目。-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="test-img">-->
-<!--      <img :src="'data:image/png;base64,'+ testImgUrl" alt="">-->
-<!--    </div>-->
+    <ImageModal :show.sync="modalShow" :data="imgDataList" />
   </div>
 </template>
 
@@ -79,10 +54,12 @@
 import { getMerchants } from '@/api/Strength/ProjectManage/api';
 import swiper from '@/components/Swiper';
 import SwiperSlider from '@/components/SwiperSlider';
+import ImageModal from "./ImageModal";
 export default {
   components: {
     swiper,
     SwiperSlider,
+    ImageModal,
   },
   data() {
     return {
@@ -114,6 +91,8 @@ export default {
         // autoplay: true,
       },
       // testImgUrl: '',
+      imgDataList: [],
+      modalShow: false,
     };
   },
   mounted() {
@@ -165,6 +144,11 @@ export default {
         this.$refs.myImgSwiper.swiper.autoplay.start();
       }
     },
+    showImgs(dataList) {
+      this.imgDataList = dataList;
+      console.log(this.imgDataList);
+      this.modalShow = true;
+    }
   },
 };
 </script>

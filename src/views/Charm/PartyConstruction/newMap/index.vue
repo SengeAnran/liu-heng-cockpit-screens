@@ -191,7 +191,7 @@ export default {
   }
   .map-legend {
     position: absolute;
-    z-index: 10;
+    z-index: 9;
     top: 87.6rem;
     right: 37%;
     width: max-content;

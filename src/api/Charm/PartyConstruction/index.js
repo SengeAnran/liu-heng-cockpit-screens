@@ -12,6 +12,10 @@ export const partyAcademical = () => {
 export const peopleBasicInfo = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/party/peopleBasicInfo' });
 };
+// 党组织信息
+export const partyOrganization = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/party/partyOrganization' });
+};
 
 // 党员缴纳情况
 export const partyFeeSituation = () => {
