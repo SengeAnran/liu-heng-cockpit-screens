@@ -60,7 +60,7 @@
           <pie-charts style="height: 35rem; width: 100%" :pieData="residentInfo" />
           <SamllTitle name="五类老人" />
           <TableList style="width: 100%; height: 19.7rem" :datalist="oldManInfo" />
-          <SamllTitle name="村民信息" />
+          <SamllTitle name="基础村民数据" />
           <TableList style="width: 100%; height: 19.7rem" :datalist="villagerInfo" fontColor="rgba(219, 248, 119, 1)" />
         </div>
         <div>
@@ -122,7 +122,7 @@ export default {
   data() {
     return {
       defaultName: '五星村',
-      CommunityOverview: '社区概述',
+      CommunityOverview: '社区基础信息管理',
       nationList: [], // 民族比例
       manAwomenList: [], // 男女性别比
       contain1: {

@@ -1,9 +1,9 @@
 <template>
   <view-template class="ProjectManage-left flex" :interval="300" @interval="getData">
     <div>
-      <BaseTitle title="项目投资信息" :width="750" />
+      <BaseTitle title="项目基础信息管理" :width="750" />
       <div class="desc">
-        <p>实时情况</p>
+        <p>项目可视化管理</p>
         <div class="flex desc-item">
           <div class="flex">
             <div class="label">已实现 <br />融资项目</div>

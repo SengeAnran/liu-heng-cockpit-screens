@@ -23,7 +23,7 @@ export default [
       },
       {
         path: 'population',
-        name: '人口一张图',
+        name: '人口分析',
         component: () => import('@/Apps/Overview/PopulationMap'),
         meta: {
           indicator: [
@@ -268,7 +268,7 @@ export default [
       },
       {
         path: 'digit-county',
-        name: '数字乡社',
+        name: '数字村社',
         component: () => import('@/views/Charm/DigitCounty'),
         // component: BgImg,
         props: {
