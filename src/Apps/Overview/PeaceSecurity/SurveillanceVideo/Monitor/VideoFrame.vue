@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+import { mapMutations, mapGetters } from 'vuex';
 export default {
   props: {
     cameraIndexCode: {
@@ -23,6 +24,31 @@ export default {
         cameraIndexCode: this.cameraIndexCode,
       }, '*');
     },
+    fullScreenCameraIndexCode() {
+      if (this.fullScreenCameraIndexCode) {
+        if (this.fullScreenCameraIndexCode !== this.cameraIndexCode) {
+          const iframeWin = this.$refs.iframeEle;
+          iframeWin.contentWindow.postMessage({
+            action: 'hideWin',
+            msg: '隐藏窗口',
+          }, '*');
+        }
+      }
+    },
+    exitFullScreenCameraIndexCode() {
+      if (this.exitFullScreenCameraIndexCode) {
+        if (this.exitFullScreenCameraIndexCode !== this.cameraIndexCode) {
+          const iframeWin = this.$refs.iframeEle;
+          iframeWin.contentWindow.postMessage({
+            action: 'showWin',
+            msg: '展示窗口',
+          }, '*');
+        }
+      }
+    },
+  },
+  computed: {
+    ...mapGetters(['fullScreenCameraIndexCode', 'exitFullScreenCameraIndexCode']),
   },
   data() {
     return {
@@ -44,6 +70,7 @@ export default {
     this.setIframe();
   },
   methods: {
+    ...mapMutations(['setFullScreenCameraIndexCode', 'setExitFullScreenCameraIndexCode']),
     setIframe() {
       // console.log(this.cameraIndexCode);
       const iframeWin = this.$refs.iframeEle;
@@ -70,6 +97,18 @@ export default {
               msg: '更新Pos',
               iframeClientPos: iframeWin.getBoundingClientRect(),
             });
+            break;
+          case 'fullScreen': {
+            const fullScreenCameraIndexCode = e.data.cameraIndexCode;
+            this.setFullScreenCameraIndexCode(fullScreenCameraIndexCode);
+            this.setExitFullScreenCameraIndexCode('');
+          }
+            break;
+          case 'exitFullScreen': {
+            const fullScreenCameraIndexCode = e.data.cameraIndexCode;
+            this.setExitFullScreenCameraIndexCode(fullScreenCameraIndexCode);
+            this.setFullScreenCameraIndexCode('');
+          }
             break;
           default:
             break;

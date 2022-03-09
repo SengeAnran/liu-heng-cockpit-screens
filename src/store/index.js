@@ -10,6 +10,8 @@ export default new Vuex.Store({
     interval: 0,
     navShow: true,
     threeDShow: false,
+    fullScreenCameraIndexCode: '',
+    exitFullScreenCameraIndexCode: '',
   },
   mutations: {
     setIntervalId(state, msg) {
@@ -22,12 +24,20 @@ export default new Vuex.Store({
         clearInterval(state.intervalId);
       }
     },
+    setFullScreenCameraIndexCode(state, msg) {
+      state.fullScreenCameraIndexCode = msg;
+    },
+    setExitFullScreenCameraIndexCode(state, msg) {
+      state.exitFullScreenCameraIndexCode = msg;
+    },
     showThreeD(state) {
-      state.threeDShow = true
+      state.threeDShow = true;
     },
   },
   getters: {
     indicator: (state) => state.digitCounty.indicator,
+    fullScreenCameraIndexCode: (state) => state.fullScreenCameraIndexCode,
+    exitFullScreenCameraIndexCode: (state) => state.exitFullScreenCameraIndexCode,
   },
   actions: {},
   modules: {

@@ -4,6 +4,7 @@
       <HLSPlayer class="video" v-if="false" />
       <VideoFrame
         :camera-index-code="cameraIndexCode"
+        @fullScreen="fullScreen"
       />
       <h3>{{name}}</h3>
     </div>
@@ -51,6 +52,9 @@ export default {
       this.activeId = id;
       this.cameraIndexCode = this.videoList[index].url;
       this.name = this.videoList[index].name;
+    },
+    fullScreen(cameraIndexCode) {
+      this.$emit('fullScreen', cameraIndexCode);
     },
   },
   components: {

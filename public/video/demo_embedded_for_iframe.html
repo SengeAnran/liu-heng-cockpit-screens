@@ -32,6 +32,7 @@
 
 <script type="text/javascript">
   console.log(location.hash.substr(1));
+  let myCameraIndexCode = location.hash.substr(1);
   // 插件对象实例，初始化为null，需要创建多个插件窗口时，需要定义多个插件对象实例变量，各个变量唯一标志对应的插件实例
   var oWebControl = null;
   var pubKey = '';                  // demo中未使用加密，可根据需求参照开发指南自行使用加密功能
@@ -66,8 +67,15 @@
           break;
         case 'updateCameraIndexCode':
           var cameraIndexCode = e.data.cameraIndexCode; // 获得更新后的cameraIndexCode
+            myCameraIndexCode = cameraIndexCode;
           // initPlugin();
           updataCameraIndexCode(cameraIndexCode);
+          break;
+        case 'hideWin':
+            oWebControl.JS_HideWnd();
+          break;
+        case 'showWin':
+            oWebControl.JS_ShowWnd();
           break;
         default:
           break;
@@ -136,23 +144,29 @@
         oWebControl.JS_SetWindowControlCallback({
           // cbIntegrationCallBack: console.log,
           cbIntegrationCallBack: function(oData) { // oData 是封装的视频 web 插件回调消息的消息体
-            console.log(oData);
-            console.log(JSON.stringify(oData));
             if (oData.responseMsg.type === 5) {
               // 进入全屏/退出全屏消息
               console.log('全屏', oData);
-              const msg = JoData.responseMsg.msg;
-              if (msg.result === 0x0400) {
+              const msg = oData.responseMsg.msg;
+              if (msg.result === 1024) {
                 // 进入全屏
                 // oWebControl.JS_HideWnd();
+                  window.parent.postMessage({
+                      action: 'fullScreen',
+                      msg: '全屏',
+                      cameraIndexCode: myCameraIndexCode,
+                  });
               } else {
                 // 0x0401(1025)- 退出全屏。
                 // oWebControl.JS_ShowWnd();
+                  window.parent.postMessage({
+                      action: 'exitFullScreen',
+                      msg: '退出全屏',
+                      cameraIndexCode: myCameraIndexCode,
+                  });
               }
 
             }
-
-            console.log(JSON.stringify(oData)); // 打印消息体至控制台
                     // {
                     //   uuid: "xxx-xxx-xxx-xxx", // 消息体唯一标识
                     //     sequence: "", // 序号
