@@ -136,11 +136,12 @@
         oWebControl.JS_SetWindowControlCallback({
           // cbIntegrationCallBack: console.log,
           cbIntegrationCallBack: function(oData) { // oData 是封装的视频 web 插件回调消息的消息体
+            console.log(oData);
             console.log(JSON.stringify(oData));
-            if (JSON.stringify(oData).responseMsg.type === 5) {
+            if (oData.responseMsg.type === 5) {
               // 进入全屏/退出全屏消息
-              console.log('全屏', JSON.stringify(oData));
-              const msg = JSON.stringify(oData).responseMsg.msg;
+              console.log('全屏', oData);
+              const msg = JoData.responseMsg.msg;
               if (msg.result === 0x0400) {
                 // 进入全屏
                 // oWebControl.JS_HideWnd();
