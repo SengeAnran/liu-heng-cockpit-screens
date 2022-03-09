@@ -134,7 +134,44 @@
         initCount = 0;
         // ② （可选） 设置消息回调 JS_SetWindowControlCallback
         oWebControl.JS_SetWindowControlCallback({
-          cbIntegrationCallBack: console.log,
+          // cbIntegrationCallBack: console.log,
+          cbIntegrationCallBack: function(oData) { // oData 是封装的视频 web 插件回调消息的消息体
+            console.log(JSON.stringify(oData));
+            if (JSON.stringify(oData).responseMsg.type === 5) {
+              // 进入全屏/退出全屏消息
+              console.log('全屏', JSON.stringify(oData));
+              const msg = JSON.stringify(oData).responseMsg.msg;
+              if (msg.result === 0x0400) {
+                // 进入全屏
+                // oWebControl.JS_HideWnd();
+              } else {
+                // 0x0401(1025)- 退出全屏。
+                // oWebControl.JS_ShowWnd();
+              }
+
+            }
+
+            console.log(JSON.stringify(oData)); // 打印消息体至控制台
+                    // {
+                    //   uuid: "xxx-xxx-xxx-xxx", // 消息体唯一标识
+                    //     sequence: "", // 序号
+                    //   cmd: "window.integrationCallBack", // 命令
+                    //   responseMsg: {
+                    //       // 此处为视频 web 插件消息 json 报文字符串
+                    //   }
+                    // }
+            // {
+            //   type: 1, // 消息类型，取值详见 3.12.*
+            //     msg:
+            //   {
+            //     wndId: 1, // 窗口序号，从 1 开始
+            //     result: {
+            //       result: 0x400 // 0x0400-全屏 0x0401-退出全屏
+            //     }
+            //     cameraIndexcode: "58e90452772a4d9da7c7ba4cef26dbf0", // 监控点编号
+            //     expand: "" // 扩展字段
+            //   } }
+          }
         });
         // ① 前端加载播放插件 JS_StartService
         oWebControl.JS_StartService("window", {

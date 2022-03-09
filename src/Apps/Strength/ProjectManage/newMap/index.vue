@@ -13,6 +13,7 @@
       />
     </div>
     <div class="switch">
+      <div class="button"  @click="goVR()">VR地图</div>
       <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
       <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
       <div class="button" :class="{'active': iconIndex === 3}" @click="changeMap(3)" >3D地图</div>
@@ -66,16 +67,21 @@ export default {
       threeDMap: false,
       activeItem: '',
       iconIndex: 1, // 图层切换按钮
-      satelliteMap: true,
+      satelliteMap: true, // 卫星图层
 
       threeDDataList: [],
       polygonList: [],
       tipTemplate: {},
       title: '',
       Scale: 37.7,
+      features: 'width=1800,height=700,left=50,top=200'
     };
   },
   mounted() {
+    this.countStyle();
+    window.onresize = () => {
+      this.countStyle();
+    };
     this.getClassDate();
   },
   methods: {
@@ -90,6 +96,19 @@ export default {
         this.satelliteMap = true;
         this.threeDMap = false;
       }
+    },
+    countStyle() {
+      const clientWidth = document.documentElement.clientWidth
+      const clientHeight = document.documentElement.clientHeight
+      // console.log(document.documentElement);
+      // console.log(document.documentElement.clientHeight);
+      this.features = 'width=' + clientWidth +
+        ',height=' + (parseInt(clientHeight * 0.83)) +
+        ',left=' + 0 +
+        ',top=' + (parseInt(clientHeight * 0.23));
+    },
+    goVR() {
+      window.open('https://720yun.com/t/b3vksm2958m?scene_id=48962433','_blank',this.features);
     },
     // 获得图例弹窗数
     async getClassDate() {
@@ -179,7 +198,7 @@ export default {
     height: 135rem;
   }
   .switch {
-    width: 374px;
+    width: 488px;
     height: 360px;
     position: absolute;
     bottom: 48rem;

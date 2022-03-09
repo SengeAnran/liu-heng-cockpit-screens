@@ -7,10 +7,17 @@
         </div>
         <div class="desc" v-if="feature.properties.content">
           {{ feature.properties.content }}
+<!--          <img src="@/assets/images/tuceng2.png" alt="">-->
+        </div>
+        <div class="img" v-if="feature.properties.picture">
+          <img :src="'data:image/png;base64,'+ feature.properties.picture" alt="">
         </div>
         <div class="info" v-if="feature.properties.listData">
           <div class="content2 item" v-for="(item, index) in feature.properties.listData" :key="index">
-            <span class="item-title">{{item.title}}： </span> <span>{{item.value}}</span>
+            <span class="item-title">{{item.title}}： </span>
+            <span>
+              {{item.value}}
+            </span>
           </div>
         </div>
       </div>

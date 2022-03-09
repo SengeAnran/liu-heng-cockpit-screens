@@ -35,8 +35,9 @@ export default {
     // console.log(this);
     const onResize = this.onResize.bind(this); // onResize 绑定新函数 可以使用当前组件的属性和方法
     const changeVideoPos = this.changeVideoPos.bind(this);
+    console.log(window);
     window.globalScale.add(onResize);
-    window.addEventListener('message', changeVideoPos);
+    window.addEventListener('message', changeVideoPos); // 接收来自子页面的消息，
     this.$once('hook:beforeDestroy', () => {
       window.globalScale.remove(onResize);
       window.removeEventListener('message', changeVideoPos);
@@ -65,10 +66,12 @@ export default {
       if (e && e.data) {
         switch (e.data.action) {
           case 'updateInitParam':
+            // 用iframe嵌套页面时，如果父页面要获取子页面里面的内容，可以使用contentWindow或者contentDocument
+            // contentWindow这是个只读属性
             iframeWin.contentWindow.postMessage({
               action: 'updateInitParam',
               msg: '更新Pos',
-              iframeClientPos: iframeWin.getBoundingClientRect(),
+              iframeClientPos: iframeWin.getBoundingClientRect(), // 方法返回元素的大小及其相对于视口的位置。
             });
             break;
           default:

@@ -1,7 +1,7 @@
 import { centroid, getCoord } from '@turf/turf';
 export function getPopupPostion(feature) {
   const { type, coordinates } = feature.geometry;
-  console.log(coordinates);
+  // console.log(coordinates);
   if (type === 'Point') {
     return coordinates;
   }

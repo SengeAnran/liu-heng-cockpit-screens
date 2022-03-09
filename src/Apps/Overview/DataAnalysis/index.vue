@@ -41,6 +41,14 @@ export default {
     CreateIsland,
 
   },
+  data() {
+    return {
+      getPageUrl: 'http://10.25.17.237:18155/cas/login?service=http%3A%2F%2F10.25.17.237%3A18155%2Fwydataeye%2Fj_security_check&__t=1637734017419&locale=zh_CN',
+      getOpenPageUrl: 'http://10.25.17.237:18155/wydataeye/static/datamap/html/autoIndex.html',
+      // getOpenPageUrl: 'https://www.runoob.com/jsref/met-win-open.html',
+      features: 'width=1800,height=700,left=50,top=200'
+    };
+  },
   mounted() {
     this.countStyle();
     window.onresize = () => {
