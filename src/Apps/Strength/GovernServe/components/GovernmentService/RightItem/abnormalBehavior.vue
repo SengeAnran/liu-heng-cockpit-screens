@@ -3,29 +3,61 @@
     <swiper  ref="mySwiper" :options="swiperOption" v-if="dataList.length > 1">
       <swiper-slider v-for="(item, index) in dataList" :key="index">
         <div class="content1">
-          <div class="img">
-            <img :src="'data:image/png;base64,'+item.zp" />
+          <div class="img" @click="showImgs(item.zp)">
+            <img :src="item.zp" />
           </div>
           <div class="content">
-            <div class="name">备注信息</div>
+            <div class="name">告警详情</div>
             <div class="kouhao">
-              {{ item.bzxx }}
+              <div class="detail">
+                <div class="title">告警地点: </div>
+                <div class="detail-content" :title="item.address">{{ item.address }}</div>
+              </div>
+              <div class="detail">
+                <div class="title">告警类型: </div>
+                <div class="detail-content" :title="item.type">{{ item.type }}</div>
+              </div>
+              <div class="detail">
+                <div class="title">告警时间: </div>
+                <div class="detail-content" :title="item.time">{{ item.time }}</div>
+              </div>
+            </div>
+            <div class="monitor" @click="showMonitor(item.cameraCode)">
+              <img src="./img/icon_jk.png" alt="">
+              实时监控
             </div>
           </div>
         </div>
       </swiper-slider>
     </swiper>
     <div v-else class="content1">
-      <div class="img">
-        <img :src="'data:image/png;base64,'+dataList[0].zp" />
+      <div class="img" @click="showImgs(dataList[0].zp)">
+        <img :src="dataList[0].zp" />
       </div>
       <div class="content">
-        <div class="name">备注信息</div>
+        <div class="name">告警详情</div>
         <div class="kouhao">
-          {{ dataList[0].bzxx }}
+          <div class="detail">
+            <div class="title">告警地点: </div>
+            <div class="detail-content" :title="dataList[0].address">{{ dataList[0].address }}</div>
+          </div>
+          <div class="detail">
+            <div class="title">告警类型: </div>
+            <div class="detail-content" :title="dataList[0].type">{{ dataList[0].type }}</div>
+          </div>
+          <div class="detail">
+            <div class="title">告警时间: </div>
+            <div class="detail-content" :title="dataList[0].time">{{ dataList[0].time }}</div>
+          </div>
+        </div>
+        <div class="monitor">
+          <img src="./img/icon_jk.png" alt="">
+          实时监控
         </div>
       </div>
     </div>
+    <monitorShow :show.sync="monitorShow" :cameraIndexCode="cameraIndexCode"/>
+    <ImageModal :show.sync="modalShow" :data="imgDataList" />
   </div>
 </template>
 
@@ -33,14 +65,19 @@
 import swiper from '@/components/Swiper';
 import SwiperSlider from '@/components/SwiperSlider';
 import { getAbnormalAnalysis } from '@/api/Strength/GovernServe/api';
+import ImageModal from "./ImageModal";
+import monitorShow from "./monitorShow/index";
 export default {
   components: {
     swiper,
     SwiperSlider,
+    ImageModal,
+    monitorShow,
   },
   data() {
     return {
       dataList: [],
+      imgDataList: '',
       swiperOption: {
         // direction: '',
         speed: 1000,
@@ -54,14 +91,27 @@ export default {
         },
         // autoplay: true,
       },
+      modalShow: false,
+      monitorShow: false,
+      cameraIndexCode: '',
     };
   },
   mounted() {
     this.initData();
   },
   methods: {
+    showMonitor(cameraCode = '') {
+      console.log(cameraCode);
+      if (!cameraCode) return
+      this.cameraIndexCode = cameraCode;
+      this.monitorShow = true;
+    },
+    showImgs(dataList) {
+      this.imgDataList = dataList;
+      this.modalShow = true;
+    },
     initData() {
-      getAbnormalAnalysis()
+      getAbnormalAnalysis({num: 100})
         .request()
         .then((json) => {
           if (!json) {
@@ -102,23 +152,25 @@ export default {
   display: flex;
   .img {
     margin: 50px;
-    width: 347px;
+    width: 377px;
     height: 239px;
     overflow: hidden;
     img {
-      object-fit: fill;
+      object-fit: contain;
       width: 100%;
       height: 100%;
     }
   }
   .content {
-    margin: 20px;
+    position: relative;
+    height: 100%;
+    padding: 20px;
     .kouhao {
       //border-top: 2px solid slategrey;
-      width: 338px;
+      width: 308px;
 
       padding: 10px;
-      margin-top: 46px;
+      margin-top: 20px;
       //width: 390px;
       //height: 99px;
       background: rgba(54, 66, 80, 0.2);
@@ -129,11 +181,33 @@ export default {
       color: #FFFFFF;
       line-height: 36px;
       max-height: 154px;
-      overflow : hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+      .detail {
+        display: flex;
+        .title {
+          margin-right: 5px;
+          width: 103px;
+        }
+        .detail-content {
+          width: 200px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+    .monitor {
+      position: absolute;
+      right: 35px;
+      bottom: 81px;
+      font-size: 24px;
+      font-family: Source Han Sans CN;
+      font-weight: 400;
+      color: #82E2E4;
+      line-height: 36px;
+      img {
+        margin-right: 12px;
+        vertical-align: sub;
+      }
 
     }
   }

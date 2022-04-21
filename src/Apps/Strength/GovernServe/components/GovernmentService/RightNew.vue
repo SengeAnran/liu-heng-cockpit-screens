@@ -6,8 +6,12 @@
         <Jiankong></Jiankong>
       </div>
       <div class="yuedu">
-        <BaseTitle title="异常行为分析" :width="800" />
-        <abnormalBehavior></abnormalBehavior>
+        <div style="display: flex; justify-content: space-between; cursor: pointer; width: 800px">
+          <BaseTitle title="异常行为分析" tableWidth="300px" @onClick="showBehavior = true"/>
+          <BaseTitle title="异常事件列表" tableWidth="300px" @onClick="showBehavior = false" />
+        </div>
+        <abnormalBehavior v-if="showBehavior"></abnormalBehavior>
+        <behaviorList v-else></behaviorList>
       </div>
     </div>
     <div>
@@ -25,13 +29,19 @@
 
 <script>
 import Banlixinxi from './RightItem/banlixinxi';
+import behaviorList from './RightItem/behaviorList';
 import Jiankong from './RightItem/jiankong';
 
 import abnormalBehavior from './RightItem/abnormalBehavior';
 import Yuedumingxing from './RightItem/yuedumingxing';
 
 export default {
-  components: { Jiankong, Banlixinxi, Yuedumingxing, abnormalBehavior },
+  components: { Jiankong, Banlixinxi, Yuedumingxing, abnormalBehavior, behaviorList },
+  data() {
+    return {
+      showBehavior: true,
+    }
+  }
 };
 </script>
 
@@ -46,7 +56,7 @@ export default {
   font-size: 24px;
   display: flex;
   color: #fff;
-  z-index: 999;
+  z-index: 9999;
 }
 .yuedu {
   position: absolute;

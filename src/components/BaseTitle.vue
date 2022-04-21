@@ -1,5 +1,5 @@
 <template>
-  <div class="base-title" :style="{ width: tableWidth }">
+  <div class="base-title" :style="{ width: tableWidth }" @click="$emit('onClick')">
     {{title}}
   </div>
 </template>

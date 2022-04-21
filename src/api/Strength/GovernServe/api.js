@@ -18,8 +18,12 @@ export const getRoadMonitor = () => {
   return new MetroApi({ myType: 0, method: 'get', url: '/traffic/getRoadMonitor' });
 };
 // 异常行为分析
-export const getAbnormalAnalysis = () => {
-  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getAbnormalAnalysis' });
+export const getAbnormalAnalysis = (data) => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getAbnormalAnalysis', data });
+};
+// 异常行为分析列表
+export const getAbnormalAnalysisList = () => {
+  return new MetroApi({ myType: 0, method: 'get', url: '/government/services/getAbnormalAnalysisList' });
 };
 // 月度明星
 export const getMonthlyStar = () => {
