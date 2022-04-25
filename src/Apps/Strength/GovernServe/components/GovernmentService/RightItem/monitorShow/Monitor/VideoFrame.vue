@@ -1,5 +1,5 @@
 <template>
-  <div class="video-frame">
+  <div v-if="cameraIndexCode" class="video-frame">
     <iframe
       frameborder="0"
       ref="iframeEle"
