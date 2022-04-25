@@ -8,7 +8,7 @@
           <img @click="hideModal" src="../img/close.png" alt="">
         </div>
         <div class="modal-monitor">
-          <VideoFrame :camera-index-code="cameraIndexCode" />
+          <VideoFrame v-if="show" :camera-index-code="cameraIndexCode" />
         </div>
       </div>
     </div>

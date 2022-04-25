@@ -122,14 +122,14 @@ export default {
 .video-frame {
   //height: 42.5rem;
   //height: 31.5rem;
-  width: 1287px;
-  height: 733px;
+  //width: 128rem;
+  height: 73rem;
   position: relative;
   iframe {
     position: absolute;
     // outline: 5px solid red;
-    width: 100% !important;
-    height: 100% !important;
+    width: 100% ;
+    height: 100% ;
   }
 }
 </style>
