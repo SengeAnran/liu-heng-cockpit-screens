@@ -50,7 +50,7 @@
             <div class="detail-content" :title="dataList[0].time">{{ dataList[0].time }}</div>
           </div>
         </div>
-        <div class="monitor">
+        <div class="monitor" @click="showMonitor(dataList[0].cameraCode)">
           <img src="./img/icon_jk.png" alt="">
           实时监控
         </div>
