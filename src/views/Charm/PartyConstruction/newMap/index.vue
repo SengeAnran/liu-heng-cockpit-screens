@@ -11,6 +11,8 @@
         :Scale="1.3"
       />
     </div>
+
+    <div class="go-app" @click="goPage">办事不出岛2.0</div>
     <div class="switch">
       <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
       <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
@@ -71,10 +73,17 @@ export default {
       threeDDataList: [],
       tipTemplate: {},
       title: '',
+      activeLink: false,
+      getOpenPageUrl: 'https://cloudphone-ecmpapi-shanghai-1.cmecloud.cn/H5/#/index',
+      features: 'width=1800,height=700,left=50,top=200'
     };
   },
   mounted() {
     this.getClassDate();
+    this.countStyle();
+    window.onresize = () => {
+      this.countStyle();
+    };
   },
   methods: {
     changeMap(type) {
@@ -136,6 +145,23 @@ export default {
       // console.log(this.threeDDataList);
       // console.log(this.tipTemplate);
     },
+    // goApp() {
+    //   this.activeLink = true;
+    // },
+    countStyle() {
+      const clientWidth = document.documentElement.clientWidth
+      const clientHeight = document.documentElement.clientHeight
+      // console.log(document.documentElement);
+      // console.log(document.documentElement.clientHeight);
+      this.features = 'width=' + clientWidth +
+        ',height=' + (parseInt(clientHeight * 0.83)) +
+        ',left=' + 0 +
+        ',top=' + (parseInt(clientHeight * 0.23));
+    },
+    goPage() {
+      // console.log('click');
+      window.open(this.getOpenPageUrl,'_blank',this.features);
+    }
   },
 };
 </script>
@@ -187,6 +213,26 @@ export default {
         color: white;
         background: url('./img/mmexport1.jpg') no-repeat;
       }
+    }
+  }
+  .go-app {
+    position: absolute;
+    bottom: 79.8rem;
+    right: 239rem;
+    //width: 114px;
+    height: 44px;
+    padding: 0 1rem;
+    font-size: 24px;
+    line-height: 44px;
+    text-align: center;
+    color: #82e2e4;
+    cursor: pointer;
+    background: url('./img/mmexport.jpg') no-repeat;
+    background-size: 100% 100%;
+    &:hover {
+      color: white;
+      background: url('./img/mmexport1.jpg') no-repeat;
+      background-size: 100% 100%;
     }
   }
   .map-legend {
@@ -242,6 +288,40 @@ export default {
         }
       }
     }
+  }
+}
+.server-title {
+  width: 447px;
+  height: 39px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  //background-image: ;
+  background-image: url('./img/server-title-bg.png');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .name {
+    font-family: 'YouSheBiaoTiHei';
+    font-size: 24px;
+    background: linear-gradient(0deg, #79c0f6 10%, #ffffff 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+.server-body {
+  width: 468px;
+  height: 791px;
+  background-image: url('./img/server-body-bg.png');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .iframe {
+    width: 407px;
+    height: 736px;
+    border: none;
+    border-radius: 10px;
+    background: #ffffff;
   }
 }
 </style>

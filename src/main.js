@@ -8,6 +8,7 @@ import Digital from '@/components/Digital';
 import ViewTemplate from '@/components/ViewTemplate';
 import PointPopup from '@/components/PointPopup';
 import ThreeDMap from '@/components/ThreeDMap';
+import PopupBox from '@/components/PopupBox';
 // import ImageModal from '@/components/ImageModal';
 import * as echarts from 'echarts';
 
@@ -38,6 +39,7 @@ Vue.component('BaseTitle', BaseTitle);
 Vue.component('PointPopup', PointPopup);
 Vue.component('view-template', ViewTemplate);
 Vue.component('ThreeDMap', ThreeDMap);
+Vue.component('PopupBox', PopupBox);
 // Vue.component('ImageModal', ThreeDMap);
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
