@@ -158,9 +158,9 @@ export default {
       //   ',left=' + 0 +
       //   ',top=' + (parseInt(clientHeight * 0.23));
       this.features = 'width=' + clientWidth * 0.27 +
-        ',height=' + (parseInt(clientHeight * 0.62)) +
-        ',left=' + (clientWidth * 0.5 - clientWidth * 0.133) +
-        ',top=' + (parseInt(clientHeight * 0.13));
+        ',height=' + (parseInt(clientHeight * 0.6)) +
+        ',left=' + (clientWidth * 0.5 - clientWidth * 0.14) +
+        ',top=' + (parseInt(clientHeight * 0.06));
     },
     goPage() {
       // console.log('click');
