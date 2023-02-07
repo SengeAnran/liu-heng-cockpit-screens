@@ -153,10 +153,14 @@ export default {
       const clientHeight = document.documentElement.clientHeight
       // console.log(document.documentElement);
       // console.log(document.documentElement.clientHeight);
-      this.features = 'width=' + clientWidth +
-        ',height=' + (parseInt(clientHeight * 0.83)) +
-        ',left=' + 0 +
-        ',top=' + (parseInt(clientHeight * 0.23));
+      // this.features = 'width=' + clientWidth +
+      //   ',outerHeight=' + (parseInt(clientHeight * 0.83)) +
+      //   ',left=' + 0 +
+      //   ',top=' + (parseInt(clientHeight * 0.23));
+      this.features = 'width=' + clientWidth * 0.27 +
+        ',height=' + (parseInt(clientHeight * 0.62)) +
+        ',left=' + (clientWidth * 0.5 - clientWidth * 0.133) +
+        ',top=' + (parseInt(clientHeight * 0.13));
     },
     goPage() {
       // console.log('click');

@@ -28,6 +28,7 @@
       <iframe src="http://60.163.192.206:8000/srit3d/default.html" width="100%" height="100%"></iframe>
 <!--      <ThreeDMap/>-->
     </div>
+    <div class="go-app" @click="goPage">办事不出岛2.0</div>
     <div class="switch">
       <div class="button" :class="{'active': iconIndex === 1}" @click="changeMap(1)">卫星地图</div>
       <div class="button" :class="{'active': iconIndex === 2}" @click="changeMap(2)">2D地图</div>
@@ -99,6 +100,8 @@ export default {
           position: [122.136267, 29.701412],
         },
       ],
+      getOpenPageUrl: 'https://cloudphone-ecmpapi-shanghai-1.cmecloud.cn/H5/#/index',
+      features: 'width=1800,height=700,left=50,top=200'
     };
   },
   mounted() {
@@ -111,8 +114,26 @@ export default {
     this.map.add(this.layers);
     this.autoClick();
     this.getData();
+    this.countStyle();
+    window.onresize = () => {
+      this.countStyle();
+    };
   },
   methods: {
+    countStyle() {
+      const clientWidth = document.documentElement.clientWidth
+      const clientHeight = document.documentElement.clientHeight
+      console.dir(document.documentElement);
+      // console.log(document.documentElement.clientHeight);
+      this.features = 'width=' + clientWidth * 0.27 +
+        ',height=' + (parseInt(clientHeight * 0.62)) +
+        ',left=' + (clientWidth * 0.5 - clientWidth * 0.133) +
+        ',top=' + (parseInt(clientHeight * 0.13));
+    },
+    goPage() {
+      // console.log('click');
+      window.open(this.getOpenPageUrl,'_blank',this.features);
+    },
     changeMap(type) {
       this.iconIndex = type;
       if (type === 1) {
@@ -417,6 +438,26 @@ export default {
         background: url("./img/mmexport1.jpg") no-repeat;
       }
     }
+  }
+}
+.go-app {
+  position: absolute;
+  bottom: 79.8rem;
+  right: 239rem;
+  //width: 114px;
+  height: 44px;
+  padding: 0 1rem;
+  font-size: 24px;
+  line-height: 44px;
+  text-align: center;
+  color: #82e2e4;
+  cursor: pointer;
+  background: url('./img/mmexport.jpg') no-repeat;
+  background-size: 100% 100%;
+  &:hover {
+    color: white;
+    background: url('./img/mmexport1.jpg') no-repeat;
+    background-size: 100% 100%;
   }
 }
 </style>
